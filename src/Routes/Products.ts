@@ -12,16 +12,6 @@ export default class ProductRouter
         this.server = server;
         this.server.use("/product", this.router);
         
-        /**
-         * @swagger
-         * /books:
-         *   get:
-         *     description: Get all books
-         *     responses:
-         *       200:
-         *         description: Success
-         * 
-         */
         this.router.get("/all", (req, res) => {
 
         })
