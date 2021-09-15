@@ -11,5 +11,26 @@ export default class CustomerRouter
     {
         this.server = server;
         this.server.use("/customer", this.router);
+
+        this.router.post("/create", (req, res) => {
+
+            let {
+                first_name,
+                last_name,
+                email,
+                phone,
+                company,
+                company_vat,
+                street01,
+                street02,
+                city,
+                state,
+                postcode,
+                country
+            } = req.body;
+
+            
+
+        });
     }
 }
