@@ -15,14 +15,7 @@ export default class CategoryRouter
         this.server.use("/category", this.router);
 
         this.router.get("/all", (req, res) => {
-            let categories = [];
-
-            for(const [key, value] of CacheCategories.entries())
-            {
-                categories.push(value);
-            }
-
-            APISuccess(categories)(res);
+            APISuccess(CacheCategories.array())(res);
         });
 
         this.router.get("/:id", (req, res) => {
