@@ -1,15 +1,37 @@
 /*Copyright (C) 2021 Tolfix - All Rights Reserved*/
-require("dotenv").config()
+require("dotenv").config();
+require("./Mods/MapMod");
 import express from "express";
 import cors from "cors";
-import { PORT } from "./Config";
+import session from "express-session";
+import { Express_Session_Secret, PORT } from "./Config";
 import Logger from "./Lib/Logger";
 import RouteHandler from "./Routes/Handler";
 import { reCache } from "./Cache/reCache";
 import Mongo_Database from "./Database/Mongo";
+import { ICustomer } from "./Interfaces/Customer";
+
+declare module "express-session"
+{
+    interface SessionData {
+        payload?: ICustomer;
+    }
+}
 
 const server = express();
 new Mongo_Database();
+
+let sessionMiddleWare = session({
+    secret: Express_Session_Secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        path: "/",
+        maxAge: 30*24*60*60*1000,
+    }
+});
+
+server.use(sessionMiddleWare);
 
 server.use(cors({
     origin: true,
