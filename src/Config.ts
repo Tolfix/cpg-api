@@ -3,7 +3,7 @@
  * Used if this service is running in debug mode.
  */
 export const DebugMode = process.env.DEBUG === "true" ? true : false;
-export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
+export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", "").replace("\\src", "").replace("/src", ""));
 export const JWT_Access_Token = process.env.JWT_ACCESS_TOKEN ?? "";
 
 export const PORT = process.env.PORT ?? 8080;
