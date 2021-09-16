@@ -5,6 +5,7 @@ export interface ICustomer
     uid: string;
     personal: Personal;
     billing: Billing;
+    createdAt: Date;
     extra?: any;
 }
 

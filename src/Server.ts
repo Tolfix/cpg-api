@@ -1,4 +1,4 @@
-/*Copyright (C) 2021 Tolfix - All Rights Reserved*/
+/* Copyright (C) 2021 Tolfix - All Rights Reserved */
 require("dotenv").config();
 require("./Mods/MapMod");
 import express from "express";
@@ -10,6 +10,7 @@ import RouteHandler from "./Routes/Handler";
 import { reCache } from "./Cache/reCache";
 import Mongo_Database from "./Database/Mongo";
 import { ICustomer } from "./Interfaces/Customer";
+import AdminHandler from "./Admin/AdminHandler";
 
 declare module "express-session"
 {
@@ -20,6 +21,7 @@ declare module "express-session"
 
 const server = express();
 new Mongo_Database();
+new AdminHandler();
 
 let sessionMiddleWare = session({
     secret: Express_Session_Secret,
@@ -39,6 +41,7 @@ server.use(cors({
 }));
 
 server.use(express.urlencoded({ extended: true }));
+server.use(express.json());
 
 server.use((req, res, next) => {
     res.setHeader("Content-Type", "application/json");
@@ -50,4 +53,4 @@ reCache().then(() => {
     RouteHandler(server);
 });
 
-const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));
+export const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));

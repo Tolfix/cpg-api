@@ -100,6 +100,7 @@ export default class CustomerRouter
                     street02
                 },
                 uid: idCustomer().toString(),
+                createdAt: new Date(),
                 extra
             };
 

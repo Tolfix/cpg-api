@@ -21,6 +21,11 @@ const CustomerSchema = new Schema
             required: true,
         },
 
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+
         extra: {
             type: Object,
             required: false,
