@@ -11,26 +11,14 @@ export interface IProduct
     BStock: Boolean;
     hidden: Boolean;
     special: boolean;
-    payment_type: Partial<keyof IPaymentType>;
+    payment_type: Partial<IPaymentType>;
     price: number;
     setup_fee: number;
-    recurring_method: Partial<keyof IRecurringMethod>;
+    recurring_method: Partial<IRecurringMethod>;
 }
 
 export interface IDProduct extends IProduct, Document {};
 
-export interface IPaymentType
-{
-    free: Boolean;
-    one_time: Boolean;
-    recurring: Boolean;
-}
+export type IPaymentType = "free" | "one_time" | "recurring";
 
-export interface IRecurringMethod
-{
-    monthly: Boolean;
-    quarterly: Boolean;
-    semi_annually: Boolean;
-    biennially: Boolean;
-    triennially: Boolean;
-}
+export type IRecurringMethod = "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially";

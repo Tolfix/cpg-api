@@ -4,6 +4,7 @@ import CustomerModel from "../Database/Schemas/Customer";
 import { ICustomer } from "../Interfaces/Customer";
 import { idCustomer } from "../Lib/Generator";
 import { APIError, APISuccess } from "../Lib/Response";
+import EnsureAdmin from "../Middlewares/EnsureAdmin";
 import EnsureAuth from "../Middlewares/EnsureAuth";
 
 export default class CustomerRouter
@@ -113,7 +114,7 @@ export default class CustomerRouter
             })(res);
         });
 
-        this.router.get("/:uid", EnsureAuth, (req, res) => {
+        this.router.get("/:uid", EnsureAdmin, (req, res) => {
 
         });
     }
