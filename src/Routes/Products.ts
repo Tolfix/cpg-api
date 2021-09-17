@@ -19,7 +19,22 @@ export default class ProductRouter
         this.server.use("/product", this.router);
         
         this.router.get("/get/all", (req, res) => {
+            return APISuccess({
+                products: CacheProduct.array(),
+            })(res);
+        });
 
+        this.router.get("/get/:uid", (req, res) => {
+            const product = CacheProduct.get(req.params.uid);
+
+            if(!product)
+                return APIError({
+                    text: `Unable to find product with id ${req.params.uid}`
+                })(res);
+
+            return APISuccess({
+                product: product,
+            })(res);
         });
 
         this.router.post("/post/create", EnsureAdmin, (req, res) => {
@@ -124,6 +139,7 @@ export default class ProductRouter
 
             APISuccess({
                 text: `Succesfully created product`,
+                uid: info.uid,
                 product: info,
             })(res);
         });
