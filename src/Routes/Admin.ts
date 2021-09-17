@@ -14,8 +14,8 @@ export default class AdminRouter
         this.server = server;
         this.server.use("/admin", this.router);
 
-        this.router.get("/isAuth", EnsureAdmin, (req, res) => {
-            APISuccess("Authenticated")(res);
+        this.router.get("/validate", EnsureAdmin, (req, res) => {
+            APISuccess("Authenticated", 202)(res);
         });
 
     }
