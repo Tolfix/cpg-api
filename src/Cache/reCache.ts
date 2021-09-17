@@ -11,21 +11,6 @@ import { CacheProduct } from "./CacheProduct";
 
 export function reCache_Categories()
 {
-    if(DebugMode)
-    {
-        CacheCategories.set("0", {
-            description: "Testing",
-            name: "Test",
-            private: true,
-            uid: "0",
-        });
-        CacheCategories.set("1", {
-            description: "Testing",
-            name: "Test",
-            private: true,
-            uid: "1",
-        });
-    }
     Logger.info(`Starting caching on categories..`);
     return new Promise(async (resolve, reject) => {
         const categories = await CategoryModel.find();
