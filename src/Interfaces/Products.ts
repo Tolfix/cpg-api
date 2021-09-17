@@ -10,7 +10,7 @@ export interface IProduct
     stock: number;
     BStock: Boolean;
     hidden: Boolean;
-    special: number;
+    special: boolean;
     payment_type: Partial<keyof IPaymentType>;
     price: number;
     setup_fee: number;
