@@ -1,11 +1,10 @@
 import { Application, Router } from "express";
 import { CacheProduct } from "../Cache/CacheProduct";
 import ProductModel from "../Database/Schemas/Products";
-import { IPaymentType, IProduct } from "../Interfaces/Products";
+import { IProduct } from "../Interfaces/Products";
 import { idProduct } from "../Lib/Generator";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
-import EnsureAuth from "../Middlewares/EnsureAuth";
 
 export default class ProductRouter
 {

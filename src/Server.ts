@@ -51,6 +51,5 @@ server.use((req, res, next) => {
 
 reCache().then(() => {
     RouteHandler(server);
+    const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));
 });
-
-export const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));
