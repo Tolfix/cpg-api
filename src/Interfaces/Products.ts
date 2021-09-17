@@ -11,10 +11,10 @@ export interface IProduct
     BStock: Boolean;
     hidden: Boolean;
     special: number;
-    payment_type: IPaymentType;
+    payment_type: Partial<keyof IPaymentType>;
     price: number;
     setup_fee: number;
-    recurring_method: IRecurringMethod;
+    recurring_method: Partial<keyof IRecurringMethod>;
 }
 
 export interface IDProduct extends IProduct, Document {};
