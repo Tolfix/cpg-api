@@ -1,6 +1,7 @@
 import { Application, Router } from "express";
 import { CacheCategories } from "../Cache/CacheCategories";
 import CategoryModel from "../Database/Schemas/Category";
+import { ICategory } from "../Interfaces/Categories";
 import AW from "../Lib/AW";
 import { idCategory } from "../Lib/Generator";
 import Logger from "../Lib/Logger";
@@ -64,6 +65,48 @@ export default class CategoryRouter
             APISuccess({
                 text: "Succesfully created category.",
                 uid: info.uid,
+            })(res);
+        });
+
+        this.router.patch("/patch/:uid", EnsureAdmin, async (req, res) => {
+            const uid = req.params.uid;
+            const category = CacheCategories.get(uid);
+            if(!category)
+                return APIError({
+                    text: `Unable to find category by uid ${uid}`,
+                })(res);
+
+            let { name, description, Private } = req.body;
+            
+            let info: ICategory = {
+                uid: category.uid,
+                name: category.name,
+                description: category.description,
+                private: category.private,
+            }
+
+            if(name !== info.name)
+                info.name = name;
+
+            if(description !== info.description)
+                info.description = description;
+
+            if(Private !== description.private)
+                info.description = Private;
+            
+            const [Success, Fail] = await AW(CategoryModel.updateOne({ uid: category.uid}, info));
+
+            if(!Fail)
+                return APIError({
+                    text: `Something went wrong, try again later.`,
+                })(res);
+
+            CacheCategories.set(category.uid, info);
+
+            return APISuccess({
+                text: `Succesfully updated category`,
+                uid: category.uid,
+                category: info,
             })(res);
         });
 
