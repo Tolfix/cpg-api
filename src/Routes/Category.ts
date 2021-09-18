@@ -96,7 +96,7 @@ export default class CategoryRouter
             
             const [Success, Fail] = await AW(CategoryModel.updateOne({ uid: category.uid}, info));
 
-            if(!Fail)
+            if(Fail)
                 return APIError({
                     text: `Something went wrong, try again later.`,
                 })(res);

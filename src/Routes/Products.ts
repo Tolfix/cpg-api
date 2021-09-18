@@ -189,7 +189,7 @@ export default class ProductRouter
 
             const [Succes, Fail] = await AW(ProductModel.updateOne({ uid: product.uid }, info));
 
-            if(!Fail)
+            if(Fail)
                 return APIError({
                     text: `Something went wrong, try again later.`,
                 })(res);
