@@ -201,5 +201,30 @@ export default class ProductRouter
                 product: info,
             })(res);
         });
+
+        this.router.delete("/delete/:uid", EnsureAdmin, async (req, res) => {
+            const uid = req.params.uid;
+
+            const product = CacheProduct.get(uid);
+
+            if(!product)
+                return APIError({
+                    text: `Unable to find product with uid ${uid}`,
+                })(res);
+
+            const [Success, Fail] = await AW(ProductModel.deleteOne({ uid: uid }));
+
+            if(Fail)
+                return APIError({
+                    text: `Something went wrong, try again later.`,
+                })(res);
+
+            CacheProduct.delete(uid);
+
+            return APISuccess({
+                text: `Succesfully removed product`,
+                uid: uid,
+            })(res);
+        });
     }
 }
