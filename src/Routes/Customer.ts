@@ -6,7 +6,6 @@ import AW from "../Lib/AW";
 import { idCustomer } from "../Lib/Generator";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
-import EnsureAuth from "../Middlewares/EnsureAuth";
 
 export default class CustomerRouter
 {
