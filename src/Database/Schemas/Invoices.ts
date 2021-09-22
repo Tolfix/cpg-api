@@ -11,13 +11,13 @@ const InvoiceSchame = new Schema
             required: true,
         },
 
-        client_name: {
+        customer_uid: {
             type: String,
             required: true,
         },
 
         invoiced_to: {
-            type: Object,
+            type: String,
             required: true,
         },
 
@@ -45,7 +45,7 @@ const InvoiceSchame = new Schema
             type: String,
             default: "none"
         },
-        
+
         status: {
             type: String,
             default: "draft",
