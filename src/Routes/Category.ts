@@ -33,7 +33,9 @@ export default class CategoryRouter
                     text: `Unable to find category by id ${id}`
                 })(res);
 
-            APISuccess(category)(res);
+            return APISuccess({
+                category:category
+            })(res);
         });
 
         this.router.post("/post/create", EnsureAdmin, (req, res) => {

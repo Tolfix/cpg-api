@@ -33,7 +33,9 @@ export default class CustomerRouter
                     text: `Unable to find customer by uid ${id}`
                 })(res);
 
-            APISuccess(customer)(res);
+            return APISuccess({
+                customer: customer
+            })(res);
         });
 
         this.router.post("/post/create", (req, res) => {
