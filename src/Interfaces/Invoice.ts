@@ -1,3 +1,4 @@
+import { Document } from "mongoose";
 import { ICustomer } from "./Customer";
 import { OrderStatus } from "./Orders";
 import { IPayments } from "./Payments";
@@ -11,12 +12,14 @@ export interface IInvoice
     amount: number;
     items: Array<IInvoices_Items>;
     transactions?: Array<IInvoices_Transactions>;
-    payment_method: IPayments;
+    payment_method: keyof IPayments;
     status: OrderStatus | "draf" | "refunded" | "collections" | "payment_pending";
     tax_rate: number;
     notes: string;
     paid: Boolean;
 }
+
+export interface IDInvoice extends IInvoice, Document {};
 
 export interface IInvoice_Dates
 {
