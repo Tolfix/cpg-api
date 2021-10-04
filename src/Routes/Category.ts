@@ -17,7 +17,7 @@ export default class CategoryRouter
     constructor(server: Application)
     {
         this.server = server;
-        this.server.use("/category", this.router);
+        this.server.use("/categories", this.router);
 
         this.router.get("/get/all", (req, res) => {
             APISuccess(CacheCategories.array())(res);

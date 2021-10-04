@@ -18,7 +18,7 @@ export default class ProductRouter
     constructor(server: Application)
     {
         this.server = server;
-        this.server.use("/product", this.router);
+        this.server.use("/products", this.router);
         
         this.router.get("/get/all", (req, res) => {
             return APISuccess({

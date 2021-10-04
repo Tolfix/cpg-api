@@ -17,7 +17,7 @@ export default class CustomerRouter
     constructor(server: Application)
     {
         this.server = server;
-        this.server.use("/customer", this.router);
+        this.server.use("/customers", this.router);
 
         this.router.get("/get/all", EnsureAdmin, (req, res) => {
             APISuccess(CacheCustomer.array())(res);

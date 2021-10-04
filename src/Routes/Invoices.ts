@@ -12,7 +12,7 @@ export default class InvoiceRouter
     constructor(server: Application)
     {
         this.server = server;
-        this.server.use("/invoice", this.router);
+        this.server.use("/invoices", this.router);
 
         this.router.get("/get/all", EnsureAdmin, (req, res) => {
             APISuccess({
