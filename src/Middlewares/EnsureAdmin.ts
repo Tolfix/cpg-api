@@ -12,23 +12,23 @@ export default function EnsureAdmin(req: Request, res: Response, next: NextFunct
     if(!authHeader)
         return APIError({
             text: "Missing 'authorization' in header"
-        });
+        })(res);
 
     const b64auth = (authHeader).split(' ');
 
     if(!b64auth[0].toLocaleLowerCase().match(/basic|bearer/g))
         return APIError({
             text: "Missing 'basic' or 'bearer' in authorization"
-        });
+        })(res);
 
     if(!b64auth[1])
         return APIError({
             text: "Missing 'buffer' in authorization"
-        });
+        })(res);
 
     if(b64auth[0].toLocaleLowerCase() === "basic")
     {
-        const [login, password] = Buffer.from(b64auth[1], 'base64').toString().split(':');
+        const [login, password] = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString().split(':');
 
         return bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "")?.["password"]) ?? "", (err, match) => {
             if(!match)
@@ -42,7 +42,7 @@ export default function EnsureAdmin(req: Request, res: Response, next: NextFunct
 
     if(b64auth[0].toLocaleLowerCase() === "bearer")
     {
-        const token = Buffer.from(b64auth[1], 'base64').toString();
+        const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
         jwt.verify(token, JWT_Access_Token, (err, payload) => {
             if(err || !payload)
                 return APIError({
