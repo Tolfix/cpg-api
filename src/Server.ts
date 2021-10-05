@@ -4,13 +4,14 @@ require("./Mods/MapMod");
 import express from "express";
 import cors from "cors";
 import session from "express-session";
-import { Express_Session_Secret, PORT } from "./Config";
+import { Express_Session_Secret, HomeDir, PORT } from "./Config";
 import Logger from "./Lib/Logger";
 import RouteHandler from "./Routes/Handler";
 import { reCache } from "./Cache/reCache";
 import Mongo_Database from "./Database/Mongo";
 import { ICustomer } from "./Interfaces/Customer";
 import AdminHandler from "./Admin/AdminHandler";
+import Swagger from "./Middlewares/Swagger";
 
 declare module "express-session"
 {
@@ -51,5 +52,6 @@ server.use((req, res, next) => {
 
 reCache().then(() => {
     RouteHandler(server);
+    Swagger(server);
     const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));
 });
