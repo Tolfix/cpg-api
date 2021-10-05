@@ -100,9 +100,9 @@ export default class CategoryRouter
          * @route PATCH /categories/patch/{uid}
          * @group Category
          * @param {string} uid.path.required - uid for category.
-         * @param {string} name.query.required - Name for category.
-         * @param {string} description.query.required - description for category.
-         * @param {boolean} Private.query.required - Private for category.
+         * @param {string} name.query - Name for category.
+         * @param {string} description.query - description for category.
+         * @param {boolean} Private.query - Private for category.
          * @returns {object} 200 - Updated category
          * @returns {Error} default - Unable to find category or failed
          * @security JWT
