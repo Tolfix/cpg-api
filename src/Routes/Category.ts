@@ -131,7 +131,7 @@ export default class CategoryRouter
             if(description !== info.description)
                 info.description = description;
 
-            if(Private !== description.private)
+            if(Private !== info.private)
                 info.description = Private;
             
             const [Success, Fail] = await AW(CategoryModel.updateOne({ uid: category.uid}, info));
