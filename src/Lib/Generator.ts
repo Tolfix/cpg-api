@@ -45,10 +45,15 @@ export function idOrder()
     return uid;
 }
 
-export function iDInvoice()
+export function idInvoice()
 {
     let arrayC = CacheInvoice.array();
     let lastUid = parseInt(arrayC[arrayC.length-1]?.uid ?? "0");
     let uid = lastUid+1;
     return uid;
+}
+
+export function idTransicitons(): `TRAN_${string}`
+{
+    return `TRAN_${require("crypto").randomBytes(10).toString("hex")}`
 }
