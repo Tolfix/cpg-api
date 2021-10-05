@@ -30,9 +30,9 @@ export default class CategoryRouter
 
         /**
          * Gets specific category
-         * @route GET /categories/get/{id}
+         * @route GET /categories/get/{uid}
          * @group Category
-         * @param {string} id.path.required - uid for category.
+         * @param {string} uid.path.required - uid for category.
          * @returns {Object} 200 - Gets specific category
          * @returns {Object} default - Unable to find category
          */
@@ -99,7 +99,7 @@ export default class CategoryRouter
          * Updates a category
          * @route PATCH /categories/patch/{uid}
          * @group Category
-         * @param {string} id.path.required - uid for category.
+         * @param {string} uid.path.required - uid for category.
          * @param {string} name.query.required - Name for category.
          * @param {string} description.query.required - description for category.
          * @param {boolean} Private.query.required - Private for category.
@@ -154,7 +154,7 @@ export default class CategoryRouter
          * Deletes a category
          * @route DELETE /categories/delete/{uid}
          * @group Category
-         * @param {string} id.path.required - uid for category.
+         * @param {string} uid.path.required - uid for category.
          * @returns {object} 200 - Updated category
          * @returns {Error} default - Unable to find category or failed
          * @security JWT
