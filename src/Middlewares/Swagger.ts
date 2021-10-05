@@ -9,8 +9,8 @@ export default function Swagger(server: Application)
     let options = {
         swaggerDefinition: {
             info: {
-                description: 'This is a sample server',
-                title: 'Swagger',
+                description: 'CPG API Swagger',
+                title: 'CPG API',
                 version: '1.0.0',
             },
             // host: 'localhost:8080',
@@ -24,7 +24,7 @@ export default function Swagger(server: Application)
                     type: 'apiKey',
                     in: 'header',
                     name: 'Authorization',
-                    description: "",
+                    description: "Bearer",
                 },
                 Basic: {
                     type: 'apiKey',
