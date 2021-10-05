@@ -13,8 +13,6 @@ export default class ProductRouter
     private server: Application;
     private router = Router();
 
-    public name = "Product";
-
     constructor(server: Application)
     {
         this.server = server;

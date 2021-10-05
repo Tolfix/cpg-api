@@ -9,7 +9,6 @@ export default class AdminRouter
 {
     private server: Application;
     private router = Router();
-    public name = "Admin";
 
     constructor(server: Application)
     {
