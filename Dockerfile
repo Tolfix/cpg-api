@@ -32,6 +32,12 @@ COPY . ./
 
 RUN tsc -b
 
+ENV JWT_ACCESS_TOKEN ""
+ENV DEBUG ""
+ENV MONGO_URI ""
+ENV SESSION_SECRET ""
+ENV PORT ""
+
 EXPOSE 8080
 
 CMD [ "node", "./build/Server.js" ]
