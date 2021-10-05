@@ -12,6 +12,7 @@ import Mongo_Database from "./Database/Mongo";
 import { ICustomer } from "./Interfaces/Customer";
 import AdminHandler from "./Admin/AdminHandler";
 import Swagger from "./Middlewares/Swagger";
+import { APIError } from "./Lib/Response";
 
 declare module "express-session"
 {
@@ -54,4 +55,9 @@ reCache().then(() => {
     RouteHandler(server);
     Swagger(server);
     const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));
+    server.use("*", (req, res) => {
+        return APIError({
+            text: `Couldn't find what you were looking for.`
+        })(res);
+    })
 });
