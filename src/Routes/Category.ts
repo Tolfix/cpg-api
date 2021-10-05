@@ -12,17 +12,30 @@ export default class CategoryRouter
 {
     private server: Application;
     private router = Router();
-    public name = "Category";
 
     constructor(server: Application)
     {
         this.server = server;
         this.server.use("/categories", this.router);
 
+        /**
+         * Gets all categories
+         * @route GET /categories/get/all
+         * @group Category
+         * @returns {Array} 200 - An array for categories
+         */
         this.router.get("/get/all", (req, res) => {
             APISuccess(CacheCategories.array())(res);
         });
 
+        /**
+         * Gets specific category
+         * @route GET /categories/get/{id}
+         * @group Category
+         * @param {string} id.path.required - uid for category.
+         * @returns {Object} 200 - Gets specific category
+         * @returns {Object} default - Unable to find category
+         */
         this.router.get("/get/:id", (req, res) => {
             const id = req.params.id;
 
@@ -38,17 +51,29 @@ export default class CategoryRouter
             })(res);
         });
 
+        /**
+         * Creates a category
+         * @route POST /categories/post/create
+         * @group Category
+         * @param {string} name.query.required - Name for category.
+         * @param {string} description.query.required - description for category.
+         * @param {boolean} Private.query.required - Private for category.
+         * @returns {Object} 200 - Created a new category.
+         * @returns {Object} default - Missing something
+         * @security JWT
+         * @security Basic
+         */
         this.router.post("/post/create", EnsureAdmin, (req, res) => {
-            let { name, description, Private } = req.body;
+            let { name, description, Private } = req.query as any;
 
             if(!name)
                 return APIError({
-                    text: "Missing 'name' in body"
+                    text: "Missing 'name' in query"
                 })(res);
 
             if(!description)
                 return APIError({
-                    text: "Missing 'description' in body"
+                    text: "Missing 'description' in query"
                 })(res);
 
             if(!Private)
@@ -58,8 +83,8 @@ export default class CategoryRouter
                 name,
                 description,
                 private: Private,
-                uid: idCategory().toString(),   
-            }
+                uid: idCategory().toString(),
+            };
 
             new CategoryModel(info).save();
             CacheCategories.set(info.uid, info);
@@ -70,6 +95,19 @@ export default class CategoryRouter
             })(res);
         });
 
+        /**
+         * Updates a category
+         * @route PATCH /categories/patch/{uid}
+         * @group Category
+         * @param {string} id.path.required - uid for category.
+         * @param {string} name.query.required - Name for category.
+         * @param {string} description.query.required - description for category.
+         * @param {boolean} Private.query.required - Private for category.
+         * @returns {object} 200 - Updated category
+         * @returns {Error} default - Unable to find category or failed
+         * @security JWT
+         * @security Basic
+         */
         this.router.patch("/patch/:uid", EnsureAdmin, async (req, res) => {
             const uid = req.params.uid;
             const category = CacheCategories.get(uid);
@@ -78,7 +116,7 @@ export default class CategoryRouter
                     text: `Unable to find category by uid ${uid}`,
                 })(res);
 
-            let { name, description, Private } = req.body;
+            let { name, description, Private } = req.query as any;
             
             let info: ICategory = {
                 uid: category.uid,
@@ -112,6 +150,16 @@ export default class CategoryRouter
             })(res);
         });
 
+        /**
+         * Deletes a category
+         * @route DELETE /categories/delete/{uid}
+         * @group Category
+         * @param {string} id.path.required - uid for category.
+         * @returns {object} 200 - Updated category
+         * @returns {Error} default - Unable to find category or failed
+         * @security JWT
+         * @security Basic
+         */
         this.router.delete("/delete/:uid", EnsureAdmin, async (req, res) => {
             const uid = req.params.uid;
 
@@ -131,7 +179,7 @@ export default class CategoryRouter
             APISuccess({
                 text: "Succesfully deleted category",
                 uid
-            })(res)
+            })(res);
         });
     }
 }
