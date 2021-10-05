@@ -1,23 +1,12 @@
-FROM ubuntu:latest
+FROM node:14-alpine
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL author="Tolfix" maintainer="support@tolfix.com"
 
-# Upgrade/Update apt[-get]
-RUN apt update -qq -y && apt -qq upgrade -y
-RUN apt-get upgrade -y && apt-get update -y
-
-# Install curl
-RUN apt-get install curl -y
-
-RUN apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev -y
-
-# Get nodejs setup
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-
-# Install node.js
-RUN apt -y install nodejs
+RUN apk update && \
+    apk upgrade && \
+    apk add git
 
 RUN npm install -g @types/node \
     && npm install -g typescript
