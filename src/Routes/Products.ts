@@ -90,7 +90,7 @@ export default class ProductRouter
                 special,
                 stock,
                 BStock
-            } = req.query;
+            } = req.query as any;
             
 
             if(!product_name)
@@ -150,7 +150,28 @@ export default class ProductRouter
             })(res);
         });
 
-        this.router.patch("/patch/:uid", EnsureAdmin, async (req, res) => {
+        /**
+         * Updates a product
+         * @route PATCH /products/{uid}
+         * @group Products
+         * @param {string} uid.path.required - Uid for product
+         * @param {string} category_uid.query - uid for category.
+         * @param {string} description.query - description for product.
+         * @param {boolean} hidden.query - Is hidden.
+         * @param {"free" | "one_time" | "recurring} payment_type.query - description for category.
+         * @param {number} price.query - Price of product.
+         * @param {"monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"} recurring_method.query - Method of payment if recurring
+         * @param {string} product_name.query - Name of product.
+         * @param {number} setup_fee.query - Setup fee.
+         * @param {boolean} special.query - If a special product or not.
+         * @param {number} stock.query - Stock number.
+         * @param {boolean} BStock.query - Should stock be enabled.
+         * @returns {Object} 200 - Updated product.
+         * @returns {Error} default - Missing something
+         * @security JWT
+         * @security Basic
+         */
+        this.router.patch("/:uid", EnsureAdmin, async (req, res) => {
             // Check if product exists
             const uid = req.params.uid;
             let product = CacheProduct.get(uid);
@@ -171,7 +192,7 @@ export default class ProductRouter
                 special,
                 stock,
                 BStock
-            } = req.body;
+            } = req.query as any;
 
             let info: IProduct = {
                 uid: uid,
@@ -233,6 +254,16 @@ export default class ProductRouter
             })(res);
         });
 
+        /**
+         * Creates a product
+         * @route DELETE /products/{uid}
+         * @group Products
+         * @param {string} uid.path.required - Uid for product
+         * @returns {Object} 200 - Deleted product.
+         * @returns {Error} default - Something went wrong.
+         * @security JWT
+         * @security Basic
+         */
         this.router.delete("/delete/:uid", EnsureAdmin, async (req, res) => {
             const uid = req.params.uid;
 
