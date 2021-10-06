@@ -68,7 +68,7 @@ export function isValidProduct(product: IProduct, res?: Response)
         return false;
     }
 
-    if(!typeof product.recurring_method.match(/monthly|quarterly|semi_annually|biennially|triennially/g))
+    if(!typeof product?.recurring_method?.match(/monthly|quarterly|semi_annually|biennially|triennially/g))
     {
         if(res)
             APIError({

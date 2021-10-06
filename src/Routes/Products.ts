@@ -73,7 +73,7 @@ export default class ProductRouter
          */
         this.router.post("/create", EnsureAdmin, (req, res) => {
 
-            const cUid = req.query.category_uid;
+            const cUid = req.query.category_uid as string;
 
             if(!cUid)
                 return APIError({
