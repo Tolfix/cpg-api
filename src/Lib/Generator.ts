@@ -11,6 +11,7 @@ import { ICustomer } from "../Interfaces/Customer";
 import { IInvoice } from "../Interfaces/Invoice";
 import { IOrder } from "../Interfaces/Orders";
 import { IProduct } from "../Interfaces/Products";
+import { ITransactions } from "../Interfaces/Transactions";
 
 /*
     Old method:
@@ -68,7 +69,7 @@ export function idInvoice(): IInvoice["uid"]
     return uid;
 }
 
-export function idTransicitons(): `TRAN_${string}`
+export function idTransicitons(): ITransactions["uid"]
 {
     return `TRAN_${crypto.randomBytes(10).toString("hex")}`
 }
