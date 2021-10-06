@@ -2,11 +2,13 @@ import AdminModel from "../Database/Schemas/Administrators";
 import CategoryModel from "../Database/Schemas/Category";
 import CustomerModel from "../Database/Schemas/Customer";
 import ProductModel from "../Database/Schemas/Products";
+import TransactionsModel from "../Database/Schemas/Transactions";
 import Logger from "../Lib/Logger";
 import { CacheAdmin } from "./CacheAdmin";
 import { CacheCategories } from "./CacheCategories";
 import { CacheCustomer } from "./CacheCustomer";
 import { CacheProduct } from "./CacheProduct";
+import { CacheTransactions } from "./CacheTransactions";
 
 export function reCache_Categories()
 {
@@ -64,10 +66,25 @@ export async function reCache_Product()
     });
 }
 
+export async function reCache_Transactions()
+{
+    Logger.info(`Starting caching on transactions..`);
+    return new Promise(async (resolve, reject) => {
+        const transa = await TransactionsModel.find();
+        for (const t of transa)
+        {
+            Logger.cache(`Caching transaction ${t.uid}`);
+            CacheTransactions.set(t.uid, t);
+        }
+        return resolve(true);
+    });
+}
+
 export async function reCache()
 {
     await reCache_Categories();
     await reCache_Admin();
     await reCache_Customers();
     await reCache_Product();
+    await reCache_Transactions();
 }
