@@ -1,5 +1,6 @@
 import { Application, Router } from "express";
 import { CacheCategories } from "../Cache/CacheCategories";
+import { getProductByCategoryUid } from "../Cache/CacheProduct";
 import CategoryModel from "../Database/Schemas/Category";
 import { ICategory } from "../Interfaces/Categories";
 import AW from "../Lib/AW";
@@ -43,11 +44,35 @@ export default class CategoryRouter
 
             if(!category)
                 return APIError({
-                    text: `Unable to find category by id ${id}`
+                    text: `Unable to find category by uid ${id}`
                 })(res);
 
             return APISuccess({
-                category:category
+                category: category
+            })(res);
+        });
+
+        /**
+         * Gets products by catgory uid
+         * @route GET /categories/{uid}/products
+         * @group Category
+         * @param {string} uid.path.required - uid for category.
+         * @returns {Object} 200 - Gets specific products by category uid
+         * @returns {Object} default - Unable to find category
+         */
+        this.router.get("/:uid/products", (req, res) => {
+            const id = req.params.uid;
+
+            const category = CacheCategories.get(id);
+
+            if(!category)
+                return APIError({
+                    text: `Unable to find category by uid ${id}`
+                })(res);
+
+            return APISuccess({
+                category_uid: id,
+                products: getProductByCategoryUid(id)
             })(res);
         });
 

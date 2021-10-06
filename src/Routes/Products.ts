@@ -57,8 +57,9 @@ export default class ProductRouter
          * @param {string} category_uid.query.required - uid for category.
          * @param {string} description.query.required - description for product.
          * @param {boolean} hidden.query.required - Is hidden.
-         * @param {"free" | "one_time" | "recurring} payment_type.query.required - description for category.
-         * @param {number} price.query.required - Price of product.
+         * @param {string} payment_type.query - Payment type can be the following : "free" | "one_time" | "recurring".
+         * @param {number} price.query - Price of product.
+         * @param {string} recurring_method.query - Method of payment if recurring, then can be the following : "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
          * @param {"monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"} recurring_method.query - Method of payment if recurring
          * @param {string} product_name.query.required - Name of product.
          * @param {number} setup_fee.query - Setup fee.
@@ -158,9 +159,9 @@ export default class ProductRouter
          * @param {string} category_uid.query - uid for category.
          * @param {string} description.query - description for product.
          * @param {boolean} hidden.query - Is hidden.
-         * @param {"free" | "one_time" | "recurring"} payment_type.query - description for category.
+         * @param {string} payment_type.query - Payment type can be the following : "free" | "one_time" | "recurring".
          * @param {number} price.query - Price of product.
-         * @param {"monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"} recurring_method.query - Method of payment if recurring
+         * @param {string} recurring_method.query - Method of payment if recurring, then can be the following : "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
          * @param {string} product_name.query - Name of product.
          * @param {number} setup_fee.query - Setup fee.
          * @param {boolean} special.query - If a special product or not.
