@@ -42,7 +42,7 @@ export default class CustomerRouter
          * @security Basic
          */        
         this.router.get("/:uid", EnsureAdmin, (req, res) => {
-            const id = req.params.uid;
+            const id = req.params.uid as ICustomer["uid"];
 
             const customer = CacheCustomer.get(id);
 
@@ -58,8 +58,8 @@ export default class CustomerRouter
 
         /**
          * Creates a customer
-         * @route POST /customer/create
-         * @group Category
+         * @route POST /customers/create
+         * @group Customer
          * @param {string} first_name.query.required - First name of customer.
          * @param {string} last_name.query.required - Last name of customer.
          * @param {string} email.query.required - Email of customer.
@@ -72,7 +72,7 @@ export default class CustomerRouter
          * @param {string} state.query.required - State of customer.
          * @param {string} postcode.query.required - Postcode of customer.
          * @param {string} country.query.required - Country of customer.
-         * @param {object} extra.query.required - Extra data of customer.
+         * @param {object} extra.query - Extra data of customer.
          * @returns {Object} 200 - Created a new customer.
          * @returns {Error} default - Missing something
          * @security JWT
@@ -159,7 +159,7 @@ export default class CustomerRouter
                     company_vat,
                     street02
                 },
-                uid: idCustomer().toString(),
+                uid: idCustomer(),
                 createdAt: new Date(),
                 extra
             };
@@ -175,8 +175,8 @@ export default class CustomerRouter
 
         /**
          * Updates a customer
-         * @route PATCH /customer/{uid}
-         * @group Category
+         * @route PATCH /customers/{uid}
+         * @group Customer
          * @param {string} uid.path.required - Uid of customer.
          * @param {string} first_name.query - First name of customer.
          * @param {string} last_name.query - Last name of customer.
@@ -198,7 +198,7 @@ export default class CustomerRouter
          */
         this.router.patch("/:uid", EnsureAdmin, async (req, res) => {
 
-            const uid = req.params.uid;
+            const uid = req.params.uid as ICustomer["uid"];
 
             const customer = CacheCustomer.get(uid);
 
@@ -221,7 +221,7 @@ export default class CustomerRouter
                 postcode,
                 country,
                 extra
-            } = req.body;
+            } = req.query as any;
 
             let CustomerData: ICustomer = {
                 personal: customer.personal,
@@ -296,7 +296,7 @@ export default class CustomerRouter
          * @security Basic
          */
         this.router.delete("/:uid", EnsureAdmin, async (req, res) => {
-            const uid = req.params.uid;
+            const uid = req.params.uid as ICustomer["uid"];
 
             const customer = CacheCustomer.get(uid);
 

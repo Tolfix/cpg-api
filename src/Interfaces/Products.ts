@@ -3,7 +3,7 @@ import { ICategory } from "./Categories";
 
 export interface IProduct
 {
-    uid: string;
+    uid: `PROD_${string}`;
     name: string;
     description: string;
     category_uid: ICategory["uid"];

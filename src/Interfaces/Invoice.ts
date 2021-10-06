@@ -5,7 +5,7 @@ import { IPayments } from "./Payments";
 
 export interface IInvoice
 {
-    uid: string;
+    uid: `INV_${string}`;
     customer_uid: ICustomer["uid"];
     invoiced_to: ICustomer["uid"];
     dates: IInvoice_Dates;

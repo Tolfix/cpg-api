@@ -6,7 +6,7 @@ import Logger from "../Lib/Logger";
 
 export default function createAdmin(username: string, password: string)
 {
-    if(CacheAdmin.get(getAdminByUsername(username) ?? ''))
+    if(CacheAdmin.get(getAdminByUsername(username) ?? 'ADM_'))
         return Logger.warning(`Administrator ${username} already exists`);
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -17,7 +17,7 @@ export default function createAdmin(username: string, password: string)
             let info = {
                 username,
                 password: hash,
-                uid: idAdmin().toString(),
+                uid: idAdmin(),
                 createdAt: new Date()
             };
 

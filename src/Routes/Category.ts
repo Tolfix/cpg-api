@@ -38,7 +38,7 @@ export default class CategoryRouter
          * @returns {Object} default - Unable to find category
          */
         this.router.get("/:id", (req, res) => {
-            const id = req.params.id;
+            const id = req.params.id as ICategory["uid"];
 
             const category = CacheCategories.get(id);
 
@@ -61,7 +61,7 @@ export default class CategoryRouter
          * @returns {Object} default - Unable to find category
          */
         this.router.get("/:uid/products", (req, res) => {
-            const id = req.params.uid;
+            const id = req.params.uid as ICategory["uid"];
 
             const category = CacheCategories.get(id);
 
@@ -108,7 +108,7 @@ export default class CategoryRouter
                 name,
                 description,
                 private: Private,
-                uid: idCategory().toString(),
+                uid: idCategory(),
             };
 
             new CategoryModel(info).save();
@@ -134,7 +134,7 @@ export default class CategoryRouter
          * @security Basic
          */
         this.router.patch("/:uid", EnsureAdmin, async (req, res) => {
-            const uid = req.params.uid;
+            const uid = req.params.uid as ICategory["uid"];
             const category = CacheCategories.get(uid);
             if(!category)
                 return APIError({
@@ -186,7 +186,7 @@ export default class CategoryRouter
          * @security Basic
          */
         this.router.delete("/:uid", EnsureAdmin, async (req, res) => {
-            const uid = req.params.uid;
+            const uid = req.params.uid as ICategory["uid"];
 
             if(!CacheCategories.get(uid))
                 return APIError({

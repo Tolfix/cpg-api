@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 
 export interface ICustomer
 {
-    uid: string;
+    uid: `CUS_${string}`;
     personal: Personal;
     billing: Billing;
     createdAt: Date;

@@ -1,5 +1,6 @@
 import { Application, Router } from "express";
 import { CacheInvoice } from "../Cache/CacheInvoices";
+import { IInvoice } from "../Interfaces/Invoice";
 import Logger from "../Lib/Logger";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
@@ -21,7 +22,7 @@ export default class InvoiceRouter
         });
 
         this.router.get("/get/:uid", EnsureAdmin, (req, res) => {
-            const uid = req.params.uid;
+            const uid = req.params.uid as IInvoice["uid"];
 
             const invoice = CacheInvoice.get(uid);
 

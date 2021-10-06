@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 
 export interface ICategory
 {
-    uid: string;
+    uid: `CAT_${string}`;
     name: string;
     description: string;
     private: Boolean;

@@ -30,7 +30,7 @@ export default function EnsureAdmin(req: Request, res: Response, next: NextFunct
     {
         const [login, password] = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString().split(':');
 
-        return bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "")?.["password"]) ?? "", (err, match) => {
+        return bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"]) ?? "", (err, match) => {
             if(!match)
                 return APIError({
                     text: "Unauthorized admin"

@@ -6,7 +6,7 @@ import { IPaymentType, IProduct, IRecurringMethod } from "./Products";
 
 export interface IOrder
 {
-    uid: string;
+    uid: `ORD_${string}`;
     invoice_uid?: IInvoice["uid"];
     customer_uid: ICustomer["uid"];
     payment_method: keyof IPayments;

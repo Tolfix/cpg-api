@@ -1,6 +1,7 @@
 import { Application, Router } from "express";
 import { CacheProduct } from "../Cache/CacheProduct";
 import ProductModel from "../Database/Schemas/Products";
+import { ICategory } from "../Interfaces/Categories";
 import { IProduct } from "../Interfaces/Products";
 import AW from "../Lib/AW";
 import { idProduct } from "../Lib/Generator";
@@ -38,7 +39,7 @@ export default class ProductRouter
          * @returns {Error} 400 - Failed to get product
          */
         this.router.get("/get/:uid", (req, res) => {
-            const product = CacheProduct.get(req.params.uid);
+            const product = CacheProduct.get(req.params.uid as IProduct["uid"]);
 
             if(!product)
                 return APIError({
@@ -73,7 +74,7 @@ export default class ProductRouter
          */
         this.router.post("/create", EnsureAdmin, (req, res) => {
 
-            const cUid = req.query.category_uid as string;
+            const cUid = req.query.category_uid as ICategory["uid"];
 
             if(!cUid)
                 return APIError({
@@ -100,7 +101,7 @@ export default class ProductRouter
                 })(res);
 
             let info: IProduct = {
-                uid: idProduct().toString(),
+                uid: idProduct(),
                 category_uid: cUid,
                 description,
                 hidden,
@@ -177,7 +178,7 @@ export default class ProductRouter
          */
         this.router.patch("/:uid", EnsureAdmin, async (req, res) => {
             // Check if product exists
-            const uid = req.params.uid;
+            const uid = req.params.uid as IProduct["uid"];
             let product = CacheProduct.get(uid);
 
             if(!product)
@@ -269,7 +270,7 @@ export default class ProductRouter
          * @security Basic
          */
         this.router.delete("/delete/:uid", EnsureAdmin, async (req, res) => {
-            const uid = req.params.uid;
+            const uid = req.params.uid as IProduct["uid"];
 
             const product = CacheProduct.get(uid);
 
