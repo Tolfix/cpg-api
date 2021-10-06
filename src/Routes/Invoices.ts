@@ -15,13 +15,13 @@ export default class InvoiceRouter
         this.server = server;
         this.server.use("/invoices", this.router);
 
-        this.router.get("/get/all", EnsureAdmin, (req, res) => {
+        this.router.get("/", EnsureAdmin, (req, res) => {
             APISuccess({
                 invoices: CacheInvoice.array(),
             })(res);
         });
 
-        this.router.get("/get/:uid", EnsureAdmin, (req, res) => {
+        this.router.get("/:uid", EnsureAdmin, (req, res) => {
             const uid = req.params.uid as IInvoice["uid"];
 
             const invoice = CacheInvoice.get(uid);
