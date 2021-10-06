@@ -14,7 +14,7 @@ export interface IProduct
     payment_type: Partial<IPaymentType>;
     price: number;
     setup_fee: number;
-    recurring_method: Partial<IRecurringMethod>;
+    recurring_method?: Partial<IRecurringMethod>;
 }
 
 export interface IDProduct extends IProduct, Document {};

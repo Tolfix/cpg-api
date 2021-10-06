@@ -55,13 +55,13 @@ export default class ProductRouter
          * @route POST /products/create
          * @group Products
          * @param {string} category_uid.query.required - uid for category.
-         * @param {string} description.query.required - description for product.
-         * @param {boolean} hidden.query.required - Is hidden.
+         * @param {string} product_name.query.required - Name of product.
+         * @param {string} description.query - description for product.
+         * @param {boolean} hidden.query - Is hidden.
          * @param {string} payment_type.query - Payment type can be the following : "free" | "one_time" | "recurring".
          * @param {number} price.query - Price of product.
          * @param {string} recurring_method.query - Method of payment if recurring, then can be the following : "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
          * @param {"monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"} recurring_method.query - Method of payment if recurring
-         * @param {string} product_name.query.required - Name of product.
          * @param {number} setup_fee.query - Setup fee.
          * @param {boolean} special.query - If a special product or not.
          * @param {number} stock.query - Stock number.
@@ -73,11 +73,11 @@ export default class ProductRouter
          */
         this.router.post("/create", EnsureAdmin, (req, res) => {
 
-            const cUid = req.body.category_uid;
+            const cUid = req.query.category_uid;
 
             if(!cUid)
                 return APIError({
-                    text: `Missing 'category_uid' in body.`,
+                    text: `Missing 'category_uid' in query.`,
                 })(res);
 
             let {
@@ -96,7 +96,7 @@ export default class ProductRouter
 
             if(!product_name)
                 return APIError({
-                    text: `Missing 'product_name' in body.`,
+                    text: `Missing 'product_name' in query.`,
                 })(res);
 
             let info: IProduct = {
@@ -121,7 +121,10 @@ export default class ProductRouter
                 info.description = '';
 
             if(!payment_type)
+            {
                 info.payment_type = "free";
+                info.recurring_method = undefined;
+            }
 
             if(!price)
                 info.price = 0;
