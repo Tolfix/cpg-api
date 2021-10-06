@@ -71,5 +71,8 @@ export function idInvoice(): IInvoice["uid"]
 
 export function idTransicitons(): ITransactions["uid"]
 {
-    return `TRAN_${crypto.randomBytes(10).toString("hex")}`
+    let uid: ITransactions["uid"] = `TRAN_${crypto.randomBytes(20).toString("hex")}`;
+    if(CacheInvoice.get(uid))
+        uid = `TRAN_${crypto.randomBytes(20).toString("hex")}`;
+    return uid;
 }
