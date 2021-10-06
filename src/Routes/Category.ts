@@ -193,6 +193,8 @@ export default class CategoryRouter
                     text: "Ensure uid is correct",
                 })(res);
 
+            // TODO Check if we have products..
+
             const [Success, Fail] = await AW(CategoryModel.deleteOne({ uid: uid }));
                 
             if(Fail)
