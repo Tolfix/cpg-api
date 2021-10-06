@@ -1,6 +1,7 @@
 /* Copyright (C) 2021 Tolfix - All Rights Reserved */
 require("dotenv").config();
 require("./Mods/MapMod");
+require("./Events/NodeEvents");
 import express from "express";
 import cors from "cors";
 import session from "express-session";
