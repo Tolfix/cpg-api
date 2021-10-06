@@ -21,12 +21,14 @@ export default class CategoryRouter
 
         /**
          * Gets all categories
-         * @route GET /categories/
+         * @route GET /categories
          * @group Category
          * @returns {Array} 200 - An array for categories
          */
         this.router.get("/", (req, res) => {
-            APISuccess(CacheCategories.array())(res);
+            APISuccess({
+                categories: CacheCategories.array()
+            })(res);
         });
 
         /**
@@ -35,7 +37,7 @@ export default class CategoryRouter
          * @group Category
          * @param {string} uid.path.required - uid for category.
          * @returns {Object} 200 - Gets specific category
-         * @returns {Object} default - Unable to find category
+         * @returns {Object} 400 - Unable to find category
          */
         this.router.get("/:id", (req, res) => {
             const id = req.params.id as ICategory["uid"];

@@ -5,6 +5,7 @@ import { CacheCustomer } from "../Cache/CacheCustomer";
 import { CacheInvoice } from "../Cache/CacheInvoices";
 import { CacheOrder } from "../Cache/CacheOrder";
 import { CacheProduct } from "../Cache/CacheProduct";
+import { CacheTransactions } from "../Cache/CacheTransactions";
 import { IAdministrator } from "../Interfaces/Administrators";
 import { ICategory } from "../Interfaces/Categories";
 import { ICustomer } from "../Interfaces/Customer";
@@ -72,7 +73,7 @@ export function idInvoice(): IInvoice["uid"]
 export function idTransicitons(): ITransactions["uid"]
 {
     let uid: ITransactions["uid"] = `TRAN_${crypto.randomBytes(20).toString("hex")}`;
-    if(CacheInvoice.get(uid))
+    if(CacheTransactions.get(uid))
         uid = `TRAN_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
