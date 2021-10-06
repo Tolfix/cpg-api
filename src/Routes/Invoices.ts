@@ -15,12 +15,30 @@ export default class InvoiceRouter
         this.server = server;
         this.server.use("/invoices", this.router);
 
+        /**
+         * Gets all invoices
+         * @route GET /invoices
+         * @group Invoices
+         * @returns {Array} 200 - An array of invoices
+         * @security JWT
+         * @security Basic
+         */
         this.router.get("/", EnsureAdmin, (req, res) => {
             APISuccess({
                 invoices: CacheInvoice.array(),
             })(res);
         });
 
+        /**
+         * Gets specific invoices
+         * @route GET /invoices/{uid}
+         * @group Invoices
+         * @param {string} uid.path.required - The uid of invoice.
+         * @returns {Array} 200 - The invoice
+         * @returns {Error} 400 - Unable to find by uid
+         * @security JWT
+         * @security Basic
+         */    
         this.router.get("/:uid", EnsureAdmin, (req, res) => {
             const uid = req.params.uid as IInvoice["uid"];
 
