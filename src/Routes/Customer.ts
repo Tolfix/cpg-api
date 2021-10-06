@@ -74,7 +74,7 @@ export default class CustomerRouter
          * @param {string} country.query.required - Country of customer.
          * @param {object} extra.query.required - Extra data of customer.
          * @returns {Object} 200 - Created a new customer.
-         * @returns {Object} default - Missing something
+         * @returns {Error} default - Missing something
          * @security JWT
          * @security Basic
          */
@@ -169,11 +169,35 @@ export default class CustomerRouter
 
             return APISuccess({
                 text: `Succesfully created user`,
-                data: CustomerData,
+                customer: CustomerData,
             })(res);
         });
 
+        /**
+         * Updates a customer
+         * @route PATCH /customer/{uid}
+         * @group Category
+         * @param {string} uid.path.required - Uid of customer.
+         * @param {string} first_name.query - First name of customer.
+         * @param {string} last_name.query - Last name of customer.
+         * @param {string} email.query - Email of customer.
+         * @param {string} phone.query - Phone number of customer.
+         * @param {string} company.query - Company name of customer company.
+         * @param {string} company_vat.query - Company vat name of customer company.
+         * @param {string} city.query - City of customer.
+         * @param {string} street01.query - Street 01 of customer.
+         * @param {string} street02.query - Street 02 of customer.
+         * @param {string} state.query - State of customer.
+         * @param {string} postcode.query - Postcode of customer.
+         * @param {string} country.query - Country of customer.
+         * @param {object} extra.query - Extra data of customer.
+         * @returns {Object} 200 - Updated customer.
+         * @returns {Error} default - Missing something
+         * @security JWT
+         * @security Basic
+         */
         this.router.patch("/:uid", EnsureAdmin, async (req, res) => {
+
             const uid = req.params.uid;
 
             const customer = CacheCustomer.get(uid);
@@ -257,10 +281,20 @@ export default class CustomerRouter
 
             return APISuccess({
                 text: `Succesfully updated user`,
-                data: CustomerData,
+                customer: CustomerData,
             })(res);
         });
 
+        /**
+         * Deletes customers
+         * @route DELETE /customers/{uid}
+         * @group Customer
+         * @param {string} uid.path.required - uid of customer.
+         * @returns {Object} 200 - Removed the customer.
+         * @returns {Error} 400 - Unable to find customer.
+         * @security JWT
+         * @security Basic
+         */
         this.router.delete("/:uid", EnsureAdmin, async (req, res) => {
             const uid = req.params.uid;
 
