@@ -17,11 +17,31 @@ export default class CustomerRouter
         this.server = server;
         this.server.use("/customers", this.router);
 
-        this.router.get("/get/all", EnsureAdmin, (req, res) => {
-            APISuccess(CacheCustomer.array())(res);
+        /**
+         * Gets all customers
+         * @route GET /customers
+         * @group Customer
+         * @returns {Array} 200 - An array for customers
+         * @security JWT
+         * @security Basic
+         */
+        this.router.get("/", EnsureAdmin, (req, res) => {
+            APISuccess({
+                customers: CacheCustomer.array()
+            })(res);
         });
 
-        this.router.get("/get/:uid", EnsureAdmin, (req, res) => {
+        /**
+         * Gets specific customers
+         * @route GET /customers/{uid}
+         * @group Customer
+         * @param {string} uid.path.required - uid of customer.
+         * @returns {Object} 200 - The customer
+         * @returns {Error} 400 - Unable to find customer 
+         * @security JWT
+         * @security Basic
+         */        
+        this.router.get("/:uid", EnsureAdmin, (req, res) => {
             const id = req.params.uid;
 
             const customer = CacheCustomer.get(id);
@@ -36,7 +56,29 @@ export default class CustomerRouter
             })(res);
         });
 
-        this.router.post("/post/create", (req, res) => {
+        /**
+         * Creates a customer
+         * @route POST /customer/create
+         * @group Category
+         * @param {string} first_name.query.required - First name of customer.
+         * @param {string} last_name.query.required - Last name of customer.
+         * @param {string} email.query.required - Email of customer.
+         * @param {string} phone.query.required - Phone number of customer.
+         * @param {string} company.query.required - Company name of customer company.
+         * @param {string} company_vat.query - Company vat name of customer company.
+         * @param {string} city.query.required - City of customer.
+         * @param {string} street01.query.required - Street 01 of customer.
+         * @param {string} street02.query - Street 02 of customer.
+         * @param {string} state.query.required - State of customer.
+         * @param {string} postcode.query.required - Postcode of customer.
+         * @param {string} country.query.required - Country of customer.
+         * @param {object} extra.query.required - Extra data of customer.
+         * @returns {Object} 200 - Created a new customer.
+         * @returns {Object} default - Missing something
+         * @security JWT
+         * @security Basic
+         */
+        this.router.post("/create", (req, res) => {
 
             let {
                 first_name,
@@ -52,52 +94,52 @@ export default class CustomerRouter
                 postcode,
                 country,
                 extra
-            } = req.body;
+            } = req.query as any;
 
             // Check each if they exist
             if(!first_name)
                 return APIError({
-                    text: "Missing 'first_name' in body"
+                    text: "Missing 'first_name' in query"
                 })(res);
         
             if(!last_name)
                 return APIError({
-                    text: "Missing 'last_name' in body"
+                    text: "Missing 'last_name' in query"
                 })(res);
 
             if(!email)
                 return APIError({
-                    text: "Missing 'email' in body"
+                    text: "Missing 'email' in query"
                 })(res);
 
             if(!phone)
                 return APIError({
-                    text: "Missing 'phone' in body"
+                    text: "Missing 'phone' in query"
                 })(res);
 
             if(!street01)
                 return APIError({
-                    text: "Missing 'street01' in body"
+                    text: "Missing 'street01' in query"
                 })(res);
 
             if(!city)
                 return APIError({
-                    text: "Missing 'city' in body"
+                    text: "Missing 'city' in query"
                 })(res);
         
             if(!state)
                 return APIError({
-                    text: "Missing 'state' in body"
+                    text: "Missing 'state' in query"
                 })(res);
                 
             if(!postcode)
                 return APIError({
-                    text: "Missing 'postcode' in body"
+                    text: "Missing 'postcode' in query"
                 })(res);
 
             if(!country)
                 return APIError({
-                    text: "Missing 'country' in body"
+                    text: "Missing 'country' in query"
                 })(res);
 
             let CustomerData: ICustomer = {
@@ -131,7 +173,7 @@ export default class CustomerRouter
             })(res);
         });
 
-        this.router.patch("/patch/:uid", EnsureAdmin, async (req, res) => {
+        this.router.patch("/:uid", EnsureAdmin, async (req, res) => {
             const uid = req.params.uid;
 
             const customer = CacheCustomer.get(uid);
@@ -219,7 +261,7 @@ export default class CustomerRouter
             })(res);
         });
 
-        this.router.delete("/delete/:uid", EnsureAdmin, async (req, res) => {
+        this.router.delete("/:uid", EnsureAdmin, async (req, res) => {
             const uid = req.params.uid;
 
             const customer = CacheCustomer.get(uid);
