@@ -1,4 +1,3 @@
-
 declare global
 {
     interface Map<K, V>
@@ -10,11 +9,13 @@ declare global
 export default Object.defineProperty(Map.prototype, "array", {
     value: function()
     {
-        let a = [];
-        for (let [key, value] of this.entries())
-        {
-            a.push(value);
-        }
-        return a;
+        // let a = [];
+        // for (let [key, value] of this.entries())
+        // {
+        //     a.push(value);
+        // }
+        // return a;
+        return [...(this.values())]
     }
-})
+});
+
