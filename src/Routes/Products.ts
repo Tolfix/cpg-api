@@ -158,7 +158,7 @@ export default class ProductRouter
          * @param {string} category_uid.query - uid for category.
          * @param {string} description.query - description for product.
          * @param {boolean} hidden.query - Is hidden.
-         * @param {"free" | "one_time" | "recurring} payment_type.query - description for category.
+         * @param {"free" | "one_time" | "recurring"} payment_type.query - description for category.
          * @param {number} price.query - Price of product.
          * @param {"monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"} recurring_method.query - Method of payment if recurring
          * @param {string} product_name.query - Name of product.

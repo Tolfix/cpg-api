@@ -20,23 +20,23 @@ export default class CategoryRouter
 
         /**
          * Gets all categories
-         * @route GET /categories/get/all
+         * @route GET /categories/
          * @group Category
          * @returns {Array} 200 - An array for categories
          */
-        this.router.get("/get/all", (req, res) => {
+        this.router.get("/", (req, res) => {
             APISuccess(CacheCategories.array())(res);
         });
 
         /**
          * Gets specific category
-         * @route GET /categories/get/{uid}
+         * @route GET /categories/{uid}
          * @group Category
          * @param {string} uid.path.required - uid for category.
          * @returns {Object} 200 - Gets specific category
          * @returns {Object} default - Unable to find category
          */
-        this.router.get("/get/:id", (req, res) => {
+        this.router.get("/:id", (req, res) => {
             const id = req.params.id;
 
             const category = CacheCategories.get(id);
@@ -53,7 +53,7 @@ export default class CategoryRouter
 
         /**
          * Creates a category
-         * @route POST /categories/post/create
+         * @route POST /categories/create
          * @group Category
          * @param {string} name.query.required - Name for category.
          * @param {string} description.query.required - description for category.
@@ -63,7 +63,7 @@ export default class CategoryRouter
          * @security JWT
          * @security Basic
          */
-        this.router.post("/post/create", EnsureAdmin, (req, res) => {
+        this.router.post("/create", EnsureAdmin, (req, res) => {
             let { name, description, Private } = req.query as any;
 
             if(!name)
@@ -97,7 +97,7 @@ export default class CategoryRouter
 
         /**
          * Updates a category
-         * @route PATCH /categories/patch/{uid}
+         * @route PATCH /categories/{uid}
          * @group Category
          * @param {string} uid.path.required - uid for category.
          * @param {string} name.query - Name for category.
@@ -108,7 +108,7 @@ export default class CategoryRouter
          * @security JWT
          * @security Basic
          */
-        this.router.patch("/patch/:uid", EnsureAdmin, async (req, res) => {
+        this.router.patch("/:uid", EnsureAdmin, async (req, res) => {
             const uid = req.params.uid;
             const category = CacheCategories.get(uid);
             if(!category)
@@ -152,7 +152,7 @@ export default class CategoryRouter
 
         /**
          * Deletes a category
-         * @route DELETE /categories/delete/{uid}
+         * @route DELETE /categories/{uid}
          * @group Category
          * @param {string} uid.path.required - uid for category.
          * @returns {object} 200 - Updated category
@@ -160,7 +160,7 @@ export default class CategoryRouter
          * @security JWT
          * @security Basic
          */
-        this.router.delete("/delete/:uid", EnsureAdmin, async (req, res) => {
+        this.router.delete("/:uid", EnsureAdmin, async (req, res) => {
             const uid = req.params.uid;
 
             if(!CacheCategories.get(uid))
