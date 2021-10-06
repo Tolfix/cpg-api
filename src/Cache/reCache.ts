@@ -1,12 +1,14 @@
 import AdminModel from "../Database/Schemas/Administrators";
 import CategoryModel from "../Database/Schemas/Category";
 import CustomerModel from "../Database/Schemas/Customer";
+import OrderModel from "../Database/Schemas/Orders";
 import ProductModel from "../Database/Schemas/Products";
 import TransactionsModel from "../Database/Schemas/Transactions";
 import Logger from "../Lib/Logger";
 import { CacheAdmin } from "./CacheAdmin";
 import { CacheCategories } from "./CacheCategories";
 import { CacheCustomer } from "./CacheCustomer";
+import { CacheOrder } from "./CacheOrder";
 import { CacheProduct } from "./CacheProduct";
 import { CacheTransactions } from "./CacheTransactions";
 
@@ -80,6 +82,20 @@ export async function reCache_Transactions()
     });
 }
 
+export async function reCache_Orders()
+{
+    Logger.info(`Starting caching on orders..`);
+    return new Promise(async (resolve, reject) => {
+        const order = await OrderModel.find();
+        for (const o of order)
+        {
+            Logger.cache(`Caching order ${o.uid}`);
+            CacheOrder.set(o.uid, o);
+        }
+        return resolve(true);
+    });
+}
+
 export async function reCache()
 {
     await reCache_Categories();
@@ -87,4 +103,5 @@ export async function reCache()
     await reCache_Customers();
     await reCache_Product();
     await reCache_Transactions();
+    await reCache_Orders();
 }
