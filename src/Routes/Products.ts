@@ -17,13 +17,26 @@ export default class ProductRouter
     {
         this.server = server;
         this.server.use("/products", this.router);
-        
-        this.router.get("/get/all", (req, res) => {
+        /**
+         * Gets all products
+         * @route GET /products
+         * @group Products
+         * @returns {Array} 200 - An array for products
+         */
+        this.router.get("/", (req, res) => {
             return APISuccess({
                 products: CacheProduct.array(),
             })(res);
         });
 
+        /**
+         * Get specific product
+         * @route GET /products/{uid}
+         * @group Products
+         * @param {string} uid.path.required - Uid for product
+         * @returns {Object} 200 - The product data
+         * @returns {Error} 400 - Failed to get product
+         */
         this.router.get("/get/:uid", (req, res) => {
             const product = CacheProduct.get(req.params.uid);
 
@@ -37,7 +50,27 @@ export default class ProductRouter
             })(res);
         });
 
-        this.router.post("/post/create", EnsureAdmin, (req, res) => {
+        /**
+         * Creates a product
+         * @route POST /products/create
+         * @group Products
+         * @param {string} category_uid.query.required - uid for category.
+         * @param {string} description.query.required - description for product.
+         * @param {boolean} hidden.query.required - Is hidden.
+         * @param {"free" | "one_time" | "recurring} payment_type.query.required - description for category.
+         * @param {number} price.query.required - Price of product.
+         * @param {"monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"} recurring_method.query - Method of payment if recurring
+         * @param {string} product_name.query.required - Name of product.
+         * @param {number} setup_fee.query - Setup fee.
+         * @param {boolean} special.query - If a special product or not.
+         * @param {number} stock.query - Stock number.
+         * @param {boolean} BStock.query - Should stock be enabled.
+         * @returns {Object} 200 - Created a new product.
+         * @returns {Error} default - Missing something
+         * @security JWT
+         * @security Basic
+         */
+        this.router.post("/create", EnsureAdmin, (req, res) => {
 
             const cUid = req.body.category_uid;
 
@@ -57,7 +90,7 @@ export default class ProductRouter
                 special,
                 stock,
                 BStock
-            } = req.body;
+            } = req.query;
             
 
             if(!product_name)
