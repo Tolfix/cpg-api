@@ -18,7 +18,7 @@ const ProductSchema = new Schema
 
         description: {
             type: String,
-            required: true,
+            default: '',
         },
 
         hidden: {
@@ -63,7 +63,7 @@ const ProductSchema = new Schema
         
         recurring_method: {
             type: Object,
-            required: true,
+            default: '',
         },
 
     }
