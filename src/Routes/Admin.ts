@@ -26,13 +26,13 @@ export default class AdminRouter
 
         /**
          * Validates admin Basic credentials and returns token.
-         * @route POST /admin/post/auth
+         * @route POST /admin/auth
          * @group Admin - Admin routes
          * @returns {Object} 200 - Response with token
          * @returns {APIError} 404 - Failed
          * @security Basic
          */
-        this.router.post("/post/auth", EnsureAdmin, (req, res) => {
+        this.router.post("/auth", EnsureAdmin, (req, res) => {
             let token = jwt.sign({
                 data: 'admin',
                 exp: Math.floor(Date.now() / 1000) + ((60 * 60)*24)*7
