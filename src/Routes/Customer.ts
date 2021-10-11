@@ -60,19 +60,7 @@ export default class CustomerRouter
          * Creates a customer
          * @route POST /customers/create
          * @group Customer
-         * @param {string} first_name.query.required - First name of customer.
-         * @param {string} last_name.query.required - Last name of customer.
-         * @param {string} email.query.required - Email of customer.
-         * @param {string} phone.query.required - Phone number of customer.
-         * @param {string} company.query.required - Company name of customer company.
-         * @param {string} company_vat.query - Company vat name of customer company.
-         * @param {string} city.query.required - City of customer.
-         * @param {string} street01.query.required - Street 01 of customer.
-         * @param {string} street02.query - Street 02 of customer.
-         * @param {string} state.query.required - State of customer.
-         * @param {string} postcode.query.required - Postcode of customer.
-         * @param {string} country.query.required - Country of customer.
-         * @param {object} extra.query - Extra data of customer.
+         * @param {Customer.model} data.body.required - Data for customer
          * @returns {Object} 200 - Created a new customer.
          * @returns {Error} default - Missing something
          * @security JWT
@@ -94,7 +82,7 @@ export default class CustomerRouter
                 postcode,
                 country,
                 extra
-            } = req.query as any;
+            } = req.body as any;
 
             // Check each if they exist
             if(!first_name)
@@ -178,19 +166,7 @@ export default class CustomerRouter
          * @route PATCH /customers/{uid}
          * @group Customer
          * @param {string} uid.path.required - Uid of customer.
-         * @param {string} first_name.query - First name of customer.
-         * @param {string} last_name.query - Last name of customer.
-         * @param {string} email.query - Email of customer.
-         * @param {string} phone.query - Phone number of customer.
-         * @param {string} company.query - Company name of customer company.
-         * @param {string} company_vat.query - Company vat name of customer company.
-         * @param {string} city.query - City of customer.
-         * @param {string} street01.query - Street 01 of customer.
-         * @param {string} street02.query - Street 02 of customer.
-         * @param {string} state.query - State of customer.
-         * @param {string} postcode.query - Postcode of customer.
-         * @param {string} country.query - Country of customer.
-         * @param {object} extra.query - Extra data of customer.
+         * @param {Customer.model} data.body - Data for customer
          * @returns {Object} 200 - Updated customer.
          * @returns {Error} default - Missing something
          * @security JWT
@@ -221,7 +197,7 @@ export default class CustomerRouter
                 postcode,
                 country,
                 extra
-            } = req.query as any;
+            } = req.body as any;
 
             let CustomerData: ICustomer = {
                 personal: customer.personal,
