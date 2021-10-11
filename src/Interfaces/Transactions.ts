@@ -1,6 +1,15 @@
 import { Document } from "mongoose";
 import { IInvoice } from "./Invoice";
 
+/**
+ * @typedef Transactions
+ * @property {string} uid
+ * @property {string} date 
+ * @property {string} payment_method
+ * @property {number} amount
+ * @property {number} fees 
+ */
+export function SwaggerDOC () {};
 export interface ITransactions
 {
     uid: `TRAN_${string}`;
