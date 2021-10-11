@@ -4,6 +4,47 @@ import { OrderStatus } from "./Orders";
 import { IPayments } from "./Payments";
 import { ITransactions } from "./Transactions";
 
+/**
+ * @typedef InvoiceCreate
+ * @property {Array.<Transactions>} transactions
+ * @property {number} amount
+ * @property {Array.<InvoiceItem>} items
+ * @property {string} payment_method
+ * @property {InvoiceDates.model} dates
+ * @property {Status} status
+ * @property {number} tax_rate
+ * @property {string} notes
+ * @property {boolean} paid
+ */
+export function SwaggerDOC () {};
+
+/**
+ * @typedef InvoiceItem
+ * @property {string} notes
+ * @property {number} amount
+ * @property {boolean} taxed
+ */
+export function SwaggerDOC1 () {};
+
+/**
+ * @typedef InvoiceDates
+ * @property {string} invoice_date
+ * @property {string} due_date
+ */
+export function SwaggerDOC2 () {};
+
+/**
+ * @typedef Status
+ * @property {string} active
+ * @property {string} pending
+ * @property {string} draft
+ * @property {string} fruad
+ * @property {string} cancelled
+ * @property {string} refunded
+ * @property {string} collections
+ * @property {string} payment_pending
+ */
+export function SwaggerDOC3 () {};
 export interface IInvoice
 {
     uid: `INV_${string}`;
