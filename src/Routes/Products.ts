@@ -1,4 +1,5 @@
 import { Application, Router } from "express";
+import { UploadedFile } from "express-fileupload";
 import { CacheCategories } from "../Cache/CacheCategories";
 import { CacheProduct } from "../Cache/CacheProduct";
 import ProductModel from "../Database/Schemas/Products";
@@ -6,6 +7,7 @@ import { ICategory } from "../Interfaces/Categories";
 import { IProduct } from "../Interfaces/Products";
 import AW from "../Lib/AW";
 import { idProduct } from "../Lib/Generator";
+import Logger from "../Lib/Logger";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 import { isValidProduct } from "../Validator/ValidProducts";
@@ -67,6 +69,7 @@ export default class ProductRouter
          * @param {boolean} special.query - If a special product or not.
          * @param {number} stock.query - Stock number.
          * @param {boolean} BStock.query - Should stock be enabled.
+         * @param {file} image.formData - Image for product.
          * @returns {Object} 200 - Created a new product.
          * @returns {Error} default - Missing something
          * @security JWT
@@ -141,6 +144,15 @@ export default class ProductRouter
 
             if(!BStock)
                 info.BStock = false;
+
+            if(req.files)
+                info.image =
+                {
+                    data: (req.files.image as UploadedFile).data,
+                    type: (req.files.image as UploadedFile).mimetype,
+                    size: (req.files.image as UploadedFile).size,
+                    name: (req.files.image as UploadedFile).name
+                };
 
             if(!isValidProduct(info, res))
                 return;

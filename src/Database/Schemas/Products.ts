@@ -66,6 +66,11 @@ const ProductSchema = new Schema
             default: '',
         },
 
+        image: {
+            type: Object,
+            // default: '',
+        },
+
     }
 );
 

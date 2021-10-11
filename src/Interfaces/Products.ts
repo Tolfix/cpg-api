@@ -14,10 +14,19 @@ export interface IProduct
     payment_type: Partial<IPaymentType>;
     price: number;
     setup_fee: number;
+    image?: IImageProduct;
     recurring_method?: Partial<IRecurringMethod>;
 }
 
 export interface IDProduct extends IProduct, Document {};
+
+export interface IImageProduct
+{
+    data: Buffer;
+    type: string;
+    size: number;
+    name: string;
+}
 
 export type IPaymentType = "free" | "one_time" | "recurring";
 
