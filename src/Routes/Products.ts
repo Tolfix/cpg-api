@@ -59,16 +59,7 @@ export default class ProductRouter
          * @route POST /products/create
          * @group Products
          * @param {string} category_uid.query.required - uid for category.
-         * @param {string} product_name.query.required - Name of product.
-         * @param {string} description.query - description for product.
-         * @param {boolean} hidden.query - Is hidden.
-         * @param {string} payment_type.query - Payment type can be the following : "free" | "one_time" | "recurring".
-         * @param {number} price.query - Price of product.
-         * @param {string} recurring_method.query - Method of payment if recurring, then can be the following : "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
-         * @param {number} setup_fee.query - Setup fee.
-         * @param {boolean} special.query - If a special product or not.
-         * @param {number} stock.query - Stock number.
-         * @param {boolean} BStock.query - Should stock be enabled.
+         * @param {Product.model} data.body.required - Data for product
          * @param {file} image.formData - Image for product.
          * @returns {Object} 200 - Created a new product.
          * @returns {Error} default - Missing something
@@ -95,7 +86,7 @@ export default class ProductRouter
                 special,
                 stock,
                 BStock
-            } = req.query as any;
+            } = req.body as any;
             
 
             if(!product_name)
@@ -171,18 +162,8 @@ export default class ProductRouter
          * Updates a product
          * @route PATCH /products/{uid}
          * @group Products
-         * @param {string} uid.path.required - Uid for product
-         * @param {string} category_uid.query - uid for category.
-         * @param {string} description.query - description for product.
-         * @param {boolean} hidden.query - Is hidden.
-         * @param {string} payment_type.query - Payment type can be the following : "free" | "one_time" | "recurring".
-         * @param {number} price.query - Price of product.
-         * @param {string} recurring_method.query - Method of payment if recurring, then can be the following : "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
-         * @param {string} product_name.query - Name of product.
-         * @param {number} setup_fee.query - Setup fee.
-         * @param {boolean} special.query - If a special product or not.
-         * @param {number} stock.query - Stock number.
-         * @param {boolean} BStock.query - Should stock be enabled.
+         * @param {Product.model} data.body.required - Data for product
+         * @param {file} image.formData - Image for product.
          * @returns {Object} 200 - Updated product.
          * @returns {Error} default - Missing something
          * @security JWT
@@ -210,7 +191,7 @@ export default class ProductRouter
                 stock,
                 BStock,
                 category_uid
-            } = req.query as any;
+            } = req.body as any;
 
             let info: IProduct = {
                 uid: uid,
@@ -260,6 +241,15 @@ export default class ProductRouter
             if(product.category_uid !== category_uid)
                 if(CacheCategories.get(category_uid))
                     info.category_uid = category_uid;
+
+            if(req.files)
+                info.image =
+                {
+                    data: (req.files.image as UploadedFile).data,
+                    type: (req.files.image as UploadedFile).mimetype,
+                    size: (req.files.image as UploadedFile).size,
+                    name: (req.files.image as UploadedFile).name
+                };
 
             const [Succes, Fail] = await AW(ProductModel.updateOne({ uid: product.uid }, info));
 
