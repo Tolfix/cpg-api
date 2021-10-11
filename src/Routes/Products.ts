@@ -1,4 +1,5 @@
 import { Application, Router } from "express";
+import { CacheCategories } from "../Cache/CacheCategories";
 import { CacheProduct } from "../Cache/CacheProduct";
 import ProductModel from "../Database/Schemas/Products";
 import { ICategory } from "../Interfaces/Categories";
@@ -62,7 +63,6 @@ export default class ProductRouter
          * @param {string} payment_type.query - Payment type can be the following : "free" | "one_time" | "recurring".
          * @param {number} price.query - Price of product.
          * @param {string} recurring_method.query - Method of payment if recurring, then can be the following : "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
-         * @param {"monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"} recurring_method.query - Method of payment if recurring
          * @param {number} setup_fee.query - Setup fee.
          * @param {boolean} special.query - If a special product or not.
          * @param {number} stock.query - Stock number.
@@ -196,7 +196,8 @@ export default class ProductRouter
                 setup_fee,
                 special,
                 stock,
-                BStock
+                BStock,
+                category_uid
             } = req.query as any;
 
             let info: IProduct = {
@@ -243,6 +244,10 @@ export default class ProductRouter
 
             if(product.BStock !== BStock)
                 info.BStock = BStock;
+
+            if(product.category_uid !== category_uid)
+                if(CacheCategories.get(category_uid))
+                    info.category_uid = category_uid;
 
             const [Succes, Fail] = await AW(ProductModel.updateOne({ uid: product.uid }, info));
 
