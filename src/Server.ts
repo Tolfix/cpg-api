@@ -5,6 +5,7 @@ require("./Events/NodeEvents");
 import express from "express";
 import cors from "cors";
 import session from "express-session";
+import fileUpload from "express-fileupload";
 import { Express_Session_Secret, HomeDir, PORT } from "./Config";
 import Logger from "./Lib/Logger";
 import RouteHandler from "./Routes/Handler";
@@ -25,6 +26,10 @@ declare module "express-session"
 const server = express();
 new Mongo_Database();
 new AdminHandler();
+
+server.use(fileUpload({
+    createParentPath: true
+}));
 
 let sessionMiddleWare = session({
     secret: Express_Session_Secret,
