@@ -62,7 +62,6 @@ export default class ProductRouter
          * @group Products
          * @param {string} category_uid.query.required - uid for category.
          * @param {Product.model} data.body.required - Data for product
-         * @param {file} image.formData - Image for product.
          * @returns {Object} 200 - Created a new product.
          * @returns {Error} default - Missing something
          * @security JWT
@@ -138,19 +137,8 @@ export default class ProductRouter
             if(!BStock)
                 info.BStock = false;
 
-            if(req.files)
-                (req.files.images as UploadedFile[]).forEach(async (image) => {
-                    let dataImage = {
-                        uid: idImages(),
-                        data: image.data,
-                        type: image.mimetype,
-                        size: image.size,
-                        name: image.name
-                    };
-                    await new ImageModel(dataImage).save();
-                    CacheImages.set(dataImage.uid, dataImage);
-                    info.images?.push(dataImage.uid);
-                });
+            
+                
 
             if(!isValidProduct(info, res))
                 return;
@@ -170,7 +158,6 @@ export default class ProductRouter
          * @route PATCH /products/{uid}
          * @group Products
          * @param {Product.model} data.body.required - Data for product
-         * @param {file} image.formData - Image for product.
          * @returns {Object} 200 - Updated product.
          * @returns {Error} default - Missing something
          * @security JWT
@@ -248,30 +235,6 @@ export default class ProductRouter
             if(product.category_uid !== category_uid)
                 if(CacheCategories.get(category_uid))
                     info.category_uid = category_uid;
-
-            if(req.files)
-            {
-                // TODO find a way to delete image..
-                (req.files.images as UploadedFile[]).forEach(async (image) => {
-                    let dataImage = {
-                        uid: idImages(),
-                        data: image.data,
-                        type: image.mimetype,
-                        size: image.size,
-                        name: image.name
-                    };
-                    await new ImageModel(dataImage).save();
-                    CacheImages.set(dataImage.uid, dataImage);
-                    info.images?.push(dataImage.uid);
-                });
-                // info.image =
-                // {
-                //     data: (req.files.image as UploadedFile).data,
-                //     type: (req.files.image as UploadedFile).mimetype,
-                //     size: (req.files.image as UploadedFile).size,
-                //     name: (req.files.image as UploadedFile).name
-                // };
-            }
 
             const [Succes, Fail] = await AW(ProductModel.updateOne({ uid: product.uid }, info));
 

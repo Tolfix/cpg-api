@@ -14,6 +14,7 @@ import { IImage } from "./Images";
  * @property {boolean} special - If a special product or not.
  * @property {number} stock - Stock number.
  * @property {boolean} BStock - Should stock be enabled.
+ * @property {Array.<string>} images - Images uid.
  */
 export function Swagger_DOC () {};
 export interface IProduct

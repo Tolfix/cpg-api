@@ -28,7 +28,7 @@ new Mongo_Database();
 new AdminHandler();
 
 server.use(fileUpload({
-    createParentPath: true
+    createParentPath: true,
 }));
 
 let sessionMiddleWare = session({
