@@ -5,7 +5,6 @@ import CategoryModel from "../Database/Schemas/Category";
 import { ICategory } from "../Interfaces/Categories";
 import AW from "../Lib/AW";
 import { idCategory } from "../Lib/Generator";
-import Logger from "../Lib/Logger";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 

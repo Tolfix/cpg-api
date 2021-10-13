@@ -1,15 +1,11 @@
 import { Application, Router } from "express";
-import { UploadedFile } from "express-fileupload";
 import { CacheCategories } from "../Cache/CacheCategories";
-import { CacheImages } from "../Cache/CacheImage";
 import { CacheProduct } from "../Cache/CacheProduct";
-import ImageModel from "../Database/Schemas/Images";
 import ProductModel from "../Database/Schemas/Products";
 import { ICategory } from "../Interfaces/Categories";
 import { IProduct } from "../Interfaces/Products";
 import AW from "../Lib/AW";
-import { idImages, idProduct } from "../Lib/Generator";
-import Logger from "../Lib/Logger";
+import { idProduct } from "../Lib/Generator";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 import { isValidProduct } from "../Validator/ValidProducts";

@@ -1,7 +1,6 @@
 import { Application, Router } from "express";
 import { CacheTransactions } from "../Cache/CacheTransactions";
 import { ITransactions } from "../Interfaces/Transactions";
-import Logger from "../Lib/Logger";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 

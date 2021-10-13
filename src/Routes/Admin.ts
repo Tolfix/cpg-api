@@ -1,8 +1,7 @@
 import { Application, Router } from "express";
 import { JWT_Access_Token } from "../Config";
 import jwt from "jsonwebtoken";
-import Logger from "../Lib/Logger";
-import { APIError, APISuccess } from "../Lib/Response";
+import { APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 
 export default class AdminRouter

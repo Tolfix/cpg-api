@@ -5,7 +5,6 @@ import InvoiceModel from "../Database/Schemas/Invoices";
 import { ICustomer } from "../Interfaces/Customer";
 import { IInvoice } from "../Interfaces/Invoice";
 import { idInvoice } from "../Lib/Generator";
-import Logger from "../Lib/Logger";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 import { isValidInvoice } from "../Validator/ValidInvoice";
