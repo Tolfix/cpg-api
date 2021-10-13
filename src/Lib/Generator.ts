@@ -2,6 +2,7 @@ import crypto from "crypto";
 import { CacheAdmin } from "../Cache/CacheAdmin";
 import { CacheCategories } from "../Cache/CacheCategories";
 import { CacheCustomer } from "../Cache/CacheCustomer";
+import { CacheImages } from "../Cache/CacheImage";
 import { CacheInvoice } from "../Cache/CacheInvoices";
 import { CacheOrder } from "../Cache/CacheOrder";
 import { CacheProduct } from "../Cache/CacheProduct";
@@ -9,6 +10,7 @@ import { CacheTransactions } from "../Cache/CacheTransactions";
 import { IAdministrator } from "../Interfaces/Administrators";
 import { ICategory } from "../Interfaces/Categories";
 import { ICustomer } from "../Interfaces/Customer";
+import { IImage } from "../Interfaces/Images";
 import { IInvoice } from "../Interfaces/Invoice";
 import { IOrder } from "../Interfaces/Orders";
 import { IProduct } from "../Interfaces/Products";
@@ -25,7 +27,7 @@ import { ITransactions } from "../Interfaces/Transactions";
 export function idCustomer(): ICustomer["uid"]
 {
     let uid: ICustomer["uid"] = `CUS_${crypto.randomBytes(20).toString("hex")}`;
-    if(CacheCustomer.get(uid))
+    while(CacheCustomer.get(uid))
         uid = `CUS_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
@@ -33,7 +35,7 @@ export function idCustomer(): ICustomer["uid"]
 export function idCategory(): ICategory["uid"]
 {
     let uid: ICategory["uid"] = `CAT_${crypto.randomBytes(20).toString("hex")}`;
-    if(CacheCategories.get(uid))
+    while(CacheCategories.get(uid))
         uid = `CAT_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
@@ -41,7 +43,7 @@ export function idCategory(): ICategory["uid"]
 export function idProduct(): IProduct["uid"]
 {
     let uid: IProduct["uid"] = `PROD_${crypto.randomBytes(20).toString("hex")}`;
-    if(CacheProduct.get(uid))
+    while(CacheProduct.get(uid))
         uid = `PROD_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
@@ -49,7 +51,7 @@ export function idProduct(): IProduct["uid"]
 export function idAdmin(): IAdministrator["uid"]
 {
     let uid: IAdministrator["uid"] = `ADM_${crypto.randomBytes(20).toString("hex")}`;
-    if(CacheAdmin.get(uid))
+    while(CacheAdmin.get(uid))
         uid = `ADM_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
@@ -57,7 +59,7 @@ export function idAdmin(): IAdministrator["uid"]
 export function idOrder(): IOrder["uid"]
 {
     let uid: IOrder["uid"] = `ORD_${crypto.randomBytes(20).toString("hex")}`;
-    if(CacheOrder.get(uid))
+    while(CacheOrder.get(uid))
         uid = `ORD_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
@@ -65,7 +67,7 @@ export function idOrder(): IOrder["uid"]
 export function idInvoice(): IInvoice["uid"]
 {
     let uid: IInvoice["uid"] = `INV_${crypto.randomBytes(20).toString("hex")}`;
-    if(CacheInvoice.get(uid))
+    while(CacheInvoice.get(uid))
         uid = `INV_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
@@ -73,7 +75,15 @@ export function idInvoice(): IInvoice["uid"]
 export function idTransicitons(): ITransactions["uid"]
 {
     let uid: ITransactions["uid"] = `TRAN_${crypto.randomBytes(20).toString("hex")}`;
-    if(CacheTransactions.get(uid))
+    while(CacheTransactions.get(uid))
         uid = `TRAN_${crypto.randomBytes(20).toString("hex")}`;
+    return uid;
+}
+
+export function idImages(): IImage["uid"]
+{
+    let uid: IImage["uid"] = `IMG_${crypto.randomBytes(20).toString("hex")}`;
+    while(CacheImages.get(uid))
+        uid = `IMG_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
