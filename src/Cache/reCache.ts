@@ -1,6 +1,7 @@
 import AdminModel from "../Database/Schemas/Administrators";
 import CategoryModel from "../Database/Schemas/Category";
 import CustomerModel from "../Database/Schemas/Customer";
+import ImageModel from "../Database/Schemas/Images";
 import OrderModel from "../Database/Schemas/Orders";
 import ProductModel from "../Database/Schemas/Products";
 import TransactionsModel from "../Database/Schemas/Transactions";
@@ -11,6 +12,7 @@ import { CacheCustomer } from "./CacheCustomer";
 import { CacheOrder } from "./CacheOrder";
 import { CacheProduct } from "./CacheProduct";
 import { CacheTransactions } from "./CacheTransactions";
+import { CacheImages } from "./CacheImage";
 
 export function reCache_Categories()
 {
@@ -96,6 +98,20 @@ export async function reCache_Orders()
     });
 }
 
+export async function reCache_Images()
+{
+    Logger.info(`Starting caching on images..`);
+    return new Promise(async (resolve, reject) => {
+        const image = await ImageModel.find();
+        for (const o of image)
+        {
+            Logger.cache(`Caching image ${o.uid}`);
+            CacheImages.set(o.uid, o);
+        }
+        return resolve(true);
+    });
+}
+
 export async function reCache()
 {
     await reCache_Categories();
@@ -104,4 +120,5 @@ export async function reCache()
     await reCache_Product();
     await reCache_Transactions();
     await reCache_Orders();
+    await reCache_Images();
 }
