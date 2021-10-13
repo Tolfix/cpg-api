@@ -1,12 +1,14 @@
 import { Application, Router } from "express";
 import { UploadedFile } from "express-fileupload";
 import { CacheCategories } from "../Cache/CacheCategories";
+import { CacheImages } from "../Cache/CacheImage";
 import { CacheProduct } from "../Cache/CacheProduct";
+import ImageModel from "../Database/Schemas/Images";
 import ProductModel from "../Database/Schemas/Products";
 import { ICategory } from "../Interfaces/Categories";
 import { IProduct } from "../Interfaces/Products";
 import AW from "../Lib/AW";
-import { idProduct } from "../Lib/Generator";
+import { idImages, idProduct } from "../Lib/Generator";
 import Logger from "../Lib/Logger";
 import { APIError, APISuccess } from "../Lib/Response";
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
@@ -137,13 +139,18 @@ export default class ProductRouter
                 info.BStock = false;
 
             if(req.files)
-                info.image =
-                {
-                    data: (req.files.image as UploadedFile).data,
-                    type: (req.files.image as UploadedFile).mimetype,
-                    size: (req.files.image as UploadedFile).size,
-                    name: (req.files.image as UploadedFile).name
-                };
+                (req.files.images as UploadedFile[]).forEach(async (image) => {
+                    let dataImage = {
+                        uid: idImages(),
+                        data: image.data,
+                        type: image.mimetype,
+                        size: image.size,
+                        name: image.name
+                    };
+                    await new ImageModel(dataImage).save();
+                    CacheImages.set(dataImage.uid, dataImage);
+                    info.images?.push(dataImage.uid);
+                });
 
             if(!isValidProduct(info, res))
                 return;
@@ -243,13 +250,28 @@ export default class ProductRouter
                     info.category_uid = category_uid;
 
             if(req.files)
-                info.image =
-                {
-                    data: (req.files.image as UploadedFile).data,
-                    type: (req.files.image as UploadedFile).mimetype,
-                    size: (req.files.image as UploadedFile).size,
-                    name: (req.files.image as UploadedFile).name
-                };
+            {
+                // TODO find a way to delete image..
+                (req.files.images as UploadedFile[]).forEach(async (image) => {
+                    let dataImage = {
+                        uid: idImages(),
+                        data: image.data,
+                        type: image.mimetype,
+                        size: image.size,
+                        name: image.name
+                    };
+                    await new ImageModel(dataImage).save();
+                    CacheImages.set(dataImage.uid, dataImage);
+                    info.images?.push(dataImage.uid);
+                });
+                // info.image =
+                // {
+                //     data: (req.files.image as UploadedFile).data,
+                //     type: (req.files.image as UploadedFile).mimetype,
+                //     size: (req.files.image as UploadedFile).size,
+                //     name: (req.files.image as UploadedFile).name
+                // };
+            }
 
             const [Succes, Fail] = await AW(ProductModel.updateOne({ uid: product.uid }, info));
 

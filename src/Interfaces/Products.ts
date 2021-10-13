@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 import { ICategory } from "./Categories";
+import { IImage } from "./Images";
 
 /**
  * @typedef Product
@@ -28,19 +29,11 @@ export interface IProduct
     payment_type: Partial<IPaymentType>;
     price: number;
     setup_fee: number;
-    image?: IImageProduct;
+    images?: IImage["uid"][];
     recurring_method?: Partial<IRecurringMethod>;
 }
 
 export interface IDProduct extends IProduct, Document {};
-
-export interface IImageProduct
-{
-    data: Buffer;
-    type: string;
-    size: number;
-    name: string;
-}
 
 export type IPaymentType = "free" | "one_time" | "recurring";
 
