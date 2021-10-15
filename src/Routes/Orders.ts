@@ -33,7 +33,7 @@ export default class OrdersRouter
          * @route GET /orders/{uid}
          * @group Orders
          * @param {string} uid.path.required - The uid of order.
-         * @returns {Array} 200 - The order
+         * @returns {Object} 200 - The order
          * @returns {Error} 400 - Unable to find by uid
          * @security JWT
          * @security Basic
@@ -51,6 +51,10 @@ export default class OrdersRouter
             return APISuccess({
                 order: order,
             })(res);
+        });
+
+        this.router.post("/create", EnsureAdmin, (req, res) => {
+            
         });
     }
 }
