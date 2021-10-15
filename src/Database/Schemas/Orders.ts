@@ -11,10 +11,10 @@ const OrderSchame = new Schema
             required: true,
         },
 
-        invoice_uid: {
-            type: String,
-            required: true,
-        },
+        // invoice_uid: {
+        //     type: String,
+        //     required: false,
+        // },
 
         customer_uid: {
             type: String,
@@ -23,12 +23,12 @@ const OrderSchame = new Schema
 
         payment_method: {
             type: String,
-            required: true,
+            default: "none",
         },
 
         order_status: {
             type: String,
-            required: true,
+            default: "pending",
         },
 
         product_uid: {
@@ -38,12 +38,11 @@ const OrderSchame = new Schema
 
         billing_type: {
             type: String,
-            required: true,
+            default: "free",
         },
         
         billing_cycle: {
             type: String,
-            default: "",
         },
 
         quantity: {
@@ -54,6 +53,11 @@ const OrderSchame = new Schema
         price_override: {
             type: Number,
             defualt: 0,
+        },
+
+        dates: {
+            type: Object,
+            required: true
         },
 
     }
