@@ -110,8 +110,9 @@ export default class OrdersRouter
 
         /**
          * Updates new order
-         * @route PATCH /orders/create
+         * @route PATCH /orders/{uid}
          * @group Orders
+         * @param {string} uid.path.required - The uid of order.
          * @param {Order} data.body - The data for updating order.
          * @security JWT
          * @security Basic
