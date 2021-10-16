@@ -1,8 +1,11 @@
 import { Application, Router } from "express";
 import { CacheOrder } from "../../Cache/CacheOrder";
+import OrderModel from "../../Database/Schemas/Orders";
 import { IOrder } from "../../Interfaces/Orders";
+import { idOrder } from "../../Lib/Generator";
 import { APIError, APISuccess } from "../../Lib/Response";
 import EnsureAdmin from "../../Middlewares/EnsureAdmin";
+import { validOrder } from "../../Validator/ValidOrder";
 
 export default class OrdersRouter
 {
@@ -53,8 +56,55 @@ export default class OrdersRouter
             })(res);
         });
 
+        /**
+         * Create new order
+         * @route POST /orders/create
+         * @group Orders
+         * @param {Orders} data.body.required - The data for creating order.
+         * @security JWT
+         * @security Basic
+         */
         this.router.post("/create", EnsureAdmin, (req, res) => {
             
+            let {
+                billing_type,
+                customer_uid,
+                dates,
+                order_status,
+                payment_method,
+                product_uid,
+                quantity,
+                billing_cycle,
+                price_override
+            } = req.body as any;
+
+            let data: IOrder = {
+                uid: idOrder(),
+                billing_type,
+                customer_uid,
+                dates,
+                order_status,
+                payment_method,
+                product_uid,
+                quantity,
+                billing_cycle,
+                price_override
+            };
+
+            if(!data.price_override)
+                data.price_override = 0;
+
+            if(!validOrder(data, res))
+                return;
+
+            new OrderModel(data).save();
+            CacheOrder.set(data.uid, data);
+
+            return APISuccess({
+                text: `Succesfully created new order`,
+                uid: data.uid,
+                order: data,
+            });
         });
     }
 }
