@@ -11,17 +11,16 @@ import Logger from "../Lib/Logger";
  */
 export default function RouteHandler(server: Application): void
 {
-    let commandDir = HomeDir+"/build/Routes";
-    const command = readdirSync(`${commandDir}`).filter((f) => f.endsWith('.js'));
-    for (let file of command) {
-        if(file !== "Handler.js")
-        {
-            const pull = require(`${commandDir}/${file}`).default;
+    let routeDir = HomeDir+"/build/Routes";
+    readdirSync(`${routeDir}`).forEach((dir) => {
+        const routes = readdirSync(`${routeDir}/${dir}`).filter((f) => f.endsWith('.js'));
+        for (let file of routes) {
+            const pull = require(`${routeDir}/${file}`).default;
             if (pull) {
                 Logger.info(`Adding new router ${pull.name ?? ""}`)
                 new pull(server);
             }
+            continue;
         }
-        continue;
-    }
+    })
 }

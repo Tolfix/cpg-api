@@ -8,7 +8,7 @@ import session from "express-session";
 import fileUpload from "express-fileupload";
 import { Express_Session_Secret, HomeDir, PORT } from "./Config";
 import Logger from "./Lib/Logger";
-import RouteHandler from "./Routes/Handler";
+import RouteHandler from "./Handlers/Route";
 import { reCache } from "./Cache/reCache";
 import Mongo_Database from "./Database/Mongo";
 import { ICustomer } from "./Interfaces/Customer";
