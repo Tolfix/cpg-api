@@ -201,34 +201,34 @@ export default class ProductRouter
             if(!isValidProduct(info, res))
                 return;
 
-            if(product_name !== product.name)
+            if(product_name && product_name !== product.name)
                 info.name = product_name;
 
-            if(hidden !== product.hidden)
+            if(hidden && hidden !== product.hidden)
                 info.hidden = hidden;
 
-            if(description !== product.description)
+            if(description && description !== product.description)
                 info.description = description;
 
-            if(product.payment_type !== payment_type)
+            if(payment_type && payment_type !== product.payment_type)
                 info.payment_type = payment_type;
 
-            if(product.price !== price)
+            if(price && price !== product.price)
                 info.price = price;
             
-            if(product.setup_fee !== setup_fee)
+            if(setup_fee && setup_fee !== product.setup_fee)
                 info.setup_fee = setup_fee;
 
-            if(product.special !== special)
+            if(special && special !== product.special)
                 info.special = special;
 
-            if(product.stock !== stock)
+            if(stock && stock !== product.stock)
                 info.stock = stock;
 
-            if(product.BStock !== BStock)
+            if(BStock && BStock !== product.BStock)
                 info.BStock = BStock;
 
-            if(product.category_uid !== category_uid)
+            if(category_uid && category_uid !== product.category_uid)
                 if(CacheCategories.get(category_uid))
                     info.category_uid = category_uid;
 

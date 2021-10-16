@@ -207,43 +207,43 @@ export default class CustomerRouter
                 extra: customer.extra,
             };
 
-            if(first_name !== CustomerData.personal.first_name)
+            if(first_name && first_name !== CustomerData.personal.first_name)
                 CustomerData.personal.first_name = first_name;
         
-            if(last_name !== CustomerData.personal.last_name)
+            if(last_name && last_name !== CustomerData.personal.last_name)
                 CustomerData.personal.last_name = last_name;
 
-            if(email !== CustomerData.personal.email)
+            if(email && email !== CustomerData.personal.email)
                 CustomerData.personal.email = email;
 
-            if(phone !== CustomerData.personal.phone)
+            if(phone && phone !== CustomerData.personal.phone)
                 CustomerData.personal.phone = phone;
 
-            if(company !== CustomerData.billing.company)
+            if(company && company !== CustomerData.billing.company)
                 CustomerData.billing.company = company;
 
-            if(company_vat !== CustomerData.billing.company_vat)
+            if(company_vat && company_vat !== CustomerData.billing.company_vat)
                 CustomerData.billing.company_vat = company_vat;
 
-            if(street01 !== CustomerData.billing.street01)
+            if(street01 && street01 !== CustomerData.billing.street01)
                 CustomerData.billing.street01 = street01;
 
-            if(street02 !== CustomerData.billing.street02)
+            if(street02 && street02 !== CustomerData.billing.street02)
                 CustomerData.billing.street02 = street02;
 
-            if(city !== CustomerData.billing.city)
-            CustomerData.billing.city = city;
+            if(city && city !== CustomerData.billing.city)
+                CustomerData.billing.city = city;
 
-            if(state !== CustomerData.billing.state)
+            if(state && state !== CustomerData.billing.state)
                 CustomerData.billing.state = state;
 
-            if(postcode !== CustomerData.billing.postcode)
+            if(postcode && postcode !== CustomerData.billing.postcode)
                 CustomerData.billing.postcode = postcode;
 
-            if(country !== CustomerData.billing.country)
+            if(country && country !== CustomerData.billing.country)
                 CustomerData.billing.country = country;
 
-            if(extra !== CustomerData.extra)
+            if(extra && extra !== CustomerData.extra)
                 CustomerData.extra = extra;
 
             const [Succes, Fail] = await AW(CustomerModel.updateOne({ uid: CustomerData.uid }, CustomerData));

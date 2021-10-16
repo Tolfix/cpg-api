@@ -106,5 +106,42 @@ export default class OrdersRouter
                 order: data,
             });
         });
+
+        /**
+         * Updates new order
+         * @route POST /orders/create
+         * @group Orders
+         * @param {Order} data.body - The data for updating order.
+         * @security JWT
+         * @security Basic
+         */        
+        this.router.patch("/:uid", EnsureAdmin, (req, res) => {
+            let uid = req.params.uid as IOrder["uid"];
+            const Order = CacheOrder.get(uid);
+            
+            if(!Order)
+                return APIError({
+                    text: `Unable to find order by uid ${uid}`,
+                })(res);
+            
+            let {
+                billing_type,
+                customer_uid,
+                dates,
+                order_status,
+                payment_method,
+                product_uid,
+                quantity,
+                billing_cycle,
+                price_override
+            } = req.body as any;
+
+            let data = Order;
+
+            if(data.billing_type !== billing_type)
+                data.billing_type = billing_type;
+
+            // if(data.customer_uid !== customer_uid)
+        });
     }
 }
