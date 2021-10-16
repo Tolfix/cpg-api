@@ -1,9 +1,12 @@
 import { Application, Router } from "express";
+import dateFormat from "date-and-time";
 import { CacheOrder } from "../../Cache/CacheOrder";
+import { CacheProduct } from "../../Cache/CacheProduct";
 import OrderModel from "../../Database/Schemas/Orders";
 import { IOrder } from "../../Interfaces/Orders";
 import AW from "../../Lib/AW";
-import { idOrder } from "../../Lib/Generator";
+import createInvoice from "../../Lib/Create/CreateInvoice";
+import { idInvoice, idOrder } from "../../Lib/Generator";
 import { APIError, APISuccess } from "../../Lib/Response";
 import EnsureAdmin from "../../Middlewares/EnsureAdmin";
 import { validOrder } from "../../Validator/ValidOrder";
@@ -79,6 +82,7 @@ export default class OrdersRouter
                 price_override
             } = req.body as any;
 
+            //@ts-ignore
             let data: IOrder = {
                 uid: idOrder(),
                 billing_type,
@@ -89,7 +93,7 @@ export default class OrdersRouter
                 product_uid,
                 quantity,
                 billing_cycle,
-                price_override
+                price_override,
             };
 
             if(!data.price_override)
@@ -98,8 +102,35 @@ export default class OrdersRouter
             if(!validOrder(data, res))
                 return;
 
+            const product = CacheProduct.get(data.product_uid);
+
+            let invoiceData = {
+                uid: idInvoice(),
+                amount: data.price_override !== 0 ? data.price_override : product?.price ?? 0,
+                customer_uid: data.customer_uid,
+                invoiced_to: data.customer_uid,
+                paid: false,
+                items: [{
+                    notes: product?.name ? `${product.name} | ${product.uid}` : "",
+                    amount: data.price_override !== 0 ? data.price_override : product?.price ?? 0,
+                    taxed: false
+                }],
+                notes: "",
+                payment_method: data.payment_method,
+                status: data.order_status,
+                tax_rate: 0,
+                dates: {
+                    invoice_date: data.dates.createdAt,
+                    due_date: dateFormat.addDays(data.dates.createdAt, 14),
+                }
+            };
+
+            data["invoices"] = [invoiceData.uid];
+
             new OrderModel(data).save();
             CacheOrder.set(data.uid, data);
+
+            createInvoice(invoiceData, true);
 
             return APISuccess({
                 text: `Succesfully created new order`,
