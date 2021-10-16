@@ -2,6 +2,7 @@ import { Application, Router } from "express";
 import { CacheOrder } from "../../Cache/CacheOrder";
 import OrderModel from "../../Database/Schemas/Orders";
 import { IOrder } from "../../Interfaces/Orders";
+import AW from "../../Lib/AW";
 import { idOrder } from "../../Lib/Generator";
 import { APIError, APISuccess } from "../../Lib/Response";
 import EnsureAdmin from "../../Middlewares/EnsureAdmin";
@@ -115,7 +116,7 @@ export default class OrdersRouter
          * @security JWT
          * @security Basic
          */        
-        this.router.patch("/:uid", EnsureAdmin, (req, res) => {
+        this.router.patch("/:uid", EnsureAdmin, async (req, res) => {
             let uid = req.params.uid as IOrder["uid"];
             const Order = CacheOrder.get(uid);
             
@@ -138,10 +139,46 @@ export default class OrdersRouter
 
             let data = Order;
 
-            if(data.billing_type !== billing_type)
+            if(billing_type && billing_type !== data.billing_type)
                 data.billing_type = billing_type;
 
-            // if(data.customer_uid !== customer_uid)
+            if(customer_uid && customer_uid !== data.customer_uid)
+                data.customer_uid = customer_uid;
+
+            if(dates && dates !== data.dates)
+                data.dates = dates;
+
+            if(order_status && order_status !== data.order_status)
+                data.order_status = order_status;
+
+            if(payment_method && payment_method !== data.payment_method)
+                data.payment_method = payment_method;
+
+            if(product_uid && product_uid !== data.product_uid)
+                data.product_uid = product_uid;
+
+            if(quantity && quantity !== data.quantity)
+                data.quantity = quantity;
+
+            if(billing_cycle && data.billing_type === "recurring" && billing_cycle !== data.billing_cycle)
+                data.billing_cycle = billing_cycle;
+
+            if(price_override && price_override !== data.price_override)
+                data.price_override = price_override;
+
+            const [S, F] = await AW(OrderModel.updateOne({ uid: uid }, data));
+
+            if(F)
+                return APIError({
+                    text: `Something went wrong.. try again later`
+                })(res);
+
+            CacheOrder.set(data.uid, data);
+
+            return APISuccess({
+                text: `Succesfully updated order`,
+                order: data,
+            })(res);
         });
     }
 }
