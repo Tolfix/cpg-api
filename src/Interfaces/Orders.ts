@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 import { ICustomer } from "./Customer";
+import { IInvoice } from "./Invoice";
 import { IPayments } from "./Payments";
 import { IPaymentType, IProduct, IRecurringMethod } from "./Products";
 
@@ -34,6 +35,7 @@ export interface IOrder
     quantity: number;
     price_override?: number;
     dates: IOrderDates;
+    invoices: Array<IInvoice["uid"]>;
 }
 
 export interface IDOrder extends IOrder, Document {};
