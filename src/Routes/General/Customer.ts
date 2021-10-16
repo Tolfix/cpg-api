@@ -87,47 +87,47 @@ export default class CustomerRouter
             // Check each if they exist
             if(!first_name)
                 return APIError({
-                    text: "Missing 'first_name' in query"
+                    text: "Missing 'first_name' in body"
                 })(res);
         
             if(!last_name)
                 return APIError({
-                    text: "Missing 'last_name' in query"
+                    text: "Missing 'last_name' in body"
                 })(res);
 
             if(!email)
                 return APIError({
-                    text: "Missing 'email' in query"
+                    text: "Missing 'email' in body"
                 })(res);
 
             if(!phone)
                 return APIError({
-                    text: "Missing 'phone' in query"
+                    text: "Missing 'phone' in body"
                 })(res);
 
             if(!street01)
                 return APIError({
-                    text: "Missing 'street01' in query"
+                    text: "Missing 'street01' in body"
                 })(res);
 
             if(!city)
                 return APIError({
-                    text: "Missing 'city' in query"
+                    text: "Missing 'city' in body"
                 })(res);
         
             if(!state)
                 return APIError({
-                    text: "Missing 'state' in query"
+                    text: "Missing 'state' in body"
                 })(res);
                 
             if(!postcode)
                 return APIError({
-                    text: "Missing 'postcode' in query"
+                    text: "Missing 'postcode' in body"
                 })(res);
 
             if(!country)
                 return APIError({
-                    text: "Missing 'country' in query"
+                    text: "Missing 'country' in body"
                 })(res);
 
             let CustomerData: ICustomer = {

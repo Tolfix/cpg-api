@@ -110,7 +110,7 @@ export default class OrdersRouter
 
         /**
          * Updates new order
-         * @route POST /orders/create
+         * @route PATCH /orders/create
          * @group Orders
          * @param {Order} data.body - The data for updating order.
          * @security JWT
@@ -165,6 +165,9 @@ export default class OrdersRouter
 
             if(price_override && price_override !== data.price_override)
                 data.price_override = price_override;
+
+            if(!validOrder(data))
+                return;
 
             const [S, F] = await AW(OrderModel.updateOne({ uid: uid }, data));
 
