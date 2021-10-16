@@ -60,7 +60,7 @@ export default class OrdersRouter
          * Create new order
          * @route POST /orders/create
          * @group Orders
-         * @param {Orders} data.body.required - The data for creating order.
+         * @param {Order} data.body.required - The data for creating order.
          * @security JWT
          * @security Basic
          */
