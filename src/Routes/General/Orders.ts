@@ -1,8 +1,8 @@
 import { Application, Router } from "express";
-import { CacheOrder } from "../Cache/CacheOrder";
-import { IOrder } from "../Interfaces/Orders";
-import { APIError, APISuccess } from "../Lib/Response";
-import EnsureAdmin from "../Middlewares/EnsureAdmin";
+import { CacheOrder } from "../../Cache/CacheOrder";
+import { IOrder } from "../../Interfaces/Orders";
+import { APIError, APISuccess } from "../../Lib/Response";
+import EnsureAdmin from "../../Middlewares/EnsureAdmin";
 
 export default class OrdersRouter
 {

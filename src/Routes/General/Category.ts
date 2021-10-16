@@ -1,12 +1,12 @@
 import { Application, Router } from "express";
-import { CacheCategories } from "../Cache/CacheCategories";
-import { getProductByCategoryUid } from "../Cache/CacheProduct";
-import CategoryModel from "../Database/Schemas/Category";
-import { ICategory } from "../Interfaces/Categories";
-import AW from "../Lib/AW";
-import { idCategory } from "../Lib/Generator";
-import { APIError, APISuccess } from "../Lib/Response";
-import EnsureAdmin from "../Middlewares/EnsureAdmin";
+import { CacheCategories } from "../../Cache/CacheCategories";
+import { getProductByCategoryUid } from "../../Cache/CacheProduct";
+import CategoryModel from "../../Database/Schemas/Category";
+import { ICategory } from "../../Interfaces/Categories";
+import AW from "../../Lib/AW";
+import { idCategory } from "../../Lib/Generator";
+import { APIError, APISuccess } from "../../Lib/Response";
+import EnsureAdmin from "../../Middlewares/EnsureAdmin";
 
 export default class CategoryRouter
 {

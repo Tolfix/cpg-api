@@ -1,14 +1,14 @@
 import { Application, Router } from "express";
-import { CacheCategories } from "../Cache/CacheCategories";
-import { CacheProduct } from "../Cache/CacheProduct";
-import ProductModel from "../Database/Schemas/Products";
-import { ICategory } from "../Interfaces/Categories";
-import { IProduct } from "../Interfaces/Products";
-import AW from "../Lib/AW";
-import { idProduct } from "../Lib/Generator";
-import { APIError, APISuccess } from "../Lib/Response";
-import EnsureAdmin from "../Middlewares/EnsureAdmin";
-import { isValidProduct } from "../Validator/ValidProducts";
+import { CacheCategories } from "../../Cache/CacheCategories";
+import { CacheProduct } from "../../Cache/CacheProduct";
+import ProductModel from "../../Database/Schemas/Products";
+import { ICategory } from "../../Interfaces/Categories";
+import { IProduct } from "../../Interfaces/Products";
+import AW from "../../Lib/AW";
+import { idProduct } from "../../Lib/Generator";
+import { APIError, APISuccess } from "../../Lib/Response";
+import EnsureAdmin from "../../Middlewares/EnsureAdmin";
+import { isValidProduct } from "../../Validator/ValidProducts";
 
 export default class ProductRouter
 {

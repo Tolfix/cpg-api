@@ -1,8 +1,8 @@
 import { Application, Router } from "express";
-import { CacheTransactions } from "../Cache/CacheTransactions";
-import { ITransactions } from "../Interfaces/Transactions";
-import { APIError, APISuccess } from "../Lib/Response";
-import EnsureAdmin from "../Middlewares/EnsureAdmin";
+import { CacheTransactions } from "../../Cache/CacheTransactions";
+import { ITransactions } from "../../Interfaces/Transactions";
+import { APIError, APISuccess } from "../../Lib/Response";
+import EnsureAdmin from "../../Middlewares/EnsureAdmin";
 
 export default class TransactionsRouter
 {
