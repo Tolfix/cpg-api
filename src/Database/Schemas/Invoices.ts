@@ -66,6 +66,11 @@ const InvoiceSchame = new Schema
             default: false,
         },
 
+        notified: {
+            type: Boolean,
+            default: false,
+        },
+
     }
 );
 
