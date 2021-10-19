@@ -10,6 +10,7 @@ import { idInvoice, idOrder } from "../../Lib/Generator";
 import { APIError, APISuccess } from "../../Lib/Response";
 import EnsureAdmin from "../../Middlewares/EnsureAdmin";
 import { validOrder } from "../../Validator/ValidOrder";
+import nextRycleDate from "../../Lib/Dates/DateCycle";
 
 export default class OrdersRouter
 {
@@ -73,7 +74,6 @@ export default class OrdersRouter
             let {
                 billing_type,
                 customer_uid,
-                dates,
                 order_status,
                 payment_method,
                 product_uid,
@@ -87,7 +87,11 @@ export default class OrdersRouter
                 uid: idOrder(),
                 billing_type,
                 customer_uid,
-                dates,
+                dates: {
+                    createdAt: new Date(),
+                    last_recycle: billing_type === "recurring" ? new Date() : undefined,
+                    next_recycle: billing_type === "recurring" ? nextRycleDate(new Date, billing_cycle) : undefined,
+                },
                 order_status,
                 payment_method,
                 product_uid,
@@ -122,7 +126,8 @@ export default class OrdersRouter
                 dates: {
                     invoice_date: data.dates.createdAt,
                     due_date: dateFormat.addDays(data.dates.createdAt, 14),
-                }
+                },
+                notified: false
             };
 
             data["invoices"] = [invoiceData.uid];
@@ -160,7 +165,6 @@ export default class OrdersRouter
             let {
                 billing_type,
                 customer_uid,
-                dates,
                 order_status,
                 payment_method,
                 product_uid,
@@ -176,9 +180,6 @@ export default class OrdersRouter
 
             if(customer_uid && customer_uid !== data.customer_uid)
                 data.customer_uid = customer_uid;
-
-            if(dates && dates !== data.dates)
-                data.dates = dates;
 
             if(order_status && order_status !== data.order_status)
                 data.order_status = order_status;
