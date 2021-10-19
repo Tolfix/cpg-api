@@ -1,6 +1,6 @@
   
 import { model, Schema } from "mongoose"
-import { IDIAdministrator } from "../../Interfaces/Administrators";
+import { IDIAdministrator } from "../../Interfaces/Admin/Administrators";
 
 const AdminSchema = new Schema
 (

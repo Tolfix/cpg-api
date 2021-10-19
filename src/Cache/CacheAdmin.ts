@@ -1,4 +1,4 @@
-import { IAdministrator } from "../Interfaces/Administrators";
+import { IAdministrator } from "../Interfaces/Admin/Administrators";
 
 export const CacheAdmin = new Map<IAdministrator["uid"], IAdministrator>();
 
