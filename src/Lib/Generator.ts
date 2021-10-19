@@ -7,7 +7,7 @@ import { CacheInvoice } from "../Cache/CacheInvoices";
 import { CacheOrder } from "../Cache/CacheOrder";
 import { CacheProduct } from "../Cache/CacheProduct";
 import { CacheTransactions } from "../Cache/CacheTransactions";
-import { IAdministrator } from "../Interfaces/Administrators";
+import { IAdministrator } from "../Interfaces/Admin/Administrators";
 import { ICategory } from "../Interfaces/Categories";
 import { ICustomer } from "../Interfaces/Customer";
 import { IImage } from "../Interfaces/Images";
