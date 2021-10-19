@@ -13,6 +13,9 @@ import { CacheOrder } from "./CacheOrder";
 import { CacheProduct } from "./CacheProduct";
 import { CacheTransactions } from "./CacheTransactions";
 import { CacheImages } from "./CacheImage";
+import ConfigModel from "../Database/Schemas/Configs";
+import { SchemaTypes } from "mongoose";
+import { CacheConfig } from "./CacheConfigs";
 
 export function reCache_Categories()
 {
@@ -98,6 +101,44 @@ export async function reCache_Orders()
     });
 }
 
+export async function reCache_Configs()
+{
+    Logger.info(`Starting caching on configs..`);
+    return new Promise(async (resolve, reject) => {
+        const config = await ConfigModel.find();
+        // Logger.debug(config);
+        if(!config[0])
+        {
+            let smtpData = {
+                smtp: {
+                    host: "",
+                    username: "",
+                    password: "",
+                    secure: false,
+                    port: 25,
+                },
+                smtp_emails: [],
+            }
+            new ConfigModel(smtpData).save();
+
+            Logger.cache(`Caching config`);
+
+            CacheConfig.set("smtp", smtpData.smtp);
+            CacheConfig.set("smtp_emails", smtpData.smtp_emails);
+
+            return resolve(true);
+        }
+
+        Logger.cache(`Caching config`);
+        let c = config[0];
+
+        CacheConfig.set("smtp", c.smtp);
+        CacheConfig.set("smtp_emails", c.smtp_emails);
+
+        return resolve(true);
+    });
+}
+
 export async function reCache_Images()
 {
     Logger.info(`Starting caching on images..`);
@@ -114,6 +155,7 @@ export async function reCache_Images()
 
 export async function reCache()
 {
+    await reCache_Configs();
     await reCache_Categories();
     await reCache_Admin();
     await reCache_Customers();
