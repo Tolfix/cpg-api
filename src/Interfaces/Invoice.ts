@@ -59,6 +59,8 @@ export interface IInvoice
     tax_rate: number;
     notes: string;
     paid: Boolean;
+
+    notified: Boolean;
 }
 
 export interface IDInvoice extends IInvoice, Document {};

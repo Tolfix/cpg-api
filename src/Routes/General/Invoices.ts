@@ -108,7 +108,8 @@ export default class InvoiceRouter
                 amount,
                 payment_method,
                 items,
-                transactions
+                transactions,
+                notified: false,
             }
 
             if(!isValidInvoice(info, res))
