@@ -25,9 +25,7 @@ export default class CategoryRouter
          * @returns {Array} 200 - An array for categories
          */
         this.router.get("/", (req, res) => {
-            APISuccess({
-                categories: CacheCategories.array()
-            })(res);
+            APISuccess(CacheCategories.array())(res);
         });
 
         /**
@@ -48,9 +46,7 @@ export default class CategoryRouter
                     text: `Unable to find category by uid ${id}`
                 })(res);
 
-            return APISuccess({
-                category: category
-            })(res);
+            return APISuccess(category)(res);
         });
 
         /**
@@ -71,26 +67,25 @@ export default class CategoryRouter
                     text: `Unable to find category by uid ${id}`
                 })(res);
 
-            return APISuccess({
-                category_uid: id,
-                products: getProductByCategoryUid(id)
-            })(res);
+            return APISuccess(
+                getProductByCategoryUid(id)
+            )(res);
         });
 
         /**
          * Creates a category
          * @route POST /categories/create
          * @group Category
-         * @param {string} name.query.required - Name for category.
-         * @param {string} description.query.required - description for category.
-         * @param {boolean} Private.query.required - Private for category.
+         * @param {string} name.body.required - Name for category.
+         * @param {string} description.body.required - description for category.
+         * @param {boolean} Private.body.required - Private for category.
          * @returns {Object} 200 - Created a new category.
          * @returns {Object} default - Missing something
          * @security JWT
          * @security Basic
          */
         this.router.post("/create", EnsureAdmin, (req, res) => {
-            let { name, description, Private } = req.query as any;
+            let { name, description, Private } = req.body as any;
 
             if(!name)
                 return APIError({
@@ -126,9 +121,9 @@ export default class CategoryRouter
          * @route PATCH /categories/{uid}
          * @group Category
          * @param {string} uid.path.required - uid for category.
-         * @param {string} name.query - Name for category.
-         * @param {string} description.query - description for category.
-         * @param {boolean} Private.query - Private for category.
+         * @param {string} name.body - Name for category.
+         * @param {string} description.body - description for category.
+         * @param {boolean} Private.body - Private for category.
          * @returns {object} 200 - Updated category
          * @returns {Error} default - Unable to find category or failed
          * @security JWT
@@ -142,7 +137,7 @@ export default class CategoryRouter
                     text: `Unable to find category by uid ${uid}`,
                 })(res);
 
-            let { name, description, Private } = req.query as any;
+            let { name, description, Private } = req.body as any;
             
             let info: ICategory = {
                 uid: category.uid,
