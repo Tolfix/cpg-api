@@ -3,26 +3,16 @@ import Logger from "./Logger";
 
 export function APISuccess(msg: any, status: number = 200)
 {
-    let response = {
-        code: status,
-        status: "Success",
-        res: msg
-    };
-    Logger.debug(response);
+    Logger.debug(msg);
     return (res: Response) => {
-        res.status(status).json(response);
+        res.status(status).json(msg);
     }
 }
 
 export function APIError(msg: any, status: number = 400)
 {
-    let response = {
-        code: status,
-        status: "Error",
-        res: msg
-    };
-    Logger.debug(response);
+    Logger.debug(msg);
     return (res: Response) => {
-        res.status(status).json(response);
+        res.status(status).json(msg);
     }
 }
