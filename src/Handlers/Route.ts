@@ -2,6 +2,8 @@ import { Application } from "express";
 import { readdirSync } from "fs";
 import { HomeDir } from "../Config";
 import Logger from "../Lib/Logger";
+import Swagger from "./Swagger";
+
 
 /**
  * 
@@ -12,16 +14,20 @@ import Logger from "../Lib/Logger";
 export default function RouteHandler(server: Application): void
 {
     let routeDir = HomeDir+"/build/Routes";
-    readdirSync(`${routeDir}`).forEach((dir) => {
-        const routes = readdirSync(`${routeDir}/${dir}`).filter((f) => f.endsWith('.js'));
-        for (let file of routes) {
-            const pull = require(`${routeDir}/${dir}/${file}`).default;
-            if (pull)
+    readdirSync(`${routeDir}`).forEach((version) => {
+        Swagger(server, version);
+        readdirSync(`${routeDir}/${version}`).forEach((route) => {
+            const routes = readdirSync(`${routeDir}/${version}/${route}`).filter((f) => f.endsWith('config.js'));
+            for(let file of routes)
             {
-                Logger.info(`Adding new router ${pull.name ?? ""}`)
-                new pull(server);
+                const pull = require(`${routeDir}/${version}/${route}/${file}`).default;
+                if(pull)
+                {
+                    Logger.info(`Adding new router in version ${version}, name ${pull.name ?? ""}`)
+                    new pull(server, version);
+                }
+                continue;
             }
-            continue;
-        }
+        })
     })
 }
