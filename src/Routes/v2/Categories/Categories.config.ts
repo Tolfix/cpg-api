@@ -1,4 +1,5 @@
 import { Application, Router } from "express";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import CategoryController from "./Categories.controller";
 
 export default class CategoryRouter
@@ -20,14 +21,17 @@ export default class CategoryRouter
         ]);
 
         this.router.post("/", [
+            EnsureAdmin,
             CategoryController.insert
         ]);
 
         this.router.patch("/uid", [
+            EnsureAdmin,
             CategoryController.patch
         ])
 
         this.router.delete("/:uid", [
+            EnsureAdmin,
             CategoryController.removeById
         ])
     }
