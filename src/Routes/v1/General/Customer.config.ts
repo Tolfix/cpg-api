@@ -1,21 +1,21 @@
 import { Application, Router } from "express";
-import { CacheCustomer } from "../../Cache/CacheCustomer";
-import CustomerModel from "../../Database/Schemas/Customer";
-import { ICustomer } from "../../Interfaces/Customer";
-import AW from "../../Lib/AW";
-import { idCustomer } from "../../Lib/Generator";
-import { APIError, APISuccess } from "../../Lib/Response";
-import EnsureAdmin from "../../Middlewares/EnsureAdmin";
+import { CacheCustomer } from "../../../Cache/CacheCustomer";
+import CustomerModel from "../../../Database/Schemas/Customer";
+import { ICustomer } from "../../../Interfaces/Customer";
+import AW from "../../../Lib/AW";
+import { idCustomer } from "../../../Lib/Generator";
+import { APIError, APISuccess } from "../../../Lib/Response";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 
 export default class CustomerRouter
 {
     private server: Application;
     private router = Router();
 
-    constructor(server: Application)
+    constructor(server: Application, version: string)
     {
         this.server = server;
-        this.server.use("/customers", this.router);
+        this.server.use(`/${version}/customers`, this.router);
 
         /**
          * Gets all customers

@@ -1,22 +1,22 @@
 import { Application, Router } from "express";
-import { CacheCategories } from "../../Cache/CacheCategories";
-import { getProductByCategoryUid } from "../../Cache/CacheProduct";
-import CategoryModel from "../../Database/Schemas/Category";
-import { ICategory } from "../../Interfaces/Categories";
-import AW from "../../Lib/AW";
-import { idCategory } from "../../Lib/Generator";
-import { APIError, APISuccess } from "../../Lib/Response";
-import EnsureAdmin from "../../Middlewares/EnsureAdmin";
+import { CacheCategories } from "../../../Cache/CacheCategories";
+import { getProductByCategoryUid } from "../../../Cache/CacheProduct";
+import CategoryModel from "../../../Database/Schemas/Category";
+import { ICategory } from "../../../Interfaces/Categories";
+import AW from "../../../Lib/AW";
+import { idCategory } from "../../../Lib/Generator";
+import { APIError, APISuccess } from "../../../Lib/Response";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 
 export default class CategoryRouter
 {
     private server: Application;
     private router = Router();
 
-    constructor(server: Application)
+    constructor(server: Application, version: string)
     {
         this.server = server;
-        this.server.use("/categories", this.router);
+        this.server.use(`/${version}/categories`, this.router);
 
         /**
          * Gets all categories

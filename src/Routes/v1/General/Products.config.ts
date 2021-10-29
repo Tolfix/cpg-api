@@ -1,24 +1,24 @@
 import { Application, Router } from "express";
-import { CacheCategories } from "../../Cache/CacheCategories";
-import { CacheProduct } from "../../Cache/CacheProduct";
-import ProductModel from "../../Database/Schemas/Products";
-import { ICategory } from "../../Interfaces/Categories";
-import { IProduct } from "../../Interfaces/Products";
-import AW from "../../Lib/AW";
-import { idProduct } from "../../Lib/Generator";
-import { APIError, APISuccess } from "../../Lib/Response";
-import EnsureAdmin from "../../Middlewares/EnsureAdmin";
-import { isValidProduct } from "../../Validator/ValidProducts";
+import { CacheCategories } from "../../../Cache/CacheCategories";
+import { CacheProduct } from "../../../Cache/CacheProduct";
+import ProductModel from "../../../Database/Schemas/Products";
+import { ICategory } from "../../../Interfaces/Categories";
+import { IProduct } from "../../../Interfaces/Products";
+import AW from "../../../Lib/AW";
+import { idProduct } from "../../../Lib/Generator";
+import { APIError, APISuccess } from "../../../Lib/Response";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
+import { isValidProduct } from "../../../Validator/ValidProducts";
 
 export default class ProductRouter
 {
     private server: Application;
     private router = Router();
 
-    constructor(server: Application)
+    constructor(server: Application, version: string)
     {
         this.server = server;
-        this.server.use("/products", this.router);
+        this.server.use(`/${version}/products`, this.router);
         /**
          * Gets all products
          * @route GET /products

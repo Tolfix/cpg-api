@@ -1,18 +1,18 @@
 import { Application, Router } from "express";
-import { CacheTransactions } from "../../Cache/CacheTransactions";
-import { ITransactions } from "../../Interfaces/Transactions";
-import { APIError, APISuccess } from "../../Lib/Response";
-import EnsureAdmin from "../../Middlewares/EnsureAdmin";
+import { CacheTransactions } from "../../../Cache/CacheTransactions";
+import { ITransactions } from "../../../Interfaces/Transactions";
+import { APIError, APISuccess } from "../../../Lib/Response";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 
 export default class TransactionsRouter
 {
     private server: Application;
     private router = Router();
 
-    constructor(server: Application)
+    constructor(server: Application, version: string)
     {
         this.server = server;
-        this.server.use("/transactions", this.router);
+        this.server.use(`/${version}/transactions`, this.router);
 
         /**
          * Gets all transactions

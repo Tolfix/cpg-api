@@ -1,18 +1,18 @@
 import { Application, Router } from "express";
-import { JWT_Access_Token } from "../../Config";
+import { JWT_Access_Token } from "../../../Config";
 import jwt from "jsonwebtoken";
-import { APISuccess } from "../../Lib/Response";
-import EnsureAdmin from "../../Middlewares/EnsureAdmin";
+import { APISuccess } from "../../../Lib/Response";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 
 export default class AdminRouter
 {
     private server: Application;
     private router = Router();
 
-    constructor(server: Application)
+    constructor(server: Application, version: string)
     {
         this.server = server;
-        this.server.use("/admin", this.router);
+        this.server.use(`/${version}/admin`, this.router);
         /**
          * Checks if admins credentials are valid
          * @route GET /admin/validate

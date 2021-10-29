@@ -1,23 +1,23 @@
 import { Application, Router } from "express";
-import { CacheCustomer } from "../../Cache/CacheCustomer";
-import { CacheInvoice } from "../../Cache/CacheInvoices";
-import InvoiceModel from "../../Database/Schemas/Invoices";
-import { ICustomer } from "../../Interfaces/Customer";
-import { IInvoice } from "../../Interfaces/Invoice";
-import { idInvoice } from "../../Lib/Generator";
-import { APIError, APISuccess } from "../../Lib/Response";
-import EnsureAdmin from "../../Middlewares/EnsureAdmin";
-import { isValidInvoice } from "../../Validator/ValidInvoice";
+import { CacheCustomer } from "../../../Cache/CacheCustomer";
+import { CacheInvoice } from "../../../Cache/CacheInvoices";
+import InvoiceModel from "../../../Database/Schemas/Invoices";
+import { ICustomer } from "../../../Interfaces/Customer";
+import { IInvoice } from "../../../Interfaces/Invoice";
+import { idInvoice } from "../../../Lib/Generator";
+import { APIError, APISuccess } from "../../../Lib/Response";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
+import { isValidInvoice } from "../../../Validator/ValidInvoice";
 
 export default class InvoiceRouter
 {
     private server: Application;
     private router = Router();
 
-    constructor(server: Application)
+    constructor(server: Application, version: string)
     {
         this.server = server;
-        this.server.use("/invoices", this.router);
+        this.server.use(`/${version}/invoices`, this.router);
 
 
         /**

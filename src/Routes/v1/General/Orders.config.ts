@@ -1,26 +1,26 @@
 import { Application, Router } from "express";
 import dateFormat from "date-and-time";
-import { CacheOrder } from "../../Cache/CacheOrder";
-import { CacheProduct } from "../../Cache/CacheProduct";
-import OrderModel from "../../Database/Schemas/Orders";
-import { IOrder } from "../../Interfaces/Orders";
-import AW from "../../Lib/AW";
-import createInvoice from "../../Lib/Create/CreateInvoice";
-import { idInvoice, idOrder } from "../../Lib/Generator";
-import { APIError, APISuccess } from "../../Lib/Response";
-import EnsureAdmin from "../../Middlewares/EnsureAdmin";
-import { validOrder } from "../../Validator/ValidOrder";
-import nextRycleDate from "../../Lib/Dates/DateCycle";
+import { CacheOrder } from "../../../Cache/CacheOrder";
+import { CacheProduct } from "../../../Cache/CacheProduct";
+import OrderModel from "../../../Database/Schemas/Orders";
+import { IOrder } from "../../../Interfaces/Orders";
+import AW from "../../../Lib/AW";
+import createInvoice from "../../../Lib/Create/CreateInvoice";
+import { idInvoice, idOrder } from "../../../Lib/Generator";
+import { APIError, APISuccess } from "../../../Lib/Response";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
+import { validOrder } from "../../../Validator/ValidOrder";
+import nextRycleDate from "../../../Lib/Dates/DateCycle";
 
 export default class OrdersRouter
 {
     private server: Application;
     private router = Router();
 
-    constructor(server: Application)
+    constructor(server: Application, version: string)
     {
         this.server = server;
-        this.server.use("/oders", this.router);
+        this.server.use(`/${version}/oders`, this.router);
         
         /**
          * Gets all orders

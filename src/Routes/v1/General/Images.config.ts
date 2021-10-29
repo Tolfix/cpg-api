@@ -1,23 +1,23 @@
 import { Application, Router } from "express";
-import Logger from "../../Lib/Logger";
-import { APIError, APISuccess } from "../../Lib/Response";
-import EnsureAdmin from "../../Middlewares/EnsureAdmin";
-import { CacheImages } from "../../Cache/CacheImage";
-import { IImage } from "../../Interfaces/Images";
+import Logger from "../../../Lib/Logger";
+import { APIError, APISuccess } from "../../../Lib/Response";
+import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
+import { CacheImages } from "../../../Cache/CacheImage";
+import { IImage } from "../../../Interfaces/Images";
 import { UploadedFile } from "express-fileupload";
-import { idImages } from "../../Lib/Generator";
-import ImageModel from "../../Database/Schemas/Images";
-import AW from "../../Lib/AW";
+import { idImages } from "../../../Lib/Generator";
+import ImageModel from "../../../Database/Schemas/Images";
+import AW from "../../../Lib/AW";
 
 export default class ImagesRouter
 {
     private server: Application;
     private router = Router();
 
-    constructor(server: Application)
+    constructor(server: Application, version: string)
     {
         this.server = server;
-        this.server.use("/images", this.router);
+        this.server.use(`/${version}/images`, this.router);
         /**
          * Gets all images except buffer.
          * @route GET /images
