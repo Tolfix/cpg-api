@@ -19,9 +19,14 @@ export default class BaseModelAPI<IModel extends { uid: string }>
         return a.save();
     }
 
-    public findByUid(uid: IModel["uid"]): Promise<IModel>
+    public findByUid(uid: IModel["uid"]): Promise<IModel | []>
     {
-        return this.iModel.findOne({ uid: uid }).then((result: any) => {
+        if(!uid || uid === "undefined")
+            return Promise.resolve([]);
+        return this.iModel.findOne({ $or: [
+            { id: uid },
+            { uid: uid }
+        ]}).then((result: any) => {
             if(!result)
                 return;
 
@@ -53,17 +58,25 @@ export default class BaseModelAPI<IModel extends { uid: string }>
     public findAndPatch(
         uid: IModel["uid"],
         data: IModel
-    ): Promise<IModel>
+    ): Promise<IModel | []>
     {
-        return this.iModel.findOneAndUpdate({
-            uid: uid
-        }, data);
+        if(!uid || uid === "undefined")
+            return Promise.resolve([]);
+        return this.iModel.findOneAndUpdate({ $or: [
+            { id: uid },
+            { uid: uid }
+        ]}, data);
     };
 
     public removeByUid(uid: IModel["uid"])
     {
+        if(!uid || uid === "undefined")
+            return Promise.resolve([]);
         return new Promise((resolve, reject) => {
-            this.iModel.deleteMany({ uid: uid }, (err: any) => {
+            this.iModel.deleteMany({ $or: [
+                { id: uid },
+                { uid: uid }
+            ]}, (err: any) => {
                 if (err) {
                     reject(err);
                 } else {
