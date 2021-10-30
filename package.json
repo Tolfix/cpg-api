@@ -1,8 +1,8 @@
 {
   "name": "cpg",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CPG",
+  "main": "./build/Main.js",
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/colors": "^1.2.1",
@@ -43,7 +43,7 @@
     "url": "git+https://github.com/Tolfix/CGP-API.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tolfix",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Tolfix/CGP-API/issues"
