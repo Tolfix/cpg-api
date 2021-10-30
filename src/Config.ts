@@ -1,3 +1,6 @@
+import ConfigModel from "./Database/Schemas/Configs";
+import { IConfigs } from "./Interfaces/Admin/Configs";
+
 /**
  * @description
  * Used if this service is running in debug mode.
@@ -11,3 +14,10 @@ export const PORT = process.env.PORT ?? 8080;
 export const Express_Session_Secret = process.env.SESSION_SECRET ?? require("crypto").randomBytes(20).toString("hex");
 
 export const MongoDB_URI = process.env.MONGO_URI ?? "mongodb://localhost/cpg";
+
+export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
+    return ConfigModel.find().then(config => {
+        //@ts-ignore
+        return config[0].smtp;
+    });
+}
