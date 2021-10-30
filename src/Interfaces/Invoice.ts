@@ -49,17 +49,15 @@ export interface IInvoice
 {
     uid: `INV_${string}`;
     customer_uid: ICustomer["uid"];
-    invoiced_to: ICustomer["uid"];
     dates: IInvoice_Dates;
     amount: number;
     items: Array<IInvoices_Items>;
-    transactions?: Array<ITransactions>;
+    transactions?: Array<ITransactions["uid"]>;
     payment_method: keyof IPayments;
     status: OrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
     tax_rate: number;
     notes: string;
     paid: Boolean;
-
     notified: Boolean;
 }
 

@@ -32,7 +32,7 @@ export interface Personal
     first_name: string;
     last_name: string;
     email: string;
-    phone: Boolean;
+    phone: string;
 }
 
 export interface Billing
@@ -42,9 +42,9 @@ export interface Billing
     street01: string;
     street02?: string;
     city: string;
-    state: Boolean;
-    postcode: Boolean;
-    country: Boolean;
+    state: string;
+    postcode: string;
+    country: string;
 }
 
 export interface IDCustomer extends Document, ICustomer {};

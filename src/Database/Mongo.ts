@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { DebugMode, MongoDB_URI } from "../Config";
 import Logger from "../Lib/Logger";
+import increment from "mongoose-auto-increment";
+import event from "events";
 
 export default class Mongo_Database
 {
@@ -9,7 +11,6 @@ export default class Mongo_Database
     constructor()
     {
         mongoose.connect(MongoDB_URI);
-        
         this.db = mongoose.connection;
 
         this.db.on('error', (error: any) => {

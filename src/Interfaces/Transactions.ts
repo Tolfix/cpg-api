@@ -4,7 +4,7 @@ import { IInvoice } from "./Invoice";
 /**
  * @typedef Transactions
  * @property {string} uid
- * @property {string} date 
+ * @property {Date} date 
  * @property {string} payment_method
  * @property {number} amount
  * @property {number} fees 
@@ -13,7 +13,7 @@ export function SwaggerDOC () {};
 export interface ITransactions
 {
     uid: `TRAN_${string}`;
-    date: string;
+    date: Date;
     payment_method: IInvoice["payment_method"];
     amount: IInvoice["amount"];
     fees: number;
