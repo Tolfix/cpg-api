@@ -38,14 +38,14 @@ export default function ReCache()
                 if(!Customer.personal.email)
                     continue;
                 
-                var data = {
+                let data = {
                     "currency": "SEK",
-                    "taxNotation": "vat",
+                    "taxNotation": "vat", //or gst
                     "marginTop": 25,
                     "marginRight": 25,
                     "marginLeft": 25,
                     "marginBottom": 25,
-                    "logo": "https://cdn.tolfix.com/images/TX-Small.png",
+                    "logo": "https://cdn.tolfix.com/images/TX-Small.png", //or base64
                     "sender": {
                         "company": "Tolfix",
                         "address": "Kalendervägen 23",
@@ -54,7 +54,7 @@ export default function ReCache()
                         "country": "Sweden"
                     },
                     "client": {
-                        "company": Customer.billing.company,
+                        "company": Customer.billing.company ?? `${Customer.personal.first_name} ${Customer.personal.last_name}`,
                         "address": Customer.billing.street01,
                         "zip": Customer.billing.postcode,
                         "city": Customer.billing.city,
@@ -88,6 +88,14 @@ export default function ReCache()
                         A gentle reminder you have a invoice due to <strong>${invoice.dates.due_date}</strong> <br />
                         <br />
                         Refrence invoice id <strong>INVOICE ${invoice.id}</strong> when paying!
+                        <br />
+                        <br />
+                        Payment method: ${invoice.payment_method}
+                        <br />
+                        <br />
+                        Company information : <a href="https://tolfix.com/knowledgebase">https://tolfix.com/knowledgebase</a>
+                        <br />
+                        Company Billing : <a href="https://tolfix.com/about/billing">https://tolfix.com/about/billing</a>
                         `
                     }, (err, sent) => {
                         if(!err && sent)
