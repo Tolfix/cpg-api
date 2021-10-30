@@ -73,5 +73,5 @@ export interface IInvoices_Items
 {
     notes: string;
     amount: IInvoice["amount"];
-    taxed: Boolean;
+    quantity: number;
 }

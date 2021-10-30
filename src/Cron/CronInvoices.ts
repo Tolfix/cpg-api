@@ -40,12 +40,12 @@ export default function ReCache()
                 
                 var data = {
                     "currency": "SEK",
-                    "taxNotation": "vat", //or gst
+                    "taxNotation": "vat",
                     "marginTop": 25,
                     "marginRight": 25,
                     "marginLeft": 25,
                     "marginBottom": 25,
-                    "logo": "https://cdn.tolfix.com/images/TX-Small.png", //or base64
+                    "logo": "https://cdn.tolfix.com/images/TX-Small.png",
                     "sender": {
                         "company": "Tolfix",
                         "address": "Kalendervägen 23",
@@ -64,9 +64,9 @@ export default function ReCache()
                     "invoiceDate": invoice.dates.due_date,
                     "products": invoice.items.map((item) => {
                         return {
-                            "quantity": "1",
+                            "quantity": item.quantity,
                             "description": item.notes,
-                            "tax": "0",
+                            "tax": invoice.tax_rate,
                             "price": item.amount
                         }
                     }),
