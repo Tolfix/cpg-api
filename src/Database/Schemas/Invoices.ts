@@ -1,22 +1,19 @@
   
-import { model, Schema } from "mongoose"
+import mongoose, { model, Schema } from "mongoose"
+import increment from "mongoose-auto-increment";
+import { MongoDB_URI } from "../../Config";
 import { IDInvoice } from "../../Interfaces/Invoice";
 
 const InvoiceSchame = new Schema
 (
     {
-
+        id: Number,
         uid: {
             type: String,
             required: true,
         },
 
         customer_uid: {
-            type: String,
-            required: true,
-        },
-
-        invoiced_to: {
             type: String,
             required: true,
         },
@@ -73,6 +70,16 @@ const InvoiceSchame = new Schema
 
     }
 );
+
+const connection = mongoose.createConnection(MongoDB_URI);
+increment.initialize(connection);
+
+InvoiceSchame.plugin(increment.plugin, {
+    model: 'invoices',
+    field: 'id',
+    startAt: 0,
+    incrementBy: 1
+});
 
 const InvoiceModel = model<IDInvoice>("invoices", InvoiceSchame);
 

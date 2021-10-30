@@ -1,8 +1,10 @@
   
-import { model, Schema } from "mongoose"
+import mongoose,{ model, Schema } from "mongoose"
+import increment from "mongoose-auto-increment";
+import { MongoDB_URI } from "../../Config";
 import { IDImage } from "../../Interfaces/Images";
 
-const ImageSchame = new Schema
+const ImageSchema = new Schema
 (
     {
 
@@ -34,6 +36,16 @@ const ImageSchame = new Schema
     }
 );
 
-const ImageModel = model<IDImage>("images", ImageSchame);
+const connection = mongoose.createConnection(MongoDB_URI);
+increment.initialize(connection);
+
+ImageSchema.plugin(increment.plugin, {
+    model: 'images',
+    field: 'id',
+    startAt: 0,
+    incrementBy: 1
+});
+
+const ImageModel = model<IDImage>("images", ImageSchema);
 
 export default ImageModel;

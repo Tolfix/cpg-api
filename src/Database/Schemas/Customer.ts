@@ -1,5 +1,7 @@
   
-import { model, Schema } from "mongoose"
+import mongoose, { model, Schema } from "mongoose"
+import increment from "mongoose-auto-increment";
+import { MongoDB_URI } from "../../Config";
 import { IDCustomer } from "../../Interfaces/Customer";
 
 const CustomerSchema = new Schema
@@ -33,6 +35,16 @@ const CustomerSchema = new Schema
 
     }
 );
+
+const connection = mongoose.createConnection(MongoDB_URI);
+increment.initialize(connection);
+
+CustomerSchema.plugin(increment.plugin, {
+    model: 'customer',
+    field: 'id',
+    startAt: 0,
+    incrementBy: 1
+});
 
 const CustomerModel = model<IDCustomer>("customer", CustomerSchema);
 

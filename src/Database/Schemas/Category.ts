@@ -1,5 +1,6 @@
-  
-import { model, Schema } from "mongoose"
+import mongoose, { model, Schema } from "mongoose"
+import increment from "mongoose-auto-increment";
+import { MongoDB_URI } from "../../Config";
 import { IDCategory } from "../../Interfaces/Categories";
 
 const CategorySchema = new Schema
@@ -28,6 +29,16 @@ const CategorySchema = new Schema
 
     }
 );
+
+const connection = mongoose.createConnection(MongoDB_URI);
+increment.initialize(connection);
+
+CategorySchema.plugin(increment.plugin, {
+    model: 'category',
+    field: 'id',
+    startAt: 0,
+    incrementBy: 1
+});
 
 const CategoryModel = model<IDCategory>("category", CategorySchema);
 
