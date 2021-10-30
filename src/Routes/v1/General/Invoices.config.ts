@@ -99,7 +99,6 @@ export default class InvoiceRouter
             let info: IInvoice = {
                 uid: idInvoice(),
                 customer_uid: customer_uid,
-                invoiced_to: customer_uid,
                 dates,
                 status,
                 tax_rate,
