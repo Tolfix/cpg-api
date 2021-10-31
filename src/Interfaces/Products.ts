@@ -27,11 +27,12 @@ export interface IProduct
     BStock: Boolean;
     hidden: Boolean;
     special: boolean;
-    payment_type: Partial<IPaymentType>;
+    // payment_type: Partial<IPaymentType>;
     price: number;
     setup_fee: number;
     images?: IImage["uid"][];
-    recurring_method?: Partial<IRecurringMethod>;
+    tax_rate: number;
+    // recurring_method?: Partial<IRecurringMethod>;
 }
 
 export interface IDProduct extends IProduct, Document {};

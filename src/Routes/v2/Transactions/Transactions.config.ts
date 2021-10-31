@@ -13,10 +13,12 @@ export default class TransactionsRouter
         this.server.use(`/${version}/transactions`, this.router);
 
         this.router.get("/", [
+            EnsureAdmin,
             TransactionsController.list
         ]);
 
         this.router.get("/:uid", [
+            EnsureAdmin,
             TransactionsController.getByUid
         ]);
 

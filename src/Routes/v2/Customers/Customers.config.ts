@@ -13,10 +13,12 @@ export default class CustomerRouter
         this.server.use(`/${version}/customers`, this.router);
 
         this.router.get("/", [
+            EnsureAdmin,
             CustomerController.list
         ]);
 
         this.router.get("/:uid", [
+            EnsureAdmin,
             CustomerController.getByUid
         ]);
 

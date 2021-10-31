@@ -17,10 +17,12 @@ export default class InvoiceRouter
         this.server.use(`/${version}/invoices`, this.router);
 
         this.router.get("/", [
+            EnsureAdmin,
             InvoiceController.list
         ]);
 
         this.router.get("/:uid", [
+            EnsureAdmin,
             InvoiceController.getByUid
         ]);
 
