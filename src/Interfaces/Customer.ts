@@ -23,6 +23,7 @@ export interface ICustomer
     uid: `CUS_${string}`;
     personal: Personal;
     billing: Billing;
+    password: string;
     createdAt: Date;
     extra?: any;
 }
