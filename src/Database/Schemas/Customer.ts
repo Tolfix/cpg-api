@@ -28,6 +28,11 @@ const CustomerSchema = new Schema
             default: Date.now,
         },
 
+        password: {
+            type: String,
+            required: true,
+        },
+
         extra: {
             type: Object,
             required: false,
