@@ -87,7 +87,7 @@ export default function Cron_Invoices()
                         body: `Hello ${Customer.personal.first_name} ${Customer.personal.last_name} <br />
                         A gentle reminder you have a invoice due to <strong>${invoice.dates.due_date}</strong> <br />
                         <br />
-                        Refrence invoice id <strong>INVOICE ${invoice.id}</strong> when paying!
+                        Reference invoice id <strong>INVOICE ${invoice.id}</strong> when paying!
                         <br />
                         <br />
                         Payment method: ${invoice.payment_method}
