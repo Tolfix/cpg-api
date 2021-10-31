@@ -48,10 +48,10 @@ const ProductSchema = new Schema
             required: true,
         },
 
-        payment_type: {
-            type: Object,
-            required: true,
-        },
+        // payment_type: {
+        //     type: Object,
+        //     required: true,
+        // },
 
         price: {
             type: Number,
@@ -62,11 +62,16 @@ const ProductSchema = new Schema
             type: Number,
             required: true,
         },
-        
-        recurring_method: {
-            type: Object,
-            default: '',
+
+        tax_rate: {
+            type: Number,
+            required: true,
         },
+        
+        // recurring_method: {
+        //     type: Object,
+        //     default: '',
+        // },
 
         image: {
             type: Object,
