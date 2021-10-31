@@ -6,7 +6,7 @@ import CustomerModel from "../Database/Schemas/Customer";
 import { SendEmail } from "../Email/Send";
 import easyinvoice from 'easyinvoice';
 
-export default function ReCache()
+export default function Cron_Invoices()
 {
     // Every hour
     new CronJob("0 */12 * * *", () => {

@@ -2,7 +2,7 @@ import { CronJob } from "cron";
 import { CacheOrder } from "../Cache/CacheOrder";
 import Logger from "../Lib/Logger";
 
-export default function ReCache()
+export default function Cron_Orders()
 {
     // Every hour
     new CronJob("0 */12 * * *", () => {
