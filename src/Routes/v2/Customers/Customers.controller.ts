@@ -61,9 +61,14 @@ async function patch(req: Request, res: Response)
 {
     if(req.body.password)
     {
-        const salt = await bcrypt.genSalt(10)
-        const hash = await bcrypt.hash(req.body.password ?? "123qwe123", salt);
-        req.body.password = hash;
+        // Check if they are the same..
+        const Customer = await CustomerModel.findOne({ id: req.params.uid });
+        if(Customer?.password !== req.body.password)
+        {
+            const salt = await bcrypt.genSalt(10)
+            const hash = await bcrypt.hash(req.body.password ?? "123qwe123", salt);
+            req.body.password = hash;
+        }
     }
     API_CustomerModel.findAndPatch((req.params.uid as ICustomer["uid"]), req.body).then((result) => {
         APISuccess(result)(res);
