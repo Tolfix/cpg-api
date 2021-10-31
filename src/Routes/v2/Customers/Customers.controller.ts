@@ -1,20 +1,31 @@
 import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
 import CustomerModel from "../../../Database/Schemas/Customer";
 import { ICustomer } from "../../../Interfaces/Customer";
 import { idCustomer } from "../../../Lib/Generator";
 import { APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
+import Logger from "../../../Lib/Logger";
 
 const API_CustomerModel = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
 function insert(req: Request, res: Response)
 {
-    API_CustomerModel.create(req.body)
-        .then((result) => {
-            APISuccess({
-                uid: result.uid
-            })(res);
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.password ?? "123qwe123", salt, (err, hash) => {
+            if(err)
+                Logger.error(err);
+
+            req.body.password = hash;
+
+            API_CustomerModel.create(req.body)
+                .then((result) => {
+                    APISuccess({
+                        uid: result.uid
+                    })(res);
+                });
         });
+    });
 }
 
 function getByUid(req: Request, res: Response)
@@ -46,8 +57,14 @@ function list(req: Request, res: Response)
     });
 }
 
-function patch(req: Request, res: Response)
+async function patch(req: Request, res: Response)
 {
+    if(req.body.password)
+    {
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(req.body.password ?? "123qwe123", salt);
+        req.body.password = hash;
+    }
     API_CustomerModel.findAndPatch((req.params.uid as ICustomer["uid"]), req.body).then((result) => {
         APISuccess(result)(res);
     });
