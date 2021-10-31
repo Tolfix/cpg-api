@@ -1,4 +1,5 @@
   
+import { truncate } from "fs";
 import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
@@ -12,11 +13,6 @@ const OrderSchame = new Schema
             type: String,
             required: true,
         },
-
-        // invoice_uid: {
-        //     type: String,
-        //     required: false,
-        // },
 
         customer_uid: {
             type: String,
@@ -60,6 +56,11 @@ const OrderSchame = new Schema
         dates: {
             type: Object,
             required: true
+        },
+
+        invoices: {
+            type: Array,
+            required: true,
         },
 
     }
