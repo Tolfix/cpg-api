@@ -23,9 +23,9 @@ export interface IOrder
 {
     uid: `ORD_${string}`;
     customer_uid: ICustomer["uid"];
+    product_uid: IProduct["uid"];
     payment_method: keyof IPayments;
     order_status: OrderStatus;
-    product_uid: IProduct["uid"];
     billing_type: IPaymentType;
     /**
      * @description
