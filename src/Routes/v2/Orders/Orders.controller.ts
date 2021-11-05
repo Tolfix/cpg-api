@@ -5,11 +5,12 @@ import InvoiceModel from "../../../Database/Schemas/Invoices";
 import OrderModel from "../../../Database/Schemas/Orders";
 import ProductModel from "../../../Database/Schemas/Products";
 import { IInvoices_Items } from "../../../Interfaces/Invoice";
-import { IOrder } from "../../../Interfaces/Orders";
+import { IOrder, IOrderDates } from "../../../Interfaces/Orders";
 import nextRycleDate from "../../../Lib/Dates/DateCycle";
 import { idInvoice, idOrder } from "../../../Lib/Generator";
 import { APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
+import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
 
 const API = new BaseModelAPI<IOrder>(idOrder, OrderModel);
 
@@ -28,38 +29,7 @@ async function insert(req: Request, res: Response)
 
     req.body.dates = dates;
 
-    // Get our product
-    const Product = await ProductModel.findOne({ id: req.body.product_uid });
-
-    // Get our category
-    const Category = await CategoryModel.findOne({ id: Product?.category_uid });
-
-    // Get customer id
-    const Customer_Id = req.body.customer_uid;
-
-    // Create invoice
-    const newInvoice = await (new InvoiceModel({
-        uid: idInvoice(),
-        customer_uid: Customer_Id,
-        dates: {
-            due_date: dates.next_recycle,
-            invoiced_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
-        },
-        amount: Product?.price,
-        items: [
-            <IInvoices_Items>{
-                amount: Product?.price,
-                notes: `${Category?.name} - ${Product?.name}`,
-                quantity: req.body.quantity
-            }
-        ],
-        payment_method: req.body.payment_method,
-        status: req.body.order_status,
-        tax_rate: Product?.tax_rate,
-        notes: "",
-        paid: false,
-        notified: false,
-    })).save();
+    const newInvoice = await createInvoiceFromOrder(req.body as IOrder);
 
     req.body.invoices = [newInvoice.id];
 
