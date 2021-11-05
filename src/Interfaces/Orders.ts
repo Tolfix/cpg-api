@@ -34,7 +34,7 @@ export interface IOrder
     billing_cycle?: IRecurringMethod;
     quantity: number;
     price_override?: number;
-    dates: IOrderDates;
+    dates: IOrderDates<IRecurringMethod>;
     invoices: Array<IInvoice["uid"]>;
 }
 
@@ -42,7 +42,7 @@ export interface IDOrder extends IOrder, Document {};
 
 export type OrderStatus = "active" | "pending" | "fruad" | "cancelled";
 
-export interface IOrderDates
+export interface IOrderDates<isRecurring extends string>
 {
     createdAt: Date;
     
@@ -50,11 +50,11 @@ export interface IOrderDates
      * @description
      * if 'billing_type' is "recurring" `last_recycle` wont be undefined
      */    
-    last_recycle?: Date;
+    last_recycle: isRecurring extends "recurring" ? Date : undefined;
 
     /**
      * @description
      * if 'billing_type' is "recurring" `next_recycle` wont be undefined
      */    
-    next_recycle?: Date;
+    next_recycle: isRecurring extends "recurring" ? Date : undefined;
 }
