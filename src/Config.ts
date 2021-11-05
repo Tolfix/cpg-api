@@ -15,6 +15,11 @@ export const Express_Session_Secret = process.env.SESSION_SECRET ?? require("cry
 
 export const MongoDB_URI = process.env.MONGO_URI ?? "mongodb://localhost/cpg";
 
+// osTicket configs
+export const osticket_url = process.env.OSTICKET_URL ?? "";
+export const osticket_api_key = process.env.OSTICKET_API_KEY ?? "";
+ 
+
 export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
     return ConfigModel.find().then(config => {
         //@ts-ignore
