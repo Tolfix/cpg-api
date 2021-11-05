@@ -45,7 +45,7 @@ export default function Cron_Invoices()
                     "marginRight": 25,
                     "marginLeft": 25,
                     "marginBottom": 25,
-                    "logo": "https://cdn.tolfix.com/images/TX-Small.png", //or base64
+                    "logo": "https://cdn.tolfix.com/images/Tolfix.png", //or base64
                     "sender": {
                         "company": "Tolfix",
                         "address": "Kalendervägen 23",
@@ -70,7 +70,7 @@ export default function Cron_Invoices()
                             "price": item.amount
                         }
                     }),
-                    "bottomNotice": "Kindly pay your invoice within 14 days.",
+                    // "bottomNotice": "Kindly pay your invoice within 14 days.",
                 };
                 
                 //@ts-ignore

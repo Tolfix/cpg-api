@@ -1,7 +1,7 @@
 import { IRecurringMethod } from "../../Interfaces/Products";
 import datetime from "date-and-time";
 
-export default function nextRycleDate(date: Date, type: IRecurringMethod): Date
+export default function nextRecycleDate(date: Date, type: IRecurringMethod): Date
 {
     if(type === "monthly")
         return (datetime.addMonths(date, 1));
