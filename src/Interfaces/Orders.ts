@@ -34,7 +34,7 @@ export interface IOrder
     billing_cycle?: IRecurringMethod;
     quantity: number;
     price_override?: number;
-    dates: IOrderDates<IRecurringMethod>;
+    dates: IOrderDates<IOrder["billing_type"]>;
     invoices: Array<IInvoice["uid"]>;
 }
 
