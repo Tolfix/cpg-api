@@ -13,6 +13,16 @@ const TransactionsSchema = new Schema
             required: true,
         },
 
+        customer_uid: {
+            type: Number,
+            required: true
+        },
+
+        invoice_uid: {
+            type: Number,
+            required: true
+        },
+        
         date: {
             type: String,
             required: true,
