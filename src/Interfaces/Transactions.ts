@@ -13,7 +13,7 @@ export function SwaggerDOC () {};
 export interface ITransactions
 {
     uid: `TRAN_${string}`;
-    date: Date;
+    date: Date | string;
     payment_method: IInvoice["payment_method"];
     amount: IInvoice["amount"];
     fees: number;
