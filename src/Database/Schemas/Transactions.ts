@@ -20,7 +20,7 @@ const TransactionsSchema = new Schema
 
         invoice_uid: {
             type: Number,
-            required: true
+            required: false
         },
         
         date: {
