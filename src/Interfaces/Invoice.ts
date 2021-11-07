@@ -65,8 +65,8 @@ export interface IDInvoice extends IInvoice, Document {};
 
 export interface IInvoice_Dates
 {
-    invoice_date: Date;
-    due_date: Date;
+    invoice_date: Date | string;
+    due_date: Date | string;
 }
 
 export interface IInvoices_Items
