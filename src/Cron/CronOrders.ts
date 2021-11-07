@@ -1,6 +1,7 @@
 import { CronJob } from "cron";
 import OrderModel from "../Database/Schemas/Orders";
 import Logger from "../Lib/Logger";
+import dateFormat from "date-and-time";
 import { createInvoiceFromOrder } from "../Lib/Orders/newInvoice";
 import nextRecycleDate from "../Lib/Dates/DateCycle";
 
@@ -20,7 +21,12 @@ export default function Cron_Orders()
                     if(order.dates.next_recycle)
                     {
                         // Check if the dates are 14 days between
-                        if(order.dates.next_recycle.getTime() - new Date().getTime() <= 14 * 24 * 60 * 60 * 1000)
+                        if(dateFormat.parse(
+                            typeof order.dates.next_recycle === "string" ? 
+                                                                            order.dates.next_recycle
+                                                                            : 
+                                                                            dateFormat.format(new Date(),
+                            "YYYY-MM-DD") , "YYYY-MM-DD").getTime() - new Date().getTime() <= 14 * 24 * 60 * 60 * 1000)
                         {
                             // Create a new invoice
                             const newInvoice = await createInvoiceFromOrder(order);
