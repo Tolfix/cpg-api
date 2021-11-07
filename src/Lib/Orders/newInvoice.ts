@@ -9,9 +9,13 @@ import dateFormat from "date-and-time";
 
 
 // Create a method that checks if the order next recycle is within 14 days
-export function isWithinNext14Days(date: Date): boolean
+export function isWithinNext14Days(date: Date | string): boolean
 {
-    const nextRecycle = new Date(date);
+    let nextRecycle;
+    if(typeof date === "string")
+        nextRecycle = dateFormat.parse(date, "YYYY-MM-DD");
+    else
+        nextRecycle = new Date(date);
     const today = new Date();
     const diff = Math.abs(nextRecycle.getTime() - today.getTime());
     const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
