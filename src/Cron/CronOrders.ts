@@ -4,6 +4,7 @@ import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
 import { createInvoiceFromOrder } from "../Lib/Orders/newInvoice";
 import nextRecycleDate from "../Lib/Dates/DateCycle";
+import { d_Days } from "../Config";
 
 export default function Cron_Orders()
 {
@@ -26,7 +27,7 @@ export default function Cron_Orders()
                                                                             order.dates.next_recycle
                                                                             : 
                                                                             dateFormat.format(new Date(),
-                            "YYYY-MM-DD") , "YYYY-MM-DD").getTime() - new Date().getTime() <= 14 * 24 * 60 * 60 * 1000)
+                            "YYYY-MM-DD") , "YYYY-MM-DD").getTime() - new Date().getTime() <= d_Days * 24 * 60 * 60 * 1000)
                         {
                             // Create a new invoice
                             const newInvoice = await createInvoiceFromOrder(order);
