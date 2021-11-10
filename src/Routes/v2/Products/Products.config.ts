@@ -1,6 +1,6 @@
 import { Application, Router } from "express";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
-import InvoiceController from "./Products.controller";
+import ProductController from "./Products.controller";
 
 export default class ProductsRouter
 {
@@ -14,32 +14,32 @@ export default class ProductsRouter
 
         this.router.get("/", [
             EnsureAdmin,
-            InvoiceController.list
+            ProductController.list
         ]);
 
         this.router.get("/:uid", [
             EnsureAdmin,
-            InvoiceController.getByUid
+            ProductController.getByUid
         ]);
 
         this.router.post("/", [
             EnsureAdmin,
-            InvoiceController.insert
+            ProductController.insert
         ]);
 
         this.router.patch("/:uid", [
             EnsureAdmin,
-            InvoiceController.patch
+            ProductController.patch
         ]);
 
         this.router.put("/:uid", [
             EnsureAdmin,
-            InvoiceController.patch
+            ProductController.patch
         ]);
 
         this.router.delete("/:uid", [
             EnsureAdmin,
-            InvoiceController.removeById
+            ProductController.removeById
         ]);
 
     }
