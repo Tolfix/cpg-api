@@ -36,6 +36,7 @@
     "nodemailer": "^6.7.0",
     "prompt": "^1.2.0",
     "request": "^2.88.2",
+    "stripe": "^8.186.1",
     "supertest": "^6.1.6",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6"
