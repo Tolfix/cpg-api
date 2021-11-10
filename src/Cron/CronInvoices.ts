@@ -5,6 +5,7 @@ import dateFormat from "date-and-time";
 import CustomerModel from "../Database/Schemas/Customer";
 import { SendEmail } from "../Email/Send";
 import createPDFInvoice from "../Lib/Invoices/CreatePDFInvoice";
+import { d_Days } from "../Config";
 
 export default function Cron_Invoices()
 {
@@ -15,16 +16,16 @@ export default function Cron_Invoices()
         // Trigger if a invoice is dued in the next 2 weeks.
         // Send email and notify,
         // Mark it as sent notification.
-        const getDates14Ahead = () => {
+        const getDates30DaysAhead = () => {
             let dates = [];
-            for (let i = 0; i < 14; i++)
+            for (let i = 0; i < d_Days; i++)
                 dates.push(dateFormat.format(dateFormat.addDays(new Date(), i+1), "YYYY-MM-DD"))
             return dates;
         }
 
         InvoiceModel.find({
             "dates.due_date": {
-                $in: [...(getDates14Ahead())]
+                $in: [...(getDates30DaysAhead())]
             },
             notified: false
         }).then(async (invoices) => {
