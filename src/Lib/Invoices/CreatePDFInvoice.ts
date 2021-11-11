@@ -12,6 +12,8 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             throw new Error("Customer not found");
     
         let data = {
+            // @ts-ignore
+            "documentTitle": `Invoice #${invoice.id}`,
             "currency": "SEK",
             "taxNotation": "vat",
             "marginTop": 25,
