@@ -52,7 +52,7 @@ export default class InvoiceRouter
             if(!invoice)
                 return res.status(404).send("Invoice not found");
 
-            const result = createPDFInvoice(invoice);
+            const result = await createPDFInvoice(invoice);
 
             res.writeHead(200, {
                 'Content-Disposition': `attachment; filename="invoice.pdf"`,
