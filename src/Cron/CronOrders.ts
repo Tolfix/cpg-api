@@ -22,12 +22,7 @@ export default function Cron_Orders()
                     if(order.dates.next_recycle)
                     {
                         // Check if the dates are 14 days between
-                        if(dateFormat.parse(
-                            typeof order.dates.next_recycle === "string" ? 
-                                                                            order.dates.next_recycle
-                                                                            : 
-                                                                            dateFormat.format(new Date(),
-                            "YYYY-MM-DD") , "YYYY-MM-DD").getTime() - new Date().getTime() <= d_Days * 24 * 60 * 60 * 1000)
+                        if(dateFormat.parse(order.dates.next_recycle, "YYYY-MM-DD").getTime() - new Date().getTime() <= d_Days * 24 * 60 * 60 * 1000)
                         {
                             // Create a new invoice
                             const newInvoice = await createInvoiceFromOrder(order);
@@ -36,7 +31,9 @@ export default function Cron_Orders()
                             // Save our last recyle in dates.last_recycle
                             order.dates.last_recycle = order.dates.next_recycle;
                             // Update order.dates.next_recycle
-                            order.dates.next_recycle = nextRecycleDate(new Date, order.billing_cycle ?? "monthly");
+                            order.dates.next_recycle = dateFormat.format(nextRecycleDate(
+                                dateFormat.parse(order.dates.next_recycle, "YYYY-MM-DD"), order.billing_cycle ?? "monthly")
+                            , "YYYY-MM-DD");
                             // mark order updated in dates
                             order.markModified("dates");
                             // Save the order

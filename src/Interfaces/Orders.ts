@@ -50,11 +50,11 @@ export interface IOrderDates<isRecurring extends string>
      * @description
      * if 'billing_type' is "recurring" `last_recycle` wont be undefined
      */    
-    last_recycle: isRecurring extends "recurring" ? Date | string : undefined;
+    last_recycle: isRecurring extends "recurring" ? string : undefined;
 
     /**
      * @description
      * if 'billing_type' is "recurring" `next_recycle` wont be undefined
      */    
-    next_recycle: isRecurring extends "recurring" ? Date | string : undefined;
+    next_recycle: isRecurring extends "recurring" ? string : undefined;
 }
