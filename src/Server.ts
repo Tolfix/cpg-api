@@ -24,6 +24,11 @@ export default function start()
     server.use(fileUpload({
         createParentPath: true,
     }));
+
+    server.use(cors({
+        origin: "*",
+        credentials: true,
+    }));
     
     let sessionMiddleWare = session({
         secret: Express_Session_Secret,
@@ -36,11 +41,6 @@ export default function start()
     });
     
     server.use(sessionMiddleWare);
-    
-    server.use(cors({
-        origin: true,
-        credentials: true
-    }));
     
     server.use(express.urlencoded({ extended: true }));
     server.use(express.json());
