@@ -30,9 +30,10 @@ export default function Cron_Orders()
                             order.invoices.push(newInvoice.id);
                             // Save our last recyle in dates.last_recycle
                             order.dates.last_recycle = order.dates.next_recycle;
+                            const temptNextRecycle = order.dates.last_recycle
                             // Update order.dates.next_recycle
                             order.dates.next_recycle = dateFormat.format(nextRecycleDate(
-                                dateFormat.parse(order.dates.next_recycle, "YYYY-MM-DD"), order.billing_cycle ?? "monthly")
+                                dateFormat.parse(temptNextRecycle, "YYYY-MM-DD"), order.billing_cycle ?? "monthly")
                             , "YYYY-MM-DD");
                             // mark order updated in dates
                             order.markModified("dates");
