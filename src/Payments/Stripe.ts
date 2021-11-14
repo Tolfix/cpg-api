@@ -10,10 +10,12 @@ const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
 // Create a method that will create a payment intent from an order
 export const CreatePaymentIntent = async (order: IOrder) => {
     const customer = await CustomerModel.findOne({ id: order.customer_uid });
-    const product = await ProductModel.findOne({ id: order.product_uid });
+    const Products = await ProductModel.find({ id: {
+        $in: [...order.products_uid]
+    } });
 
     return (await Stripe.paymentIntents.create({
-        amount: order.price_override ? order.price_override : product?.price ?? 0 * 100,
+        amount: order.price_override ? order.price_override : Products.reduce((acc, cur) => acc + cur.price, 0) ?? 0 * 100,
         currency: "usd",
         payment_method_types: ["card"],
         receipt_email: customer?.personal.email,

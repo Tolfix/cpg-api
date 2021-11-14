@@ -1,11 +1,10 @@
-
-import CategoryModel from "../../Database/Schemas/Category";
 import InvoiceModel from "../../Database/Schemas/Invoices";
 import ProductModel from "../../Database/Schemas/Products";
 import { IInvoices_Items } from "../../Interfaces/Invoice";
 import { IOrder } from "../../Interfaces/Orders";
 import { idInvoice } from "../Generator";
 import dateFormat from "date-and-time";
+import getCategoryByProduct from "../Products/getCategoryByProduct";
 
 
 // Create a method that checks if the order next recycle is within 14 days
@@ -27,11 +26,10 @@ export function isWithinNext14Days(date: Date | string): boolean
 export async function createInvoiceFromOrder(order: IOrder)
 {
 
-    // Get our product
-    const Product = await ProductModel.findOne({ id: order.product_uid });
-
-    // Get our category
-    const Category = await CategoryModel.findOne({ id: Product?.category_uid });
+    // Get our products
+    const Products = await ProductModel.find({ id: {
+        $in: [...order.products_uid]
+    } });
 
     // Get customer id
     const Customer_Id = order.customer_uid;
@@ -44,17 +42,16 @@ export async function createInvoiceFromOrder(order: IOrder)
             due_date: order.dates.next_recycle,
             invoiced_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
         },
-        amount: Product?.price,
-        items: [
-            <IInvoices_Items>{
-                amount: Product?.price,
-                notes: `${Category?.name} - ${Product?.name}`,
-                quantity: order.quantity
-            }
-        ],
+        // Go through all products prices and add them together
+        amount: Products.reduce((acc, cur) => acc + cur.price, 0),
+        items: Products.map(async (product) => (<IInvoices_Items>{
+            amount: product.price,
+            notes: `${(await getCategoryByProduct(product))?.name} - ${product?.name}`,
+            quantity: order.quantity,
+        })),
         payment_method: order.payment_method,
         status: order.order_status,
-        tax_rate: Product?.tax_rate,
+        tax_rate: Products?.reduce((acc, cur) => cur.tax_rate, 0),
         notes: "",
         paid: false,
         notified: false,
