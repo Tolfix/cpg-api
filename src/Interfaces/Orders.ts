@@ -3,6 +3,7 @@ import { ICustomer } from "./Customer";
 import { IInvoice } from "./Invoice";
 import { IPayments } from "./Payments";
 import { IPaymentType, IProduct, IRecurringMethod } from "./Products";
+import { IPromotionsCodes } from "./PromotionsCodes";
 
 /**
  * @typedef Order
@@ -36,6 +37,7 @@ export interface IOrder
     price_override?: number;
     dates: IOrderDates<IOrder["billing_type"]>;
     invoices: Array<IInvoice["uid"]>;
+    promotion_codes?: Array<IPromotionsCodes["id"]>;
 }
 
 export interface IDOrder extends IOrder, Document {};

@@ -63,6 +63,11 @@ const OrderSchame = new Schema
             required: true,
         },
 
+        promotion_codes: {
+            type: Array,
+            require: false
+        },
+
     }
 );
 
