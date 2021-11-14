@@ -1,9 +1,7 @@
-  
-import { truncate } from "fs";
-import mongoose, { model, Schema } from "mongoose"
+import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IDOrder } from "../../Interfaces/Orders";
+import { IOrder } from "../../Interfaces/Orders";
 
 const OrderSchame = new Schema
 (
@@ -29,8 +27,8 @@ const OrderSchame = new Schema
             default: "pending",
         },
 
-        product_uid: {
-            type: String,
+        products_uid: {
+            type: Array,
             required: true,
         },
 
@@ -81,6 +79,6 @@ OrderSchame.plugin(increment.plugin, {
     incrementBy: 1
 });
 
-const OrderModel = model<IDOrder>("orders", OrderSchame);
+const OrderModel = model<IOrder & Document>("orders", OrderSchame);
 
 export default OrderModel;
