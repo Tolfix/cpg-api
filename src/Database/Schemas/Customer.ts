@@ -1,8 +1,8 @@
   
-import mongoose, { model, Schema } from "mongoose"
+import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IDCustomer } from "../../Interfaces/Customer";
+import { ICustomer } from "../../Interfaces/Customer";
 
 const CustomerSchema = new Schema
 (
@@ -51,6 +51,6 @@ CustomerSchema.plugin(increment.plugin, {
     incrementBy: 1
 });
 
-const CustomerModel = model<IDCustomer>("customer", CustomerSchema);
+const CustomerModel = model<ICustomer & Document>("customer", CustomerSchema);
 
 export default CustomerModel;
