@@ -81,14 +81,23 @@ function removeById(req: Request, res: Response)
         .then((result)=>{
             APISuccess(result, 204)(res)
         });
- };
+};
+
+function getMyProfile(req: Request, res: Response)
+{
+    // @ts-ignore
+    API_CustomerModel.findByUid((req.payload.id as ICustomer["uid"])).then((result) => {
+        APISuccess(result)(res);
+    });
+}
 
 const CustomerController = {
     insert,
     getByUid,
     list,
     patch,
-    removeById
+    removeById,
+    getMyProfile
 }
 
 export default CustomerController;
