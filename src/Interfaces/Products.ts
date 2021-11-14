@@ -19,6 +19,7 @@ import { IImage } from "./Images";
 export function Swagger_DOC () {};
 export interface IProduct
 {
+    id: number;
     uid: `PROD_${string}`;
     name: string;
     description: string;
@@ -34,8 +35,6 @@ export interface IProduct
     tax_rate: number;
     // recurring_method?: Partial<IRecurringMethod>;
 }
-
-export interface IDProduct extends IProduct, Document {};
 
 export type IPaymentType = "free" | "one_time" | "recurring";
 
