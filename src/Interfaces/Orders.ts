@@ -22,9 +22,10 @@ export function Swagger_DOC () {};
 
 export interface IOrder
 {
+    id: any;
     uid: `ORD_${string}`;
     customer_uid: ICustomer["uid"];
-    product_uid: IProduct["uid"];
+    products_uid: Array<IProduct["uid"]>;
     payment_method: keyof IPayments;
     order_status: OrderStatus;
     billing_type: IPaymentType;
@@ -40,7 +41,6 @@ export interface IOrder
     promotion_codes?: Array<IPromotionsCodes["id"]>;
 }
 
-export interface IDOrder extends IOrder, Document {};
 
 export type OrderStatus = "active" | "pending" | "fruad" | "cancelled";
 
