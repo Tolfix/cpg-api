@@ -17,11 +17,11 @@ export default function EnsureAuth()
             if (err) 
                 return APIError(`Unauthorized user.`, 403)(res);
 
-            if(!payload?.data?.personal)
+            if(!payload?.data?.id)
                 return APIError(`Wrong payload.`, 403)(res);
 
             //@ts-ignore
-            req.payload = payload.data;
+            req.customer = payload.data;
 
             return next();
         });

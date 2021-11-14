@@ -47,5 +47,3 @@ export interface Billing
     postcode: string;
     country: string;
 }
-
-export interface IDCustomer extends Document, ICustomer {};
