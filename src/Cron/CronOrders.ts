@@ -25,7 +25,7 @@ export default function Cron_Orders()
                         if(dateFormat.parse(order.dates.next_recycle, "YYYY-MM-DD").getTime() - new Date().getTime() <= d_Days * 24 * 60 * 60 * 1000)
                         {
                             const temptNextRecycle = order.dates.next_recycle;
-                            order.dates.last_recycle = order.dates.next_recycle;
+                            order.dates.last_recycle = temptNextRecycle;
                             // Update order.dates.next_recycle
                             order.dates.next_recycle = dateFormat.format(nextRecycleDate(
                                 dateFormat.parse(temptNextRecycle, "YYYY-MM-DD"), order.billing_cycle ?? "monthly")
