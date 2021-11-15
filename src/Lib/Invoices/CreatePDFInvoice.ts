@@ -26,14 +26,23 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "address": "Kalendervägen 23",
                 "zip": "415 34",
                 "city": "Göteborg",
-                "country": "Sweden"
+                "country": "Sweden",
             },
             "client": {
                 "company": Customer.billing.company ?? `${Customer.personal.first_name} ${Customer.personal.last_name}`,
                 "address": Customer.billing.street01,
                 "zip": Customer.billing.postcode,
                 "city": Customer.billing.city,
-                "country": Customer.billing.country
+                "country": Customer.billing.country,
+                "custom1": `<br/><strong>Customer ID:</strong> ${Customer.id}`,
+                "custom2": `
+                <div style="
+                position: fixed;
+                right: 28;
+                top: 214;
+                ">
+                    <strong>Due Date:</strong> ${invoice.dates.due_date}
+                </div>`,
             },
             // @ts-ignore
             "invoiceNumber": invoice.id,
@@ -47,7 +56,10 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                     "price": item.amount
                 }
             }),
-            "bottomNotice": `Due Date: ${invoice.dates.due_date}
+            "bottomNotice": `
+            <div style="text-align:start;">
+
+            </div>
             `,
         };
         
