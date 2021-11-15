@@ -29,6 +29,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "zip": "415 34",
                 "city": "Göteborg",
                 "country": "Sweden",
+                "custom1": "<br/><strong>Innehar F-Skattsedel</strong>",
             },
             "client": {
                 "company": Customer.billing.company ?? `${Customer.personal.first_name} ${Customer.personal.last_name}`,
@@ -41,7 +42,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 <div style="
                 position: fixed;
                 right: 28;
-                top: 214;
+                top: 224;
                 ">
                     <strong>Due Date:</strong> ${invoice.dates.due_date}
                 </div>`,
