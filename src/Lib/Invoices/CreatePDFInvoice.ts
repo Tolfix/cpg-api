@@ -1,6 +1,8 @@
 import CustomerModel from "../../Database/Schemas/Customer";
 import { IInvoice } from "../../Interfaces/Invoice";
 import easyinvoice from 'easyinvoice';
+import { createSwishQRCode } from "../../Payments/Swish";
+import { Swish_Payee_Number } from "../../Config";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {
@@ -58,7 +60,13 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             }),
             "bottomNotice": `
             <div style="text-align:start;">
-
+                ${(Swish_Payee_Number && Customer.personal.phone) ? `
+                QR-Kod för Swish
+                <div>
+                    <img src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}" width="95">
+                </div>
+                ` : ''}
+                
             </div>
             `,
         };
