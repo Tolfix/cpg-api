@@ -25,6 +25,9 @@ export const Stripe_SK_Test = process.env.STRIPE_SK_TEST ?? "";
 export const Stripe_SK_Live = process.env.STRIPE_SK_LIVE ?? "";
 export const Stripe_SK_Public_Test = process.env.STRIPE_SK_PUBLIC_TEST ?? "";
 
+// Swish
+export const Swish_Payee_Number = process.env.SWISH_PAYEE_NUMBER ?? "";
+
 export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
     return ConfigModel.find().then(config => {
         //@ts-ignore
