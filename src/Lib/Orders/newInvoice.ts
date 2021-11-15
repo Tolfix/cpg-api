@@ -1,6 +1,6 @@
 import InvoiceModel from "../../Database/Schemas/Invoices";
 import ProductModel from "../../Database/Schemas/Products";
-import { IInvoices_Items } from "../../Interfaces/Invoice";
+import { IInvoice, IInvoices_Items, IInvoice_Dates } from "../../Interfaces/Invoice";
 import { IOrder } from "../../Interfaces/Orders";
 import { idInvoice } from "../Generator";
 import dateFormat from "date-and-time";
@@ -38,9 +38,9 @@ export async function createInvoiceFromOrder(order: IOrder)
     const newInvoice = await (new InvoiceModel({
         uid: idInvoice(),
         customer_uid: Customer_Id,
-        dates: {
+        dates: <IInvoice_Dates>{
             due_date: order.dates.next_recycle,
-            invoiced_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
+            invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
         },
         // Go through all products prices and add them together
         amount: Products.reduce((acc, cur) => acc + cur.price, 0),

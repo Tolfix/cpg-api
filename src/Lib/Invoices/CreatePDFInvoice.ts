@@ -38,7 +38,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             // @ts-ignore
             "invoiceNumber": invoice.id,
             "invoiceDate": invoice.dates.invoice_date,
-            "invoiceDueDate": invoice.dates.due_date,
+            // "invoiceDueDate": invoice.dates.due_date,
             "products": invoice.items.map((item) => {
                 return {
                     "quantity": item.quantity,
