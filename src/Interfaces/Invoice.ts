@@ -47,6 +47,7 @@ export function SwaggerDOC2 () {};
 export function SwaggerDOC3 () {};
 export interface IInvoice
 {
+    id: any;
     uid: `INV_${string}`;
     customer_uid: ICustomer["uid"];
     dates: IInvoice_Dates;
@@ -60,8 +61,6 @@ export interface IInvoice
     paid: Boolean;
     notified: Boolean;
 }
-
-export interface IDInvoice extends IInvoice, Document {};
 
 export interface IInvoice_Dates
 {

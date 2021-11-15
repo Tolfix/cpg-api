@@ -1,8 +1,8 @@
   
-import mongoose, { model, Schema } from "mongoose"
+import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IDInvoice } from "../../Interfaces/Invoice";
+import { IInvoice } from "../../Interfaces/Invoice";
 
 const InvoiceSchame = new Schema
 (
@@ -81,6 +81,6 @@ InvoiceSchame.plugin(increment.plugin, {
     incrementBy: 1
 });
 
-const InvoiceModel = model<IDInvoice>("invoices", InvoiceSchame);
+const InvoiceModel = model<IInvoice & Document>("invoices", InvoiceSchame);
 
 export default InvoiceModel;
