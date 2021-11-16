@@ -1,6 +1,6 @@
 import { Application, Router } from "express";
 
-export default class ProductsRouter
+export default class StripeRouter
 {
     private server: Application;
     private router = Router();
