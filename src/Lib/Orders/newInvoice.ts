@@ -5,6 +5,7 @@ import { IOrder } from "../../Interfaces/Orders";
 import { idInvoice } from "../Generator";
 import dateFormat from "date-and-time";
 import getCategoryByProduct from "../Products/getCategoryByProduct";
+import { IProduct } from "../../Interfaces/Products";
 
 
 // Create a method that checks if the order next recycle is within 14 days
@@ -27,9 +28,7 @@ export async function createInvoiceFromOrder(order: IOrder)
 {
 
     // Get our products
-    const Products = await ProductModel.find({ id: {
-        $in: [...order.products_uid]
-    } });
+    const Products = await getProductsByOrder(order);
 
     // Get customer id
     const Customer_Id = order.customer_uid;
@@ -60,6 +59,20 @@ export async function createInvoiceFromOrder(order: IOrder)
     return newInvoice;
 }
 
+export async function getPriceFromOrder(order: IOrder, product?: IProduct[])
+{
+    if(!product)
+        product = await getProductsByOrder(order);
+    
+    return product.reduce((acc, cur) => acc + cur.price, 0);
+}
+
+export async function getProductsByOrder(order: IOrder)
+{
+    return await ProductModel.find({ id: {
+        $in: [...order.products_uid]
+    } });
+}
 // Create a method that creates a new invoice for a customer
 // It should get input from an order and decide if we should create a new invoice
 // if the dates.next_recycle is in within the next 14 days
