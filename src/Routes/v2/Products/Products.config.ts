@@ -13,12 +13,10 @@ export default class ProductsRouter
         this.server.use(`/${version}/products`, this.router);
 
         this.router.get("/", [
-            EnsureAdmin,
             ProductController.list
         ]);
 
         this.router.get("/:uid", [
-            EnsureAdmin,
             ProductController.getByUid
         ]);
 
