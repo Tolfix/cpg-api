@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import CategoryModel from "../../../Database/Schemas/Category";
+import ProductModel from "../../../Database/Schemas/Products";
 import { ICategory } from "../../../Interfaces/Categories";
 import { idCategory } from "../../../Lib/Generator";
 import { APISuccess } from "../../../Lib/Response";
@@ -60,14 +61,24 @@ function removeById(req: Request, res: Response)
         .then((result)=>{
             APISuccess({}, 204)(res)
         });
- };
+};
+
+function getProductsByUid(req: Request, res: Response)
+{
+    ProductModel.find({ 
+        category_uid: req.params.uid as ICategory["uid"]
+    }).then((result) => {
+      APISuccess(result)(res);  
+    })
+}
 
 const CategoryController = {
     insert,
     getByUid,
     list,
     patch,
-    removeById
+    removeById,
+    getProductsByUid
 }
 
 export default CategoryController;

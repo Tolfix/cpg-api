@@ -20,6 +20,10 @@ export default class CategoryRouter
             CategoryController.getByUid
         ]);
 
+        this.router.get("/:uid/products", [
+            CategoryController.getProductsByUid
+        ])
+
         this.router.post("/", [
             EnsureAdmin,
             CategoryController.insert
