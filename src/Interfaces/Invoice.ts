@@ -53,7 +53,7 @@ export interface IInvoice
     dates: IInvoice_Dates;
     amount: number;
     items: Array<IInvoices_Items>;
-    transactions?: Array<ITransactions["uid"]>;
+    transactions: Array<ITransactions["uid"]>;
     payment_method: keyof IPayments;
     status: OrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
     tax_rate: number;
