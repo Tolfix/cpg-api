@@ -2,7 +2,8 @@ import CustomerModel from "../../Database/Schemas/Customer";
 import { IInvoice } from "../../Interfaces/Invoice";
 import easyinvoice from 'easyinvoice';
 import { createSwishQRCode } from "../../Payments/Swish";
-import { Swish_Payee_Number } from "../../Config";
+import { Full_Domain, Paypal_Client_Secret, Swish_Payee_Number } from "../../Config";
+import qrcode from "qrcode";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {
@@ -60,13 +61,29 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 }
             }),
             "bottomNotice": `
-            <div style="text-align:start;">
-                ${(Swish_Payee_Number && Customer.personal.phone) ? `
-                QR-Kod för Swish
-                <div>
-                    <img src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}" width="95">
+            <div style="
+                text-align:start;
+                display:inline-block;
+            ">
+                <div style="display:inline-block;">    
+                    ${(Swish_Payee_Number && Customer.personal.phone) ? `
+                    QR-Kod för Swish
+                    <div>
+                        <img src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}" width="95">
+                    </div>
+                    ` : ''}
                 </div>
-                ` : ''}
+                <div style="display:inline-block;">
+                    ${(Paypal_Client_Secret) ? `
+                    QR-Kod för Paypal (Klickbar)
+                    <div>
+                        <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
+                            <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)}" width="87">
+                        </a>
+                    </div>
+                    
+                    ` : ''}'
+                </div>
                 
             </div>
             `,
