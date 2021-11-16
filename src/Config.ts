@@ -9,6 +9,8 @@ export const DebugMode = process.env.DEBUG === "true" ? true : false;
 export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
 export const JWT_Access_Token = process.env.JWT_ACCESS_TOKEN ?? "";
 export const d_Days = parseInt(process.env.D_DAYS ?? "30");
+export const Domain = process.env.DOMAIN ?? "localhost";
+export const Http_Schema = process.env.HTTP_SCHEMA ?? "http";
 
 export const PORT = process.env.PORT ?? 8080;
 
@@ -27,6 +29,10 @@ export const Stripe_SK_Public_Test = process.env.STRIPE_SK_PUBLIC_TEST ?? "";
 
 // Swish
 export const Swish_Payee_Number = process.env.SWISH_PAYEE_NUMBER ?? "";
+
+// Paypal
+export const Paypal_Client_Id = process.env.PAYPAL_CLIENT_ID ?? "";
+export const Paypal_Client_Secret = process.env.PAYPAL_CLIENT_SECRET ?? "";
 
 export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
     return ConfigModel.find().then(config => {
