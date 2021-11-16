@@ -5,7 +5,7 @@ import dateFormat from "date-and-time";
 import CustomerModel from "../Database/Schemas/Customer";
 import { SendEmail } from "../Email/Send";
 import createPDFInvoice from "../Lib/Invoices/CreatePDFInvoice";
-import { d_Days } from "../Config";
+import { d_Days, Full_Domain } from "../Config";
 
 export default function Cron_Invoices()
 {
@@ -56,6 +56,11 @@ export default function Cron_Invoices()
                     <br />
                     <br />
                     Payment method: ${invoice.payment_method}
+                    ${invoice.payment_method === "paypal" ? `<br />
+                    <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
+                        Click me to pay.
+                    </a>
+                    ` : ''}
                     <br />
                     <br />
                     Company information : <a href="https://tolfix.com/knowledgebase">https://tolfix.com/knowledgebase</a>
