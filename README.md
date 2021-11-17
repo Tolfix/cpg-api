@@ -5,7 +5,7 @@
 </p>
 
 # ⭐ | CPG-API
-CPG-API is being used to create products and handles customers for your business.
+CPG-API is being used to create products, invoices, orders, transactions and payments for customers, to grow your business.
 
 # 📢 | Contribute
 Want to contribute? Great! You can contribute by `forking` this repository, then make changes and make a `PR`!
