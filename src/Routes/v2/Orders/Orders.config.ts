@@ -1,6 +1,20 @@
 import { Application, Router } from "express";
+import CustomerModel from "../../../Database/Schemas/Customer";
+import OrderModel from "../../../Database/Schemas/Orders";
+import ProductModel from "../../../Database/Schemas/Products";
+import { IPayments } from "../../../Interfaces/Payments";
+import { IProduct } from "../../../Interfaces/Products";
+import { APIError, APISuccess } from "../../../Lib/Response";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import OrderController from "./Orders.controller";
+import dateFormat from "date-and-time";
+import nextRecycleDate from "../../../Lib/Dates/DateCycle";
+import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
+import { idOrder } from "../../../Lib/Generator";
+import { Full_Domain } from "../../../Config";
+import { sendInvoiceEmail } from "../../../Lib/Invoices/SendEmail";
+import EnsureAuth from "../../../Middlewares/EnsureAuth";
+
 
 export default class OrderRoute
 {
@@ -16,6 +30,70 @@ export default class OrderRoute
             EnsureAdmin,
             OrderController.list
         ]);
+
+        this.router.post("/place", EnsureAuth, async (req, res) => {
+            // @ts-ignore
+            const customer_id = req.customer.id;
+            const products_id = req.body as Array<IProduct["id"]>;
+            const payment_method = req.body as keyof IPayments;
+
+            if(!customer_id || !products_id || !payment_method)
+                return APIError("Missing in body")(res);
+
+            if(!payment_method.match(/manual|bank|paypal|credit_card|swish/g))
+                return APIError("payment_method invalid")(res);
+
+            // Check if customer_id is valid
+            const customer = await CustomerModel.findOne({ id: customer_id });
+
+            if(!customer)
+                return APIError("Unable to find customer")(res);
+
+            const products = await ProductModel.find({
+                id: {
+                    $in: products_id
+                }
+            });
+
+            if(products.length <= 0)
+                return APIError("No valid products ids")(res);
+
+            // Create new order
+            const order = await (new OrderModel({
+                customer_id: customer.id,
+                products_uid: products.map(product => {
+                    return product.id
+                }),
+                payment_method: payment_method,
+                order_status: "active",
+                billing_type: "recurring",
+                billing_cycle: "monthly",
+                quantity: 1,
+                dates: {
+                    createdAt: new Date(),
+                    next_recycle: dateFormat.format(nextRecycleDate(
+                        new Date(), "monthly")
+                    , "YYYY-MM-DD"),
+                    last_recycle: dateFormat.format(new Date(), "YYYY-MM-DD")
+                },
+                uid: idOrder(),
+            }).save());
+
+            const invoice = await createInvoiceFromOrder(order);
+
+            order.invoices.push(invoice.id);
+            await order.save();
+
+            await sendInvoiceEmail(invoice, customer);
+
+            if(!invoice)
+                return APIError("Unable to create invoice")(res);
+
+            if(payment_method === "paypal")
+                return APISuccess(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)(res);
+
+            return APISuccess(`Invoice sent.`);
+        });
 
         this.router.get("/:uid", [
             EnsureAdmin,
