@@ -58,7 +58,7 @@ const OrderSchame = new Schema
 
         invoices: {
             type: Array,
-            required: true,
+            default: [],
         },
 
         promotion_codes: {
