@@ -20,6 +20,9 @@ export default class PaypalRouter
             if(!invoice)
                 return res.redirect("back");
 
+            if(invoice.paid)
+                return res.redirect("back");
+
             const links = await createPaypalPaymentFromInvoice(invoice);
 
             if(!links)
