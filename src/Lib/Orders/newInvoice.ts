@@ -29,6 +29,7 @@ export async function createInvoiceFromOrder(order: IOrder)
 
     // Get our products
     const Products = await getProductsByOrder(order);
+    const LBProducts = createMapProductsFromOrder(order);
 
     // Get customer id
     const Customer_Id = order.customer_uid;
@@ -46,7 +47,7 @@ export async function createInvoiceFromOrder(order: IOrder)
         items: Products.map(async (product) => (<IInvoices_Items>{
             amount: product.price,
             notes: `${(await getCategoryByProduct(product))?.name} - ${product?.name}`,
-            quantity: order.quantity,
+            quantity: LBProducts.get(product.id)?.quantity ?? 1,
         })),
         payment_method: order.payment_method,
         status: order.order_status,
@@ -70,8 +71,18 @@ export async function getPriceFromOrder(order: IOrder, product?: IProduct[])
 export async function getProductsByOrder(order: IOrder)
 {
     return await ProductModel.find({ id: {
-        $in: [...order.products_uid]
+        $in: [...order.products.map(product => product.product_id)]
     } });
+}
+
+export function createMapProductsFromOrder(order: IOrder)
+{
+    const a = new Map<IProduct["id"], {
+        product_id: number,
+        quantity: number,
+    }>()
+    order.products.forEach(product => a.set(product.product_id, product));
+    return a;
 }
 // Create a method that creates a new invoice for a customer
 // It should get input from an order and decide if we should create a new invoice

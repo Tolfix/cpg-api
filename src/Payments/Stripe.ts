@@ -11,7 +11,7 @@ const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
 export const CreatePaymentIntent = async (order: IOrder) => {
     const customer = await CustomerModel.findOne({ id: order.customer_uid });
     const Products = await ProductModel.find({ id: {
-        $in: [...order.products_uid]
+        $in: [...order.products.map(product => product.product_id)]
     } });
 
     return (await Stripe.paymentIntents.create({

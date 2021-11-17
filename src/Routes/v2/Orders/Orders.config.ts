@@ -34,10 +34,13 @@ export default class OrderRoute
         this.router.post("/place", EnsureAuth, async (req, res) => {
             // @ts-ignore
             const customer_id = req.customer.id;
-            const products_id = req.body as Array<IProduct["id"]>;
+            const products = req.body as Array<{
+                product_id: IProduct["id"],
+                quantity: number
+            }>;
             const payment_method = req.body as keyof IPayments;
 
-            if(!customer_id || !products_id || !payment_method)
+            if(!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
 
             if(!payment_method.match(/manual|bank|paypal|credit_card|swish/g))
@@ -49,20 +52,23 @@ export default class OrderRoute
             if(!customer)
                 return APIError("Unable to find customer")(res);
 
-            const products = await ProductModel.find({
+            const _products = await ProductModel.find({
                 id: {
-                    $in: products_id
+                    $in: products.map(product => product.product_id)
                 }
             });
 
-            if(products.length <= 0)
+            if(_products.length <= 0)
                 return APIError("No valid products ids")(res);
 
             // Create new order
             const order = await (new OrderModel({
                 customer_id: customer.id,
-                products_uid: products.map(product => {
-                    return product.id
+                products: _products.map(product => {
+                    return {
+                        product_id: product.id,
+                        quantity: products.find(p => p.product_id === product.id)?.quantity ?? 1
+                    }
                 }),
                 payment_method: payment_method,
                 order_status: "active",

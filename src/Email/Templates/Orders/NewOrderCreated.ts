@@ -11,8 +11,8 @@ A new order has been created for you.
 
 Order nmr.: ${order.id}
 <br />
-Products: ${order.products_uid.map(async product => {
-    const p = await getProductById(product as any);
+Products: ${order.products.map(async product => {
+    const p = await getProductById(product.product_id as any);
     if(!p)
         return '';
     return `${p.name} - (${p.price} SEK)`;
