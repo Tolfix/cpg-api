@@ -27,7 +27,7 @@ const OrderSchame = new Schema
             default: "pending",
         },
 
-        products_uid: {
+        products: {
             type: Array,
             required: true,
         },
@@ -40,12 +40,7 @@ const OrderSchame = new Schema
         billing_cycle: {
             type: String,
         },
-
-        quantity: {
-            type: Number,
-            default: 0,
-        },
-
+        
         price_override: {
             type: Number,
             defualt: 0,

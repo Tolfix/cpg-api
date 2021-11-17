@@ -25,7 +25,10 @@ export interface IOrder
     id: any;
     uid: `ORD_${string}`;
     customer_uid: ICustomer["uid"];
-    products_uid: Array<IProduct["uid"]>;
+    products: Array<{
+        product_id: IProduct["id"],
+        quantity: number
+    }>;
     payment_method: keyof IPayments;
     order_status: OrderStatus;
     billing_type: IPaymentType;
@@ -34,7 +37,6 @@ export interface IOrder
      * if 'billing_type' is "recurring" `billing_cycle` wont be undefined
      */
     billing_cycle?: IRecurringMethod;
-    quantity: number;
     price_override?: number;
     dates: IOrderDates<IOrder["billing_type"]>;
     invoices: Array<IInvoice["uid"]>;
