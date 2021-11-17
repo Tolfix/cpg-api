@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import CustomerModel from "../../../Database/Schemas/Customer";
 import { ICustomer } from "../../../Interfaces/Customer";
 import { idCustomer } from "../../../Lib/Generator";
-import { APISuccess } from "../../../Lib/Response";
+import { APIError, APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 import Logger from "../../../Lib/Logger";
 
@@ -12,11 +12,19 @@ const API_CustomerModel = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel)
 function insert(req: Request, res: Response)
 {
     bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password ?? "123qwe123", salt, (err, hash) => {
+        bcrypt.hash(req.body.password ?? "123qwe123", salt, async (err, hash) => {
             if(err)
                 Logger.error(err);
 
             req.body.password = hash;
+
+            const email = req.body.email;
+
+            // Check if email already exists
+            const doesExist = await CustomerModel.findOne({ email: email });
+
+            if(doesExist)
+                return APIError(`Email ${email} already exists`, 409)(res);
 
             API_CustomerModel.create(req.body)
                 .then((result) => {
