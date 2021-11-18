@@ -1,16 +1,15 @@
 import { Request, Response } from "express";
 import dateFormat from "date-and-time";
-import CategoryModel from "../../../Database/Schemas/Category";
-import InvoiceModel from "../../../Database/Schemas/Invoices";
 import OrderModel from "../../../Database/Schemas/Orders";
-import ProductModel from "../../../Database/Schemas/Products";
-import { IInvoices_Items } from "../../../Interfaces/Invoice";
-import { IOrder, IOrderDates } from "../../../Interfaces/Orders";
+import { IOrder } from "../../../Interfaces/Orders";
 import nextRycleDate from "../../../Lib/Dates/DateCycle";
-import { idInvoice, idOrder } from "../../../Lib/Generator";
+import { idOrder } from "../../../Lib/Generator";
 import { APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
+import { SendEmail } from "../../../Email/Send";
+import CustomerModel from "../../../Database/Schemas/Customer";
+import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 
 const API = new BaseModelAPI<IOrder>(idOrder, OrderModel);
 
@@ -34,7 +33,16 @@ async function insert(req: Request, res: Response)
     req.body.invoices = [newInvoice.id];
 
     API.create(req.body)
-        .then((result) => {
+        .then(async (result) => {
+
+            const customer = await CustomerModel.findOne({ id: result.customer_uid });
+
+            if(customer)
+                SendEmail(customer.personal.email, `New Order | ${result.id}`, {
+                    isHTML: true,
+                    body: await NewOrderCreated(result, customer)
+                });
+
             APISuccess({
                 uid: result.uid
             })(res);
