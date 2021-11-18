@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 import { Full_Domain } from "../../Config";
+import Footer from "../../Email/Templates/General/Footer";
 import { ICustomer } from "../../Interfaces/Customer";
 import { IInvoice } from "../../Interfaces/Invoice";
 import createPDFInvoice from "./CreatePDFInvoice";
@@ -38,6 +39,9 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
             Company information : <a href="https://tolfix.com/knowledgebase">https://tolfix.com/knowledgebase</a>
             <br />
             Company Billing : <a href="https://tolfix.com/about/billing">https://tolfix.com/about/billing</a>
+            <br />
+            <br />
+            ${Footer}
             `
         }, (err: any, sent: any) => {
             if(!err && sent)
