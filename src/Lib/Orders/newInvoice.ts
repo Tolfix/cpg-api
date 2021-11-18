@@ -34,6 +34,14 @@ export async function createInvoiceFromOrder(order: IOrder)
     // Get customer id
     const Customer_Id = order.customer_uid;
 
+    const items = await Promise.all(Products.map(async (product) => {
+        return <IInvoices_Items>{
+            amount: product.price,
+            notes: `${(await getCategoryByProduct(product))?.name} - ${product?.name}`,
+            quantity: LBProducts.get(product.id)?.quantity ?? 1,
+        }
+    }))
+
     // Create invoice
     const newInvoice = await (new InvoiceModel({
         uid: idInvoice(),
@@ -44,11 +52,7 @@ export async function createInvoiceFromOrder(order: IOrder)
         },
         // Go through all products prices and add them together
         amount: Products.reduce((acc, cur) => acc + cur.price, 0),
-        items: Products.map(async (product) => (<IInvoices_Items>{
-            amount: product.price,
-            notes: `${(await getCategoryByProduct(product))?.name} - ${product?.name}`,
-            quantity: LBProducts.get(product.id)?.quantity ?? 1,
-        })),
+        items: items,
         payment_method: order.payment_method,
         status: order.order_status,
         tax_rate: Products?.reduce((acc, cur) => cur.tax_rate, 0),
