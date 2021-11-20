@@ -43,7 +43,8 @@ export default function start()
     server.use(sessionMiddleWare);
     
     server.use(express.urlencoded({ extended: true }));
-    server.use(express.json());
+    // @ts-ignore
+    server.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}));
     
     server.use((req, res, next) => {
         // res.setHeader("Content-Type", "application/json");
