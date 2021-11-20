@@ -13,7 +13,7 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
             return;
         
         //@ts-ignore
-        SendEmail(Customer.personal.email, `Invoice From Tolfix ${invoice.id}`, {
+        SendEmail(Customer.personal.email, `Invoice from Tolfix ${invoice.id}`, {
             isHTML: true,
             attachments: [
                 {
