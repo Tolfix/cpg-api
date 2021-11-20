@@ -26,7 +26,9 @@ export const osticket_api_key = process.env.OSTICKET_API_KEY ?? "";
 // Stripe
 export const Stripe_SK_Test = process.env.STRIPE_SK_TEST ?? "";
 export const Stripe_SK_Live = process.env.STRIPE_SK_LIVE ?? "";
-export const Stripe_SK_Public_Test = process.env.STRIPE_SK_PUBLIC_TEST ?? "";
+export const Stripe_PK_Public_Test = process.env.STRIPE_SK_PUBLIC_TEST ?? "";
+export const Stripe_PK_Public = process.env.STRIPE_SK_PUBLIC ?? "";
+export const Stripe_Webhook_Secret = process.env.STRIPE_WEBHOOK_SECRET ?? "";
 
 // Swish
 export const Swish_Payee_Number = process.env.SWISH_PAYEE_NUMBER ?? "";
