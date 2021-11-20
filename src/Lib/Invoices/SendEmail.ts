@@ -4,6 +4,7 @@ import Footer from "../../Email/Templates/General/Footer";
 import { ICustomer } from "../../Interfaces/Customer";
 import { IInvoice } from "../../Interfaces/Invoice";
 import createPDFInvoice from "./CreatePDFInvoice";
+import {SendEmail} from "../../Email/Send"
 
 export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: ICustomer)
 {
