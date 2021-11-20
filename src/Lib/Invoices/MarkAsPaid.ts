@@ -9,6 +9,9 @@ export async function getInvoiceByIdAndMarkAsPaid(id: number | string): Promise<
         if(!invoice)
             return reject("Unable to find invoice");
     
+        if(invoice.paid)
+            return reject("Invoice is already paid");
+
         invoice.paid = true;
         await invoice.save();
         return resolve(invoice);
