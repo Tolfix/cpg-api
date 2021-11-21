@@ -35,6 +35,11 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
                 Click me to pay.
             </a>
             ` : ''}
+            ${invoice.payment_method === "credit_card" ? `<br />
+            <a href="${Full_Domain}/v2/stripe/pay/${invoice.uid}" target="_blank">
+                Click me to pay.
+            </a>
+            ` : ''}
             <br />
             <br />
             Company information : <a href="https://tolfix.com/knowledgebase">https://tolfix.com/knowledgebase</a>
