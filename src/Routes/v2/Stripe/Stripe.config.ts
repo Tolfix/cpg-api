@@ -19,8 +19,8 @@ export default class StripeRouter
         this.server.use(`/${version}/stripe`, this.router);
 
         this.router.get("/pay/:invoiceId", async (req, res) => {
-            const invoiceId = req.params.invoiceId;
-            const invoice = await InvoiceModel.findOne( { id: invoiceId } );
+            const invoiceId = req.params.invoiceId as any;
+            const invoice = await InvoiceModel.findOne( { uid: invoiceId } );
             if(!invoice)
                 return APIError("Couldn't find invoice")(res);
 
