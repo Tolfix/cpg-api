@@ -2,7 +2,7 @@ import CustomerModel from "../../Database/Schemas/Customer";
 import { IInvoice } from "../../Interfaces/Invoice";
 import easyinvoice from 'easyinvoice';
 import { createSwishQRCode } from "../../Payments/Swish";
-import { Full_Domain, Paypal_Client_Secret, Swish_Payee_Number } from "../../Config";
+import { Full_Domain, Paypal_Client_Secret, Stripe_PK_Public, Stripe_PK_Public_Test, Stripe_SK_Live, Stripe_SK_Test, Swish_Payee_Number } from "../../Config";
 import qrcode from "qrcode";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
@@ -63,7 +63,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             "bottomNotice": `
             <div style="
                 text-align:start;
-                display:inline-block;
+                
             ">
                 <div style="display:inline-block;">    
                     ${(Swish_Payee_Number && Customer.personal.phone) ? `
@@ -74,17 +74,30 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                     ` : ''}
                 </div>
                 <div style="display:inline-block;">
+
                     ${(Paypal_Client_Secret) ? `
                     QR-Kod för Paypal (Klickbar)
                     <div>
                         <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
-                            <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)}" width="87">
+                            <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)}" width="95">
                         </a>
                     </div>
-                    
-                    ` : ''}'
+                    ` : ''}
                 </div>
                 
+                <div style="">
+
+                    ${(Stripe_PK_Public_Test && Stripe_SK_Test) || (Stripe_PK_Public && Stripe_SK_Live) ? `
+                    QR-Kod för Kredit kort (Klickbar)
+                    <div>
+                        <a href="${Full_Domain}/v2/stripe/pay/${invoice.uid}" target="_blank">
+                            <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/stripe/pay/${invoice.uid}`)}" width="95">
+                        </a>
+                    </div
+                    ` : ''}'
+
+                </div>
+
             </div>
             `,
         };
