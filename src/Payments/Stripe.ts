@@ -40,17 +40,14 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
     return intent;
 };
 
-export const RetrivePaymentIntent = async (payment_intent: string) =>
-{
-    return (await Stripe.paymentIntents.retrieve(payment_intent));
-}
+export const RetrivePaymentIntent = async (payment_intent: string) => (await Stripe.paymentIntents.retrieve(payment_intent));
 
 export const markInvoicePaid = async (intent: stripe.Response<stripe.PaymentIntent>) =>
 {
     const invoice = await getInvoiceByIdAndMarkAsPaid(intent.metadata.invoice_id);
 
     const newTrans = await (new TransactionsModel({
-        amount: invoice.amount,
+        amount: invoice.amount+invoice.amount*invoice.tax_rate/100,
         payment_method: invoice.payment_method,
         fees: 0,
         invoice_uid: invoice.id,
