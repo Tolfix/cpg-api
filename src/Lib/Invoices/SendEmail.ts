@@ -23,13 +23,19 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
                     contentType: 'application/pdf'
                 }
             ],
-            body: `Hello ${Customer.personal.first_name} ${Customer.personal.last_name} <br />
+            body: `Dear ${Customer.personal.first_name} ${Customer.personal.last_name} ${Customer.billing.company ? `(${Customer.billing.company})` : ''} <br />
+            This is a notice that an invoice has been generated on ${invoice.dates.invoice_date}
+            <br />
             A gentle reminder you have a invoice due to <strong>${invoice.dates.due_date}</strong> <br />
             <br />
-            Reference invoice id <strong>INVOICE ${invoice.id}</strong> when paying!
+            Your payment method is: ${invoice.payment_method}
             <br />
             <br />
-            Payment method: ${invoice.payment_method}
+            Invoice id: #<strong>${invoice.id}</strong>. <br />
+            Tax due: ${invoice.tax_rate} <br />
+            Amount due: ${invoice.amount+invoice.amount*invoice.tax_rate/100} <br />
+            Due date: ${invoice.dates.due_date} <br />
+
             ${invoice.payment_method === "paypal" ? `<br />
             <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
                 Click me to pay.
@@ -40,6 +46,11 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
                 Click me to pay.
             </a>
             ` : ''}
+            <strong>Invoice items</strong> <br />
+            ${invoice.items.map(item => `<br />
+            ${item.notes} <br />
+            ${item.quantity} x ${item.amount} = ${item.quantity * item.amount} <br />
+            `).join('')}
             <br />
             <br />
             Company information : <a href="https://tolfix.com/knowledgebase">https://tolfix.com/knowledgebase</a>
