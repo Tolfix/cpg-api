@@ -26,7 +26,6 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
             body: `Dear ${Customer.personal.first_name} ${Customer.personal.last_name} ${Customer.billing.company ? `(${Customer.billing.company})` : ''} <br />
             This is a notice that an invoice has been generated on ${invoice.dates.invoice_date}
             <br />
-            A gentle reminder you have a invoice due to <strong>${invoice.dates.due_date}</strong> <br />
             <br />
             Your payment method is: ${invoice.payment_method}
             <br />
