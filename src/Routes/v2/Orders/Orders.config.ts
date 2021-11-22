@@ -76,6 +76,15 @@ export default class OrderRoute
             if(!payment_method.match(/manual|bank|paypal|credit_card|swish/g))
                 return APIError("payment_method invalid")(res);
 
+            if(products.every(e => typeof e === "object"))
+                return APIError("products invalid")(res);    
+
+            if(products.every(e => e.quantity <= 0))
+                return APIError("quantity invalid")(res);
+
+            if(products.every(e => typeof e.product_id === "undefined"))
+                return APIError("product_id invalid")(res);      
+
             // Check if customer_id is valid
             const customer = await CustomerModel.findOne({ id: customer_id });
 
