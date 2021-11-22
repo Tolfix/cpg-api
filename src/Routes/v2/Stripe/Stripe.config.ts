@@ -18,7 +18,8 @@ export default class StripeRouter
         this.server = server;
         this.server.use(`/${version}/stripe`, this.router);
 
-        this.router.get("/pay/:invoiceId", async (req, res) => {
+        this.router.get("/pay/:invoiceId", async (req, res) =>
+        {
             const invoiceId = req.params.invoiceId as any;
             const invoice = await InvoiceModel.findOne( { uid: invoiceId } );
             if(!invoice)
@@ -272,20 +273,16 @@ export default class StripeRouter
             `);
         });
 
-        this.router.post("/webhook", async (req, res) => {
-            const payload = req.body;
-            console.log(Stripe_Webhook_Secret)
+        this.router.post("/webhook", async (req, res) =>
+        {
             const sig = req.headers['stripe-signature'] as string;
-
-            //The event
             let event;
-        
             try {
                 // @ts-ignore
                 event = Stripe.webhooks.constructEvent(req.rawBody, sig, Stripe_Webhook_Secret);
             } catch (err) {
-                //@ts-ignore
-                return res.status(400).send(`Webhook Error: ${err.message}`);;
+                // @ts-ignore
+                return res.status(400).send(`Webhook Error: ${err.message}`);
             }
 
             switch (event.type)
