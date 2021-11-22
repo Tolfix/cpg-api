@@ -99,7 +99,7 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
                 return;
             const invoice = await getInvoiceByIdAndMarkAsPaid(invoice_number);
             const newTrans = await (new TransactionsModel({
-                amount: invoice.amount,
+                amount: invoice.amount+invoice.amount*invoice.tax_rate/100,
                 payment_method: invoice.payment_method,
                 fees: 0,
                 invoice_uid: invoice.id,
