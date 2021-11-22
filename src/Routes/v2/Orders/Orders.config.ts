@@ -97,6 +97,9 @@ export default class OrderRoute
 
             if(payment_method === "paypal")
                 return APISuccess(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)(res);
+            
+            if(payment_method === "credit_card")
+                return APISuccess(`${Full_Domain}/v2/stripe/pay/${invoice.uid}`)(res);
 
             return APISuccess(`Invoice sent.`);
         });
