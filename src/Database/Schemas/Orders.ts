@@ -1,6 +1,7 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
+import mainEvent from "../../Events/Main";
 import { IOrder } from "../../Interfaces/Orders";
 
 const OrderSchame = new Schema
@@ -72,6 +73,24 @@ OrderSchame.plugin(increment.plugin, {
     field: 'id',
     startAt: 0,
     incrementBy: 1
+});
+
+// Emit event when a new order is created
+OrderSchame.post("save", function(order: IOrder)
+{
+    mainEvent.emit("order_created", order);
+});
+
+// Emit event when an order is updated
+OrderSchame.post("update", function(order: IOrder)
+{
+    mainEvent.emit("order_updated", order);
+});
+
+// Emit event when an order is deleted
+OrderSchame.post("remove", function(order: IOrder)
+{
+    mainEvent.emit("order_deleted", order);
 });
 
 const OrderModel = model<IOrder & Document>("orders", OrderSchame);
