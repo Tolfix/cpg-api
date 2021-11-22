@@ -48,10 +48,10 @@ const ProductSchema = new Schema
             required: true,
         },
 
-        // payment_type: {
-        //     type: Object,
-        //     required: true,
-        // },
+        payment_type: {
+            type: String,
+            default: "one_time",
+        },
 
         price: {
             type: Number,
@@ -68,10 +68,10 @@ const ProductSchema = new Schema
             required: true,
         },
         
-        // recurring_method: {
-        //     type: Object,
-        //     default: '',
-        // },
+        recurring_method: {
+            type: String,
+            default: undefined,
+        },
 
         image: {
             type: Object,

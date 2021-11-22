@@ -28,12 +28,12 @@ export interface IProduct
     BStock: Boolean;
     hidden: Boolean;
     special: boolean;
-    // payment_type: Partial<IPaymentType>;
+    payment_type: Partial<IPaymentType>;
     price: number;
     setup_fee: number;
     images?: IImage["uid"][];
     tax_rate: number;
-    // recurring_method?: Partial<IRecurringMethod>;
+    recurring_method?: Partial<IRecurringMethod>;
 }
 
 export type IPaymentType = "free" | "one_time" | "recurring";

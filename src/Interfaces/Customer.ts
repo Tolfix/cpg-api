@@ -20,6 +20,7 @@ export function Swagger_DOC () {};
 
 export interface ICustomer
 {
+    id: any;
     uid: `CUS_${string}`;
     personal: Personal;
     billing: Billing;
