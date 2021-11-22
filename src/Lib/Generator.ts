@@ -16,14 +16,6 @@ import { IOrder } from "../Interfaces/Orders";
 import { IProduct } from "../Interfaces/Products";
 import { ITransactions } from "../Interfaces/Transactions";
 
-/*
-    Old method:
-        let arrayC = Cache.array();
-        let lastUid = parseInt(arrayC[arrayC.length-1]?.uid ?? "0");
-        let uid = lastUid+1;
-        return uid;
-*/
-
 export function idCustomer(): ICustomer["uid"]
 {
     let uid: ICustomer["uid"] = `CUS_${crypto.randomBytes(20).toString("hex")}`;

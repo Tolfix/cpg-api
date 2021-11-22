@@ -1,4 +1,3 @@
-  
 import { model, Schema } from "mongoose"
 import { IDConfigs } from "../../Interfaces/Admin/Configs";
 

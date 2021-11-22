@@ -1,5 +1,4 @@
 export default `
-
 <div align="center">
     <td class="es-p15t es-p10b es-p20r es-p20l" align="left">
         <table cellpadding="0" cellspacing="0" width="100%">

@@ -1,4 +1,3 @@
-import { Document } from "mongoose";
 import { ICustomer } from "./Customer";
 import { OrderStatus } from "./Orders";
 import { IPayments } from "./Payments";

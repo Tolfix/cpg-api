@@ -1,5 +1,3 @@
-import { Document } from "mongoose";
-
 /**
  * @typedef Customer
  * @property {string} first_name - First name of customer

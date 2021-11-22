@@ -4,7 +4,7 @@ import TransactionsModel from "../Database/Schemas/Transactions";
 import { IInvoice } from "../Interfaces/Invoice";
 import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
-import { getDate, getTime } from "../Lib/Time";
+import { getDate } from "../Lib/Time";
 
 if(Paypal_Client_Id || Paypal_Client_Secret)
     paypal.configure({

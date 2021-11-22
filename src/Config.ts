@@ -14,7 +14,6 @@ export const Http_Schema = process.env.HTTP_SCHEMA ?? "http";
 export const PORT = process.env.PORT ?? 8080;
 export const Full_Domain = `${Http_Schema}://${Domain === "localhost" ? `localhost:${PORT}` : Domain}`;
 
-
 export const Express_Session_Secret = process.env.SESSION_SECRET ?? require("crypto").randomBytes(20).toString("hex");
 
 export const MongoDB_URI = process.env.MONGO_URI ?? "mongodb://localhost/cpg";

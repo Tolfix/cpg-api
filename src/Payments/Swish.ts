@@ -1,6 +1,5 @@
 import request from "request";
 
-
 // Create qr code for Swish from IInvoice interface
 export function createSwishQRCode(number: string, amount: number, notes: string)
 {

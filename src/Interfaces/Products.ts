@@ -1,4 +1,3 @@
-import { Document } from "mongoose";
 import { ICategory } from "./Categories";
 import { IImage } from "./Images";
 
