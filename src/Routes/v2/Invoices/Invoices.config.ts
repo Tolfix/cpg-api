@@ -45,7 +45,7 @@ export default class InvoiceRouter
             InvoiceController.removeById
         ]);
 
-        this.router.get("/:uid/pdf",  async (req, res) => {
+        this.router.get("/:uid/pdf", EnsureAdmin, async (req, res) => {
             
             const invoice = await InvoiceModel.findOne({ id: req.params.uid });
 
@@ -55,9 +55,9 @@ export default class InvoiceRouter
             const result = await createPDFInvoice(invoice);
 
             res.writeHead(200, {
-                // 'Content-Disposition': `attachment; filename="invoice.pdf"`,
+                'Content-Disposition': `attachment; filename="invoice.pdf"`,
                 'Content-Type': "application/pdf",
-            })
+            });
 
             res.end(result, "base64");
         });
