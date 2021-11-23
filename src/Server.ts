@@ -48,7 +48,7 @@ export default function start()
     
     server.use((req, res, next) => {
         // res.setHeader("Content-Type", "application/json");
-        res.setHeader('X-Powered-By', 'Tolfix');
+        res.setHeader('X-Powered-By', 'CPG-API');
         next();
     });
     
