@@ -1,6 +1,7 @@
 import InvoiceModel from "../../Database/Schemas/Invoices";
 import { IInvoice } from "../../Interfaces/Invoice";
 import { Document } from "mongoose";
+import mainEvent from "../../Events/Main";
 
 export async function getInvoiceByIdAndMarkAsPaid(id: number | string): Promise<IInvoice & Document>
 {
@@ -14,6 +15,8 @@ export async function getInvoiceByIdAndMarkAsPaid(id: number | string): Promise<
 
         invoice.paid = true;
         await invoice.save();
+        // emit event as invoice is paid
+        mainEvent.emit("invoice_paid", invoice);
         return resolve(invoice);
-    }) 
+    });
 }
