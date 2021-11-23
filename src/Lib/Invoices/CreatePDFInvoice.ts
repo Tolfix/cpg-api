@@ -2,7 +2,22 @@ import CustomerModel from "../../Database/Schemas/Customer";
 import { IInvoice } from "../../Interfaces/Invoice";
 import easyinvoice from 'easyinvoice';
 import { createSwishQRCode } from "../../Payments/Swish";
-import { Full_Domain, Paypal_Client_Secret, Stripe_PK_Public, Stripe_PK_Public_Test, Stripe_SK_Live, Stripe_SK_Test, Swish_Payee_Number } from "../../Config";
+import { 
+    Company_Address,
+    Company_Name,
+    Company_Zip,
+    Company_City,
+    Company_Country,
+    Full_Domain,
+    Paypal_Client_Secret,
+    Stripe_PK_Public,
+    Stripe_PK_Public_Test,
+    Stripe_SK_Live,
+    Stripe_SK_Test,
+    Swish_Payee_Number, 
+    PDF_Template_Url,
+    Company_Logo_Url
+} from "../../Config";
 import qrcode from "qrcode";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
@@ -23,13 +38,12 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             "marginRight": 25,
             "marginLeft": 25,
             "marginBottom": 25,
-            "background": "https://cdn.tolfix.com/images/pdf/Template_Invoice.pdf",
             "sender": {
-                "company": "Tolfix",
-                "address": "Kalendervägen 23",
-                "zip": "415 34",
-                "city": "Göteborg",
-                "country": "Sweden",
+                "company": Company_Name,
+                "address": Company_Address,
+                "zip": Company_Zip,
+                "city": Company_City,
+                "country": Company_Country,
                 "custom1": "<br/><strong>Innehar F-Skattsedel</strong>",
             },
             "client": {
@@ -101,6 +115,14 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             </div>
             `,
         };
+
+        if(Company_Logo_Url && PDF_Template_Url === "")
+            // @ts-ignore
+            data["logo"] = Company_Logo_Url;
+
+        if(PDF_Template_Url !== "")
+            // @ts-ignore
+            data["background"] = PDF_Template_Url;
         
         //@ts-ignore
         easyinvoice.createInvoice(data, (result: { pdf: any; }) => {

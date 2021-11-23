@@ -51,12 +51,6 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
             ${item.quantity} x ${item.amount} = ${item.quantity * item.amount} <br />
             `).join('')}
             <br />
-            <br />
-            Company information : <a href="https://tolfix.com/knowledgebase">https://tolfix.com/knowledgebase</a>
-            <br />
-            Company Billing : <a href="https://tolfix.com/about/billing">https://tolfix.com/about/billing</a>
-            <br />
-            <br />
             ${Footer}
             `
         }, (err: any, sent: any) => {

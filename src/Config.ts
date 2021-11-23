@@ -36,6 +36,21 @@ export const Swish_Payee_Number = process.env.SWISH_PAYEE_NUMBER ?? "";
 export const Paypal_Client_Id = process.env.PAYPAL_CLIENT_ID ?? "";
 export const Paypal_Client_Secret = process.env.PAYPAL_CLIENT_SECRET ?? "";
 
+// Company
+// Later change this to a databse etc..
+export const Company_Name = process.env.COMPANY_NAME ?? "";
+export const Company_Address = process.env.COMPANY_ADDRESS ?? "";
+export const Company_Zip = process.env.COMPANY_ZIP ?? "";
+export const Company_City = process.env.COMPANY_CITY ?? "";
+export const Company_Country = process.env.COMPANY_COUNTRY ?? "";
+export const Company_Phone = process.env.COMPANY_PHONE ?? "";
+export const Company_Email = process.env.COMPANY_EMAIL ?? "";
+export const Company_Vat = process.env.COMPANY_VAT ?? "";
+export const Company_Logo_Url = process.env.COMPANY_LOGO_URL ?? "";
+
+// PDF
+export const PDF_Template_Url = process.env.PDF_TEMPLATE_URL ?? "";
+
 export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
     return ConfigModel.find().then(config => {
         //@ts-ignore
