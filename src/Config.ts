@@ -58,3 +58,10 @@ export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
         return config[0].smtp;
     });
 }
+
+export const GetSMTPEmails: () => Promise<IConfigs["smtp_emails"]> = () => {
+    return ConfigModel.find().then(config => {
+        //@ts-ignore
+        return config[0].smtp_emails;
+    });
+}
