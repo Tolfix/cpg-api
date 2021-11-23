@@ -13,7 +13,9 @@ export default function Cron_Orders()
         Logger.info(`Checking orders..`);
 
         // Check if the order needs to create a new invoice if order.dates.next_recylce is withing 14 days
-        OrderModel.find().then(orders => {
+        OrderModel.find({
+            order_status: "active",
+        }).then(orders => {
             orders.forEach(async order => {
                 Logger.info(`Checking order ${order.id}`);
                 // Check if order.order_status is not "cancelled" or "fruad"
