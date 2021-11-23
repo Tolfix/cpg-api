@@ -74,7 +74,7 @@ export async function sendLateInvoiceEmail(invoice: IInvoice & Document, Custome
             return;
         
         //@ts-ignore
-        SendEmail(Customer.personal.email, `Invoice from ${Company_Name ?? "CPG"} ${invoice.id}`, {
+        SendEmail(Customer.personal.email, `Invoice reminder | ${Company_Name ?? "CPG"} #${invoice.id}`, {
             isHTML: true,
             attachments: [
                 {
@@ -84,7 +84,7 @@ export async function sendLateInvoiceEmail(invoice: IInvoice & Document, Custome
                 }
             ],
             body: `Dear ${Customer.personal.first_name} ${Customer.personal.last_name} ${Customer.billing.company ? `(${Customer.billing.company})` : ''} <br />
-            This is a notice that an invoice has been generated on ${invoice.dates.invoice_date}
+            This is a notice that invoice ${invoice.id} is late.
             <br />
             <br />
             Your payment method is: ${invoice.payment_method}

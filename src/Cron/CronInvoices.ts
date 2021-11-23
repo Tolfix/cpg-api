@@ -4,7 +4,7 @@ import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
 import CustomerModel from "../Database/Schemas/Customer";
 import { d_Days } from "../Config";
-import { sendInvoiceEmail } from "../Lib/Invoices/SendEmail";
+import { sendInvoiceEmail, sendLateInvoiceEmail } from "../Lib/Invoices/SendEmail";
 
 export default function Cron_Invoices()
 {
@@ -15,12 +15,21 @@ export default function Cron_Invoices()
         // Trigger if a invoice is dued in the next 2 weeks.
         // Send email and notify,
         // Mark it as sent notification.
-        const getDates30DaysAhead = () => {
+        const getDates30DaysAhead = () =>
+        {
             let dates = [];
             for (let i = 0; i < d_Days; i++)
                 dates.push(dateFormat.format(dateFormat.addDays(new Date(), i+1), "YYYY-MM-DD"))
             return dates;
-        }
+        };
+
+        const getDates30DaysAgo = () =>
+        {
+            let dates = [];
+            for (let i = 0; i < d_Days; i++)
+                dates.push(dateFormat.format(dateFormat.addDays(new Date(), -i-1), "YYYY-MM-DD"))
+            return dates;
+        };
 
         InvoiceModel.find({
             "dates.due_date": {
@@ -36,6 +45,24 @@ export default function Cron_Invoices()
                     continue;
 
                 await sendInvoiceEmail(invoice, Customer);
+
+            }
+        });
+
+        InvoiceModel.find({
+            "dates.due_date": {
+                $in: [...(getDates30DaysAgo())]
+            },
+            paid: false
+        }).then(async (invoices) => {
+            for await(const invoice of invoices)
+            {
+                // Get customer
+                const Customer = await CustomerModel.findOne({ id: invoice.customer_uid});
+                if(!Customer)
+                    continue;
+
+                await sendLateInvoiceEmail(invoice, Customer);
 
             }
         });
