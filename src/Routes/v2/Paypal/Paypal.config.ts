@@ -1,4 +1,5 @@
 import { Application, Router } from "express";
+import { Company_Website } from "../../../Config";
 import InvoiceModel from "../../../Database/Schemas/Invoices";
 import { IInvoice } from "../../../Interfaces/Invoice";
 import { createPaypalPaymentFromInvoice, retrievePaypalTransaction } from "../../../Payments/Paypal";
@@ -38,7 +39,7 @@ export default class PaypalRouter
             const paymentId = req.query.paymentId as string;
 
             if(!payerId || !paymentId)
-                return res.redirect("https://tolfix.com/");
+                return res.redirect(Company_Website);
 
             retrievePaypalTransaction(payerId, paymentId);
 

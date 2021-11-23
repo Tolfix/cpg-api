@@ -60,7 +60,7 @@ export async function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise
                             tax: "0",
                         }
                     },
-                    description: "Tolfix",
+                    description: `Invoice ${invoice.id}`,
                     invoice_number: invoice.id.toString(),
                 }
             ]

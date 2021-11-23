@@ -1,5 +1,5 @@
 import { Application, Router } from "express";
-import { DebugMode, Full_Domain, Stripe_PK_Public, Stripe_PK_Public_Test, Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret } from "../../../Config";
+import { Company_Website, DebugMode, Full_Domain, Stripe_PK_Public, Stripe_PK_Public_Test, Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret } from "../../../Config";
 import InvoiceModel from "../../../Database/Schemas/Invoices";
 import { APIError } from "../../../Lib/Response";
 import stripe from "stripe";
@@ -203,13 +203,13 @@ export default class StripeRouter
                 case 'succeeded':
                     message = 'Success! Payment received.';
                     invoice.paid = true;
-                    href = "https://tolfix.com/";
+                    href = Company_Website;
                     status = intent.status;
                     break;
             
                 case 'processing':
                     message = "Payment processing. We'll update you when payment is received.";
-                    href = "https://tolfix.com/";
+                    href = Company_Website;
                     status = intent.status;
                     break;
             
@@ -223,7 +223,7 @@ export default class StripeRouter
             
                 default:
                     message = 'Something went wrong.';
-                    href = "https://tolfix.com/";
+                    href = Company_Website;
                     break;
             }
 

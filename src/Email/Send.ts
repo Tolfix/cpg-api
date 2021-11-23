@@ -1,5 +1,5 @@
 import mail from "nodemailer";
-import { GetSMTPConfig } from "../Config";
+import { Company_Name, GetSMTPConfig } from "../Config";
 import { IConfigs } from "../Interfaces/Admin/Configs";
 import AW from "../Lib/AW";
 var AWS = require('aws-sdk/dist/aws-sdk-react-native');
@@ -47,7 +47,7 @@ export async function SendEmail(
         html?: string;
         attachments?: any;
     } = {
-        from: `"Tolfix" <${SMTPConfig.username}>`,
+        from: `"${Company_Name}" <${SMTPConfig.username}>`,
         to: `${reciever}`,
         subject: subject,
     }
