@@ -46,6 +46,7 @@ export const Company_Country = process.env.COMPANY_COUNTRY ?? "";
 export const Company_Phone = process.env.COMPANY_PHONE ?? "";
 export const Company_Email = process.env.COMPANY_EMAIL ?? "";
 export const Company_Vat = process.env.COMPANY_VAT ?? "";
+export const Company_Tax_Registered = process.env.COMPANY_TAX_REGISTERED === "true" ? true : false;
 export const Company_Logo_Url = process.env.COMPANY_LOGO_URL ?? "";
 
 // PDF

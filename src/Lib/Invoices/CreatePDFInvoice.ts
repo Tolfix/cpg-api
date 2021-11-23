@@ -16,7 +16,8 @@ import {
     Stripe_SK_Test,
     Swish_Payee_Number, 
     PDF_Template_Url,
-    Company_Logo_Url
+    Company_Logo_Url,
+    Company_Tax_Registered
 } from "../../Config";
 import qrcode from "qrcode";
 
@@ -44,7 +45,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "zip": Company_Zip,
                 "city": Company_City,
                 "country": Company_Country,
-                "custom1": "<br/><strong>Innehar F-Skattsedel</strong>",
+                "custom1": `<br/><strong>Innehar ${Company_Tax_Registered ? "" : "inte"} F-Skattsedel</strong>`,
             },
             "client": {
                 "company": Customer.billing.company ?? `${Customer.personal.first_name} ${Customer.personal.last_name}`,
