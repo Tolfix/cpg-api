@@ -33,6 +33,13 @@ export interface IProduct
     images?: IImage["uid"][];
     tax_rate: number;
     recurring_method?: Partial<IRecurringMethod>;
+    module_name: string;
+    modules: Array<IModules>;
+}
+
+export interface IModules
+{
+    [key: string]: string;
 }
 
 export type IPaymentType = "free" | "one_time" | "recurring";

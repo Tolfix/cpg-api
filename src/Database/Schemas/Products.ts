@@ -77,6 +77,16 @@ const ProductSchema = new Schema
             // default: '',
         },
 
+        module_name: {
+            type: String,
+            default: 'none',
+        },
+
+        modules: {
+            type: Array,
+            default: [],
+        },
+
     }
 );
 
