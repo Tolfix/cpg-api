@@ -1,6 +1,7 @@
 import { ICustomer } from "./Customer";
 import { OrderStatus } from "./Orders";
 import { IPayments } from "./Payments";
+import { IProduct } from "./Products";
 import { ITransactions } from "./Transactions";
 
 /**
@@ -72,4 +73,5 @@ export interface IInvoices_Items
     notes: string;
     amount: IInvoice["amount"];
     quantity: number;
+    product_id: IProduct["id"];
 }

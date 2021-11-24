@@ -39,6 +39,7 @@ export async function createInvoiceFromOrder(order: IOrder)
             amount: product.price,
             notes: `${(await getCategoryByProduct(product))?.name} - ${product?.name}`,
             quantity: LBProducts.get(product.id)?.quantity ?? 1,
+            product_id: product.id
         }
     }))
 
