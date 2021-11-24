@@ -39,7 +39,8 @@ export interface IProduct
 
 export interface IModules
 {
-    [key: string]: string;
+    name: string;
+    value: string;
 }
 
 export type IPaymentType = "free" | "one_time" | "recurring";
