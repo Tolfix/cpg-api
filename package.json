@@ -21,6 +21,7 @@
     "colors": "^1.4.0",
     "common-tags": "^1.8.0",
     "cors": "^2.8.5",
+    "cpg-plugin-discord-webhook": "^1.0.1",
     "cron": "^1.8.2",
     "date-and-time": "^1.0.1",
     "dotenv": "^10.0.0",

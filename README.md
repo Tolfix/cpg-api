@@ -7,6 +7,9 @@
 # ⭐ | CPG-API
 CPG-API is being used to create products, invoices, orders, transactions and payments for customers, to grow your business.
 
+# 🎨 | Plugins
+Plugins allows you to install others features to CPG. Be aware it can be `dangerous` due to plugins get accessed to alot, you can trust `Tolfix` owns plugins, or plugins you created yourself, otherwise there is no guarantee
+
 # 📢 | Contribute
 Want to contribute? Great! You can contribute by `forking` this repository, then make changes and make a `PR`!
 
