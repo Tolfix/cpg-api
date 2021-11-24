@@ -69,7 +69,7 @@ export default class CustomerRouter
                 return APIError("Invalid email or password.")(res);
 
             // @ts-ignore
-            const isCorrect = await bcrypt.compare(password, customer.password)
+            const isCorrect = await bcrypt.compare(password.toString(), customer.password)
 
             if(!isCorrect)
                 return APIError("Invalid email or password.")(res);
