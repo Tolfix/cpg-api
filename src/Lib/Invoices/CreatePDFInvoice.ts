@@ -109,7 +109,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                             <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/stripe/pay/${invoice.uid}`)}" width="95">
                         </a>
                     </div
-                    ` : ''}'
+                    ` : ''}
 
                 </div>
 
