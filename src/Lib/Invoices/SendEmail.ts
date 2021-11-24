@@ -5,6 +5,7 @@ import { ICustomer } from "../../Interfaces/Customer";
 import { IInvoice } from "../../Interfaces/Invoice";
 import createPDFInvoice from "./CreatePDFInvoice";
 import {SendEmail} from "../../Email/Send"
+import mainEvent from "../../Events/Main";
 
 export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: ICustomer)
 {
@@ -47,18 +48,19 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
             ` : ''}
             <strong>Invoice items</strong> <br />
             ${invoice.items.map(item => `<br />
-            ${item.notes} <br />
-            ${item.quantity} x ${item.amount} = ${item.quantity * item.amount} <br />
+                ${item.notes} <br />
+                ${item.quantity} x ${item.amount} = ${item.quantity * item.amount} <br />
             `).join('')}
             <br />
             ${Footer}
             `
-        }, (err: any, sent: any) => {
+        }, async (err: any, sent: any) => {
             if(!err && sent)
             {
                 invoice.notified = true;
                 invoice.status = "payment_pending";
-                invoice.save();
+                await invoice.save();
+                mainEvent.emit("invoice_notified", invoice);
             }
         });
 
