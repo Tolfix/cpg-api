@@ -37,12 +37,15 @@ export default function Cron_Invoices()
             },
             notified: false
         }).then(async (invoices) => {
+            Logger.info(`Found ${invoices.length} invoices to notify.`);
             for await(const invoice of invoices)
             {
                 // Get customer
                 const Customer = await CustomerModel.findOne({ id: invoice.customer_uid});
                 if(!Customer)
                     continue;
+                    
+                Logger.info(`Sending email to ${Customer.personal.email}`);
 
                 await sendInvoiceEmail(invoice, Customer);
 
