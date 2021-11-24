@@ -155,14 +155,14 @@ export default class OrderRoute
 
                 _order_.products.push({
                     product_id: p.id,
-                    quantity: products.find(p => p.product_id === p.product_id)?.quantity ?? 1
+                    quantity: products.find(p => p.product_id == p.product_id)?.quantity ?? 1
                 });
             }
 
             // Create new orders
             if(recurring_monthly.length > 0)
                 createOrder(customer, recurring_monthly.map(p => {
-                    return products.find(p2 => p2.product_id === p.id) ?? {
+                    return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
                     }
@@ -170,7 +170,7 @@ export default class OrderRoute
 
             if(recurring_quarterly.length > 0)
                 createOrder(customer, recurring_quarterly.map(p => {
-                    return products.find(p2 => p2.product_id === p.id) ?? {
+                    return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
                     }
@@ -178,7 +178,7 @@ export default class OrderRoute
 
             if(recurring_semi_annually.length > 0)
                 createOrder(customer, recurring_semi_annually.map(p => {
-                    return products.find(p2 => p2.product_id === p.id) ?? {
+                    return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
                     }
@@ -186,7 +186,7 @@ export default class OrderRoute
 
             if(recurring_biennially.length > 0)
                 createOrder(customer, recurring_biennially.map(p => {
-                    return products.find(p2 => p2.product_id === p.id) ?? {
+                    return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
                     }
@@ -194,7 +194,7 @@ export default class OrderRoute
 
             if(recurring_triennially.length > 0)
                 createOrder(customer, recurring_triennially.map(p => {
-                    return products.find(p2 => p2.product_id === p.id) ?? {
+                    return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
                     }
@@ -202,7 +202,7 @@ export default class OrderRoute
 
             if(one_timers.length > 0)
                 createOrder(customer, one_timers.map(p => {
-                    return products.find(p2 => p2.product_id === p.id) ?? {
+                    return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
                     }
