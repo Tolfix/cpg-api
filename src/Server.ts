@@ -7,8 +7,8 @@ import Logger from "./Lib/Logger";
 import RouteHandler from "./Handlers/Route";
 import { reCache } from "./Cache/reCache";
 import { ICustomer } from "./Interfaces/Customer";
-import AdminHandler from "./Admin/AdminHandler";
 import { APIError } from "./Lib/Response";
+import { PluginHandler } from "./Plugins/PluginHandler";
 
 declare module "express-session"
 {
@@ -16,6 +16,7 @@ declare module "express-session"
         payload?: ICustomer;
     }
 }
+
 export default function start()
 {
 
@@ -52,13 +53,13 @@ export default function start()
         next();
     });
     
-    reCache().then(() => {
-        RouteHandler(server);
-        const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));
-        server.use("*", (req, res) => {
-            return APIError({
-                text: `Couldn't find what you were looking for.`
-            })(res);
-        })
+    reCache();
+    RouteHandler(server);
+    PluginHandler(server);
+    const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));
+    server.use("*", (req, res) => {
+        return APIError({
+            text: `Couldn't find what you were looking for.`
+        })(res);
     });
 }
