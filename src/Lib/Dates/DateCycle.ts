@@ -6,6 +6,9 @@ export default function nextRecycleDate(date: Date, type: IRecurringMethod): Dat
     if(type === "monthly")
         return (datetime.addMonths(date, 1));
 
+    if(type === "yearly")
+        return (datetime.addMonths(date, 12));
+
     if(type === "biennially")
         return (datetime.addYears(date, 2));
     

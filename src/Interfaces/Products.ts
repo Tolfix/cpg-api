@@ -45,4 +45,4 @@ export interface IModules
 
 export type IPaymentType = "free" | "one_time" | "recurring";
 
-export type IRecurringMethod = "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially";
+export type IRecurringMethod = "monthly" | "yearly" | "quarterly" | "semi_annually" | "biennially" | "triennially";
