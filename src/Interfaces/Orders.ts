@@ -43,7 +43,7 @@ export interface IOrder
 }
 
 
-export type OrderStatus = "active" | "pending" | "fruad" | "cancelled";
+export type OrderStatus = "active" | "pending" | "fraud" | "cancelled";
 
 export interface IOrderDates<isRecurring extends string>
 {

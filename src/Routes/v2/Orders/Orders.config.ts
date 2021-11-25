@@ -38,7 +38,7 @@ async function createOrder(customer: ICustomer, products: Array<{
         dates: {
             createdAt: new Date(),
             next_recycle: dateFormat.format(nextRecycleDate(
-                new Date(), "monthly")
+                new Date(), billing_cycle ?? "monthly")
             , "YYYY-MM-DD"),
             last_recycle: dateFormat.format(new Date(), "YYYY-MM-DD")
         },
@@ -129,6 +129,7 @@ export default class OrderRoute
             let recurring_semi_annually = [];
             let recurring_biennially = [];
             let recurring_triennially = [];
+            let recurring_yearly = [];
 
             // Possible to get a Dos attack
             // ! prevent this
@@ -151,7 +152,9 @@ export default class OrderRoute
                 
                 if(p.payment_type === "recurring" && p.recurring_method === "triennially")
                     recurring_triennially.push(p);
-    
+
+                if(p.payment_type === "recurring" && p.recurring_method === "yearly")
+                    recurring_yearly.push(p);
 
                 _order_.products.push({
                     product_id: p.id,
@@ -207,6 +210,14 @@ export default class OrderRoute
                         quantity: 1
                     }
                 }), one_timers, payment_method, "one_time");
+
+            if(recurring_yearly.length > 0)
+                createOrder(customer, recurring_yearly.map(p => {
+                    return products.find(p2 => p2.product_id == p.id) ?? {
+                        product_id: p.id,
+                        quantity: 1
+                    }
+                }), recurring_yearly, payment_method, "recurring", "yearly");
 
             const invoice = await createInvoiceFromOrder(_order_);
 
