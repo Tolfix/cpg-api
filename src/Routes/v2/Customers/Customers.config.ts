@@ -78,7 +78,7 @@ export default class CustomerRouter
                 data: {
                     id: customer.id,
                     email: customer.personal.email,
-                },                
+                },
                 exp: Math.floor(Date.now() / 1000) + (((60 * 60)*24))
             }, JWT_Access_Token);
             return APISuccess({

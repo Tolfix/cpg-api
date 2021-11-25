@@ -1,4 +1,4 @@
-import {Application} from "express";
+import { Application } from "express";
 import { HomeDir } from "../Config";
 import CategoryModel from "../Database/Schemas/Category";
 import CustomerModel from "../Database/Schemas/Customer";

@@ -1,4 +1,5 @@
-export const translate_sweden = {
+export const translate_sweden =
+{
     "invoiceNumber": "Fakturanummer",
     "invoiceDate": "Fakturadatum",
     "products": "Produkter", 
@@ -6,7 +7,6 @@ export const translate_sweden = {
     "price": "Pris",
     "subtotal": "Belopp",
     "total": "Totalt",
-    "documentTitle": `FAKTURA`,
 }
 
 export function getTranslate(country: string)

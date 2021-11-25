@@ -1,7 +1,6 @@
 import stripe from "stripe";
 import { DebugMode, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
 import CustomerModel from "../Database/Schemas/Customer";
-import InvoiceModel from "../Database/Schemas/Invoices";
 import TransactionsModel from "../Database/Schemas/Transactions";
 import { IInvoice } from "../Interfaces/Invoice";
 import { idTransicitons } from "../Lib/Generator";
