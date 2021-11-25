@@ -38,13 +38,13 @@ export default class BaseModelAPI<IModel extends { uid: string }>
         });
     }
 
-    public findAll(limit: number, page: number): Promise<Array<IModel>>
+    public findAll(limit: number, skip: number): Promise<Array<IModel>>
     {
         return new Promise((resolve, reject) => {
             this.iModel.find()
                 .select("-_id -__v")
                 .limit(limit)
-                .skip(limit * page)
+                .skip(skip)
                 .exec(function (err: any, users: any) {
                     if (err) {
                         reject(err);

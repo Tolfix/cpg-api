@@ -26,22 +26,22 @@ function getByUid(req: Request, res: Response)
 
 function list(req: Request, res: Response)
 {
-    let limit = parseInt(req.query.limit as string)
-    && parseInt(req.query.limit as string) <= 100 ? 
-                                                            parseInt(req.query.limit as string) 
+    let limit = parseInt(req.query._end as string)
+    && parseInt(req.query._end as string) <= 100 ? 
+                                                            parseInt(req.query._end as string) 
                                                             :
-                                                            10;
-    let page = 0;
+                                                            25;
+    let start = 0;
     if(req.query)
     {
-        if(req.query.page)
+        if(req.query._start)
         {
-            let p = parseInt(req.query.page as string);
-            page = Number.isInteger(p) ? p : 0;
+            let p = parseInt(req.query._start as string);
+            start = Number.isInteger(p) ? p : 0;
         }
     }
 
-    API.findAll(limit, page).then((result: any) => {
+    API.findAll(limit, start).then((result: any) => {
         APISuccess(result)(res)
     });
 }
