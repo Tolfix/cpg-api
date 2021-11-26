@@ -21,7 +21,7 @@ function insert(req: Request, res: Response)
             const email = req.body?.personal?.email;
 
             // Check if email already exists
-            const doesExist = await CustomerModel.findOne({ email: email });
+            const doesExist = await CustomerModel.findOne({ "personal.email": email });
 
             if(doesExist)
                 return APIError(`Email ${email} already exists`, 409)(res);
