@@ -1,5 +1,5 @@
 import events from "events";
-import { MainOnEvents } from "../Interfaces/Events/on/MainOnEvents";
+import { MainOnEvents } from "../Interfaces/Events/MainOnEvents";
 
 class MainEvent extends events.EventEmitter
 {

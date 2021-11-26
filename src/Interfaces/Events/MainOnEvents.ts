@@ -1,5 +1,5 @@
-import { IInvoice } from "../../Invoice";
-import { IOrder } from "../../Orders";
+import { IInvoice } from "../Invoice";
+import { IOrder } from "../Orders";
 
 export interface MainOnEvents
 {
