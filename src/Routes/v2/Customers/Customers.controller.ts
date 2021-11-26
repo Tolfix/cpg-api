@@ -18,7 +18,7 @@ function insert(req: Request, res: Response)
 
             req.body.password = hash;
 
-            const email = req.body.email;
+            const email = req.body?.personal?.email;
 
             // Check if email already exists
             const doesExist = await CustomerModel.findOne({ email: email });
