@@ -40,7 +40,7 @@ export async function PluginHandler(server: Application)
 
         Logger.plugin(`Loaded plugin ${plugin}`)
     }
-}
+};
 
 export function installPlugin(plugin: string)
 {
@@ -63,7 +63,7 @@ export function installPlugin(plugin: string)
             });
         });
     }) 
-}
+};
 
 export function getPlugins()
 {
@@ -72,4 +72,4 @@ export function getPlugins()
     // get plugins starting with cpg-plugin
     const plugins = packages.filter(p => p.startsWith("cpg-plugin"));
     return plugins;
-}
+};

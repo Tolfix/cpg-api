@@ -14,8 +14,10 @@ export const Http_Schema = process.env.HTTP_SCHEMA ?? "http";
 export const PORT = process.env.PORT ?? 8080;
 export const Full_Domain = `${Http_Schema}://${Domain === "localhost" ? `localhost:${PORT}` : Domain}`;
 
+// API
 export const Express_Session_Secret = process.env.SESSION_SECRET ?? require("crypto").randomBytes(20).toString("hex");
 
+// Database
 export const MongoDB_URI = process.env.MONGO_URI ?? "mongodb://localhost/cpg";
 
 // osTicket configs
@@ -56,16 +58,18 @@ export const PDF_Template_Url = process.env.PDF_TEMPLATE_URL ?? "";
 // Plugins
 export const Plugins: Array<string> = JSON.parse(process.env.PLUGINS ?? "[]");
 
-export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
+export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () =>
+{
     return ConfigModel.find().then(config => {
         //@ts-ignore
         return config[0].smtp;
     });
-}
+};
 
-export const GetSMTPEmails: () => Promise<IConfigs["smtp_emails"]> = () => {
+export const GetSMTPEmails: () => Promise<IConfigs["smtp_emails"]> = () =>
+{
     return ConfigModel.find().then(config => {
         //@ts-ignore
         return config[0].smtp_emails;
     });
-}
+};

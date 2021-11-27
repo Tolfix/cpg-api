@@ -1,5 +1,9 @@
 import { Application, Router } from "express";
-import { Company_Website, DebugMode, Full_Domain, Stripe_PK_Public, Stripe_PK_Public_Test, Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret } from "../../../Config";
+import { 
+    Company_Website, DebugMode, Full_Domain, 
+    Stripe_PK_Public, Stripe_PK_Public_Test, 
+    Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret
+} from "../../../Config";
 import InvoiceModel from "../../../Database/Schemas/Invoices";
 import { APIError } from "../../../Lib/Response";
 import stripe from "stripe";
