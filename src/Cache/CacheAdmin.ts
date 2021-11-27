@@ -1,5 +1,8 @@
 import { IAdministrator } from "../Interfaces/Admin/Administrators";
 
+/**
+ * @deprecated
+ */
 export const CacheAdmin = new Map<IAdministrator["uid"], IAdministrator>();
 
 export function getAdminByUsername(username: IAdministrator["username"])

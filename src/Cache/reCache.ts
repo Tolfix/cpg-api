@@ -153,6 +153,9 @@ export async function reCache_Images()
     });
 }
 
+/**
+ * @deprecated
+ */
 export async function reCache()
 {
     await reCache_Configs();
