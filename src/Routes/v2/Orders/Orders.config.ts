@@ -11,18 +11,20 @@ import dateFormat from "date-and-time";
 import nextRecycleDate from "../../../Lib/Dates/DateCycle";
 import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
 import { idOrder } from "../../../Lib/Generator";
-import { Full_Domain } from "../../../Config";
+import { Company_Name, Full_Domain } from "../../../Config";
 import { sendInvoiceEmail } from "../../../Lib/Invoices/SendEmail";
 import EnsureAuth from "../../../Middlewares/EnsureAuth";
 import { IOrder } from "../../../Interfaces/Orders";
 import { ICustomer } from "../../../Interfaces/Customer";
+import { SendEmail } from "../../../Email/Send";
+import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
     quantity: number
 }>, _products: IProduct[], payment_method: string, billing_type: string, billing_cycle?: IRecurringMethod)
 {
-    await (new OrderModel({
+    const order = await (new OrderModel({
         customer_uid: customer.id,
         products: _products.map(product => {
             return {
@@ -44,6 +46,11 @@ async function createOrder(customer: ICustomer, products: Array<{
         },
         uid: idOrder(),
     }).save());
+
+    SendEmail(customer.personal.email, `New order from ${Company_Name !== "" ? Company_Name : "CPG"} #${order.id}`, {
+        isHTML: true,
+        body: NewOrderCreated(order, customer), 
+    });
 }
 
 export default class OrderRoute
@@ -76,9 +83,6 @@ export default class OrderRoute
 
             if(!payment_method.match(/manual|bank|paypal|credit_card|swish/g))
                 return APIError("payment_method invalid")(res);
-
-            // if(products.every(e => typeof e === "object"))
-            //     return APIError("products invalid")(res);    
 
             if(products.every(e => e.quantity <= 0))
                 return APIError("quantity invalid")(res);
