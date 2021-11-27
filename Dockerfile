@@ -59,6 +59,8 @@ ENV PDF_TEMPLATE_URL ""
 
 ENV PLUGINS "[]"
 
+ENV WEBHOOK_SECRET ""
+
 EXPOSE 8080
 
 CMD [ "node", "./build/Main.js" ]

@@ -59,6 +59,9 @@ export const PDF_Template_Url = process.env.PDF_TEMPLATE_URL ?? "";
 // Plugins
 export const Plugins: Array<string> = JSON.parse(process.env.PLUGINS ?? "[]");
 
+// Webhooks
+export const Webhook_Secret = process.env.WEBHOOK_SECRET ?? "";
+
 export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () =>
 {
     return ConfigModel.find().then(config => {

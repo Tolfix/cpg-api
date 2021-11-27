@@ -2,6 +2,7 @@ import request from "request";
 import events from "events";
 import { MainOnEvents } from "../Interfaces/Events/MainOnEvents";
 import ConfigModel from "../Database/Schemas/Configs";
+import { Webhook_Secret } from "../Config";
 
 class MainEvent extends events.EventEmitter
 {
@@ -16,7 +17,8 @@ class MainEvent extends events.EventEmitter
           request.post(URL, {
             json: {
               event: event,
-              data: args
+              data: args,
+              secret: Webhook_Secret,
             }
           });
         }
