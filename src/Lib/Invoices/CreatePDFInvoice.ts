@@ -17,7 +17,8 @@ import {
     Swish_Payee_Number, 
     PDF_Template_Url,
     Company_Logo_Url,
-    Company_Tax_Registered
+    Company_Tax_Registered,
+    Company_Currency
 } from "../../Config";
 import qrcode from "qrcode";
 
@@ -33,7 +34,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
         let data = {
             // @ts-ignore
             "documentTitle": `Invoice #${invoice.id}`,
-            "currency": "SEK",
+            "currency": Company_Currency.toUpperCase(),
             "taxNotation": "vat",
             "marginTop": 25,
             "marginRight": 25,

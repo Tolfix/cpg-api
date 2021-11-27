@@ -1,3 +1,4 @@
+import { Company_Currency } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer";
 import { IOrder } from "../../../Interfaces/Orders";
 import getFullName from "../../../Lib/Customers/getFullName";
@@ -12,7 +13,7 @@ Products: ${(await Promise.all(order.products.map(async (product) => {
     const p = await getProductById(product.product_id as any);
     if (!p)
         return '';
-    return `${p.name} - (${p.price} SEK)`;
+    return `${p.name} - (${p.price} ${Company_Currency.toLocaleUpperCase()})`;
 }))).join("<br />")}
 <br />
 Total: ${(await Promise.all(order.products.map(async (product) => {
@@ -20,7 +21,7 @@ Total: ${(await Promise.all(order.products.map(async (product) => {
     if (!p)
         return 0;
     return p.price;
-}))).reduce((acc, cur) => acc + cur, 0)} SEK
+}))).reduce((acc, cur) => acc + cur, 0)} ${Company_Currency.toLocaleUpperCase()}
 
 <br />
 ${Footer}

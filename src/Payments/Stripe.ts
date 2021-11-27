@@ -1,5 +1,5 @@
 import stripe from "stripe";
-import { DebugMode, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
+import { Company_Currency, DebugMode, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
 import CustomerModel from "../Database/Schemas/Customer";
 import TransactionsModel from "../Database/Schemas/Transactions";
 import { IInvoice } from "../Interfaces/Invoice";
@@ -22,7 +22,7 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
 
     let intent = (await Stripe.paymentIntents.create({
         amount: (invoice.amount+invoice.amount*invoice.tax_rate/100) * 100,
-        currency: "sek",
+        currency: Company_Currency,
         payment_method_types: ["card"],
         receipt_email: customer?.personal.email,
         // @ts-ignore
