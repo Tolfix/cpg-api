@@ -22,13 +22,25 @@ export default class AdminHandler
             if(result.action === "help")
                 Logger.info(stripIndent`
                 Available actions:
-                    add_email,
-                    delete_email,
-                    create_admin,
-                    delete_admin,
-                    show_admins,
-                    help,
-                    update_smtp
+                    Emails:
+                        add_email
+                        delete_email
+
+                    Admin:
+                        create_admin
+                        delete_admin
+                        show_admins
+
+                    SMTP:
+                        update_smtp
+
+                    General:
+                        help
+
+                    Webhooks:
+                        add_webhook
+                        delete_webhook
+                        show_webhooks
                 `);
 
             if(result.action === "create_admin")
@@ -49,9 +61,19 @@ export default class AdminHandler
             if(result.action === "delete_email")
                 await this.delete_email();
             
+            if(result.action === "add_webhook")
+                await this.add_webhook();
+
+            if(result.action === "delete_webhook")
+                await this.delete_webhook();
+
+            if(result.action === "show_webhooks")
+                await this.show_webhooks();
+
             this.action();
         });
     }
+
 
     private async update_smtp()
     {
@@ -216,4 +238,65 @@ export default class AdminHandler
             });
         });
     }
+
+    
+    private async add_webhook()
+    {
+        return new Promise((resolve, reject) => {
+            prompt.get([
+                {
+                    name: "url",
+                    description: "URL for webhook",
+                    required: true
+                },
+            ], async (err, result) => {
+                const url = result.url as string;
+                Logger.info(`Adding webhook..`);
+                // Get our config from database
+                const config = (await ConfigModel.find())[0];
+
+                // Add webhook
+                config.webhooks_urls.push(url);
+
+                // Save our config
+                await config.save();
+                return resolve(true)
+            });
+        });
+    }
+
+    private async delete_webhook()
+    {
+        return new Promise((resolve, reject) => {
+            prompt.get([
+                {
+                    name: "url",
+                    description: "URL for webhook",
+                    required: true
+                },
+            ], async (err, result) => {
+                const url = result.url as string;
+                Logger.info(`Deleting webhook..`);
+                // Get our config from database
+                const config = (await ConfigModel.find())[0];
+
+                // Remove webhook
+                config.webhooks_urls = config.webhooks_urls.filter(e => e !== url);
+
+                // Save our config
+                await config.save();
+                return resolve(true)
+            });
+        });
+    };
+
+    private async show_webhooks()
+    {
+        return new Promise(async (resolve, reject) => {
+            // Get our config from database
+            const config = (await ConfigModel.find())[0];
+            Logger.info(`Webhooks:`, config.webhooks_urls);
+            resolve(true);
+        });
+    };
 }
