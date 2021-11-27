@@ -56,7 +56,9 @@ export default function start()
     reCache();
     RouteHandler(server);
     PluginHandler(server);
-    const sv = server.listen(PORT, () => Logger.info(`Server listing on port ${PORT}`));
+
+    server.listen(PORT, () => Logger.api(`Server listing on port ${PORT}`));
+    
     server.use("*", (req, res) => {
         return APIError({
             text: `Couldn't find what you were looking for.`
