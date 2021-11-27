@@ -9,7 +9,7 @@ export default async (order: IOrder, customer: ICustomer) => `Hello ${getFullNam
 <br />
 Order nmr.: ${order.id}
 <br />
-Products: ${(await Promise.all(order.products.map(async (product) => {
+Products: <br/>${(await Promise.all(order.products.map(async (product) => {
     const p = await getProductById(product.product_id as any);
     if (!p)
         return '';
