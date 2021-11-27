@@ -32,7 +32,7 @@ export function PluginHandler(server: Application)
             OrderModel: OrderModel,
             ProductModel: ProductModel,
             TransactionsModel: TransactionsModel,            
-        });
+        }, Logger);
     }
 }
 
