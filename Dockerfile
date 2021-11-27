@@ -56,6 +56,8 @@ ENV COMPANY_WEBSITE ""
 
 ENV PDF_TEMPLATE_URL ""
 
+ENV PLUGINS "[]"
+
 EXPOSE 8080
 
 CMD [ "node", "./build/Main.js" ]
