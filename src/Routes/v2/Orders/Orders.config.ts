@@ -64,11 +64,11 @@ export default class OrderRoute
         this.router.post("/place", EnsureAuth, async (req, res) => {
             // @ts-ignore
             const customer_id = req.customer.id;
-            const products = req.body as Array<{
+            const products = req.body.products as Array<{
                 product_id: IProduct["id"],
                 quantity: number
             }>;
-            const payment_method = req.body as keyof IPayments;
+            const payment_method = req.body.payment_method as keyof IPayments;
 
             if(!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
