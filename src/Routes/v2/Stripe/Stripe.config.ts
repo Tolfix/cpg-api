@@ -1,5 +1,10 @@
 import { Application, Router } from "express";
-import { Company_Website, DebugMode, Full_Domain, Stripe_PK_Public, Stripe_PK_Public_Test, Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret } from "../../../Config";
+import { 
+    Company_Currency,
+    Company_Website, DebugMode, Full_Domain, 
+    Stripe_PK_Public, Stripe_PK_Public_Test, 
+    Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret
+} from "../../../Config";
 import InvoiceModel from "../../../Database/Schemas/Invoices";
 import { APIError } from "../../../Lib/Response";
 import stripe from "stripe";
@@ -78,7 +83,7 @@ export default class StripeRouter
                             ${invoice.items.map(item => `
                                 <tr>
                                     <td>${item.notes}</td>
-                                    <td>${item.amount} SEK</td>
+                                    <td>${item.amount} ${Company_Currency.toUpperCase()}</td>
                                 </tr>
                             `).join("")}
 
@@ -88,7 +93,7 @@ export default class StripeRouter
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td>${invoice.amount+invoice.amount*invoice.tax_rate/100} SEK</td>
+                                <td>${invoice.amount+invoice.amount*invoice.tax_rate/100} ${Company_Currency.toUpperCase()}</td>
                             </tr>
                         </table>
 

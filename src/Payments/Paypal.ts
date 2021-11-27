@@ -1,5 +1,5 @@
 import paypal from "paypal-rest-sdk";
-import { DebugMode, Domain, Http_Schema, Paypal_Client_Id, Paypal_Client_Secret, PORT } from "../Config";
+import { Company_Currency, DebugMode, Domain, Http_Schema, Paypal_Client_Id, Paypal_Client_Secret, PORT } from "../Config";
 import TransactionsModel from "../Database/Schemas/Transactions";
 import { IInvoice } from "../Interfaces/Invoice";
 import { idTransicitons } from "../Lib/Generator";
@@ -47,13 +47,13 @@ export async function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise
                             return {
                                 name: removeTags(item.notes),
                                 price: (item.amount+(item.amount*invoice.tax_rate/100)).toString(),
-                                currency: "SEK",
+                                currency: Company_Currency.toUpperCase(),
                                 quantity: item.quantity
                             }
                         })
                     },
                     amount: {
-                        currency: "SEK",
+                        currency: Company_Currency.toUpperCase(),
                         total: (invoice.amount+(invoice.amount*invoice.tax_rate/100)).toString(),
                         details: {
                             subtotal: (invoice.amount+(invoice.amount*invoice.tax_rate/100)).toString(),

@@ -8,7 +8,15 @@
 CPG-API is being used to create products, invoices, orders, transactions and payments for customers, to grow your business.
 
 # 🎨 | Plugins
-Plugins allows you to install others features to CPG. Be aware it can be `dangerous` due to plugins get accessed to alot, you can trust `Tolfix` owns plugins, or plugins you created yourself, otherwise there is no guarantee
+Plugins allows you to install others features to CPG. Be aware it can be `dangerous` due to plugins get accessed to alot, you can trust `Tolfix` owns plugins, or plugins you created yourself, otherwise there is no guarantee.
+
+### Installing
+You can install new plugins by modifying ENV PLUGIN as a array
+`PLUGINS=["cpg-plugin-discord-webhook", "cpg-plugin-"]`
+This will install the plugin by `npm`.
+
+### Deleting
+Simply remove the plugin as you added the plugin reverse.
 
 # 📢 | Contribute
 Want to contribute? Great! You can contribute by `forking` this repository, then make changes and make a `PR`!

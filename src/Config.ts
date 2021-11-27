@@ -14,8 +14,10 @@ export const Http_Schema = process.env.HTTP_SCHEMA ?? "http";
 export const PORT = process.env.PORT ?? 8080;
 export const Full_Domain = `${Http_Schema}://${Domain === "localhost" ? `localhost:${PORT}` : Domain}`;
 
+// API
 export const Express_Session_Secret = process.env.SESSION_SECRET ?? require("crypto").randomBytes(20).toString("hex");
 
+// Database
 export const MongoDB_URI = process.env.MONGO_URI ?? "mongodb://localhost/cpg";
 
 // osTicket configs
@@ -46,6 +48,7 @@ export const Company_Country = process.env.COMPANY_COUNTRY ?? "";
 export const Company_Phone = process.env.COMPANY_PHONE ?? "";
 export const Company_Email = process.env.COMPANY_EMAIL ?? "";
 export const Company_Vat = process.env.COMPANY_VAT ?? "";
+export const Company_Currency = process.env.COMPANY_CURRENCY ?? "";
 export const Company_Tax_Registered = process.env.COMPANY_TAX_REGISTERED === "true" ? true : false;
 export const Company_Logo_Url = process.env.COMPANY_LOGO_URL ?? "";
 export const Company_Website = process.env.COMPANY_WEBSITE ?? "";
@@ -53,16 +56,24 @@ export const Company_Website = process.env.COMPANY_WEBSITE ?? "";
 // PDF
 export const PDF_Template_Url = process.env.PDF_TEMPLATE_URL ?? "";
 
-export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
+// Plugins
+export const Plugins: Array<string> = JSON.parse(process.env.PLUGINS ?? "[]");
+
+// Webhooks
+export const Webhook_Secret = process.env.WEBHOOK_SECRET ?? "";
+
+export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () =>
+{
     return ConfigModel.find().then(config => {
         //@ts-ignore
         return config[0].smtp;
     });
-}
+};
 
-export const GetSMTPEmails: () => Promise<IConfigs["smtp_emails"]> = () => {
+export const GetSMTPEmails: () => Promise<IConfigs["smtp_emails"]> = () =>
+{
     return ConfigModel.find().then(config => {
         //@ts-ignore
         return config[0].smtp_emails;
     });
-}
+};

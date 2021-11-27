@@ -1,8 +1,7 @@
 import { ICategory } from "../Interfaces/Categories";
 
 /**
- * @description
- * The cache for categories.
+ * @deprecated
  */
 export const CacheCategories = new Map<ICategory["uid"], ICategory>();
 

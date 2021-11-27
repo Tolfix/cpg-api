@@ -15,6 +15,11 @@ const ConfigsSchema = new Schema
             default: [],
         },
 
+        webhooks_urls: {
+            type: Array,
+            default: [],
+        }
+
     }
 );
 
