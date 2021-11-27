@@ -15,7 +15,7 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
             return;
         
         //@ts-ignore
-        SendEmail(Customer.personal.email, `Invoice from ${Company_Name ?? "CPG"} ${invoice.id}`, {
+        SendEmail(Customer.personal.email, `Invoice from ${Company_Name !== "" ? Company_Name : "CPG"} #${invoice.id}`, {
             isHTML: true,
             attachments: [
                 {
@@ -46,6 +46,7 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
                 Click me to pay.
             </a>
             ` : ''}
+            <br />
             <strong>Invoice items</strong> <br />
             ${invoice.items.map(item => `<br />
                 ${item.notes} <br />
