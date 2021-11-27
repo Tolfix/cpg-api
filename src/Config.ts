@@ -53,6 +53,9 @@ export const Company_Website = process.env.COMPANY_WEBSITE ?? "";
 // PDF
 export const PDF_Template_Url = process.env.PDF_TEMPLATE_URL ?? "";
 
+// Plugins
+export const Plugins: Array<string> = JSON.parse(process.env.PLUGINS ?? "[]");
+
 export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () => {
     return ConfigModel.find().then(config => {
         //@ts-ignore

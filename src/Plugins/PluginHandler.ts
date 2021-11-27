@@ -1,5 +1,4 @@
 import { Application } from "express";
-import { HomeDir } from "../Config";
 import CategoryModel from "../Database/Schemas/Category";
 import CustomerModel from "../Database/Schemas/Customer";
 import ImageModel from "../Database/Schemas/Images";
@@ -9,17 +8,22 @@ import ProductModel from "../Database/Schemas/Products";
 import TransactionsModel from "../Database/Schemas/Transactions";
 import mainEvent from "../Events/Main";
 import Logger from "../Lib/Logger";
+import { Plugins } from "../Config";
+import npm from "npm";
 
 // find installed npm packages in package.json and get plugins starting with cpg_plugin
 // then require it and call the new 
 
-export function PluginHandler(server: Application)
+export async function PluginHandler(server: Application)
 {
     // get plugins from package.json
     Logger.info("Loading plugins");
     const plugins = getPlugins();
-    for(const plugin of plugins)
+    for await(const plugin of plugins)
     {
+        await installPlugin(plugin);
+
+        Logger.plugin(`Installed plugin ${plugin}`)
         // @ts-ignore
         const pluginInstance = require(plugin);
         // @ts-ignore
@@ -33,16 +37,39 @@ export function PluginHandler(server: Application)
             ProductModel: ProductModel,
             TransactionsModel: TransactionsModel,            
         }, Logger);
+
+        Logger.plugin(`Loaded plugin ${plugin}`)
     }
+}
+
+export function installPlugin(plugin: string)
+{
+    return new Promise((resolve, reject) => {
+        npm.load(function(err)
+        {
+            if(err)
+            {
+                Logger.error(err);
+                return reject(err);
+            }
+            npm.commands.install([plugin], function(err, data)
+            {
+                if(err)
+                {
+                    Logger.error(err);
+                    return reject(err);
+                }
+                resolve(true);
+            });
+        });
+    }) 
 }
 
 export function getPlugins()
 {
-
     // get all installed npm packages
-    const packages = require(`${HomeDir}/package.json`).dependencies;
+    const packages = Plugins;
     // get plugins starting with cpg-plugin
-    const plugins = Object.keys(packages).filter((key) => key.startsWith("cpg-plugin-"));
+    const plugins = packages.filter(p => p.startsWith("cpg-plugin"));
     return plugins;
-
 }
