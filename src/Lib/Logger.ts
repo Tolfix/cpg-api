@@ -24,6 +24,12 @@ const Logger = {
         console.log(time + " | " + colors.green(`API: `), ...body)
     },
 
+    plugin: <T extends any[]> (...body: T) => {
+        let time = getTime();
+
+        console.log(time + " | " + colors.green(`Plugin: `), ...body)
+    },
+
     cache: <T extends any[]> (...body: T) => {
         let time = getTime();
 

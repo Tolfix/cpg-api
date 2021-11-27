@@ -4,7 +4,6 @@ import { HomeDir } from "../Config";
 import Logger from "../Lib/Logger";
 import Swagger from "./Swagger";
 
-
 /**
  * 
  * @param {Application} server The server from express
@@ -23,7 +22,7 @@ export default function RouteHandler(server: Application): void
                 const pull = require(`${routeDir}/${version}/${route}/${file}`).default;
                 if(pull)
                 {
-                    Logger.info(`Adding new router in version ${version}, name ${pull.name ?? ""}`)
+                    Logger.api(`Adding new router in version ${version}, name ${pull.name ?? ""}`)
                     new pull(server, version);
                 }
                 continue;
