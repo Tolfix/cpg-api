@@ -61,7 +61,7 @@ export default class OrderRoute
             OrderController.list
         ]);
 
-        this.router.post("/place", EnsureAuth, async (req, res) => {
+        this.router.post("/place", EnsureAuth(), async (req, res) => {
             // @ts-ignore
             const customer_id = req.customer.id;
             const products = req.body.products as Array<{
@@ -70,14 +70,15 @@ export default class OrderRoute
             }>;
             const payment_method = req.body.payment_method as keyof IPayments;
 
+
             if(!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
 
             if(!payment_method.match(/manual|bank|paypal|credit_card|swish/g))
                 return APIError("payment_method invalid")(res);
 
-            if(products.every(e => typeof e === "object"))
-                return APIError("products invalid")(res);    
+            // if(products.every(e => typeof e === "object"))
+            //     return APIError("products invalid")(res);    
 
             if(products.every(e => e.quantity <= 0))
                 return APIError("quantity invalid")(res);
