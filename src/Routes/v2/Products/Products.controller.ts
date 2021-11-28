@@ -61,7 +61,7 @@ function removeById(req: Request, res: Response)
         });
  };
 
-const CustomerController = {
+const ProductController = {
     insert,
     getByUid,
     list,
@@ -69,4 +69,4 @@ const CustomerController = {
     removeById
 }
 
-export default CustomerController;
+export default ProductController;
