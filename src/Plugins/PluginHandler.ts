@@ -10,6 +10,7 @@ import mainEvent from "../Events/Main";
 import Logger from "../Lib/Logger";
 import { Plugins } from "../Config";
 import npm from "npm";
+import fs from "fs";
 
 // find installed npm packages in package.json and get plugins starting with cpg_plugin
 // then require it and call the new 
@@ -21,9 +22,12 @@ export async function PluginHandler(server: Application)
     const plugins = getPlugins();
     for await(const plugin of plugins)
     {
-        await installPlugin(plugin);
+        if(!(await isPluginInstalled(plugin)))
+        {
+            await installPlugin(plugin);
+            Logger.plugin(`Installed plugin ${plugin}`)
+        }
 
-        Logger.plugin(`Installed plugin ${plugin}`)
         // @ts-ignore
         const pluginInstance = require(plugin);
         // @ts-ignore
@@ -44,7 +48,8 @@ export async function PluginHandler(server: Application)
 
 export function installPlugin(plugin: string)
 {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) =>
+    {
         npm.load(function(err)
         {
             if(err)
@@ -64,6 +69,17 @@ export function installPlugin(plugin: string)
         });
     }) 
 };
+
+export function isPluginInstalled(plugin: string)
+{
+    return new Promise((resolve, reject) => {
+        // Check node_modules for plugin
+        const pluginPath = `${process.cwd()}/node_modules/${plugin}`;
+        if(!fs.existsSync(pluginPath))
+            return resolve(false);
+        resolve(true);
+    });
+}
 
 export function getPlugins()
 {
