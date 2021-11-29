@@ -43,8 +43,18 @@ export default function start()
     server.use(sessionMiddleWare);
     
     server.use(express.urlencoded({ extended: true }));
-    // @ts-ignore
-    server.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}));
+    server.use((req, res, next) => {
+        express.json({verify: (req, res, buf, encoding) => { 
+            try {
+                JSON.parse(buf.toString());
+                // @ts-ignore
+                req.rawBody = buf;
+            } catch (e) {
+                // @ts-ignore
+                APIError("Invalid JSON")(res);
+            }
+        }})(req, res, next);
+    });
     
     server.use((req, res, next) => {
         res.setHeader('X-Powered-By', 'CPG-API');
