@@ -31,10 +31,8 @@ export function createSwishQRCode(number: string, amount: number, notes: string)
             encoding: null,
             body: data
         }, (error, response, body) => {
-            if (!error && response.statusCode === 200) {
-                const data = Buffer.from(body).toString("base64");
-                resolve(data);
-            }
+            if (!error && response.statusCode === 200)
+                resolve(Buffer.from(body).toString("base64"));
         });
     })
 }
