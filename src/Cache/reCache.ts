@@ -14,9 +14,11 @@ import { CacheProduct } from "./CacheProduct";
 import { CacheTransactions } from "./CacheTransactions";
 import { CacheImages } from "./CacheImage";
 import ConfigModel from "../Database/Schemas/Configs";
-import { SchemaTypes } from "mongoose";
 import { CacheConfig } from "./CacheConfigs";
 
+/**
+ * @deprecated
+ */
 export function reCache_Categories()
 {
     Logger.info(`Starting caching on categories..`);
@@ -45,6 +47,9 @@ export async function reCache_Admin()
     });
 }
 
+/**
+ * @deprecated
+ */
 export async function reCache_Customers()
 {
     Logger.info(`Starting caching on customers..`);
@@ -59,6 +64,9 @@ export async function reCache_Customers()
     });
 }
 
+/**
+ * @deprecated
+ */
 export async function reCache_Product()
 {
     Logger.info(`Starting caching on products..`);
@@ -73,6 +81,9 @@ export async function reCache_Product()
     });
 }
 
+/**
+ * @deprecated
+ */
 export async function reCache_Transactions()
 {
     Logger.info(`Starting caching on transactions..`);
@@ -87,6 +98,9 @@ export async function reCache_Transactions()
     });
 }
 
+/**
+ * @deprecated
+ */
 export async function reCache_Orders()
 {
     Logger.info(`Starting caching on orders..`);
@@ -139,6 +153,9 @@ export async function reCache_Configs()
     });
 }
 
+/**
+ * @deprecated
+ */
 export async function reCache_Images()
 {
     Logger.info(`Starting caching on images..`);
