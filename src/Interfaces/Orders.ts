@@ -1,3 +1,4 @@
+import { IConfigurableOptions } from "./ConfigurableOptions";
 import { ICustomer } from "./Customer";
 import { IInvoice } from "./Invoice";
 import { IPayments } from "./Payments";
@@ -26,6 +27,8 @@ export interface IOrder
     customer_uid: ICustomer["uid"];
     products: Array<{
         product_id: IProduct["id"],
+        configurable_option_id?: IConfigurableOptions["id"],
+        configurable_option_index?: number,
         quantity: number
     }>;
     payment_method: keyof IPayments;

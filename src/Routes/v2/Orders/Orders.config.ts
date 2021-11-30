@@ -18,10 +18,17 @@ import { IOrder } from "../../../Interfaces/Orders";
 import { ICustomer } from "../../../Interfaces/Customer";
 import { SendEmail } from "../../../Email/Send";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
+import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
+import ConfigurableOptionsModel from "../../../Database/Schemas/ConfigurableOptions";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
-    quantity: number
+    quantity: number,
+    configurable_options?: Array<{
+        id: IConfigurableOptions["id"],
+        option_index?: number,
+        option_name_indexing?: string,
+    }>;
 }>, _products: IProduct[], payment_method: string, billing_type: string, billing_cycle?: IRecurringMethod)
 {
     const order = await (new OrderModel({
@@ -73,10 +80,13 @@ export default class OrderRoute
             const customer_id = req.customer.id;
             const products = req.body.products as Array<{
                 product_id: IProduct["id"],
-                quantity: number
+                quantity: number,
+                configurable_options?: Array<{
+                    id: IConfigurableOptions["id"],
+                    option_index: number,
+                }>;
             }>;
             const payment_method = req.body.payment_method as keyof IPayments;
-
 
             if(!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
@@ -99,6 +109,12 @@ export default class OrderRoute
             const _products = await ProductModel.find({
                 id: {
                     $in: products.map(product => product.product_id)
+                }
+            });
+
+            const _configurable_options = await ConfigurableOptionsModel.find({
+                id: {
+                    $in: products.flatMap(product => product.configurable_options?.map(option => option.id) ?? [])
                 }
             });
 
@@ -161,8 +177,17 @@ export default class OrderRoute
                 if(p.payment_type === "recurring" && p.recurring_method === "yearly")
                     recurring_yearly.push(p);
 
+                let configurable_option: undefined | IConfigurableOptions = undefined
+                if(_configurable_options.length > 0)
+                    if(_configurable_options.find(e => e.products_ids === p.id))
+                        configurable_option = _configurable_options.find(e => e.products_ids.includes(p.id));
+                
                 _order_.products.push({
                     product_id: p.id,
+                    configurable_option_id: configurable_option?.id,
+                    // get index from products
+                    // @ts-ignore
+                    configurable_option_index: products[products.findIndex(e => e.product_id === p.id)]?.configurable_options?.findIndex(e => e.id === configurable_option?.id) ?? 0,
                     quantity: products.find(p => p.product_id == p.product_id)?.quantity ?? 1
                 });
             }

@@ -6,6 +6,8 @@ import { idInvoice } from "../Generator";
 import dateFormat from "date-and-time";
 import getCategoryByProduct from "../Products/getCategoryByProduct";
 import { IProduct } from "../../Interfaces/Products";
+import ConfigurableOptionsModel from "../../Database/Schemas/ConfigurableOptions";
+import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions";
 
 
 // Create a method that checks if the order next recycle is within 14 days
@@ -34,14 +36,41 @@ export async function createInvoiceFromOrder(order: IOrder)
     // Get customer id
     const Customer_Id = order.customer_uid;
 
-    const items = await Promise.all(Products.map(async (product) => {
-        return <IInvoices_Items>{
+    // const items = await Promise.all(Products.map(async (product) => {
+    //     return <IInvoices_Items>{
+    //         amount: product.price,
+    //         notes: `${(await getCategoryByProduct(product))?.name} - ${product?.name}`,
+    //         quantity: LBProducts.get(product.id)?.quantity ?? 1,
+    //         product_id: product.id
+    //     }
+    // }));
+
+    let items = [];
+    for await(const product of Products)
+    {
+        const category = await getCategoryByProduct(product);
+        items.push({
             amount: product.price,
-            notes: `${(await getCategoryByProduct(product))?.name} - ${product?.name}`,
+            notes: `${category?.name} - ${product?.name}`,
             quantity: LBProducts.get(product.id)?.quantity ?? 1,
             product_id: product.id
+        });
+        if(LBProducts.get(product.id)?.configurable_option_id && LBProducts.get(product.id)?.configurable_option_index)
+        {
+            const configurable_options = await ConfigurableOptionsModel.findOne({
+                id: LBProducts.get(product.id)?.configurable_option_id
+            });
+            if(configurable_options)
+            {
+                items.push({
+                    // @ts-ignore
+                    amount: configurable_options.options[LBProducts.get(product.id)?.configurable_option_index].price,
+                    notes: `${category?.name} - ${product?.name} - ${configurable_options.name}`,
+                    quantity: 1,
+                });
+            }
         }
-    }))
+    }
 
     // Create invoice
     const newInvoice = await (new InvoiceModel({
@@ -80,11 +109,20 @@ export async function getProductsByOrder(order: IOrder)
     } });
 }
 
+export async function getConfigurableOptionsByOrder(order: IOrder)
+{
+    return await ConfigurableOptionsModel.find({ id: {
+        $in: [...order.products.map(product => product.configurable_option_id ?? undefined)]
+    } });
+}
+
 export function createMapProductsFromOrder(order: IOrder)
 {
     const a = new Map<IProduct["id"], {
-        product_id: number,
-        quantity: number,
+        product_id: IProduct["id"];
+        configurable_option_id?: IConfigurableOptions["id"];
+        configurable_option_index?: number;
+        quantity: number;
     }>()
     order.products.forEach(product => a.set(product.product_id, product));
     return a;
