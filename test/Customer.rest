@@ -1,0 +1,7 @@
+POST http://localhost:8080/v2/customers/authenticate
+Content-Type: application/json
+
+{
+    "username": "john@doe.com",
+    "password": "123"
+}
