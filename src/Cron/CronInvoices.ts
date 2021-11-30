@@ -35,7 +35,10 @@ export default function Cron_Invoices()
             "dates.due_date": {
                 $in: [...(getDates30DaysAhead())]
             },
-            notified: false
+            notified: false,
+            status: {
+                $ne: /fraud|cancelled/g
+            }
         }).then(async (invoices) => {
             Logger.info(`Found ${invoices.length} invoices to notify.`);
             for await(const invoice of invoices)
@@ -56,7 +59,10 @@ export default function Cron_Invoices()
             "dates.due_date": {
                 $in: [...(getDates30DaysAgo())]
             },
-            paid: false
+            paid: false,
+            status: {
+                $ne: /fraud|cancelled/g
+            }
         }).then(async (invoices) => {
             for await(const invoice of invoices)
             {

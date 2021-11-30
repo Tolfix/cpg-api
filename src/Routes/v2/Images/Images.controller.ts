@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import ProductModel from "../../../Database/Schemas/Products";
-import { IProduct } from "../../../Interfaces/Products";
-import { idProduct } from "../../../Lib/Generator";
+import ImageModel from "../../../Database/Schemas/Images";
+import { idImages } from "../../../Lib/Generator";
 import { APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 
-const API = new BaseModelAPI<IProduct>(idProduct, ProductModel);
+const API = new BaseModelAPI<any>(idImages, ImageModel);
 
 function insert(req: Request, res: Response)
 {
@@ -19,7 +18,7 @@ function insert(req: Request, res: Response)
 
 function getByUid(req: Request, res: Response)
 {
-    API.findByUid((req.params.uid as IProduct["uid"])).then((result) => {
+    API.findByUid((req.params.uid as any)).then((result) => {
         APISuccess(result)(res);
     });
 }
@@ -48,20 +47,20 @@ function list(req: Request, res: Response)
 
 function patch(req: Request, res: Response)
 {
-    API.findAndPatch((req.params.uid as IProduct["uid"]), req.body).then((result) => {
+    API.findAndPatch((req.params.uid as any), req.body).then((result) => {
         APISuccess(result)(res);
     });
 }
 
 function removeById(req: Request, res: Response)
 {
-    API.removeByUid(req.params.uid as IProduct["uid"])
+    API.removeByUid(req.params.uid as any)
         .then((result)=>{
             APISuccess(result, 204)(res)
         });
  };
 
-const ProductController = {
+const ImageController = {
     insert,
     getByUid,
     list,
@@ -69,4 +68,4 @@ const ProductController = {
     removeById
 }
 
-export default ProductController;
+export default ImageController;

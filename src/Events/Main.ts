@@ -8,12 +8,14 @@ class MainEvent extends events.EventEmitter
 {
   public emit<K extends keyof MainOnEvents>(event: K, args: MainOnEvents[K]): boolean
   {
+    // Webhook
+    // It sends webhooks specified url
     (async () => {
+      // Grabs the URLS from config
       const URLS = (await ConfigModel.find())[0].webhooks_urls;
+      // // // // // // // // // //
       if (URLS.length > 0)
-      {
         for (const URL of URLS)
-        {
           request.post(URL, {
             json: {
               event: event,
@@ -21,8 +23,7 @@ class MainEvent extends events.EventEmitter
               secret: Webhook_Secret,
             }
           });
-        }
-      }
+      // // // // // // // // // //
     })();
     return super.emit(event, args);
   }
