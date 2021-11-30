@@ -7,6 +7,11 @@ const ConfigurableOptionsSchema = new Schema
 (
     {
 
+        name: {
+            type: String,
+            required: true,
+        },
+
         products_ids: {
             type: Array,
             default: [],
