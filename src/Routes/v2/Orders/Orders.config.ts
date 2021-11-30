@@ -20,6 +20,8 @@ import { SendEmail } from "../../../Email/Send";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
 import ConfigurableOptionsModel from "../../../Database/Schemas/ConfigurableOptions";
+import Logger from "../../../Lib/Logger";
+import { AnyLengthString } from "aws-sdk/clients/comprehendmedical";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -27,16 +29,16 @@ async function createOrder(customer: ICustomer, products: Array<{
     configurable_options?: Array<{
         id: IConfigurableOptions["id"],
         option_index?: number,
-        option_name_indexing?: string,
     }>;
 }>, _products: IProduct[], payment_method: string, billing_type: string, billing_cycle?: IRecurringMethod)
 {
     const order = await (new OrderModel({
         customer_uid: customer.id,
-        products: _products.map(product => {
+        products: products.map(product => {            
             return {
-                product_id: product.id,
-                quantity: products.find(p => p.product_id === product.id)?.quantity ?? 1
+                product_id: product.product_id,
+                configurable_options: product?.configurable_options,
+                quantity: product.quantity,
             }
         }),
         payment_method: payment_method,
@@ -112,12 +114,6 @@ export default class OrderRoute
                 }
             });
 
-            const _configurable_options = await ConfigurableOptionsModel.find({
-                id: {
-                    $in: products.flatMap(product => product.configurable_options?.map(option => option.id) ?? [])
-                }
-            });
-
             if(_products.length <= 0)
                 return APIError("No valid products ids")(res);
 
@@ -177,17 +173,15 @@ export default class OrderRoute
                 if(p.payment_type === "recurring" && p.recurring_method === "yearly")
                     recurring_yearly.push(p);
 
-                let configurable_option: undefined | IConfigurableOptions = undefined
-                if(_configurable_options.length > 0)
-                    if(_configurable_options.find(e => e.products_ids === p.id))
-                        configurable_option = _configurable_options.find(e => e.products_ids.includes(p.id));
-                
+                let configurable_option: any = undefined
+                // Get configurable options from products from p.id
+                if(products.find(e => e.product_id === p.id)?.configurable_options)
+                    configurable_option = products.find(e => e.product_id === p.id)?.configurable_options
+
                 _order_.products.push({
                     product_id: p.id,
-                    configurable_option_id: configurable_option?.id,
-                    // get index from products
                     // @ts-ignore
-                    configurable_option_index: products[products.findIndex(e => e.product_id === p.id)]?.configurable_options?.findIndex(e => e.id === configurable_option?.id) ?? 0,
+                    configurable_options: configurable_option,
                     quantity: products.find(p => p.product_id == p.product_id)?.quantity ?? 1
                 });
             }
