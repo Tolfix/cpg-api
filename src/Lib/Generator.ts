@@ -9,6 +9,7 @@ import { CacheProduct } from "../Cache/CacheProduct";
 import { CacheTransactions } from "../Cache/CacheTransactions";
 import { IAdministrator } from "../Interfaces/Admin/Administrators";
 import { ICategory } from "../Interfaces/Categories";
+import { IConfigurableOptions } from "../Interfaces/ConfigurableOptions";
 import { ICustomer } from "../Interfaces/Customer";
 import { IImage } from "../Interfaces/Images";
 import { IInvoice } from "../Interfaces/Invoice";
@@ -77,5 +78,11 @@ export function idImages(): IImage["uid"]
     let uid: IImage["uid"] = `IMG_${crypto.randomBytes(20).toString("hex")}`;
     while(CacheImages.get(uid))
         uid = `IMG_${crypto.randomBytes(20).toString("hex")}`;
+    return uid;
+}
+
+export function idConfigurableOptions(): IConfigurableOptions["uid"]
+{
+    let uid: IConfigurableOptions["uid"] = `CO_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
