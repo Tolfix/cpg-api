@@ -94,7 +94,7 @@ function removeById(req: Request, res: Response)
 function getMyProfile(req: Request, res: Response)
 {
     // @ts-ignore
-    API_CustomerModel.findByUid((req.payload.id as ICustomer["uid"])).then((result) => {
+    API_CustomerModel.findByUid((req.customer.id as ICustomer["uid"])).then((result) => {
         APISuccess(result)(res);
     });
 }
