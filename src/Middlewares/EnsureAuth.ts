@@ -8,6 +8,7 @@ export default function EnsureAuth()
 {
     return (req: Request, res: Response, next: NextFunction) =>
     {
+        console.log("EnsureAuth");
         const authHeader = req.headers['authorization'];
         if(!authHeader)
             return APIError({
@@ -31,7 +32,6 @@ export default function EnsureAuth()
             const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
             jwt.verify(token, JWT_Access_Token, (err, payload) =>
             {
-                console.log(err);
                 if (err) 
                     return APIError(`Unauthorized user.`, 403)(res);
     
