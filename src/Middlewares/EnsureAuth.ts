@@ -8,7 +8,6 @@ export default function EnsureAuth()
 {
     return (req: Request, res: Response, next: NextFunction) =>
     {
-        console.log("EnsureAuth");
         const authHeader = req.headers['authorization'];
         if(!authHeader)
             return APIError({

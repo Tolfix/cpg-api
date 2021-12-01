@@ -9,7 +9,7 @@ RUN apk update && \
     apk add git
 
 RUN npm install -g @types/node \
-    && npm install -g typescript
+    && npm install -g typescript@4.3.5
 
 WORKDIR /usr/src
 
