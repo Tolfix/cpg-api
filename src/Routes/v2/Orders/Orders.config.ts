@@ -108,11 +108,14 @@ export default class OrderRoute
             if(!customer)
                 return APIError("Unable to find customer")(res);
 
-            const _products = await ProductModel.find({
+            let _products = await ProductModel.find({
                 id: {
                     $in: products.map(product => product.product_id)
                 }
             });
+
+            // Filter products which are hidden
+            _products = _products.filter(product => product.hidden === false);
 
             if(_products.length <= 0)
                 return APIError("No valid products ids")(res);
