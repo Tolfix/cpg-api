@@ -22,7 +22,7 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
 
     let intent = (await Stripe.paymentIntents.create({
         amount: (invoice.amount+invoice.amount*invoice.tax_rate/100) * 100,
-        currency: Company_Currency,
+        currency: Company_Currency ?? "sek",
         payment_method_types: ["card"],
         receipt_email: customer?.personal.email,
         // @ts-ignore

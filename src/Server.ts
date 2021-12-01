@@ -45,14 +45,14 @@ export default function start()
     server.use(express.urlencoded({ extended: true }));
     server.use((req, res, next) => {
         express.json({verify: (req, res, buf, encoding) => { 
-            try {
-                JSON.parse(buf.toString());
+            // try {
+            //     JSON.parse(buf.toString());
                 // @ts-ignore
                 req.rawBody = buf;
-            } catch (e) {
-                // @ts-ignore
-                APIError("Invalid JSON")(res);
-            }
+            // } catch (e) {
+            //     // @ts-ignore
+            //     APIError("Invalid JSON")(res);
+            // }
         }})(req, res, next);
     });
     

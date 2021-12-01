@@ -1,3 +1,4 @@
+import { IConfigurableOptions } from "./ConfigurableOptions";
 import { ICustomer } from "./Customer";
 import { OrderStatus } from "./Orders";
 import { IPayments } from "./Payments";
@@ -73,5 +74,6 @@ export interface IInvoices_Items
     notes: string;
     amount: IInvoice["amount"];
     quantity: number;
-    product_id: IProduct["id"];
+    product_id?: IProduct["id"];
+    configurable_options_id?: IConfigurableOptions["id"];
 }

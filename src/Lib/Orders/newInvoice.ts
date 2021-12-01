@@ -1,11 +1,13 @@
 import InvoiceModel from "../../Database/Schemas/Invoices";
 import ProductModel from "../../Database/Schemas/Products";
-import { IInvoice, IInvoices_Items, IInvoice_Dates } from "../../Interfaces/Invoice";
+import { IInvoice_Dates } from "../../Interfaces/Invoice";
 import { IOrder } from "../../Interfaces/Orders";
 import { idInvoice } from "../Generator";
 import dateFormat from "date-and-time";
 import getCategoryByProduct from "../Products/getCategoryByProduct";
 import { IProduct } from "../../Interfaces/Products";
+import ConfigurableOptionsModel from "../../Database/Schemas/ConfigurableOptions";
+import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions";
 
 
 // Create a method that checks if the order next recycle is within 14 days
@@ -34,14 +36,41 @@ export async function createInvoiceFromOrder(order: IOrder)
     // Get customer id
     const Customer_Id = order.customer_uid;
 
-    const items = await Promise.all(Products.map(async (product) => {
-        return <IInvoices_Items>{
+    let items = [];
+    for await(const product of Products)
+    {
+        const category = await getCategoryByProduct(product);
+        items.push({
             amount: product.price,
-            notes: `${(await getCategoryByProduct(product))?.name} - ${product?.name}`,
+            notes: `${category?.name} - ${product?.name}`,
             quantity: LBProducts.get(product.id)?.quantity ?? 1,
             product_id: product.id
+        });
+        if(LBProducts.get(product.id)?.configurable_options)
+        {
+            const configurable_options = await ConfigurableOptionsModel.find({
+                id: {
+                    // @ts-ignore
+                    $in: [...LBProducts.get(product.id)?.configurable_options?.map(e => e.id ?? undefined)]
+                }
+            });
+            if(configurable_options)
+            {
+                for await(const configurable_option of configurable_options)
+                {
+                    const option = configurable_option.options[
+                        LBProducts.get(product.id)?.configurable_options?.find(e => e.id === configurable_option.id)?.option_index ?? 0
+                    ];
+                    items.push({
+                        amount: option.price ?? 0,
+                        notes: `+ ${product?.name} - ${configurable_option.name} ${option.name}`,
+                        quantity: 1,
+                        configurable_options_id: configurable_option.id,
+                    });
+                }
+            }
         }
-    }))
+    }
 
     // Create invoice
     const newInvoice = await (new InvoiceModel({
@@ -51,8 +80,9 @@ export async function createInvoiceFromOrder(order: IOrder)
             due_date: order.dates.next_recycle,
             invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
         },
-        // Go through all products prices and add them together
-        amount: Products.reduce((acc, cur) => acc + cur.price, 0),
+        amount: items.reduce((acc, item) => {
+            return acc + item.amount * item.quantity;
+        }, 0),
         items: items,
         payment_method: order.payment_method,
         status: order.order_status,
@@ -80,15 +110,27 @@ export async function getProductsByOrder(order: IOrder)
     } });
 }
 
+export async function getConfigurableOptionsByOrder(order: IOrder)
+{
+    return await ConfigurableOptionsModel.find({ id: {
+        $in: [...order.products.map(product => product.configurable_options_ids ?? undefined)]
+    } });
+}
+
 export function createMapProductsFromOrder(order: IOrder)
 {
     const a = new Map<IProduct["id"], {
-        product_id: number,
-        quantity: number,
+        product_id: IProduct["id"],
+        configurable_options?: Array<{
+            id: IConfigurableOptions["id"],
+            option_index: number;
+        }>,
+        quantity: number
     }>()
     order.products.forEach(product => a.set(product.product_id, product));
     return a;
 }
+
 // Create a method that creates a new invoice for a customer
 // It should get input from an order and decide if we should create a new invoice
 // if the dates.next_recycle is in within the next 14 days

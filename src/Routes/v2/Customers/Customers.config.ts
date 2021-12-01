@@ -24,11 +24,11 @@ export default class CustomerRouter
             CustomerController.list
         ]);
 
-        this.router.get("/profile", [
-            EnsureAuth,
+        this.router.get("/my/profile", [
+            EnsureAuth(),
             CustomerController.getMyProfile
         ]);
-
+        
         this.router.get("/:uid", [
             EnsureAdmin,
             CustomerController.getByUid

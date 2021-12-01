@@ -18,18 +18,27 @@ import { IOrder } from "../../../Interfaces/Orders";
 import { ICustomer } from "../../../Interfaces/Customer";
 import { SendEmail } from "../../../Email/Send";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
+import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
+import ConfigurableOptionsModel from "../../../Database/Schemas/ConfigurableOptions";
+import Logger from "../../../Lib/Logger";
+import { AnyLengthString } from "aws-sdk/clients/comprehendmedical";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
-    quantity: number
+    quantity: number,
+    configurable_options?: Array<{
+        id: IConfigurableOptions["id"],
+        option_index?: number,
+    }>;
 }>, _products: IProduct[], payment_method: string, billing_type: string, billing_cycle?: IRecurringMethod)
 {
     const order = await (new OrderModel({
         customer_uid: customer.id,
-        products: _products.map(product => {
+        products: products.map(product => {            
             return {
-                product_id: product.id,
-                quantity: products.find(p => p.product_id === product.id)?.quantity ?? 1
+                product_id: product.product_id,
+                configurable_options: product?.configurable_options,
+                quantity: product.quantity,
             }
         }),
         payment_method: payment_method,
@@ -73,10 +82,13 @@ export default class OrderRoute
             const customer_id = req.customer.id;
             const products = req.body.products as Array<{
                 product_id: IProduct["id"],
-                quantity: number
+                quantity: number,
+                configurable_options?: Array<{
+                    id: IConfigurableOptions["id"],
+                    option_index: number,
+                }>;
             }>;
             const payment_method = req.body.payment_method as keyof IPayments;
-
 
             if(!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
@@ -161,8 +173,15 @@ export default class OrderRoute
                 if(p.payment_type === "recurring" && p.recurring_method === "yearly")
                     recurring_yearly.push(p);
 
+                let configurable_option: any = undefined
+                // Get configurable options from products from p.id
+                if(products.find(e => e.product_id === p.id)?.configurable_options)
+                    configurable_option = products.find(e => e.product_id === p.id)?.configurable_options
+
                 _order_.products.push({
                     product_id: p.id,
+                    // @ts-ignore
+                    configurable_options: configurable_option,
                     quantity: products.find(p => p.product_id == p.product_id)?.quantity ?? 1
                 });
             }
