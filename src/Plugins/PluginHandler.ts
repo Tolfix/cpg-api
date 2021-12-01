@@ -6,6 +6,7 @@ import InvoiceModel from "../Database/Schemas/Invoices";
 import OrderModel from "../Database/Schemas/Orders";
 import ProductModel from "../Database/Schemas/Products";
 import TransactionsModel from "../Database/Schemas/Transactions";
+import ConfigurableOptionsModel from "../Database/Schemas/ConfigurableOptions";
 import mainEvent from "../Events/Main";
 import Logger from "../Lib/Logger";
 import { Plugins } from "../Config";
@@ -39,7 +40,8 @@ export async function PluginHandler(server: Application)
             InvoiceModel: InvoiceModel,
             OrderModel: OrderModel,
             ProductModel: ProductModel,
-            TransactionsModel: TransactionsModel,            
+            TransactionsModel: TransactionsModel,
+            ConfigurableOptionsModel: ConfigurableOptionsModel,           
         }, Logger);
 
         Logger.plugin(`Loaded plugin ${plugin}`)
