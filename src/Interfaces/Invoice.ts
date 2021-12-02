@@ -76,4 +76,5 @@ export interface IInvoices_Items
     quantity: number;
     product_id?: IProduct["id"];
     configurable_options_id?: IConfigurableOptions["id"];
+    configurable_options_index?: IConfigurableOptions["options"]["length"];
 }
