@@ -19,9 +19,6 @@ import { ICustomer } from "../../../Interfaces/Customer";
 import { SendEmail } from "../../../Email/Send";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
-import ConfigurableOptionsModel from "../../../Database/Schemas/ConfigurableOptions";
-import Logger from "../../../Lib/Logger";
-import { AnyLengthString } from "aws-sdk/clients/comprehendmedical";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -108,11 +105,14 @@ export default class OrderRoute
             if(!customer)
                 return APIError("Unable to find customer")(res);
 
-            const _products = await ProductModel.find({
+            let _products = await ProductModel.find({
                 id: {
                     $in: products.map(product => product.product_id)
                 }
             });
+
+            // Filter products which are hidden
+            _products = _products.filter(product => product.hidden === false);
 
             if(_products.length <= 0)
                 return APIError("No valid products ids")(res);
@@ -140,7 +140,6 @@ export default class OrderRoute
             }
 
             let one_timers = [];
-            // "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
             let recurring_monthly = [];
             let recurring_quarterly = [];
             let recurring_semi_annually = [];
@@ -174,7 +173,6 @@ export default class OrderRoute
                     recurring_yearly.push(p);
 
                 let configurable_option: any = undefined
-                // Get configurable options from products from p.id
                 if(products.find(e => e.product_id === p.id)?.configurable_options)
                     configurable_option = products.find(e => e.product_id === p.id)?.configurable_options
 

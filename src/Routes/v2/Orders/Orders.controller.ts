@@ -10,6 +10,7 @@ import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
 import { SendEmail } from "../../../Email/Send";
 import CustomerModel from "../../../Database/Schemas/Customer";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
+import { Company_Name } from "../../../Config";
 
 const API = new BaseModelAPI<IOrder>(idOrder, OrderModel);
 
@@ -38,9 +39,9 @@ async function insert(req: Request, res: Response)
             const customer = await CustomerModel.findOne({ id: result.customer_uid });
 
             if(customer)
-                SendEmail(customer.personal.email, `New Order | ${result.id}`, {
+                SendEmail(customer.personal.email, `New order from ${Company_Name !== "" ? Company_Name : "CPG"} #${result.id}`, {
                     isHTML: true,
-                    body: await NewOrderCreated(result, customer)
+                    body: NewOrderCreated(result, customer), 
                 });
 
             APISuccess({
