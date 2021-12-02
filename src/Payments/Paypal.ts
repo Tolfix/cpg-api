@@ -6,7 +6,7 @@ import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import { getDate } from "../Lib/Time";
 
-if(Paypal_Client_Id || Paypal_Client_Secret)
+if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
     paypal.configure({
         'mode': DebugMode ? 'sandbox' : "live",
         'client_id': Paypal_Client_Id,

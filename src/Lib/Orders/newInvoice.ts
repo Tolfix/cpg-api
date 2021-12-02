@@ -58,14 +58,16 @@ export async function createInvoiceFromOrder(order: IOrder)
             {
                 for await(const configurable_option of configurable_options)
                 {
+                    const option_index = LBProducts.get(product.id)?.configurable_options?.find(e => e.id === configurable_option.id)?.option_index ?? 0;
                     const option = configurable_option.options[
-                        LBProducts.get(product.id)?.configurable_options?.find(e => e.id === configurable_option.id)?.option_index ?? 0
+                        option_index
                     ];
                     items.push({
                         amount: option.price ?? 0,
                         notes: `+ ${product?.name} - ${configurable_option.name} ${option.name}`,
                         quantity: 1,
                         configurable_options_id: configurable_option.id,
+                        configurable_options_index: option_index
                     });
                 }
             }
