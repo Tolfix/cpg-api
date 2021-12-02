@@ -10,5 +10,5 @@ export interface MainOnEvents
     invoice_notified: IInvoice;
     order_created: IOrder;
     order_updated: IOrder;
-    order_deleted: IOrder;    
+    order_deleted: IOrder;
 }
