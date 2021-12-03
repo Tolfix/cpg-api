@@ -4,7 +4,6 @@ import { CacheAdmin, getAdminByUsername } from "../Cache/CacheAdmin";
 import { APIError } from "../Lib/Response";
 import jwt from "jsonwebtoken";
 import { JWT_Access_Token } from "../Config";
-import Logger from "../Lib/Logger";
 
 export default function EnsureAdmin(req: Request, res: Response, next: NextFunction)
 {
