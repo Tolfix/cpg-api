@@ -2,7 +2,7 @@ import { CronJob } from "cron";
 import InvoiceModel from "../Database/Schemas/Invoices";
 import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
-import CustomerModel from "../Database/Schemas/Customer";
+import CustomerModel from "../Database/Schemas/Customers/Customer";
 import { d_Days } from "../Config";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../Lib/Invoices/SendEmail";
 

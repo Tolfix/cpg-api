@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import CustomerModel from "../../../Database/Schemas/Customer";
+import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import { ICustomer } from "../../../Interfaces/Customer";
 import { idCustomer } from "../../../Lib/Generator";
 import { APIError, APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 import Logger from "../../../Lib/Logger";
+import { SendEmail } from "../../../Email/Send";
+import { Company_Name } from "../../../Config";
+import Footer from "../../../Email/Templates/General/Footer";
+import getFullName from "../../../Lib/Customers/getFullName";
 
 const API_CustomerModel = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
@@ -28,6 +32,20 @@ function insert(req: Request, res: Response)
 
             API_CustomerModel.create(req.body)
                 .then((result) => {
+
+                    // Send email to customer
+                    SendEmail(result.personal.email, `Welcome to ${Company_Name}`, {
+                        isHTML: true,
+                        body: `
+                        Welcome ${getFullName(result)} to ${Company_Name}! <br>
+                        <br>
+                        Your account has been created. <br>
+                        With email: ${result.personal.email} <br>
+                        <br>
+                        <br />
+                        ${Footer}`
+                    });
+
                     APISuccess({
                         uid: result.uid
                     })(res);
@@ -45,22 +63,17 @@ function getByUid(req: Request, res: Response)
 
 function list(req: Request, res: Response)
 {
-    let limit = parseInt(req.query.limit as string)
-    && parseInt(req.query.limit as string) <= 100 ? 
-                                                            parseInt(req.query.limit as string) 
-                                                            :
-                                                            10;
-    let page = 0;
+    let limit = parseInt(req.query._end as string)
+    && parseInt(req.query._end as string) <= 100 ? 
+                                                parseInt(req.query._end as string) 
+                                                :
+                                                25;
+    let start = 0;
     if(req.query)
-    {
-        if(req.query.page)
-        {
-            let p = parseInt(req.query.page as string);
-            page = Number.isInteger(p) ? p : 0;
-        }
-    }
+        if(req.query._start)
+            start = Number.isInteger(parseInt(req.query._start as string)) ? parseInt(req.query._start as string) : 0;
 
-    API_CustomerModel.findAll(limit, page).then((result: any) => {
+    API_CustomerModel.findAll(limit, start).then((result: any) => {
         APISuccess(result)(res)
     });
 }
