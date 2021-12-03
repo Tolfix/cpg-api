@@ -8,7 +8,7 @@ import { APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
 import { SendEmail } from "../../../Email/Send";
-import CustomerModel from "../../../Database/Schemas/Customer";
+import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { Company_Name } from "../../../Config";
 

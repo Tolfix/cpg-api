@@ -1,5 +1,5 @@
 import { Application, Router } from "express";
-import CustomerModel from "../../../Database/Schemas/Customer";
+import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import OrderModel from "../../../Database/Schemas/Orders";
 import ProductModel from "../../../Database/Schemas/Products";
 import { IPayments } from "../../../Interfaces/Payments";
