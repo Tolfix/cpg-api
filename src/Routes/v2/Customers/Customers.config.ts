@@ -11,6 +11,7 @@ import EnsureAuth from "../../../Middlewares/EnsureAuth";
 import crypto from "crypto";
 import PasswordResetModel from "../../../Database/Schemas/Customers/PasswordReset";
 import { SendEmail } from "../../../Email/Send";
+import Footer from "../../../Email/Templates/General/Footer";
 
 export default class CustomerRouter
 {
@@ -32,9 +33,9 @@ export default class CustomerRouter
             CustomerController.getMyProfile
         ]);
 
-        this.router.get("/my/reset-password", async (req, res) => {
+        this.router.post("/my/reset-password", async (req, res) => {
             const email = req.body.email;
-            const customer = await CustomerModel.findOne({ email });
+            const customer = await CustomerModel.findOne({ "personal.email": email });
             if(!customer)
                 return APIError(`Unable to find user with email ${email}`)(res);
 
@@ -50,11 +51,121 @@ export default class CustomerRouter
                 isHTML: true,
                 body: `
                 Hello ${customer.personal.first_name} <br />
-                Here is your reset password reset token: ${token}
+                Here is your reset password link: <a href="${Full_Domain}/${version}/customers/my/reset-password/${token}">Reset password</a>
                 `
             });
 
             return APISuccess(`Succesfully created a reset password email`)(res);
+        });
+
+        this.router.get("/my/reset-password/:token", async (req, res) => {
+            const token = req.params.token;
+            const passwordReset = await PasswordResetModel.findOne({ token: token }) as any;
+            if(!passwordReset)
+                return APIError(`Unable to find password reset token`)(res);
+            
+            if(!passwordReset.token)
+                return APIError(`Unable to find password reset token`)(res);
+
+            if(passwordReset.used)
+                return APIError(`This password reset token has already been used`)(res);
+            
+            const customer = await CustomerModel.findOne({ "personal.email": passwordReset.email });
+            if(!customer)
+                return APIError(`Unable to find user with email ${passwordReset.email}`)(res);
+
+            return res.send(`
+            <!-- Style it in the middle -->
+            <style>
+                .container {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                /* Style input forms */
+                .form-container {
+                    flex-direction: column;
+                    margin: 0 auto;
+                }
+                .form-container input {
+                    width: 20%;
+                    height: 40px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 5px;
+                    margin-bottom: 10px;
+                }
+                .form-container button {
+                    width: 20%;
+                    height: 40px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 5px;
+                    margin-bottom: 10px;
+                }
+            </style>
+            <html>
+                <body>
+                    <form class="container form-container" action="/${version}/customers/my/new-password?token=${token}" method="POST">
+                        <input type="password" name="password" placeholder="New Password" />
+                        <input type="password" name="password_confirmation" placeholder="Confirm Password" />
+                        <button type="submit" value="Submit">Reset password</button>
+                    </form>
+                    ${Footer}
+                </body>
+            </html>
+            `);
+        });
+
+        this.router.post("/my/new-password", async (req, res) => {
+            const token = req.query.token;
+            const password = req.body.password;
+
+            if(!password)
+                return APIError(`Password is required`)(res);
+            
+            const passwordReset = await PasswordResetModel.findOne({ token: token }) as any;
+            if(!passwordReset)
+                return APIError(`Unable to find password reset token`)(res);
+            
+            if(!passwordReset.token)
+                return APIError(`Unable to find password reset token`)(res);
+
+            if(passwordReset.used)
+                return APIError(`This password reset token has already been used`)(res);
+            
+            const customer = await CustomerModel.findOne({ "personal.email": passwordReset.email });
+            if(!customer)
+                return APIError(`Unable to find user with email ${passwordReset.email}`)(res);
+
+            const genSalt = await bcrypt.genSalt(10);
+            customer.password = bcrypt.hashSync(password, genSalt);
+            await customer.save();
+            passwordReset.used = true;
+            await passwordReset.save();
+            res.send(`
+            <style>
+                .container {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+            </style>
+            <html>
+                <body class="container">
+                    <h1>Password reset successful</h1>
+                    <div>
+                        <p>You can now login with your new password</p>
+                    </div>
+                    ${Footer}
+                </body>
+            </html>
+            `);
         });
         
         this.router.get("/:uid", [
