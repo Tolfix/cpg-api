@@ -6,11 +6,11 @@ import { idCategory } from "../../../Lib/Generator";
 import { APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 
-const API_CategoryModel = new BaseModelAPI<ICategory>(idCategory, CategoryModel);
+const API = new BaseModelAPI<ICategory>(idCategory, CategoryModel);
 
 function insert(req: Request, res: Response)
 {
-    API_CategoryModel.create(req.body)
+    API.create(req.body)
         .then((result) => {
             APISuccess({
                 uid: result.uid
@@ -20,7 +20,7 @@ function insert(req: Request, res: Response)
 
 function getByUid(req: Request, res: Response)
 {
-    API_CategoryModel.findByUid((req.params.uid as ICategory["uid"])).then((result) => {
+    API.findByUid((req.params.uid as ICategory["uid"])).then((result) => {
         APISuccess(result)(res);
     });
 }
@@ -37,21 +37,24 @@ function list(req: Request, res: Response)
         if(req.query._start)
             start = Number.isInteger(parseInt(req.query._start as string)) ? parseInt(req.query._start as string) : 0;
 
-    API_CategoryModel.findAll(limit, start).then((result: any) => {
+    let sort = req.query._sort as string ?? "id";
+    let order = req.query._order as string ?? "asc";
+        
+    API.findAll(limit, start, sort, order).then((result: any) => {
         APISuccess(result)(res)
     })
 }
 
 function patch(req: Request, res: Response)
 {
-    API_CategoryModel.findAndPatch((req.params.uid as ICategory["uid"]), req.body).then((result) => {
+    API.findAndPatch((req.params.uid as ICategory["uid"]), req.body).then((result) => {
         APISuccess(result)(res);
     });
 }
 
 function removeById(req: Request, res: Response)
 {
-    API_CategoryModel.removeByUid(req.params.userId as ICategory["uid"])
+    API.removeByUid(req.params.userId as ICategory["uid"])
         .then((result)=>{
             APISuccess({}, 204)(res)
         });

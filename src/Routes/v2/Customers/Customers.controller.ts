@@ -11,7 +11,7 @@ import { Company_Name } from "../../../Config";
 import Footer from "../../../Email/Templates/General/Footer";
 import getFullName from "../../../Lib/Customers/getFullName";
 
-const API_CustomerModel = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
+const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
 function insert(req: Request, res: Response)
 {
@@ -30,7 +30,7 @@ function insert(req: Request, res: Response)
             if(doesExist)
                 return APIError(`Email ${email} already exists`, 409)(res);
 
-            API_CustomerModel.create(req.body)
+            API.create(req.body)
                 .then((result) => {
 
                     // Send email to customer
@@ -56,7 +56,7 @@ function insert(req: Request, res: Response)
 
 function getByUid(req: Request, res: Response)
 {
-    API_CustomerModel.findByUid((req.params.uid as ICustomer["uid"])).then((result) => {
+    API.findByUid((req.params.uid as ICustomer["uid"])).then((result) => {
         APISuccess(result)(res);
     });
 }
@@ -73,7 +73,10 @@ function list(req: Request, res: Response)
         if(req.query._start)
             start = Number.isInteger(parseInt(req.query._start as string)) ? parseInt(req.query._start as string) : 0;
 
-    API_CustomerModel.findAll(limit, start).then((result: any) => {
+    let sort = req.query._sort as string ?? "id";
+    let order = req.query._order as string ?? "asc";
+        
+    API.findAll(limit, start, sort, order).then((result: any) => {
         APISuccess(result)(res)
     });
 }
@@ -91,14 +94,14 @@ async function patch(req: Request, res: Response)
             req.body.password = hash;
         }
     }
-    API_CustomerModel.findAndPatch((req.params.uid as ICustomer["uid"]), req.body).then((result) => {
+    API.findAndPatch((req.params.uid as ICustomer["uid"]), req.body).then((result) => {
         APISuccess(result)(res);
     });
 }
 
 function removeById(req: Request, res: Response)
 {
-    API_CustomerModel.removeByUid(req.params.uid as ICustomer["uid"])
+    API.removeByUid(req.params.uid as ICustomer["uid"])
         .then((result)=>{
             APISuccess(result, 204)(res)
         });
@@ -107,7 +110,7 @@ function removeById(req: Request, res: Response)
 function getMyProfile(req: Request, res: Response)
 {
     // @ts-ignore
-    API_CustomerModel.findByUid((req.customer.id as ICustomer["uid"])).then((result) => {
+    API.findByUid((req.customer.id as ICustomer["uid"])).then((result) => {
         APISuccess(result)(res);
     });
 }
