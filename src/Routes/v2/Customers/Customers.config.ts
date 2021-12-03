@@ -1,13 +1,16 @@
 import { Application, Router } from "express";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import CustomerController from "./Customers.controller";
-import { JWT_Access_Token } from "../../../Config";
+import { Full_Domain, JWT_Access_Token } from "../../../Config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APIError, APISuccess } from "../../../Lib/Response";
-import CustomerModel from "../../../Database/Schemas/Customer";
+import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import Logger from "../../../Lib/Logger";
 import EnsureAuth from "../../../Middlewares/EnsureAuth";
+import crypto from "crypto";
+import PasswordResetModel from "../../../Database/Schemas/Customers/PasswordReset";
+import { SendEmail } from "../../../Email/Send";
 
 export default class CustomerRouter
 {
@@ -28,6 +31,31 @@ export default class CustomerRouter
             EnsureAuth(),
             CustomerController.getMyProfile
         ]);
+
+        this.router.get("/my/reset-password", async (req, res) => {
+            const email = req.body.email;
+            const customer = await CustomerModel.findOne({ email });
+            if(!customer)
+                return APIError(`Unable to find user with email ${email}`)(res);
+
+            const randomToken = crypto.randomBytes(20).toString("hex");
+            const token = crypto.createHash("sha256").update(randomToken).digest("hex");
+
+            new PasswordResetModel({
+                email: customer.personal.email,
+                token: token
+            }).save();
+
+            SendEmail(customer.personal.email, "Reset Password", {
+                isHTML: true,
+                body: `
+                Hello ${customer.personal.first_name} <br />
+                Here is your reset password reset token: ${token}
+                `
+            });
+
+            return APISuccess(`Succesfully created a reset password email`)(res);
+        });
         
         this.router.get("/:uid", [
             EnsureAdmin,
