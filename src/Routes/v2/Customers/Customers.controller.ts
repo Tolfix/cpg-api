@@ -37,7 +37,7 @@ function insert(req: Request, res: Response)
                     SendEmail(result.personal.email, `Welcome to ${Company_Name}`, {
                         isHTML: true,
                         body: `
-                        Welcome ${getFullName(result)} tp ${Company_Name}! <br>
+                        Welcome ${getFullName(result)} to ${Company_Name}! <br>
                         <br>
                         Your account has been created. <br>
                         With email: ${result.personal.email} <br>
