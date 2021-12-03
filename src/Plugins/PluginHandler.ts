@@ -1,6 +1,6 @@
 import { Application } from "express";
 import CategoryModel from "../Database/Schemas/Category";
-import CustomerModel from "../Database/Schemas/Customer";
+import CustomerModel from "../Database/Schemas/Customers/Customer";
 import ImageModel from "../Database/Schemas/Images";
 import InvoiceModel from "../Database/Schemas/Invoices";
 import OrderModel from "../Database/Schemas/Orders";

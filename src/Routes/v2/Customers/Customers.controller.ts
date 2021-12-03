@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import CustomerModel from "../../../Database/Schemas/Customer";
+import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import { ICustomer } from "../../../Interfaces/Customer";
 import { idCustomer } from "../../../Lib/Generator";
 import { APIError, APISuccess } from "../../../Lib/Response";

@@ -1,6 +1,6 @@
 import AdminModel from "../Database/Schemas/Administrators";
 import CategoryModel from "../Database/Schemas/Category";
-import CustomerModel from "../Database/Schemas/Customer";
+import CustomerModel from "../Database/Schemas/Customers/Customer";
 import ImageModel from "../Database/Schemas/Images";
 import OrderModel from "../Database/Schemas/Orders";
 import ProductModel from "../Database/Schemas/Products";
