@@ -6,6 +6,10 @@ import { idCustomer } from "../../../Lib/Generator";
 import { APIError, APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 import Logger from "../../../Lib/Logger";
+import { SendEmail } from "../../../Email/Send";
+import { Company_Name } from "../../../Config";
+import Footer from "../../../Email/Templates/General/Footer";
+import getFullName from "../../../Lib/Customers/getFullName";
 
 const API_CustomerModel = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
@@ -28,6 +32,20 @@ function insert(req: Request, res: Response)
 
             API_CustomerModel.create(req.body)
                 .then((result) => {
+
+                    // Send email to customer
+                    SendEmail(result.personal.email, `Welcome to ${Company_Name}`, {
+                        isHTML: true,
+                        body: `
+                        Welcome ${getFullName(result)} tp ${Company_Name}! <br>
+                        <br>
+                        Your account has been created. <br>
+                        With email: ${result.personal.email} <br>
+                        <br>
+                        <br />
+                        ${Footer}`
+                    });
+
                     APISuccess({
                         uid: result.uid
                     })(res);
