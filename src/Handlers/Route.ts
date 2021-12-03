@@ -12,6 +12,7 @@ import Swagger from "./Swagger";
  */
 export default function RouteHandler(server: Application): void
 {
+    Logger.info("Loading routes...");
     let routeDir = HomeDir+"/build/Routes";
     readdirSync(`${routeDir}`).forEach((version) => {
         Swagger(server, version);

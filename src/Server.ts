@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
-import { Express_Session_Secret, HomeDir, PORT } from "./Config";
+import { Express_Session_Secret, Full_Domain, HomeDir, PORT } from "./Config";
 import Logger from "./Lib/Logger";
 import RouteHandler from "./Handlers/Route";
 import { reCache } from "./Cache/reCache";
@@ -65,7 +65,7 @@ export default function start()
     RouteHandler(server);
     PluginHandler(server);
 
-    server.listen(PORT, () => Logger.api(`Server listing on port ${PORT}`));
+    server.listen(PORT, () => Logger.api(`Server listing on port ${PORT} | ${Full_Domain}`));
 
     server.use("*", (req, res) => {
         return APIError({
