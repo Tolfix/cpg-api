@@ -5,6 +5,7 @@ import dateFormat from "date-and-time";
 import { createInvoiceFromOrder } from "../Lib/Orders/newInvoice";
 import nextRecycleDate from "../Lib/Dates/DateCycle";
 import { d_Days } from "../Config";
+import { InvoiceCreatedReport } from "../Email/Reports/InvoiceReport";
 
 export default function Cron_Orders()
 {
@@ -15,8 +16,11 @@ export default function Cron_Orders()
         // Check if the order needs to create a new invoice if order.dates.next_recylce is withing 14 days
         OrderModel.find({
             order_status: "active",
-        }).then(orders => {
-            orders.forEach(async order => {
+        }).then(async orders => {
+            let newInvoices = [];
+            // orders.forEach(async order => {
+            for await(let order of orders)
+            {
                 Logger.info(`Checking order ${order.id}`);
                 // Check if order.order_status is not "cancelled" or "fruad"
                 if(order.order_status.match(/cancelled|fraud/i) === null)
@@ -34,6 +38,7 @@ export default function Cron_Orders()
                             , "YYYY-MM-DD");
                             // Create a new invoice
                             const newInvoice = await createInvoiceFromOrder(order);
+                            newInvoices.push(newInvoice);
                             // Save the invoice in order.invoices array
                             order.invoices.push(newInvoice.id);
                             
@@ -44,7 +49,9 @@ export default function Cron_Orders()
                         }
                     }
                 }
-            });
+                if(newInvoices.length > 0)
+                    InvoiceCreatedReport(newInvoices);
+            };
         });
 
     }, null, true, "Europe/Stockholm");
