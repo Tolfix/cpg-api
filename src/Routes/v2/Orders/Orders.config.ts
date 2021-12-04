@@ -19,6 +19,7 @@ import { ICustomer } from "../../../Interfaces/Customer";
 import { SendEmail } from "../../../Email/Send";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
+import { CreatePaymentIntent } from "../../../Payments/Stripe";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -244,6 +245,17 @@ export default class OrderRoute
             const invoice = await createInvoiceFromOrder(_order_);
 
             await sendInvoiceEmail(invoice, customer);
+
+            // Check if request is asking for creating intent
+            if(req.query.create_intent)
+            {
+                if(payment_method === "credit_card")
+                {
+                    const intent = await CreatePaymentIntent(invoice);
+                    return APISuccess(intent.client_secret)(res);
+                }
+
+            }
 
             if(!invoice)
                 return APIError("Unable to create invoice")(res);
