@@ -5,6 +5,7 @@ import dateFormat from "date-and-time";
 import CustomerModel from "../Database/Schemas/Customers/Customer";
 import { d_Days } from "../Config";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../Lib/Invoices/SendEmail";
+import { InvoiceNotifiedReport } from "../Email/Reports/InvoiceReport";
 
 export default function Cron_Invoices()
 {
@@ -53,6 +54,7 @@ export default function Cron_Invoices()
                 await sendInvoiceEmail(invoice, Customer);
 
             }
+            InvoiceNotifiedReport(invoices);
         });
 
         InvoiceModel.find({

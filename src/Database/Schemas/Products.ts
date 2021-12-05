@@ -73,8 +73,8 @@ const ProductSchema = new Schema
         },
 
         image: {
-            type: Object,
-            // default: '',
+            type: Array,
+            default: [],
         },
 
         module_name: {

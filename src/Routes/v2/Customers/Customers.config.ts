@@ -12,6 +12,8 @@ import crypto from "crypto";
 import PasswordResetModel from "../../../Database/Schemas/Customers/PasswordReset";
 import { SendEmail } from "../../../Email/Send";
 import Footer from "../../../Email/Templates/General/Footer";
+import InvoiceModel from "../../../Database/Schemas/Invoices";
+import OrderModel from "../../../Database/Schemas/Orders";
 
 export default class CustomerRouter
 {
@@ -32,6 +34,109 @@ export default class CustomerRouter
             EnsureAuth(),
             CustomerController.getMyProfile
         ]);
+
+        this.router.get("/my/invoices", EnsureAuth(), async (req, res) => {
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const invoices = await InvoiceModel.find({
+                $or: [
+                    { customer_uid: customer.uid},
+                    { customer_uid: customer.id}
+                ]
+            });
+
+            return APISuccess(invoices)(res);
+        });
+
+        this.router.get("/my/invoices/:id", EnsureAuth(), async (req, res) => {
+            const invoiceId = req.params.id;
+
+            if(!invoiceId)
+                return APIError(`Invalid invoice id`)(res);
+            
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const invoice = await InvoiceModel.findOne({
+                // lol almost forgot to add customer_uid kek
+                $or: [
+                    {
+                        customer_uid: customer.uid,
+                    },
+                    {
+                        customer_uid: customer.id,
+                    },
+                ],
+                id: invoiceId,
+            });
+
+            if(!invoice)
+                return APIError(`Unable to find invoice`)(res);
+
+            return APISuccess(invoice)(res);
+        });
+
+        this.router.get("/my/orders", EnsureAuth(), async (req, res) => {
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const orders = await OrderModel.find({
+                $or: [
+                    { customer_uid: customer.uid},
+                    { customer_uid: customer.id}
+                ]
+            });
+
+            return APISuccess(orders)(res);
+        });
+
+        this.router.get("/my/orders/:id", EnsureAuth(), async (req, res) => {
+            const orderId = req.params.id;
+
+            if(!orderId)
+                return APIError(`Invalid invoice id`)(res);
+            
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const order = await OrderModel.findOne({
+                $or: [
+                    {
+                        customer_uid: customer.uid,
+                    },
+                    {
+                        customer_uid: customer.id,
+                    },
+                ],
+                id: orderId,
+            });
+
+            if(!order)
+                return APIError(`Unable to find order`)(res);
+
+            return APISuccess(order)(res);
+        });
 
         this.router.post("/my/reset-password", async (req, res) => {
             const email = req.body.email;

@@ -36,7 +36,10 @@ function list(req: Request, res: Response)
         if(req.query._start)
             start = Number.isInteger(parseInt(req.query._start as string)) ? parseInt(req.query._start as string) : 0;
 
-    API.findAll(limit, start).then((result: any) => {
+    let sort = req.query._sort as string ?? "id";
+    let order = req.query._order as string ?? "asc";
+
+    API.findAll(limit, start, sort, order).then((result: any) => {
         APISuccess(result)(res)
     });
 }

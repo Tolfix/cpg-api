@@ -1,7 +1,7 @@
 import request from "request";
 
 // Create qr code for Swish from IInvoice interface
-export function createSwishQRCode(number: string, amount: number, notes: string)
+export function createSwishQRCode(number: string, amount: number, notes: string): Promise<string>
 {
     return new Promise((resolve, reject) => {
         const url = "https://mpc.getswish.net/qrg-swish";
