@@ -1,7 +1,7 @@
-import mongoose,{ model, Schema } from "mongoose"
+import mongoose,{ Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IDImage } from "../../Interfaces/Images";
+import { IImage } from "../../Interfaces/Images";
 
 const ImageSchema = new Schema
 (
@@ -45,6 +45,6 @@ ImageSchema.plugin(increment.plugin, {
     incrementBy: 1
 });
 
-const ImageModel = model<IDImage>("images", ImageSchema);
+const ImageModel = model<IImage & Document>("images", ImageSchema);
 
 export default ImageModel;
