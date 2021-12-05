@@ -22,6 +22,11 @@ const CategorySchema = new Schema
             required: true,
         },
 
+        image: {
+            type: Array,
+            default: [],
+        },
+
         private: {
             type: Boolean,
             required: true,
