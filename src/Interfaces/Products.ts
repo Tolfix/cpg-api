@@ -30,7 +30,7 @@ export interface IProduct
     payment_type: Partial<IPaymentType>;
     price: number;
     setup_fee: number;
-    images?: IImage["uid"][];
+    images?: IImage["id"][];
     tax_rate: number;
     recurring_method?: Partial<IRecurringMethod>;
     module_name: string;
