@@ -32,12 +32,17 @@ export default class CategoryRouter
         this.router.patch("/uid", [
             EnsureAdmin,
             CategoryController.patch
-        ])
+        ]);
+
+        this.router.put("/uid", [
+            EnsureAdmin,
+            CategoryController.patch
+        ]);
 
         this.router.delete("/:uid", [
             EnsureAdmin,
             CategoryController.removeById
-        ])
+        ]);
     }
 
 }
