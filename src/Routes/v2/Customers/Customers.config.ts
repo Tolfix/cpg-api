@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import CustomerController from "./Customers.controller";
-import { Full_Domain, JWT_Access_Token } from "../../../Config";
+import { Full_Domain, GetSMTPEmails, JWT_Access_Token } from "../../../Config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APIError, APISuccess } from "../../../Lib/Response";
@@ -136,6 +136,54 @@ export default class CustomerRouter
                 return APIError(`Unable to find order`)(res);
 
             return APISuccess(order)(res);
+        });
+
+        this.router.get("/my/orders/:id/cancel", EnsureAuth(), async (req, res) => {
+            const orderId = req.params.id;
+
+            if(!orderId)
+                return APIError(`Invalid invoice id`)(res);
+            
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const order = await OrderModel.findOne({
+                $or: [
+                    {
+                        customer_uid: customer.uid,
+                    },
+                    {
+                        customer_uid: customer.id,
+                    },
+                ],
+                id: orderId,
+            });
+
+            if(!order)
+                return APIError(`Unable to find order`)(res);
+
+            order.order_status = "cancelled";
+            await order.save();
+
+            GetSMTPEmails().then(emails => {
+                for(const email of emails)
+                {
+                    SendEmail(email, `Order Cancelled #${order.id}`, {
+                        isHTML: true,
+                        body: `
+                            <h1>Order Cancelled</h1>
+                            <p>Order #${order.id} has been cancelled</p>
+                        `,
+                    });
+                }
+            });
+
+            return APISuccess("Order cancelled.")(res);
         });
 
         this.router.post("/my/reset-password", async (req, res) => {

@@ -11,7 +11,7 @@ import dateFormat from "date-and-time";
 import nextRecycleDate from "../../../Lib/Dates/DateCycle";
 import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
 import { idOrder } from "../../../Lib/Generator";
-import { Company_Name, Full_Domain } from "../../../Config";
+import { Company_Name, Full_Domain, Swish_Payee_Number } from "../../../Config";
 import { sendInvoiceEmail } from "../../../Lib/Invoices/SendEmail";
 import EnsureAuth from "../../../Middlewares/EnsureAuth";
 import { IOrder } from "../../../Interfaces/Orders";
@@ -20,6 +20,7 @@ import { SendEmail } from "../../../Email/Send";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
 import { CreatePaymentIntent } from "../../../Payments/Stripe";
+import { createSwishQRCode } from "../../../Payments/Swish";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -265,6 +266,9 @@ export default class OrderRoute
             
             if(payment_method === "credit_card")
                 return APISuccess(`${Full_Domain}/v2/stripe/pay/${invoice.uid}`)(res);
+
+            if(payment_method === "swish" && Swish_Payee_Number)
+                return APISuccess(`data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}`)(res);
 
             return APISuccess(`Invoice sent.`)(res);
         });
