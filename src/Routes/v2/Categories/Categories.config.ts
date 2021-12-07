@@ -29,12 +29,12 @@ export default class CategoryRouter
             CategoryController.insert
         ]);
 
-        this.router.patch("/uid", [
+        this.router.patch("/:uid", [
             EnsureAdmin,
             CategoryController.patch
         ]);
 
-        this.router.put("/uid", [
+        this.router.put("/:uid", [
             EnsureAdmin,
             CategoryController.patch
         ]);
