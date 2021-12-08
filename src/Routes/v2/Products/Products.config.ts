@@ -28,7 +28,10 @@ export default class ProductsRouter
 
         this.router.get("/:uid/configurable_options", async (req, res, next) => {
             const uid = req.params.uid;
-            const [product, p_fail] = await AW<IProduct & Document>(ProductModel.findOne({ uid: uid as IProduct["uid"] }));
+            const [product, p_fail] = await AW<IProduct & Document>(ProductModel.findOne({ $or: [
+                { uid: uid },
+                { id: uid }
+            ]}));
             if(p_fail || !product)
                 return APIError("Failed to fetch product")(res);
 
