@@ -3,7 +3,7 @@ import InvoiceModel from "../../../Database/Schemas/Invoices";
 import mainEvent from "../../../Events/Main";
 import { IInvoice } from "../../../Interfaces/Invoice";
 import { idInvoice } from "../../../Lib/Generator";
-import { APISuccess } from "../../../Lib/Response";
+import { APIError, APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 
 const API = new BaseModelAPI<IInvoice>(idInvoice, InvoiceModel);
@@ -50,10 +50,15 @@ function list(req: Request, res: Response)
 
 function patch(req: Request, res: Response)
 {
+    const paid = req.body.paid ?? false;
     API.findAndPatch((req.params.uid as IInvoice["uid"]), req.body).then((result) => {
+        if(paid !== result.paid && result.paid)
+            mainEvent.emit("invoice_paid", result);
         // @ts-ignore
         mainEvent.emit("invoice_updated", result);
         APISuccess(result)(res);
+    }).catch((err) => {
+        APIError(err)(res);
     });
 }
 
