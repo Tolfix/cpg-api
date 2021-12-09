@@ -207,7 +207,6 @@ export default class StripeRouter
             switch (intent.status) {
                 case 'succeeded':
                     message = 'Success! Payment received.';
-                    invoice.paid = true;
                     href = Company_Website;
                     status = intent.status;
                     break;
