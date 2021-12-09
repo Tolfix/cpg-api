@@ -1,7 +1,6 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import mainEvent from "../../Events/Main";
 import { IInvoice } from "../../Interfaces/Invoice";
 
 const InvoiceSchame = new Schema
@@ -79,24 +78,6 @@ InvoiceSchame.plugin(increment.plugin, {
     field: 'id',
     startAt: 0,
     incrementBy: 1
-});
-
-// Emit event when a new invoice is created
-InvoiceSchame.post("save", function(invoice: IInvoice)
-{
-    mainEvent.emit("invoice_created", invoice);
-});
-
-// Emit event when an invoice is updated
-InvoiceSchame.post("update", function(invoice: IInvoice)
-{
-    mainEvent.emit("invoice_updated", invoice);
-});
-
-// Emit event when an invoice is deleted
-InvoiceSchame.post("remove", function(invoice: IInvoice)
-{
-    mainEvent.emit("invoice_deleted", invoice);
 });
 
 const InvoiceModel = model<IInvoice & Document>("invoices", InvoiceSchame);
