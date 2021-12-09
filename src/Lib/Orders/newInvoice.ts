@@ -8,6 +8,7 @@ import getCategoryByProduct from "../Products/getCategoryByProduct";
 import { IProduct } from "../../Interfaces/Products";
 import ConfigurableOptionsModel from "../../Database/Schemas/ConfigurableOptions";
 import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions";
+import mainEvent from "../../Events/Main";
 
 
 // Create a method that checks if the order next recycle is within 14 days
@@ -93,6 +94,8 @@ export async function createInvoiceFromOrder(order: IOrder)
         paid: false,
         notified: false,
     })).save();
+
+    mainEvent.emit("invoice_created", newInvoice);
 
     return newInvoice;
 }

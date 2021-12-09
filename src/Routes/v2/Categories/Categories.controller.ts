@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import CategoryModel from "../../../Database/Schemas/Category";
 import ProductModel from "../../../Database/Schemas/Products";
+import mainEvent from "../../../Events/Main";
 import { ICategory } from "../../../Interfaces/Categories";
 import { idCategory } from "../../../Lib/Generator";
 import { APISuccess } from "../../../Lib/Response";
@@ -12,6 +13,9 @@ function insert(req: Request, res: Response)
 {
     API.create(req.body)
         .then((result) => {
+
+            mainEvent.emit("categories_created", result);
+
             APISuccess({
                 uid: result.uid
             })(res);
@@ -48,6 +52,8 @@ function list(req: Request, res: Response)
 function patch(req: Request, res: Response)
 {
     API.findAndPatch((req.params.uid as ICategory["uid"]), req.body).then((result) => {
+        // @ts-ignore
+        mainEvent.emit("categories_updated", result);
         APISuccess(result)(res);
     });
 }
@@ -55,7 +61,9 @@ function patch(req: Request, res: Response)
 function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.userId as ICategory["uid"])
-        .then((result)=>{
+        .then((result)=> {
+            // @ts-ignore
+            mainEvent.emit("categories_deleted", result);
             APISuccess({}, 204)(res)
         });
 };

@@ -21,6 +21,7 @@ import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
 import { CreatePaymentIntent } from "../../../Payments/Stripe";
 import { createSwishQRCode } from "../../../Payments/Swish";
+import mainEvent from "../../../Events/Main";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -54,6 +55,8 @@ async function createOrder(customer: ICustomer, products: Array<{
         },
         uid: idOrder(),
     }).save());
+
+    mainEvent.emit("order_created", order);
 
     SendEmail(customer.personal.email, `New order from ${Company_Name !== "" ? Company_Name : "CPG"} #${order.id}`, {
         isHTML: true,

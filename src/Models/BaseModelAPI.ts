@@ -59,10 +59,10 @@ export default class BaseModelAPI<IModel extends { uid: string }>
     public findAndPatch(
         uid: IModel["uid"],
         data: IModel
-    ): Promise<IModel | []>
+    ): Promise<IModel>
     {
         if(!uid || uid === "undefined")
-            return Promise.resolve([]);
+            return Promise.reject("No uid provided");
         return this.iModel.findOneAndUpdate({ $or: [
             { id: uid },
             { uid: uid }

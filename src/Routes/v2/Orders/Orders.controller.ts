@@ -11,6 +11,7 @@ import { SendEmail } from "../../../Email/Send";
 import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { Company_Name } from "../../../Config";
+import mainEvent from "../../../Events/Main";
 
 const API = new BaseModelAPI<IOrder>(idOrder, OrderModel);
 
@@ -35,6 +36,8 @@ async function insert(req: Request, res: Response)
 
     API.create(req.body)
         .then(async (result) => {
+
+            mainEvent.emit("order_created", result);
 
             const customer = await CustomerModel.findOne({ id: result.customer_uid });
 
@@ -80,6 +83,8 @@ function list(req: Request, res: Response)
 function patch(req: Request, res: Response)
 {
     API.findAndPatch((req.params.uid as IOrder["uid"]), req.body).then((result) => {
+        // @ts-ignore
+        mainEvent.emit("order_updated", result);
         APISuccess(result)(res);
     });
 }
@@ -88,6 +93,8 @@ function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.uid as IOrder["uid"])
         .then((result)=>{
+            // @ts-ignore
+            mainEvent.emit("order_deleted", result);
             APISuccess(result, 204)(res)
         });
  };
