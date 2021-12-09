@@ -14,11 +14,13 @@ import { SendEmail } from "../../../Email/Send";
 import Footer from "../../../Email/Templates/General/Footer";
 import InvoiceModel from "../../../Database/Schemas/Invoices";
 import OrderModel from "../../../Database/Schemas/Orders";
+import { ICustomer } from "../../../Interfaces/Customer";
 
 export default class CustomerRouter
 {
     private server: Application;
     private router = Router();
+    private attemptedLogins = new Map<ICustomer["id"], number>();
 
     constructor(server: Application, version: string)
     {
@@ -364,7 +366,32 @@ export default class CustomerRouter
             const isCorrect = await bcrypt.compare(password.toString(), customer.password)
 
             if(!isCorrect)
+            {
+                if(this.attemptedLogins.has(customer.id))
+                {
+                    const attempts = this.attemptedLogins.get(customer.id);
+                    if(attempts)
+                    {
+                        if(attempts >= 3)
+                        {
+                            SendEmail(customer.personal.email, "Account login attempts", {
+                                isHTML: true,
+                                body: `
+                                Hello ${customer.personal.first_name} <br />
+                                Someone has been trying to login to your account. <br />
+                                If this was not you, please contact us immediately.
+                                `
+                            });
+                            this.attemptedLogins.delete(customer.id);
+                        }
+                        else
+                            this.attemptedLogins.set(customer.id, attempts + 1);
+                    }
+                }
+                else
+                    this.attemptedLogins.set(customer.id, 1);
                 return APIError("Invalid email or password.")(res);
+            }
 
             let token = jwt.sign({
                 data: {
