@@ -60,7 +60,7 @@ function patch(req: Request, res: Response)
 
 function removeById(req: Request, res: Response)
 {
-    API.removeByUid(req.params.userId as ICategory["uid"])
+    API.removeByUid(req.params.uid as ICategory["uid"])
         .then((result)=> {
             // @ts-ignore
             mainEvent.emit("categories_deleted", result);
