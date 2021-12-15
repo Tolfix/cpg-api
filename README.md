@@ -7,6 +7,9 @@
 # ⭐ | CPG-API
 CPG-API is being used to create products, invoices, orders, transactions and payments for customers, to grow your business.
 
+# 📋 | Documentations
+You can read our documentations in our [`Wiki`](https://github.com/Tolfix/CPG-API/wiki)
+
 # 🧰 | Setup
 Setting up `CPG` can be done in various of ways, but by the far easiet is by using `Docker`.
 You can pull the latest `docker` image from `tolfixorg/cpg:latest` from `DockerHub`.
