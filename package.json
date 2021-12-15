@@ -32,7 +32,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "mongoose-auto-increment": "^5.0.1",
-    "node-fetch": "^3.0.0",
+    "node-fetch": "^2.6.6",
     "nodemailer": "^6.7.0",
     "npm": "^7.20.5",
     "paypal-rest-sdk": "^1.8.1",
