@@ -140,7 +140,7 @@ export default class CustomerRouter
             return APISuccess(order)(res);
         });
 
-        this.router.get("/my/orders/:id/cancel", EnsureAuth(), async (req, res) => {
+        this.router.post("/my/orders/:id/cancel", EnsureAuth(), async (req, res) => {
             const orderId = req.params.id;
 
             if(!orderId)
