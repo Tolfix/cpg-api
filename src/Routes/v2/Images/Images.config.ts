@@ -26,7 +26,7 @@ export default class ImagesRouter
          * @returns {Images} 200 - Images data
          * @security JWT
          */
-        this.router.get("/", EnsureAdmin, (req, res) => {
+        this.router.get("/", (req, res) => {
             return APISuccess(CacheImages.array().map(e => {
                 return {
                     uid: e.uid,
@@ -45,7 +45,7 @@ export default class ImagesRouter
          * @returns {APIError} 404 - Failed to find
          * @security Basic
          */
-        this.router.get("/:id", EnsureAdmin, (req, res) => {
+        this.router.get("/:id", (req, res) => {
             const id = req.params.id as IImage["id"];
 
             const data = CacheImages.get(id);
@@ -72,7 +72,8 @@ export default class ImagesRouter
         this.router.post("/", EnsureAdmin, async (req, res) => {
             if(req.files)
             {
-                const image = (req.files.image as UploadedFile);
+                // @ts-ignore
+                let image = (req.files.image as UploadedFile);
 
                 Logger.debug(`Uploading image ${image.name}`);
 
