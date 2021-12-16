@@ -56,6 +56,48 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "country": Customer.billing.country,
                 "custom1": `<br/><strong>Customer ID:</strong> ${Customer.id}`,
                 "custom2": `
+                <br/>
+                <div style="
+                    text-align:start;"
+                >
+                    <div style="display:inline-block;">    
+                        ${(Swish_Payee_Number && Customer.personal.phone) ? `
+                        Swish
+                        <div>
+                            <img 
+                            src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}" 
+                            width="64">
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div style="display:inline-block;">
+
+                        ${(Paypal_Client_Secret) ? `
+                        Paypal
+                        <div>
+                            <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
+                                <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)}" width="64">
+                            </a>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div style="display:inline-block;">
+
+                        ${(Stripe_PK_Public_Test && Stripe_SK_Test) || (Stripe_PK_Public && Stripe_SK_Live) ? `
+                        Credit Card
+                        <div>
+                            <a href="${Full_Domain}/v2/stripe/pay/${invoice.uid}" target="_blank">
+                                <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/stripe/pay/${invoice.uid}`)}" width="64">
+                            </a>
+                        </div
+                        ` : ''}
+
+                    </div>
+
+                </div>`,
+
+                "custom3": `
                 <div style="
                 position: fixed;
                 right: 28;
@@ -77,44 +119,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 }
             }),
             "bottomNotice": `
-            <div style="
-                text-align:start;
-                
-            ">
-                <div style="display:inline-block;">    
-                    ${(Swish_Payee_Number && Customer.personal.phone) ? `
-                    QR-Kod för Swish
-                    <div>
-                        <img src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}" width="95">
-                    </div>
-                    ` : ''}
-                </div>
-                <div style="display:inline-block;">
-
-                    ${(Paypal_Client_Secret) ? `
-                    QR-Kod för Paypal (Klickbar)
-                    <div>
-                        <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
-                            <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)}" width="95">
-                        </a>
-                    </div>
-                    ` : ''}
-                </div>
-                
-                <div style="">
-
-                    ${(Stripe_PK_Public_Test && Stripe_SK_Test) || (Stripe_PK_Public && Stripe_SK_Live) ? `
-                    QR-Kod för Kredit kort (Klickbar)
-                    <div>
-                        <a href="${Full_Domain}/v2/stripe/pay/${invoice.uid}" target="_blank">
-                            <img src="${await qrcode.toDataURL(`${Full_Domain}/v2/stripe/pay/${invoice.uid}`)}" width="95">
-                        </a>
-                    </div
-                    ` : ''}
-
-                </div>
-
-            </div>
+            
             `,
         };
 
