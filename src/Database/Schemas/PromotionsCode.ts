@@ -17,6 +17,16 @@ const PromotionCodeSchame = new Schema
             required: true,
         },
 
+        valid_to: {
+            type: Date,
+            default: "permament"
+        },
+
+        uses: {
+            type: Number,
+            default: "unlimited"
+        }
+
     }
 );
 
