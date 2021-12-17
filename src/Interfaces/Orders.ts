@@ -44,7 +44,7 @@ export interface IOrder
     price_override?: number;
     dates: IOrderDates<IOrder["billing_type"]>;
     invoices: Array<IInvoice["uid"]>;
-    promotion_codes?: Array<IPromotionsCodes["id"]>;
+    // promotion_code?: IPromotionsCodes["id"];
 }
 
 
