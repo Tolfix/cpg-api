@@ -22,6 +22,7 @@ import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
 import { CreatePaymentIntent } from "../../../Payments/Stripe";
 import { createSwishQRCode } from "../../../Payments/Swish";
 import mainEvent from "../../../Events/Main";
+import PromotionCodeModel from "../../../Database/Schemas/PromotionsCode";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -91,6 +92,10 @@ export default class OrderRoute
                 }>;
             }>;
             const payment_method = req.body.payment_method as keyof IPayments;
+            const __promotion_code = req.body.promotion_code;
+            const promotion_code = await PromotionCodeModel.find({
+                name: __promotion_code,
+            });
 
             if(!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
@@ -118,6 +123,39 @@ export default class OrderRoute
 
             // Filter products which are hidden
             _products = _products.filter(product => product.hidden === false);
+
+            // Check if the product id has a promotion code
+            if(promotion_code && promotion_code.length > 0)
+                for(const code of promotion_code)
+                {
+                    // Check if the promotion code is valid
+                    if(code.valid_to !== "permament")
+                        if(code.valid_to >= new Date())
+                            continue;
+
+                    if(code.valid_to === "permament")
+                        continue;
+
+                    if(code.uses > 0)
+                        continue;
+
+                    // get product from code.products_ids[]
+                    // _products is also an array so we need to go through each product
+                    for(let i = 0; i < _products.length; i++)
+                        // Check if the product id is in the promotion code
+                        if(code.products_ids.includes(_products[i].id))
+                            if(code.procentage)
+                                // Add discount to that product
+                                _products[i].price = _products[i].price+(_products[i].price*code.discount);
+                            else
+                                // Add discount to that product
+                                _products[i].price = _products[i].price-code.discount;
+
+                    // Decrease the uses if not unlimited
+                    if(code.uses !== "unlimited")
+                        code.uses--;
+                    await code.save();
+                }
 
             if(_products.length <= 0)
                 return APIError("No valid products ids")(res);
