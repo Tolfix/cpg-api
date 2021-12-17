@@ -27,6 +27,11 @@ const PromotionCodeSchame = new Schema
             default: "unlimited"
         },
 
+        procentage: {
+            type: Boolean,
+            default: false
+        },
+
         products_ids: {
             type: Array,
             required: true
