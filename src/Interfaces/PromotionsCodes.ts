@@ -1,3 +1,5 @@
+import { IProduct } from "./Products";
+
 export interface IPromotionsCodes
 {
     id: number;
@@ -5,4 +7,5 @@ export interface IPromotionsCodes
     discount: number;
     valid_to: Date | "permament";
     uses: number | "unlimited";
+    products_ids: Array<IProduct["id"]>;
 }

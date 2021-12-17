@@ -25,6 +25,11 @@ const PromotionCodeSchame = new Schema
         uses: {
             type: Number,
             default: "unlimited"
+        },
+
+        products_ids: {
+            type: Array,
+            required: true
         }
 
     }
