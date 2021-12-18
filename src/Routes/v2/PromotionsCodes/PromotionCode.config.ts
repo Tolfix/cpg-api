@@ -48,7 +48,6 @@ export default class PromotionCodeRoute
             // Convert string to date
             if(new Date(code.valid_to) < new Date())
             {
-                Logger.debug(code.valid_to, new Date());
                 Logger.debug(`Promotion code ${code.name} got invalid valid date`);
                 return APIError(`Promotion code ${name} got invalid valid date`, 400)(res);
             }

@@ -114,7 +114,6 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
         // Convert string to date
         if(new Date(code.valid_to) < new Date())
         {
-            Logger.debug(code.valid_to, new Date());
             Logger.debug(`Promotion code ${code.name} got invalid valid date`);
             return product;
         }
