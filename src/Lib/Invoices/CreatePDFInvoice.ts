@@ -34,12 +34,17 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
         let data = {
             // @ts-ignore
             "documentTitle": `Invoice #${invoice.id}`,
-            "currency": Company_Currency.toUpperCase(),
+            "images": {
+                
+            },
             "taxNotation": "vat",
-            "marginTop": 25,
-            "marginRight": 25,
-            "marginLeft": 25,
-            "marginBottom": 25,
+            "settings": {
+                "currency": Company_Currency.toUpperCase(),
+                "margin-top": 25,
+                "margin-right": 25,
+                "margin-left": 25,
+                "margin-bottom": 25,
+            },
             "sender": {
                 "company": Company_Name,
                 "address": Company_Address,
@@ -96,25 +101,17 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                     </div>
 
                 </div>`,
-
-                "custom3": `
-                <div style="
-                position: fixed;
-                right: 28;
-                top: 224;
-                ">
-                    <strong>Due Date:</strong> ${invoice.dates.due_date}
-                </div>`,
             },
-            // @ts-ignore
-            "invoiceNumber": invoice.id,
-            "invoiceDate": invoice.dates.invoice_date,
-            // "invoiceDueDate": invoice.dates.due_date,
+            "information": {
+                "number": invoice.id,
+                "date": invoice.dates.invoice_date,
+                "due-date": invoice.dates.due_date
+            },
             "products": invoice.items.map((item) => {
                 return {
                     "quantity": item.quantity,
                     "description": item.notes,
-                    "tax": invoice.tax_rate,
+                    "tax-rate": invoice.tax_rate,
                     "price": item.amount
                 }
             }),
@@ -125,11 +122,11 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 
         if(Company_Logo_Url && PDF_Template_Url === "")
             // @ts-ignore
-            data["logo"] = Company_Logo_Url;
+            data["images"]["logo"] = Company_Logo_Url;
 
         if(PDF_Template_Url !== "")
             // @ts-ignore
-            data["background"] = PDF_Template_Url;
+            data["images"]["background"] = PDF_Template_Url;
         
         //@ts-ignore
         easyinvoice.createInvoice(data, (result: { pdf: any; }) => {

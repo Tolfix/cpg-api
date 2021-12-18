@@ -24,7 +24,7 @@
     "cron": "^1.8.2",
     "date-and-time": "^1.0.1",
     "dotenv": "^10.0.0",
-    "easyinvoice": "^1.0.148",
+    "easyinvoice": "^1.1.1",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "express-session": "^1.17.2",
