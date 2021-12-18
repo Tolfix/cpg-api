@@ -17,6 +17,26 @@ const PromotionCodeSchame = new Schema
             required: true,
         },
 
+        valid_to: {
+            type: String,
+            default: "permament"
+        },
+
+        uses: {
+            type: Number,
+            default: "unlimited"
+        },
+
+        procentage: {
+            type: Boolean,
+            default: false
+        },
+
+        products_ids: {
+            type: Array,
+            required: true
+        }
+
     }
 );
 

@@ -22,6 +22,8 @@ import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
 import { CreatePaymentIntent } from "../../../Payments/Stripe";
 import { createSwishQRCode } from "../../../Payments/Swish";
 import mainEvent from "../../../Events/Main";
+import PromotionCodeModel from "../../../Database/Schemas/PromotionsCode";
+import Logger from "../../../Lib/Logger";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -91,6 +93,12 @@ export default class OrderRoute
                 }>;
             }>;
             const payment_method = req.body.payment_method as keyof IPayments;
+            const __promotion_code = req.body.promotion_code;
+            const promotion_code = await PromotionCodeModel.findOne({
+                name: __promotion_code,
+            });
+            // @ts-ignore
+            Logger.info(`Order placed by ${req.customer.email}`, `General information:`, products, payment_method, promotion_code);
 
             if(!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
@@ -141,7 +149,8 @@ export default class OrderRoute
                 },
                 uid: idOrder(),
                 // @ts-ignore
-                invoices: []
+                invoices: [],
+                promotion_code: promotion_code?.id,
             }
 
             let one_timers = [];

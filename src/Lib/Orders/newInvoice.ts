@@ -9,6 +9,10 @@ import { IProduct } from "../../Interfaces/Products";
 import ConfigurableOptionsModel from "../../Database/Schemas/ConfigurableOptions";
 import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions";
 import mainEvent from "../../Events/Main";
+import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes";
+import { Document } from "mongoose";
+import Logger from "../Logger";
+import PromotionCodeModel from "../../Database/Schemas/PromotionsCode";
 
 
 // Create a method that checks if the order next recycle is within 14 days
@@ -33,13 +37,17 @@ export async function createInvoiceFromOrder(order: IOrder)
     // Get our products
     const Products = await getProductsByOrder(order);
     const LBProducts = createMapProductsFromOrder(order);
+    const Promotion_Code = await PromotionCodeModel.findOne({ id: order.promotion_code });
 
     // Get customer id
     const Customer_Id = order.customer_uid;
 
     let items = [];
-    for await(const product of Products)
+    for await(let product of Products)
     {
+        if(Promotion_Code)
+        // @ts-ignore
+            product = await getNewPriceOfPromotionCode(Promotion_Code, product);
         const category = await getCategoryByProduct(product);
         items.push({
             amount: product.price,
@@ -98,6 +106,55 @@ export async function createInvoiceFromOrder(order: IOrder)
     mainEvent.emit("invoice_created", newInvoice);
 
     return newInvoice;
+}
+
+export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Document, product: IProduct)
+{
+    if(code.valid_to !== "permament")
+        // Convert string to date
+        if(new Date(code.valid_to) < new Date())
+        {
+            Logger.debug(code.valid_to, new Date());
+            Logger.debug(`Promotion code ${code.name} got invalid valid date`);
+            return product;
+        }
+    
+    if(typeof code.valid_to === "string")
+        if(code.uses <= 0)
+        {
+            Logger.warning(`Promotion code ${code.name} has no uses left`);
+            return product;
+        }
+
+    Logger.info(`Promotion code ${code.name} (${code.id}) is valid`);
+
+    // get product from code.products_ids[]
+    // _products is also an array so we need to go through each product
+    // Check if the product id is in the promotion code
+    if(code.products_ids.includes(product.id))
+    {
+        Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
+        let o_price = product.price;
+        if(code.procentage)
+            product.price = product.price+(product.price*code.discount);
+        else
+            product.price = product.price-code.discount;
+
+        Logger.info(`New price of product ${product.id} is ${product.price}, old price was ${o_price}`);
+        // Check if we are - on price
+        if(product.price < 0)
+        {
+            Logger.error(`Product ${product.id} price is less than 0, making it "free" by setting it to 0`);
+            product.price = 0;
+        }
+    }
+
+    // Decrease the uses if not unlimited
+    if(code.uses !== "unlimited")
+        code.uses--;
+    await code.save();
+
+    return product;
 }
 
 export async function getPriceFromOrder(order: IOrder, product?: IProduct[])

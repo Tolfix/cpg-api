@@ -38,7 +38,7 @@ export default function Cron_Invoices()
             },
             notified: false,
             status: {
-                $ne: /fraud|cancelled/g
+                $not: /fraud|cancelled/g
             }
         }).then(async (invoices) => {
             Logger.info(`Found ${invoices.length} invoices to notify.`);
@@ -63,7 +63,7 @@ export default function Cron_Invoices()
             },
             paid: false,
             status: {
-                $ne: /fraud|cancelled/g
+                $not: /fraud|cancelled/g
             }
         }).then(async (invoices) => {
             for await(const invoice of invoices)
