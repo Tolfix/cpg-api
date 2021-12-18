@@ -18,7 +18,7 @@ const PromotionCodeSchame = new Schema
         },
 
         valid_to: {
-            type: Date,
+            type: String,
             default: "permament"
         },
 
