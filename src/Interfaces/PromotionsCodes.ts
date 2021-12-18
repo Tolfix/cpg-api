@@ -5,7 +5,7 @@ export interface IPromotionsCodes
     id: number;
     name: string;
     discount: number;
-    valid_to: Date | "permament";
+    valid_to: string | "permament";
     uses: number | "unlimited";
     procentage: boolean;
     products_ids: Array<IProduct["id"]>;
