@@ -56,6 +56,11 @@ const OrderSchame = new Schema
             default: [],
         },
 
+        promotion_code: {
+            type: Number,
+            require: false
+        },
+
     }
 );
 
