@@ -25,6 +25,7 @@ export default class AdminHandler
                     Emails:
                         add_email
                         delete_email
+                        show_emails
 
                     Admin:
                         create_admin
@@ -33,6 +34,7 @@ export default class AdminHandler
 
                     SMTP:
                         update_smtp
+                        show_smtp
 
                     General:
                         help
@@ -52,6 +54,9 @@ export default class AdminHandler
             if(result.action === "update_smtp")
                 await this.update_smtp();
 
+            if(result.action === "show_smtp")
+                await this.show_smtp();
+
             if(result.action === "delete_admin")
                 await this.delete_admin();
 
@@ -60,7 +65,10 @@ export default class AdminHandler
 
             if(result.action === "delete_email")
                 await this.delete_email();
-            
+
+            if(result.action === "show_emails")
+                await this.show_emails();
+
             if(result.action === "add_webhook")
                 await this.add_webhook();
 
@@ -134,6 +142,26 @@ export default class AdminHandler
     private async show()
     {
         Logger.info(CacheAdmin.array());
+    }
+
+    private async show_emails()
+    {
+        return new Promise(async (resolve, reject) => {
+            // Get our config from database
+            const config = (await ConfigModel.find())[0];
+            Logger.info(`Emails:`, config.smtp_emails);
+            resolve(true);
+        });
+    }
+
+    private async show_smtp()
+    {
+        return new Promise(async (resolve, reject) => {
+            // Get our config from database
+            const config = (await ConfigModel.find())[0];
+            Logger.info(`SMTP Settings:`, config.smtp);
+            resolve(true);
+        });
     }
 
     private async create()
