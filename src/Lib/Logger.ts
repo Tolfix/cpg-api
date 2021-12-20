@@ -90,6 +90,13 @@ const Logger = {
 
         console.log(time + " | ", colors.blue(`info: `), ...body)
     },
+
+    db: <T extends any[]> (...body: T) => {
+        let time = getTime();
+        SaveLog(time, ...body);
+
+        console.log(time + " | ", colors.cyan(`data`)+colors.green("base: "), ...body)
+    },
 }
 
 export default Logger;
