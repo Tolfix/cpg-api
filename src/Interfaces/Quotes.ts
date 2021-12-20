@@ -3,6 +3,7 @@ import { IPromotionsCodes } from "./PromotionsCodes";
 
 export interface IQuotes
 {
+    uid: `QUO_${string}`;
     id: number;
     customer_uid: string;
     items: IQuoteItem[];
