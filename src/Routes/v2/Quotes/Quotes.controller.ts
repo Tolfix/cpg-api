@@ -1,18 +1,54 @@
 import { Request, Response } from "express";
+import { Company_Name, Full_Domain } from "../../../Config";
+import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import QuotesModel from "../../../Database/Schemas/Quotes";
+import { SendEmail } from "../../../Email/Send";
 import mainEvent from "../../../Events/Main";
 import { IQuotes } from "../../../Interfaces/Quotes";
-import { idTransicitons } from "../../../Lib/Generator";
+import getFullName from "../../../Lib/Customers/getFullName";
+import { idQuotes } from "../../../Lib/Generator";
 import { APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 
-const API = new BaseModelAPI<IQuotes & { uid: any }>(idTransicitons, QuotesModel);
+const API = new BaseModelAPI<IQuotes>(idQuotes, QuotesModel);
 
 function insert(req: Request, res: Response)
 {
     API.create(req.body)
-        .then((result) => {
+        .then(async (result) => {
             
+            if(req.body.send_email !== undefined && req.body.send_email)
+            {
+                // Get customer.
+                const Customer = await CustomerModel.findOne({
+                    $or: [
+                        { id: result.customer_uid },
+                        { uid: result.customer_uid as any }
+                    ]
+                });
+                if(Customer)
+                {
+                    // Send email to customer.
+                    SendEmail(Customer.personal.email, `Quote from ${Company_Name === "" ? "CPG" : Company_Name}`, {
+                        isHTML: true,
+                        body: `
+                            <h1>Quote</h1>
+                            <p>
+                                Hello ${getFullName(Customer)}!
+                            </p>
+                            <p>
+                                You have a new quote.
+                            </p>
+                            <p>
+                                <a href="${Full_Domain}/quotes/my/${result.uid}">
+                                    Click here to view the quote.
+                                </a>
+                            </p>
+                        `
+                    });
+                }
+            }
+
             mainEvent.emit("quotes_created", result);
 
             APISuccess({
@@ -23,7 +59,7 @@ function insert(req: Request, res: Response)
 
 function getByUid(req: Request, res: Response)
 {
-    API.findByUid((req.params.uid)).then((result) => {
+    API.findByUid((req.params.uid as IQuotes["uid"])).then((result) => {
         APISuccess(result)(res);
     });
 }
@@ -50,7 +86,7 @@ function list(req: Request, res: Response)
 
 function patch(req: Request, res: Response)
 {
-    API.findAndPatch((req.params.uid), req.body).then((result) => {
+    API.findAndPatch((req.params.uid as IQuotes["uid"]), req.body).then((result) => {
         // @ts-ignore
         mainEvent.emit("quotes_updated", result);
         APISuccess(result)(res);
@@ -59,7 +95,7 @@ function patch(req: Request, res: Response)
 
 function removeById(req: Request, res: Response)
 {
-    API.removeByUid(req.params.uid)
+    API.removeByUid(req.params.uid as IQuotes["uid"])
         .then((result)=>{
             // @ts-ignore
             mainEvent.emit("quotes_deleted", result);
