@@ -2,6 +2,7 @@ import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions";
+import Logger from "../../Lib/Logger";
 
 const ConfigurableOptionsSchema = new Schema
 (
@@ -24,6 +25,12 @@ const ConfigurableOptionsSchema = new Schema
 
     }
 );
+
+// Log when creation
+ConfigurableOptionsSchema.post('save', function(doc: IConfigurableOptions)
+{
+    Logger.db(`Created configurable_options ${doc.id}`);
+});
 
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);

@@ -2,6 +2,7 @@ import mongoose,{ Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IImage } from "../../Interfaces/Images";
+import Logger from "../../Lib/Logger";
 
 const ImageSchema = new Schema
 (
@@ -34,6 +35,12 @@ const ImageSchema = new Schema
 
     }
 );
+
+// Log when creation
+ImageSchema.post('save', function(doc: IImage)
+{
+    Logger.db(`Created image ${doc.id}`);
+});
 
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);

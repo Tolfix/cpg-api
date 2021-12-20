@@ -2,6 +2,7 @@ import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IDCategory } from "../../Interfaces/Categories";
+import Logger from "../../Lib/Logger";
 
 const CategorySchema = new Schema
 (
@@ -34,6 +35,12 @@ const CategorySchema = new Schema
 
     }
 );
+
+// Log when creation
+CategorySchema.post('save', function(doc: IDCategory)
+{
+    Logger.db(`Created category ${doc.id}`);
+});
 
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);

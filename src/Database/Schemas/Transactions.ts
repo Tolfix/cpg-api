@@ -2,6 +2,7 @@ import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IDTransactions } from "../../Interfaces/Transactions";
+import Logger from "../../Lib/Logger";
 
 const TransactionsSchema = new Schema
 (
@@ -44,6 +45,12 @@ const TransactionsSchema = new Schema
 
     }
 );
+
+// Log when a transaction is created
+TransactionsSchema.post('save', function(doc: IDTransactions)
+{
+    Logger.db(`Created transaction ${doc.uid}`);
+});
 
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);

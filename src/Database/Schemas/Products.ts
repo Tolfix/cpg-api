@@ -2,6 +2,7 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IProduct } from "../../Interfaces/Products";
+import Logger from "../../Lib/Logger";
 
 const ProductSchema = new Schema
 (
@@ -89,6 +90,12 @@ const ProductSchema = new Schema
 
     }
 );
+
+// Log when creation
+ProductSchema.post('save', function(doc: IProduct)
+{
+    Logger.db(`Created product ${doc.name} (${doc.id})`);
+});
 
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);
