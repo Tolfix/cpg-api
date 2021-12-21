@@ -15,6 +15,7 @@ import Footer from "../../../Email/Templates/General/Footer";
 import InvoiceModel from "../../../Database/Schemas/Invoices";
 import OrderModel from "../../../Database/Schemas/Orders";
 import { ICustomer } from "../../../Interfaces/Customer";
+import TransactionsModel from "../../../Database/Schemas/Transactions";
 
 export default class CustomerRouter
 {
@@ -186,6 +187,54 @@ export default class CustomerRouter
             });
 
             return APISuccess("Order cancelled.")(res);
+        });
+
+        this.router.get("/my/transactions", EnsureAuth(), async (req, res) => {
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const transactions = await TransactionsModel.find({
+                $or: [
+                    { customer_uid: customer.uid},
+                    { customer_uid: customer.id}
+                ]
+            });
+
+            return APISuccess(transactions)(res);
+        });
+
+        this.router.get("/my/transactions/:id", EnsureAuth(), async (req, res) => {
+            const transactionId = req.params.id;
+
+            if(!transactionId)
+                return APIError(`Invalid transaction id`)(res);
+            
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const transactions = await TransactionsModel.find({
+                $or: [
+                    {
+                        customer_uid: customer.uid,
+                    },
+                    {
+                        customer_uid: customer.id,
+                    },
+                ],
+                id: transactionId,
+            });
+
+            return APISuccess(transactions)(res);
         });
 
         this.router.post("/my/reset-password", async (req, res) => {

@@ -2,6 +2,7 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer";
+import Logger from "../../../Lib/Logger";
 
 const CustomerSchema = new Schema
 (
@@ -39,6 +40,12 @@ const CustomerSchema = new Schema
 
     }
 );
+
+// Log when creation
+CustomerSchema.post('save', function(doc: ICustomer)
+{
+    Logger.db(`Created customer ${doc.id}`);
+});
 
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);

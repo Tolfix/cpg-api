@@ -19,7 +19,7 @@ import fs from "fs";
 export async function PluginHandler(server: Application)
 {
     // get plugins from package.json
-    Logger.info("Loading plugins");
+    Logger.info("Loading plugins...");
     const plugins = getPlugins();
     for await(const plugin of plugins)
     {

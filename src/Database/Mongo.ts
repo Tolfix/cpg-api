@@ -16,5 +16,5 @@ db.on('disconnected', () => {
 })
 
 db.once('open', () => {
-    Logger.info(`Database opened`);
+    Logger.db(`Database opened`);
 });

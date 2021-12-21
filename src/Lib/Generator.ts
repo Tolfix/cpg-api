@@ -15,6 +15,7 @@ import { IImage } from "../Interfaces/Images";
 import { IInvoice } from "../Interfaces/Invoice";
 import { IOrder } from "../Interfaces/Orders";
 import { IProduct } from "../Interfaces/Products";
+import { IQuotes } from "../Interfaces/Quotes";
 import { ITransactions } from "../Interfaces/Transactions";
 
 export function idCustomer(): ICustomer["uid"]
@@ -84,5 +85,11 @@ export function idImages(): IImage["uid"]
 export function idConfigurableOptions(): IConfigurableOptions["uid"]
 {
     let uid: IConfigurableOptions["uid"] = `CO_${crypto.randomBytes(20).toString("hex")}`;
+    return uid;
+}
+
+export function idQuotes(): IQuotes["uid"]
+{
+    let uid: IQuotes["uid"] = `QUO_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }

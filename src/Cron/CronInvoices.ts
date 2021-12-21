@@ -54,7 +54,8 @@ export default function Cron_Invoices()
                 await sendInvoiceEmail(invoice, Customer);
 
             }
-            InvoiceNotifiedReport(invoices);
+            if(invoices.length > 0)
+                InvoiceNotifiedReport(invoices);
         });
 
         InvoiceModel.find({

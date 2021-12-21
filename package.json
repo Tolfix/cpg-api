@@ -47,7 +47,8 @@
   "scripts": {
     "start": "node ./build/Main.js",
     "test": "jest",
-    "build": "tsc -b"
+    "build": "tsc -b",
+    "watch": "nodemon ./build/Main.js"
   },
   "repository": {
     "type": "git",

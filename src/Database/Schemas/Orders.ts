@@ -2,6 +2,7 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IOrder } from "../../Interfaces/Orders";
+import Logger from "../../Lib/Logger";
 
 const OrderSchame = new Schema
 (
@@ -63,6 +64,12 @@ const OrderSchame = new Schema
 
     }
 );
+
+// Log when creation
+OrderSchame.post('save', function(doc: IOrder)
+{
+    Logger.db(`Created order ${doc.id}`);
+});
 
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);

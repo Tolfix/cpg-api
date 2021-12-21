@@ -5,6 +5,7 @@ import { IImage } from "../Images";
 import { IInvoice } from "../Invoice";
 import { IOrder } from "../Orders";
 import { IProduct } from "../Products";
+import { IQuotes } from "../Quotes";
 import { ITransactions } from "../Transactions";
 
 export interface MainOnEvents
@@ -42,4 +43,8 @@ export interface MainOnEvents
     configurable_options_created: IConfigurableOptions;
     configurable_options_updated: IConfigurableOptions;
     configurable_options_deleted: IConfigurableOptions;
+
+    quotes_created: IQuotes;
+    quotes_updated: IQuotes;
+    quotes_deleted: IQuotes;
 }

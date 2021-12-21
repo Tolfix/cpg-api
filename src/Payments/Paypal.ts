@@ -4,6 +4,7 @@ import TransactionsModel from "../Database/Schemas/Transactions";
 import { IInvoice } from "../Interfaces/Invoice";
 import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
+import Logger from "../Lib/Logger";
 import { getDate } from "../Lib/Time";
 
 if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
@@ -29,6 +30,8 @@ export async function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise
             // HTML tag with a null string.
             return str.replace( /(<([^>]+)>)/ig, '');
         }
+
+        Logger.warning(`Creating payment paypal for invoice ${invoice.uid}`);
 
         const create_payment_json =
         {
@@ -71,6 +74,8 @@ export async function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise
             if (error || !payment)
                 throw error;
 
+            Logger.warning(`Created payment paypal for invoice ${invoice.uid}`);
+
             resolve(payment?.links)
         });
     })
@@ -107,6 +112,8 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
                 date: getDate(),
                 uid: idTransicitons(),
             }).save());
+
+            Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.uid}`);
 
             invoice?.transactions.push(newTrans.id);
 
