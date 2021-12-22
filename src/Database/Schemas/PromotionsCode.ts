@@ -4,7 +4,7 @@ import { MongoDB_URI } from "../../Config";
 import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes";
 import Logger from "../../Lib/Logger";
 
-const PromotionCodeSchame = new Schema
+const PromotionCodeSchema = new Schema
 (
     {
 
@@ -42,7 +42,7 @@ const PromotionCodeSchame = new Schema
 );
 
 // Log when creation
-PromotionCodeSchame.post('save', function(doc: IPromotionsCodes)
+PromotionCodeSchema.post('save', function(doc: IPromotionsCodes)
 {
     Logger.db(`Created promotion code ${doc.name}`);
 });
@@ -50,13 +50,13 @@ PromotionCodeSchame.post('save', function(doc: IPromotionsCodes)
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);
 
-PromotionCodeSchame.plugin(increment.plugin, {
+PromotionCodeSchema.plugin(increment.plugin, {
     model: 'promotions_codes',
     field: 'id',
     startAt: 0,
     incrementBy: 1
 });
 
-const PromotionCodeModel = model<IPromotionsCodes & Document>("promotions_codes", PromotionCodeSchame);
+const PromotionCodeModel = model<IPromotionsCodes & Document>("promotions_codes", PromotionCodeSchema);
 
 export default PromotionCodeModel;

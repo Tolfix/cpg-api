@@ -4,7 +4,7 @@ import { MongoDB_URI } from "../../Config";
 import { IOrder } from "../../Interfaces/Orders";
 import Logger from "../../Lib/Logger";
 
-const OrderSchame = new Schema
+const OrderSchema = new Schema
 (
     {
 
@@ -66,7 +66,7 @@ const OrderSchame = new Schema
 );
 
 // Log when creation
-OrderSchame.post('save', function(doc: IOrder)
+OrderSchema.post('save', function(doc: IOrder)
 {
     Logger.db(`Created order ${doc.id}`);
 });
@@ -74,13 +74,13 @@ OrderSchame.post('save', function(doc: IOrder)
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);
 
-OrderSchame.plugin(increment.plugin, {
+OrderSchema.plugin(increment.plugin, {
     model: 'orders',
     field: 'id',
     startAt: 0,
     incrementBy: 1
 });
 
-const OrderModel = model<IOrder & Document>("orders", OrderSchame);
+const OrderModel = model<IOrder & Document>("orders", OrderSchema);
 
 export default OrderModel;
