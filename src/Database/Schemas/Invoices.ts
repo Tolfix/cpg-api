@@ -4,7 +4,7 @@ import { MongoDB_URI } from "../../Config";
 import { IInvoice } from "../../Interfaces/Invoice";
 import Logger from "../../Lib/Logger";
 
-const InvoiceSchame = new Schema
+const InvoiceSchema = new Schema
 (
     {
         id: Number,
@@ -72,7 +72,7 @@ const InvoiceSchame = new Schema
 );
 
 // Log when creation
-InvoiceSchame.post('save', function(doc: IInvoice)
+InvoiceSchema.post('save', function(doc: IInvoice)
 {
     Logger.db(`Created invoice ${doc.id}`);
 });
@@ -80,13 +80,13 @@ InvoiceSchame.post('save', function(doc: IInvoice)
 const connection = mongoose.createConnection(MongoDB_URI);
 increment.initialize(connection);
 
-InvoiceSchame.plugin(increment.plugin, {
+InvoiceSchema.plugin(increment.plugin, {
     model: 'invoices',
     field: 'id',
     startAt: 0,
     incrementBy: 1
 });
 
-const InvoiceModel = model<IInvoice & Document>("invoices", InvoiceSchame);
+const InvoiceModel = model<IInvoice & Document>("invoices", InvoiceSchema);
 
 export default InvoiceModel;
