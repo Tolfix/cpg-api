@@ -18,7 +18,7 @@ You can pull the latest `docker` image from `tolfixorg/cpg:latest` from `DockerH
 
 ## Installing
 `CPG` requires the following
-* Node.js
+* Node.js v14 or v16
 * Typescript - 4.3.5
 * MongoDB
 * Git
