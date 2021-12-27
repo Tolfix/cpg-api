@@ -30,7 +30,7 @@
     "express-session": "^1.17.2",
     "express-swagger-generator": "github:Tolfix/express-swagger-generator",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.12",
+    "mongoose": "^6.1.4",
     "mongoose-auto-increment": "^5.0.1",
     "node-fetch": "^2.6.6",
     "nodemailer": "^6.7.0",

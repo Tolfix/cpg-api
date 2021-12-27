@@ -37,7 +37,7 @@ const CategorySchema = new Schema
 );
 
 // Log when creation
-CategorySchema.post('save', function(doc: IDCategory)
+CategorySchema.post('save', function(doc: IDCategory & Document)
 {
     Logger.db(`Created category ${doc.id}`);
 });

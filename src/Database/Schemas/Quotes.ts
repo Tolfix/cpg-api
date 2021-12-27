@@ -1,7 +1,6 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IInvoice } from "../../Interfaces/Invoice";
 import { IQuotes } from "../../Interfaces/Quotes";
 import Logger from "../../Lib/Logger";
 
@@ -40,7 +39,7 @@ const QuotesSchema = new Schema
 );
 
 // Log when creation
-QuotesSchema.post('save', function(doc: IInvoice)
+QuotesSchema.post('save', function(doc: IQuotes & Document)
 {
     Logger.db(`Created Quotes ${doc.id}`);
 });

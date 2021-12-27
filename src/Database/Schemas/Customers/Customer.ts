@@ -42,7 +42,7 @@ const CustomerSchema = new Schema
 );
 
 // Log when creation
-CustomerSchema.post('save', function(doc: ICustomer)
+CustomerSchema.post('save', function(doc: ICustomer & Document)
 {
     Logger.db(`Created customer ${doc.id}`);
 });

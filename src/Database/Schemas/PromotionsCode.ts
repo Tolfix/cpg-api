@@ -42,7 +42,7 @@ const PromotionCodeSchema = new Schema
 );
 
 // Log when creation
-PromotionCodeSchema.post('save', function(doc: IPromotionsCodes)
+PromotionCodeSchema.post('save', function(doc: IPromotionsCodes & Document)
 {
     Logger.db(`Created promotion code ${doc.name}`);
 });

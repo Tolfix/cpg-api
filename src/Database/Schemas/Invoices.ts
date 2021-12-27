@@ -72,7 +72,7 @@ const InvoiceSchema = new Schema
 );
 
 // Log when creation
-InvoiceSchema.post('save', function(doc: IInvoice)
+InvoiceSchema.post('save', function(doc: IInvoice & Document)
 {
     Logger.db(`Created invoice ${doc.id}`);
 });

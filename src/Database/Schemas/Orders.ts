@@ -66,7 +66,7 @@ const OrderSchema = new Schema
 );
 
 // Log when creation
-OrderSchema.post('save', function(doc: IOrder)
+OrderSchema.post('save', function(doc: IOrder & Document)
 {
     Logger.db(`Created order ${doc.id}`);
 });
