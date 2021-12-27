@@ -12,6 +12,7 @@ import Logger from "../Lib/Logger";
 import { Plugins } from "../Config";
 import npm from "npm";
 import fs from "fs";
+import MainCache from "../Cache/MainCache";
 
 // find installed npm packages in package.json and get plugins starting with cpg_plugin
 // then require it and call the new 
@@ -32,6 +33,31 @@ export async function PluginHandler(server: Application)
         // @ts-ignore
         const pluginInstance = require(plugin);
         // @ts-ignore
+        /**
+         * 
+         * @param {Events} mainEvent 
+         * @param {Application} server 
+         * @param {{
+         *  CategoryModel: CategoryModel,
+         *  CustomerModel: CustomerModel,
+         *  ImageModel: ImageModel,
+         *  InvoiceModel: InvoiceModel,
+         *  OrderModel: OrderModel,
+         *  ProductModel: ProductModel,
+         *  TransactionsModel: TransactionsModel,
+         *  ConfigurableOptionsModel: ConfigurableOptionsModel
+         * }} models 
+         * @param {Object} Logger
+         * @param {{
+         *  Admin: CacheAdmin,
+         *  Customer: CacheCustomer,
+         *  Product: CacheProduct,
+         *  Transaction: CacheTransactions,
+         *  Order: CacheOrder,
+         *  Invoice: CacheInvoice,
+         *  f_orders: ce_orders
+         * }} MainCache
+         */
         new pluginInstance(mainEvent, server, {
             // All database models
             CategoryModel: CategoryModel,
@@ -42,7 +68,7 @@ export async function PluginHandler(server: Application)
             ProductModel: ProductModel,
             TransactionsModel: TransactionsModel,
             ConfigurableOptionsModel: ConfigurableOptionsModel,           
-        }, Logger);
+        }, Logger, MainCache);
 
         Logger.plugin(`Loaded plugin ${plugin}`)
     }
