@@ -1,7 +1,8 @@
 /* Copyright (C) 2021 Tolfix - All Rights Reserved */
 require("dotenv").config();
 import Logger from "./Lib/Logger";
-Logger.info("Starting CPG-API");
+import { GetVersion } from "./Config";
+Logger.info(`Starting CPG-API with version ${GetVersion()}`);
 Logger.info("Adding .env variables");
 import "./Mods/MapMod";
 Logger.info(`Loading ./Mods/MapMod`);
@@ -15,5 +16,4 @@ import "./Handlers/Cron";
 Logger.info(`Loading ./Handlers/Cron`);
 import AdminHandler from "./Admin/AdminHandler";
 Logger.info(`Loading ./Admin/AdminHandler`);
-
 new AdminHandler();

@@ -18,7 +18,7 @@ export function APIError(msg: any, status: number = 400)
 {
     return (res: Response) => {
         let ip = res.req.headers['x-forwarded-for'] || res.req.socket.remoteAddress;
-        let url = res.req.url;
+        let url = res.req.originalUrl;
         let method = res.req.method;
         Logger.api(`${ip} ${method} ${url} ${status}`);
         res.setHeader('Access-Control-Expose-Headers', 'X-Total-Count')

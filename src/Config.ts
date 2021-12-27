@@ -77,3 +77,10 @@ export const GetSMTPEmails: () => Promise<IConfigs["smtp_emails"]> = () =>
         return config[0].smtp_emails;
     });
 };
+
+// Get version of the app from package.json
+export const GetVersion: () => string = () =>
+{
+    const package_json = require("../package.json");
+    return (package_json.version);
+};
