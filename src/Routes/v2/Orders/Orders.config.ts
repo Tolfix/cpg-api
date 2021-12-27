@@ -19,11 +19,10 @@ import { ICustomer } from "../../../Interfaces/Customer";
 import { SendEmail } from "../../../Email/Send";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
-import { CreatePaymentIntent } from "../../../Payments/Stripe";
-import { createSwishQRCode } from "../../../Payments/Swish";
 import mainEvent from "../../../Events/Main";
 import PromotionCodeModel from "../../../Database/Schemas/PromotionsCode";
 import Logger from "../../../Lib/Logger";
+import { ce_orders } from "../../../Lib/Orders/PlaceOrder";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -81,7 +80,7 @@ export default class OrderRoute
             OrderController.list
         ]);
 
-        this.router.post("/place", EnsureAuth(), async (req, res) => {
+        this.router.post("/place", EnsureAuth(), async (req, res, next) => {
             // @ts-ignore
             const customer_id = req.customer.id;
             const products = req.body.products as Array<{
@@ -259,30 +258,13 @@ export default class OrderRoute
 
             await sendInvoiceEmail(invoice, customer);
 
-            // Check if request is asking for creating intent
-            if(req.query.create_intent)
-            {
-                if(payment_method === "credit_card")
-                {
-                    const intent = await CreatePaymentIntent(invoice);
-                    return APISuccess(intent.client_secret)(res);
-                }
-
-            }
-
             if(!invoice)
-                return APIError("Unable to create invoice")(res);
+                return APIError("Unable to create invoice, but created order.")(res);
 
-            if(payment_method === "paypal")
-                return APISuccess(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)(res);
-            
-            if(payment_method === "credit_card")
-                return APISuccess(`${Full_Domain}/v2/stripe/pay/${invoice.uid}`)(res);
+            if(ce_orders.get(payment_method))
+                return ce_orders.get(payment_method)?.(_order_, invoice, req, res, next);
 
-            if(payment_method === "swish" && Swish_Payee_Number)
-                return APISuccess(`data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}`)(res);
-
-            return APISuccess(`Invoice sent.`)(res);
+            return APISuccess("Invoice sent")(res);
         });
 
         this.router.get("/:uid", [
