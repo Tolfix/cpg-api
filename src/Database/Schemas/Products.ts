@@ -92,7 +92,7 @@ const ProductSchema = new Schema
 );
 
 // Log when creation
-ProductSchema.post('save', function(doc: IProduct)
+ProductSchema.post('save', function(doc: IProduct & Document)
 {
     Logger.db(`Created product ${doc.name} (${doc.id})`);
 });

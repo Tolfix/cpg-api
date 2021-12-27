@@ -3,7 +3,7 @@ import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import OrderModel from "../../../Database/Schemas/Orders";
 import ProductModel from "../../../Database/Schemas/Products";
 import { IPayments } from "../../../Interfaces/Payments";
-import { IProduct, IRecurringMethod } from "../../../Interfaces/Products";
+import { IPaymentType, IProduct, IRecurringMethod } from "../../../Interfaces/Products";
 import { APIError, APISuccess } from "../../../Lib/Response";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import OrderController from "./Orders.controller";
@@ -42,11 +42,10 @@ async function createOrder(customer: ICustomer, products: Array<{
                 quantity: product.quantity,
             }
         }),
-        payment_method: payment_method,
+        payment_method: payment_method as keyof IPayments,
         order_status: "active",
-        billing_type: billing_type,
+        billing_type: billing_type as IPaymentType,
         billing_cycle: billing_cycle,
-        quantity: 1,
         dates: {
             createdAt: new Date(),
             next_recycle: dateFormat.format(nextRecycleDate(

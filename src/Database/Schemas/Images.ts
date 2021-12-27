@@ -37,7 +37,7 @@ const ImageSchema = new Schema
 );
 
 // Log when creation
-ImageSchema.post('save', function(doc: IImage)
+ImageSchema.post('save', function(doc: IImage & Document)
 {
     Logger.db(`Created image ${doc.id}`);
 });

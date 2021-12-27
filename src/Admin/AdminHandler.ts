@@ -201,7 +201,7 @@ export default class AdminHandler
                 const username = result.username as string;
                 Logger.info(`Deleting administrator..`);
 
-                AdminModel.findOneAndDelete({ username: username }, (err: any) => {
+                AdminModel.findOneAndUpdate({ username: username }, (err: any) => {
                     if(err)
                         Logger.error(err);
                         
