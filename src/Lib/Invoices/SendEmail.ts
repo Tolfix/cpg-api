@@ -7,7 +7,7 @@ import createPDFInvoice from "./CreatePDFInvoice";
 import {SendEmail} from "../../Email/Send"
 import mainEvent from "../../Events/Main";
 
-export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: ICustomer)
+export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: ICustomer): Promise<boolean>
 {
     return new Promise(async(resolve, reject) => {
 
@@ -62,10 +62,11 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
                 invoice.status = "payment_pending";
                 await invoice.save();
                 mainEvent.emit("invoice_notified", invoice);
+                resolve(true);
             }
+            resolve(false);
         });
 
-        resolve(true);
     });
 }
 
