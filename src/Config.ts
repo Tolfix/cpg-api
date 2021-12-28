@@ -82,5 +82,5 @@ export const GetSMTPEmails: () => Promise<IConfigs["smtp_emails"]> = () =>
 export const GetVersion: () => string = () =>
 {
     const package_json = require("../package.json");
-    return (package_json.version);
+    return (package_json?.version ?? "0.0.0");
 };
