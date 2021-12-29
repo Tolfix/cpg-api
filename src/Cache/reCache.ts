@@ -15,6 +15,8 @@ import { CacheTransactions } from "./CacheTransactions";
 import { CacheImages } from "./CacheImage";
 import ConfigModel from "../Database/Schemas/Configs";
 import { CacheConfig } from "./CacheConfigs";
+import InvoiceModel from "../Database/Schemas/Invoices";
+import { CacheInvoice } from "./CacheInvoices";
 
 /**
  * @deprecated
@@ -170,6 +172,24 @@ export async function reCache_Images()
     });
 }
 
+
+/**
+ * @deprecated
+ */
+ export async function reCache_Invoices()
+ {
+     Logger.info(`Starting caching on invoices..`);
+     return new Promise(async (resolve, reject) => {
+         const invoice = await InvoiceModel.find();
+         for (const o of invoice)
+         {
+             Logger.cache(`Caching invoice ${o.uid}`);
+             CacheInvoice.set(o.uid, o);
+         }
+         return resolve(true);
+     });
+ }
+
 /**
  * @deprecated
  */
@@ -183,4 +203,5 @@ export async function reCache()
     await reCache_Transactions();
     await reCache_Orders();
     await reCache_Images();
+    await reCache_Invoices();
 }
