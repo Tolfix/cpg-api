@@ -65,6 +65,11 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 <div style="
                     text-align:start;"
                 >
+                    ${(
+                        Customer.billing.country.toLocaleLowerCase() === "sweden"
+                        ||
+                        Customer.billing.country.toLocaleLowerCase() === "sverige"
+                        ) ? `
                     <div style="display:inline-block;">    
                         ${(Swish_Payee_Number && Customer.personal.phone) ? `
                         Swish
@@ -75,9 +80,10 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                         </div>
                         ` : ''}
                     </div>
+                        ` : ""}
                     <div style="display:inline-block;">
 
-                        ${(Paypal_Client_Secret) ? `
+                        ${(Paypal_Client_Secret && invoice.payment_method === "paypal") ? `
                         Paypal
                         <div>
                             <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
