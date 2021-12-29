@@ -40,7 +40,7 @@ function insert(req: Request, res: Response)
                                 You have a new quote.
                             </p>
                             <p>
-                                <a href="${Full_Domain}/quotes/my/${result.uid}">
+                                <a href="${Full_Domain}/v2/quotes/${result.uid}/view">
                                     Click here to view the quote.
                                 </a>
                             </p>
