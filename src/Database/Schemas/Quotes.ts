@@ -10,6 +10,8 @@ const QuotesSchema = new Schema
 
         id: Number,
 
+        uid: String,
+
         customer_uid: {
             type: String,
             required: true,
@@ -34,6 +36,11 @@ const QuotesSchema = new Schema
             type: String,
             default: "",
         },
+
+        payment_method: {
+            type: String,
+            default: "none",
+        }
 
     }
 );
