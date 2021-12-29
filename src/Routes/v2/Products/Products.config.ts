@@ -28,7 +28,7 @@ export default class ProductsRouter
 
         this.router.get("/:uid/configurable_options", async (req, res, next) => {
             const uid = req.params.uid;
-            const [product, p_fail] = await AW<IProduct & Document>(ProductModel.findOne({ $or: [
+            const [product, p_fail] = await AW(await ProductModel.findOne({ $or: [
                 { uid: uid as IProduct["uid"] },
                 { id: uid as unknown as any }
             ]}));
