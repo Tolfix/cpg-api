@@ -20,6 +20,7 @@ export interface IQuotes
 export interface IQuoteItem
 {
     name: string;
+    tax_rate: number;
     price: number;
     quantity: number;
 }
