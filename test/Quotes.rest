@@ -7,6 +7,7 @@ Authorization: Basic 123:123
     "items": {
         "name": "item1",
         "price": 100,
+        "tax_rate": 25,
         "quantity": 1
     },
     "due_date": "2022-01-01",
