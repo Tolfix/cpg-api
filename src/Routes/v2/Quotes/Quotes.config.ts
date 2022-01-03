@@ -2,6 +2,7 @@ import { Application, Router } from "express";
 import CustomerModel from "../../../Database/Schemas/Customers/Customer";
 import QuotesModel from "../../../Database/Schemas/Quotes";
 import AW from "../../../Lib/AW";
+import createQuotePdf from "../../../Lib/Quotes/CreateQuotePdf";
 import { APIError, APISuccess } from "../../../Lib/Response";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import QuotesController from "./Quotes.controller";
@@ -42,10 +43,13 @@ export default class QuotesRouter
             if(e_customer || !customer)
                 return APIError(`Failed to fetch customer with uid ${quote.customer_uid}`)(res);
 
-            return APISuccess({
-                quote,
-                customer
-            })(res);
+            const result = await createQuotePdf(quote);
+
+            res.writeHead(200, {
+                'Content-Type': "application/pdf",
+            });
+
+            res.end(result, "base64");
         });
 
         this.router.post("/", [
