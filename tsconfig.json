@@ -19,7 +19,7 @@
       // "removeComments": true,
       "outDir": "./build",
     },
-    "exclude": ["./node_modules"],
+    "exclude": ["./node_modules", "./test"],
     "include": [
       "./src"
     ]

@@ -2,6 +2,7 @@ import mail from "nodemailer";
 import { Company_Name, GetSMTPConfig } from "../Config";
 import { IConfigs } from "../Interfaces/Admin/Configs";
 import AW from "../Lib/AW";
+import Logger from "../Lib/Logger";
 var AWS = require('aws-sdk/dist/aws-sdk-react-native');
 
 /**
@@ -63,6 +64,8 @@ export async function SendEmail(
 
     //@ts-ignore
     const transport = mail.createTransport(config);
+
+    Logger.info(`Sending email to ${reciever}`);
 
     transport.sendMail(email).then(e => {
         callback ? callback?.(null, true) : Promise.resolve(true);
