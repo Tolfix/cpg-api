@@ -2,17 +2,8 @@ import { SchemaComposer } from 'graphql-compose';
 import fs from "fs";
 import { HomeDir } from '../../Config';
 import Logger from '../../Lib/Logger';
-import { graphql } from 'graphql';
-import { IntrospectionQuery, printSchema } from 'graphql/utilities';
-const schemaComposer = new SchemaComposer();
 
-const graphQLDataFolder = `${HomeDir}/build/Database/GraphQL/Data`;
-// Check if the folder exists
-if (!fs.existsSync(graphQLDataFolder)) {
-    Logger.error(`The folder ${graphQLDataFolder} does not exist.`);
-    // Create the folder
-    fs.mkdirSync(graphQLDataFolder);
-};
+const schemaComposer = new SchemaComposer();
 
 // Go through each in ./Schemas/*.js files and add them to schemaComposer
 Logger.info("Loading GraphQL schemas...");
