@@ -24,7 +24,7 @@ const CategorySchema = new Schema
         },
 
         image: {
-            type: Array,
+            type: [Number],
             default: [],
         },
 

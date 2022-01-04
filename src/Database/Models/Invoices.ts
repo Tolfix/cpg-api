@@ -19,7 +19,10 @@ const InvoiceSchema = new Schema
         },
 
         dates: {
-            type: Object,
+            type: {
+                invoice_date: String,
+                due_date: String,
+            },
             required: true,
         },
 
@@ -29,12 +32,30 @@ const InvoiceSchema = new Schema
         },
 
         items: {
-            type: Array,
+            type: [
+                {
+                    notes: String,
+                    amount: Number,
+                    quantity: Number,
+                    product_id: {
+                        type: Number,
+                        required: false,
+                    },
+                    configurable_options_id: {
+                        type: Number,
+                        required: false,
+                    },
+                    configurable_options_index: {
+                        type: Number,
+                        required: false,
+                    }
+                }
+            ],
             default: []
         },
 
         transactions: {
-            type: Array,
+            type: [String],
             default: [],
         },
 
@@ -45,6 +66,7 @@ const InvoiceSchema = new Schema
 
         status: {
             type: String,
+            enum: ["active", "pending", "draft", "fraud", "cancelled", "refunded", "collections", "payment_pending"],
             default: "draft",
         },
 
