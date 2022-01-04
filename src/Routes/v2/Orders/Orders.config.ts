@@ -3,7 +3,7 @@ import CustomerModel from "../../../Database/Models/Customers/Customer";
 import OrderModel from "../../../Database/Models/Orders";
 import ProductModel from "../../../Database/Models/Products";
 import { IPayments } from "../../../Interfaces/Payments";
-import { IPaymentType, IProduct, IRecurringMethod } from "../../../Interfaces/Products";
+import { IProduct } from "../../../Interfaces/Products";
 import { APIError, APISuccess } from "../../../Lib/Response";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import OrderController from "./Orders.controller";
@@ -23,6 +23,8 @@ import mainEvent from "../../../Events/Main";
 import PromotionCodeModel from "../../../Database/Models/PromotionsCode";
 import Logger from "../../../Lib/Logger";
 import { ce_orders } from "../../../Lib/Orders/PlaceOrder";
+import { TRecurringMethod } from "../../../Types/PaymentMethod";
+import { TPaymentTypes } from "../../../Types/PaymentTypes";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -31,7 +33,7 @@ async function createOrder(customer: ICustomer, products: Array<{
         id: IConfigurableOptions["id"],
         option_index?: number,
     }>;
-}>, _products: IProduct[], payment_method: string, billing_type: string, billing_cycle?: IRecurringMethod)
+}>, _products: IProduct[], payment_method: string, billing_type: string, billing_cycle?: TRecurringMethod)
 {
     const order = await (new OrderModel({
         customer_uid: customer.id,
@@ -44,7 +46,7 @@ async function createOrder(customer: ICustomer, products: Array<{
         }),
         payment_method: payment_method as keyof IPayments,
         order_status: "active",
-        billing_type: billing_type as IPaymentType,
+        billing_type: billing_type as TPaymentTypes,
         billing_cycle: billing_cycle,
         dates: {
             createdAt: new Date(),

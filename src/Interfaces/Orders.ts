@@ -1,8 +1,10 @@
+import { TRecurringMethod } from "../Types/PaymentMethod";
+import { TPaymentTypes } from "../Types/PaymentTypes";
 import { IConfigurableOptions } from "./ConfigurableOptions";
 import { ICustomer } from "./Customer";
 import { IInvoice } from "./Invoice";
 import { IPayments } from "./Payments";
-import { IPaymentType, IProduct, IRecurringMethod } from "./Products";
+import { IProduct } from "./Products";
 import { IPromotionsCodes } from "./PromotionsCodes";
 
 /**
@@ -35,12 +37,12 @@ export interface IOrder
     }>;
     payment_method: keyof IPayments;
     order_status: OrderStatus;
-    billing_type: IPaymentType;
+    billing_type: TPaymentTypes;
     /**
      * @description
      * if 'billing_type' is "recurring" `billing_cycle` wont be undefined
      */
-    billing_cycle?: IRecurringMethod;
+    billing_cycle?: TRecurringMethod;
     price_override?: number;
     dates: IOrderDates<IOrder["billing_type"]>;
     invoices: Array<IInvoice["uid"]>;

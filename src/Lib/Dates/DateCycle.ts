@@ -1,7 +1,7 @@
-import { IRecurringMethod } from "../../Interfaces/Products";
 import datetime from "date-and-time";
+import { TRecurringMethod } from "../../Types/PaymentMethod";
 
-export default function nextRecycleDate(date: Date, type: IRecurringMethod): Date
+export default function nextRecycleDate(date: Date, type: TRecurringMethod): Date
 {
     if(type === "monthly")
         return (datetime.addMonths(date, 1));
