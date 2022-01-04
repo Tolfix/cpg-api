@@ -1,4 +1,4 @@
-import ConfigModel from "./Database/Schemas/Configs";
+import ConfigModel from "./Database/Models/Configs";
 import { IConfigs } from "./Interfaces/Admin/Configs";
 
 /**

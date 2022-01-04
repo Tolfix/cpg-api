@@ -1,4 +1,4 @@
-import CustomerModel from "../../Database/Schemas/Customers/Customer";
+import CustomerModel from "../../Database/Models/Customers/Customer";
 import easyinvoice from 'easyinvoice';
 import { 
     Company_Address,

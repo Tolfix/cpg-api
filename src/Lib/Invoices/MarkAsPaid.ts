@@ -1,4 +1,4 @@
-import InvoiceModel from "../../Database/Schemas/Invoices";
+import InvoiceModel from "../../Database/Models/Invoices";
 import { IInvoice } from "../../Interfaces/Invoice";
 import { Document } from "mongoose";
 import mainEvent from "../../Events/Main";

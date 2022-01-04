@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import dateFormat from "date-and-time";
-import OrderModel from "../../../Database/Schemas/Orders";
+import OrderModel from "../../../Database/Models/Orders";
 import { IOrder } from "../../../Interfaces/Orders";
 import nextRycleDate from "../../../Lib/Dates/DateCycle";
 import { idOrder } from "../../../Lib/Generator";
@@ -8,7 +8,7 @@ import { APISuccess } from "../../../Lib/Response";
 import BaseModelAPI from "../../../Models/BaseModelAPI";
 import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
 import { SendEmail } from "../../../Email/Send";
-import CustomerModel from "../../../Database/Schemas/Customers/Customer";
+import CustomerModel from "../../../Database/Models/Customers/Customer";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { Company_Name } from "../../../Config";
 import mainEvent from "../../../Events/Main";

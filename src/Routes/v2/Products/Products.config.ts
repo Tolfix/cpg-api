@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import { Document } from "mongoose";
-import ConfigurableOptionsModel from "../../../Database/Schemas/ConfigurableOptions";
-import ProductModel from "../../../Database/Schemas/Products";
+import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions";
+import ProductModel from "../../../Database/Models/Products";
 import { IProduct } from "../../../Interfaces/Products";
 import AW from "../../../Lib/AW";
 import { APIError, APISuccess } from "../../../Lib/Response";

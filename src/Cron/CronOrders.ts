@@ -1,5 +1,5 @@
 import { CronJob } from "cron";
-import OrderModel from "../Database/Schemas/Orders";
+import OrderModel from "../Database/Models/Orders";
 import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
 import { createInvoiceFromOrder } from "../Lib/Orders/newInvoice";
