@@ -2,13 +2,14 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
-import { Express_Session_Secret, Full_Domain, HomeDir, PORT } from "./Config";
+import { DebugMode, Express_Session_Secret, Full_Domain, HomeDir, PORT } from "./Config";
 import Logger from "./Lib/Logger";
 import RouteHandler from "./Handlers/Route";
 import { reCache } from "./Cache/reCache";
 import { ICustomer } from "./Interfaces/Customer";
 import { APIError } from "./Lib/Response";
 import { PluginHandler } from "./Plugins/PluginHandler";
+import ApolloServer from "./Database/GraphQL/ApolloServer";
 
 declare module "express-session"
 {
@@ -65,8 +66,13 @@ PluginHandler(server);
 
 server.listen(PORT, () => Logger.api(`Server listing on port ${PORT} | ${Full_Domain}`));
 
-server.use("*", (req, res) => {
-    return APIError({
-        text: `Couldn't find what you were looking for.`
-    })(res);
-});
+(async () => {
+    // Still experimental
+
+    DebugMode ? await ApolloServer(server) : null;
+    server.use("*", (req, res) => {
+        return APIError({
+            text: `Couldn't find what you were looking for.`
+        })(res);
+    });
+})();
