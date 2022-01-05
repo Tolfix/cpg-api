@@ -1,6 +1,6 @@
 import { IConfigurableOptions } from "./ConfigurableOptions";
 import { ICustomer } from "./Customer";
-import { OrderStatus } from "./Orders";
+import { TOrderStatus } from "./Orders";
 import { IPayments } from "./Payments";
 import { IProduct } from "./Products";
 import { ITransactions } from "./Transactions";
@@ -56,12 +56,25 @@ export interface IInvoice
     items: Array<IInvoices_Items>;
     transactions: Array<ITransactions["uid"]>;
     payment_method: keyof IPayments;
-    status: OrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
+    status: TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
     tax_rate: number;
     notes: string;
     paid: Boolean;
     notified: Boolean;
 }
+
+export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
+export const A_InvoiceStatus: extendedOrderStatus[] = [
+    "active",
+    "pending",
+    "draft",
+    "fraud",
+    "cancelled",
+    "refunded",
+    "collections",
+    "payment_pending",
+];
+
 
 export interface IInvoice_Dates
 {

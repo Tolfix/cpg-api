@@ -36,7 +36,7 @@ export interface IOrder
         quantity: number
     }>;
     payment_method: keyof IPayments;
-    order_status: OrderStatus;
+    order_status: TOrderStatus;
     billing_type: TPaymentTypes;
     /**
      * @description
@@ -50,7 +50,13 @@ export interface IOrder
 }
 
 
-export type OrderStatus = "active" | "pending" | "fraud" | "cancelled";
+export type TOrderStatus = "active" | "pending" | "fraud" | "cancelled";
+export const A_OrderStatus = [
+    "active",
+    "pending",
+    "fraud",
+    "cancelled"
+]
 
 export interface IOrderDates<isRecurring extends string>
 {
