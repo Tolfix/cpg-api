@@ -1,28 +1,11 @@
+import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import CategoryModel from "../../Models/Category";
-
-function adminAccess(resolvers) {
-    Object.keys(resolvers).forEach((k) => {
-      resolvers[k] = resolvers[k].wrapResolve(next => async rp => {
-  
-        // extend resolve params with hook
-        rp.beforeRecordMutate = async function(doc, rp) { 
-                if (!rp.context.isAuth) {
-                    throw new Error("Not Authorized");
-                }
-                return doc;
-            }
-  
-        return next(rp)
-      })
-    })
-    return resolvers
-}
 
 const CategoriesGraphQL = composeWithMongoose(CategoryModel);
 export const startsWith = "Categories";
 export const CategoriesQuery = {
-    categoryById: CategoriesGraphQL.mongooseResolver.findById(),
+    categoryById: CategoriesGraphQL.getResolver("findById"),
     categoryByIds: CategoriesGraphQL.getResolver("findByIds"),
     categoryOne: CategoriesGraphQL.getResolver("findOne"),
     categoryMany: CategoriesGraphQL.getResolver("findMany"),
@@ -32,7 +15,7 @@ export const CategoriesQuery = {
 }
 
 export const CategoriesMutation = {
-    adminAccess({
+    ...resolverAdminAccess({
         categoryCreateOne: CategoriesGraphQL.getResolver("createOne"),
         categoryCreateMany: CategoriesGraphQL.getResolver("createMany"),
         categoryUpdateById: CategoriesGraphQL.getResolver("updateById"),
