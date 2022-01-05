@@ -1,3 +1,4 @@
+import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import ConfigurableOptionsModel from "../../Models/ConfigurableOptions";
 
@@ -14,12 +15,14 @@ export const ConfigurableOptionsQuery = {
 }
 
 export const ConfigurableOptionsMutation = {
-    configurableOptionsCreateOne: ConfigurableOptionsGraphQL.getResolver("createOne"),
-    configurableOptionsCreateMany: ConfigurableOptionsGraphQL.getResolver("createMany"),
-    configurableOptionsUpdateById: ConfigurableOptionsGraphQL.getResolver("updateById"),
-    configurableOptionsUpdateOne: ConfigurableOptionsGraphQL.getResolver("updateOne"),
-    configurableOptionsUpdateMany: ConfigurableOptionsGraphQL.getResolver("updateMany"),
-    configurableOptionsRemoveById: ConfigurableOptionsGraphQL.getResolver("removeById"),
-    configurableOptionsRemoveOne: ConfigurableOptionsGraphQL.getResolver("removeOne"),
-    configurableOptionsRemoveMany: ConfigurableOptionsGraphQL.getResolver("removeMany"),
+    ...resolverAdminAccess({
+        configurableOptionsCreateOne: ConfigurableOptionsGraphQL.getResolver("createOne"),
+        configurableOptionsCreateMany: ConfigurableOptionsGraphQL.getResolver("createMany"),
+        configurableOptionsUpdateById: ConfigurableOptionsGraphQL.getResolver("updateById"),
+        configurableOptionsUpdateOne: ConfigurableOptionsGraphQL.getResolver("updateOne"),
+        configurableOptionsUpdateMany: ConfigurableOptionsGraphQL.getResolver("updateMany"),
+        configurableOptionsRemoveById: ConfigurableOptionsGraphQL.getResolver("removeById"),
+        configurableOptionsRemoveOne: ConfigurableOptionsGraphQL.getResolver("removeOne"),
+        configurableOptionsRemoveMany: ConfigurableOptionsGraphQL.getResolver("removeMany"),
+    })
 };
