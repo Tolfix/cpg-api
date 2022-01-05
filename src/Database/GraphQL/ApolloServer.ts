@@ -79,6 +79,6 @@ export default async (server: any) =>
 
     apolloServer.applyMiddleware({
         app: server,
-        path: "/v1/graphql",
+        path: "/graphql",
     });
 }
