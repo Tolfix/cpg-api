@@ -11,7 +11,10 @@ const QuotesSchema = new Schema
 
         id: Number,
 
-        uid: String,
+        uid: {
+            type: String,
+            required: false,
+        },
 
         customer_uid: {
             type: String,

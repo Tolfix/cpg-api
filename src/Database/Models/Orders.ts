@@ -12,7 +12,7 @@ const OrderSchema = new Schema
 
         uid: {
             type: String,
-            required: true,
+            required: false,
         },
 
         customer_uid: {

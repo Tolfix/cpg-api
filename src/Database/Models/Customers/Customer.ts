@@ -10,7 +10,7 @@ const CustomerSchema = new Schema
 
         uid: {
             type: String,
-            required: true,
+            required: false,
         },
 
         personal: {

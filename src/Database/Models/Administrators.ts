@@ -9,7 +9,7 @@ const AdminSchema = new Schema
 
         uid: {
             type: String,
-            required: true,
+            required: false,
         },
 
         username: {

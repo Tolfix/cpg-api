@@ -10,7 +10,7 @@ const InvoiceSchema = new Schema
         id: Number,
         uid: {
             type: String,
-            required: true,
+            required: false,
         },
 
         customer_uid: {
