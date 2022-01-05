@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import CategoryModel from "../../../Database/Schemas/Category";
-import ProductModel from "../../../Database/Schemas/Products";
+import CategoryModel from "../../../Database/Models/Category";
+import ProductModel from "../../../Database/Models/Products";
 import mainEvent from "../../../Events/Main";
 import { ICategory } from "../../../Interfaces/Categories";
 import { idCategory } from "../../../Lib/Generator";

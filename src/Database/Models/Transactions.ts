@@ -3,6 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IDTransactions } from "../../Interfaces/Transactions";
 import Logger from "../../Lib/Logger";
+import { A_CC_Payments } from "../../Types/PaymentMethod";
 
 const TransactionsSchema = new Schema
 (
@@ -30,6 +31,7 @@ const TransactionsSchema = new Schema
 
         payment_method: {
             type: String,
+            enum: [...A_CC_Payments],
             default: 'none',
         },
 

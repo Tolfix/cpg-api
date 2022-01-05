@@ -1,6 +1,6 @@
 import { Application, Router } from "express";
-import ProductModel from "../../../Database/Schemas/Products";
-import PromotionCodeModel from "../../../Database/Schemas/PromotionsCode";
+import ProductModel from "../../../Database/Models/Products";
+import PromotionCodeModel from "../../../Database/Models/PromotionsCode";
 import Logger from "../../../Lib/Logger";
 import { APIError, APISuccess } from "../../../Lib/Response";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";

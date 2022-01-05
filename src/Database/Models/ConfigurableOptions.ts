@@ -14,12 +14,17 @@ const ConfigurableOptionsSchema = new Schema
         },
 
         products_ids: {
-            type: Array,
+            type: [Number],
             default: [],
         },
 
         options: {
-            type: Array,
+            type: [
+                {
+                    name: String,
+                    price: Number,
+                }
+            ],
             default: [],
         },
 

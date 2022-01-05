@@ -3,6 +3,8 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IProduct } from "../../Interfaces/Products";
 import Logger from "../../Lib/Logger";
+import { A_RecurringMethod } from "../../Types/PaymentMethod";
+import { A_PaymentTypes } from "../../Types/PaymentTypes";
 
 const ProductSchema = new Schema
 (
@@ -29,7 +31,7 @@ const ProductSchema = new Schema
         },
 
         category_uid: {
-            type: String,
+            type: Number,
             required: true,
         },
 
@@ -50,6 +52,7 @@ const ProductSchema = new Schema
 
         payment_type: {
             type: String,
+            enum: [...A_PaymentTypes],
             default: "one_time",
         },
 
@@ -70,11 +73,12 @@ const ProductSchema = new Schema
         
         recurring_method: {
             type: String,
+            enum: [...A_RecurringMethod],
             default: undefined,
         },
 
         image: {
-            type: Array,
+            type: [Number],
             default: [],
         },
 
@@ -84,7 +88,10 @@ const ProductSchema = new Schema
         },
 
         modules: {
-            type: Array,
+            type: [{
+                name: String,
+                value: String,
+            }],
             default: [],
         },
 

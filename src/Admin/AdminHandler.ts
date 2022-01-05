@@ -1,8 +1,8 @@
 import { stripIndent } from "common-tags";
 import prompt from "prompt";
 import { CacheAdmin } from "../Cache/CacheAdmin";
-import AdminModel from "../Database/Schemas/Administrators";
-import ConfigModel from "../Database/Schemas/Configs";
+import AdminModel from "../Database/Models/Administrators";
+import ConfigModel from "../Database/Models/Configs";
 import Logger from "../Lib/Logger";
 import createAdmin from "./CreateAdmin";
 import updateSMTP from "./updateSMTP";
@@ -309,7 +309,7 @@ export default class AdminHandler
                 const config = (await ConfigModel.find())[0];
 
                 // Remove webhook
-                config.webhooks_urls = config.webhooks_urls.filter(e => e !== url);
+                config.webhooks_urls = config.webhooks_urls.filter((e: any) => e !== url);
 
                 // Save our config
                 await config.save();

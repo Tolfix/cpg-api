@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import ConfigurableOptionsModel from "../../../Database/Schemas/ConfigurableOptions";
+import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions";
 import mainEvent from "../../../Events/Main";
 import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
 import { idConfigurableOptions } from "../../../Lib/Generator";

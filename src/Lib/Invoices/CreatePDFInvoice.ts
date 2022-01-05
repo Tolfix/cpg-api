@@ -1,4 +1,4 @@
-import CustomerModel from "../../Database/Schemas/Customers/Customer";
+import CustomerModel from "../../Database/Models/Customers/Customer";
 import { IInvoice } from "../../Interfaces/Invoice";
 import easyinvoice from 'easyinvoice';
 import { createSwishQRCode } from "../../Payments/Swish";

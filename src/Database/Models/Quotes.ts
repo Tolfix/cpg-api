@@ -3,6 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IQuotes } from "../../Interfaces/Quotes";
 import Logger from "../../Lib/Logger";
+import { A_CC_Payments } from "../../Types/PaymentMethod";
 
 const QuotesSchema = new Schema
 (
@@ -18,12 +19,19 @@ const QuotesSchema = new Schema
         },
 
         items: {
-            type: Array,
+            type: [
+                {
+                    name: String,
+                    tax_rate: Number,
+                    price: Number,
+                    quantity: Number,
+                }
+            ],
             required: true,
         },
 
         promotion_codes: {
-            type: Array,
+            type: [Number],
             default: []
         },
 
@@ -39,6 +47,7 @@ const QuotesSchema = new Schema
 
         payment_method: {
             type: String,
+            enum: [...A_CC_Payments],
             default: "none",
         }
 

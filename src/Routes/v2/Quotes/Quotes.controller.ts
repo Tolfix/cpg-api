@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Company_Name, Full_Domain } from "../../../Config";
-import CustomerModel from "../../../Database/Schemas/Customers/Customer";
-import QuotesModel from "../../../Database/Schemas/Quotes";
+import CustomerModel from "../../../Database/Models/Customers/Customer";
+import QuotesModel from "../../../Database/Models/Quotes";
 import { SendEmail } from "../../../Email/Send";
 import mainEvent from "../../../Events/Main";
 import { IQuotes } from "../../../Interfaces/Quotes";

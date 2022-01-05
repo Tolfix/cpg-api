@@ -1,3 +1,5 @@
+import { TRecurringMethod } from "../Types/PaymentMethod";
+import { TPaymentTypes } from "../Types/PaymentTypes";
 import { ICategory } from "./Categories";
 import { IImage } from "./Images";
 
@@ -27,12 +29,12 @@ export interface IProduct
     BStock: Boolean;
     hidden: Boolean;
     special: boolean;
-    payment_type: Partial<IPaymentType>;
+    payment_type: Partial<TPaymentTypes>;
     price: number;
     setup_fee: number;
     image?: IImage["id"][];
     tax_rate: number;
-    recurring_method?: Partial<IRecurringMethod>;
+    recurring_method?: Partial<TRecurringMethod>;
     module_name: string;
     modules: Array<IModules>;
 }
@@ -43,6 +45,3 @@ export interface IModules
     value: string;
 }
 
-export type IPaymentType = "free" | "one_time" | "recurring";
-
-export type IRecurringMethod = "monthly" | "yearly" | "quarterly" | "semi_annually" | "biennially" | "triennially";

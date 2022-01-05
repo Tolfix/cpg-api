@@ -1,7 +1,7 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IInvoice } from "../../Interfaces/Invoice";
+import { A_InvoiceStatus, IInvoice } from "../../Interfaces/Invoice";
 import Logger from "../../Lib/Logger";
 
 const InvoiceSchema = new Schema
@@ -19,7 +19,10 @@ const InvoiceSchema = new Schema
         },
 
         dates: {
-            type: Object,
+            type: {
+                invoice_date: String,
+                due_date: String,
+            },
             required: true,
         },
 
@@ -29,12 +32,30 @@ const InvoiceSchema = new Schema
         },
 
         items: {
-            type: Array,
+            type: [
+                {
+                    notes: String,
+                    amount: Number,
+                    quantity: Number,
+                    product_id: {
+                        type: Number,
+                        required: false,
+                    },
+                    configurable_options_id: {
+                        type: Number,
+                        required: false,
+                    },
+                    configurable_options_index: {
+                        type: Number,
+                        required: false,
+                    }
+                }
+            ],
             default: []
         },
 
         transactions: {
-            type: Array,
+            type: [String],
             default: [],
         },
 
@@ -45,6 +66,7 @@ const InvoiceSchema = new Schema
 
         status: {
             type: String,
+            enum: [...A_InvoiceStatus],
             default: "draft",
         },
 

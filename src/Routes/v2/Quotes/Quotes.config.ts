@@ -1,6 +1,6 @@
 import { Application, Router } from "express";
-import CustomerModel from "../../../Database/Schemas/Customers/Customer";
-import QuotesModel from "../../../Database/Schemas/Quotes";
+import CustomerModel from "../../../Database/Models/Customers/Customer";
+import QuotesModel from "../../../Database/Models/Quotes";
 import AW from "../../../Lib/AW";
 import createQuotePdf from "../../../Lib/Quotes/CreateQuotePdf";
 import { APIError, APISuccess } from "../../../Lib/Response";

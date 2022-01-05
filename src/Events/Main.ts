@@ -1,7 +1,7 @@
 import request from "request";
 import events from "events";
 import { MainOnEvents } from "../Interfaces/Events/MainOnEvents";
-import ConfigModel from "../Database/Schemas/Configs";
+import ConfigModel from "../Database/Models/Configs";
 import { Webhook_Secret } from "../Config";
 
 class MainEvent extends events.EventEmitter

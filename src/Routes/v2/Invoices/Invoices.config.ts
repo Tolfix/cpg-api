@@ -1,5 +1,5 @@
 import { Application, Router } from "express";
-import InvoiceModel from "../../../Database/Schemas/Invoices";
+import InvoiceModel from "../../../Database/Models/Invoices";
 import createPDFInvoice from "../../../Lib/Invoices/CreatePDFInvoice";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import InvoiceController from "./Invoices.controller";
