@@ -14,12 +14,62 @@ const CustomerSchema = new Schema
         },
 
         personal: {
-            type: Object,
+            type: {
+                first_name: {
+                    type: String,
+                    required: true
+                },
+                last_name: {
+                    type: String,
+                    required: true
+                },
+                email: {
+                    type: String,
+                    required: true
+                },
+                phone: {
+                    type: String,
+                    required: true
+                },
+            },
             required: true,
         },
 
         billing: {
-            type: Object,
+            type: {
+                company: {
+                    type: String,
+                    required: false
+                },
+                company_vat: {
+                    type: String,
+                    required: false
+                },
+                street01: {
+                    type: String,
+                    required: true
+                },
+                street02: {
+                    type: String,
+                    required: false
+                },
+                city: {
+                    type: String,
+                    required: true
+                },
+                state: {
+                    type: String,
+                    required: true
+                },
+                postcode: {
+                    type: String,
+                    required: true
+                },
+                country: {
+                    type: String,
+                    required: true
+                }
+            },
             required: true,
         },
 

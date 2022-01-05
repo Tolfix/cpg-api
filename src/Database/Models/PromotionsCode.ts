@@ -20,11 +20,13 @@ const PromotionCodeSchema = new Schema
 
         valid_to: {
             type: String,
+            enum: [String, "permament"],
             default: "permament"
         },
 
         uses: {
             type: Number,
+            enum: [String, "unlimited"],
             default: "unlimited"
         },
 
@@ -34,7 +36,7 @@ const PromotionCodeSchema = new Schema
         },
 
         products_ids: {
-            type: Array,
+            type: [Number],
             required: true
         }
 

@@ -1,7 +1,7 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IInvoice } from "../../Interfaces/Invoice";
+import { A_InvoiceStatus, IInvoice } from "../../Interfaces/Invoice";
 import Logger from "../../Lib/Logger";
 
 const InvoiceSchema = new Schema
@@ -66,7 +66,7 @@ const InvoiceSchema = new Schema
 
         status: {
             type: String,
-            enum: ["active", "pending", "draft", "fraud", "cancelled", "refunded", "collections", "payment_pending"],
+            enum: [...A_InvoiceStatus],
             default: "draft",
         },
 

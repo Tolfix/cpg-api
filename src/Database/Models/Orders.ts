@@ -1,8 +1,10 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IOrder } from "../../Interfaces/Orders";
+import { A_OrderStatus, IOrder } from "../../Interfaces/Orders";
 import Logger from "../../Lib/Logger";
+import { A_CC_Payments, A_RecurringMethod } from "../../Types/PaymentMethod";
+import { A_PaymentTypes } from "../../Types/PaymentTypes";
 
 const OrderSchema = new Schema
 (
@@ -20,26 +22,45 @@ const OrderSchema = new Schema
 
         payment_method: {
             type: String,
+            enum: [...A_CC_Payments],
             default: "none",
         },
 
         order_status: {
             type: String,
+            enum: [...A_OrderStatus],
             default: "pending",
         },
 
         products: {
-            type: Array,
+            type: [
+                {
+                    product_id: Number,
+                    configurable_options_ids: {
+                        type: [
+                            {
+                                id: Number,
+                                option_index: Number,
+                            },
+                        ],
+                        required: false
+                    },
+                    quantity: Number,
+                }
+            ],
             required: true,
         },
 
         billing_type: {
             type: String,
+            enum: [...A_PaymentTypes],
             default: "free",
         },
         
         billing_cycle: {
             type: String,
+            enum: [...A_RecurringMethod],
+            required: false,
         },
         
         price_override: {
@@ -48,12 +69,22 @@ const OrderSchema = new Schema
         },
 
         dates: {
-            type: Object,
+            type: {
+                createdAt: Date,
+                last_recycle: {
+                    type: String,
+                    required: false,
+                },
+                next_recycle: {
+                    type: String,
+                    required: false,
+                }
+            },
             required: true
         },
 
         invoices: {
-            type: Array,
+            type: [Number],
             default: [],
         },
 
