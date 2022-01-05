@@ -3,6 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IImage } from "../../Interfaces/Images";
 import Logger from "../../Lib/Logger";
+import { txt_Uid_Description } from "../../Texts/General/Uid";
 
 const ImageSchema = new Schema
 (
@@ -11,6 +12,7 @@ const ImageSchema = new Schema
         uid: {
             type: String,
             required: false,
+            description: txt_Uid_Description,
         },
 
         data: {
