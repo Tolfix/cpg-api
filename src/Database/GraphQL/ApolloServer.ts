@@ -1,9 +1,10 @@
 import { ApolloServer } from 'apollo-server-express';
-import { JWT_Access_Token } from '../../Config';
+import { Full_Domain, JWT_Access_Token } from '../../Config';
 import SchemaPoser from './SchemaPoser';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { CacheAdmin, getAdminByUsername } from '../../Cache/CacheAdmin';
+import Logger from '../../Lib/Logger';
 
 export default async (server: any) =>
 {
@@ -90,6 +91,7 @@ export default async (server: any) =>
     });
     
     await apolloServer.start();
+    Logger.graphql(`Started GraphQL Server on ${Full_Domain}/graphql`);
 
     apolloServer.applyMiddleware({
         app: server,

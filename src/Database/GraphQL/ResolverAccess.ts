@@ -1,4 +1,5 @@
 import { Resolver } from "graphql-compose";
+import Logger from "../../Lib/Logger";
 
 export function resolverAdminAccess(resolvers: {
     [key: string]: Resolver<any, any, any, any>;
@@ -6,6 +7,8 @@ export function resolverAdminAccess(resolvers: {
 {
     Object.keys(resolvers).forEach((k) => {
       resolvers[k] = resolvers[k].wrapResolve(next => async rp => {
+
+        Logger.graphql(`Checking if user is admin on ${k}`);
 
         if(!rp.context.isAuth)
             throw new Error("Not Authorized");
@@ -26,6 +29,8 @@ export function resolverUserAccess(resolvers: {
     Object.keys(resolvers).forEach((k) => {
       resolvers[k] = resolvers[k].wrapResolve(next => async rp => {
   
+        Logger.graphql(`Checking if user is user on ${k}`);
+
         if(!rp.context.isAuth)
             throw new Error("Not Authorized");
 

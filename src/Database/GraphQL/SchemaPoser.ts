@@ -6,7 +6,7 @@ import Logger from '../../Lib/Logger';
 const schemaComposer = new SchemaComposer();
 
 // Go through each in ./Schemas/*.js files and add them to schemaComposer
-Logger.info("Loading GraphQL schemas...");
+Logger.graphql("Loading GraphQL schemas...");
 let schemaDir = HomeDir+"/build/Database/GraphQL/Schemas";
 const files = fs.readdirSync(`${schemaDir}`).filter((f) => f.endsWith('.js'));
 for(let f of files)
@@ -22,6 +22,8 @@ for(let f of files)
     // Now get schame[`${name}Query`] and schema[`${name}Mutation`]
     const query = schema[`${name}Query`];
     const mutation = schema[`${name}Mutation`];
+
+    Logger.graphql(`Adding GraphQL schema/query ${name}`);
 
     // Add the query and mutation to the schemaComposer
     if(query)
