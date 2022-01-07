@@ -6,25 +6,12 @@ export function resolverAdminAccess(resolvers: {
 {
     Object.keys(resolvers).forEach((k) => {
       resolvers[k] = resolvers[k].wrapResolve(next => async rp => {
-  
-        // extend resolve params with hook
-        rp.beforeRecordMutate = async function(doc: any, rp: { context: { 
-            isAuth: boolean;
-            isAdmin: boolean;
-            isUser: boolean;
-        }; }) {
-                if(!rp.context.isAuth)
-                {
-                    throw new Error("Not Authorized");
-                }
 
-                if(!rp.context.isAdmin)
-                {
-                    throw new Error("Not Authorized");
-                }
+        if(!rp.context.isAuth)
+            throw new Error("Not Authorized");
 
-                return doc;
-            }
+        if(!rp.context.isAdmin)
+            throw new Error("Not Authorized");
   
         return next(rp)
       })
@@ -39,29 +26,15 @@ export function resolverUserAccess(resolvers: {
     Object.keys(resolvers).forEach((k) => {
       resolvers[k] = resolvers[k].wrapResolve(next => async rp => {
   
-        // extend resolve params with hook
-        rp.beforeRecordMutate = async function(doc: any, rp: { context: { 
-            isAuth: boolean;
-            isAdmin: boolean;
-            isUser: boolean;
-        }; }) {
-                if(!rp.context.isAuth)
-                {
-                    throw new Error("Not Authorized");
-                }
+        if(!rp.context.isAuth)
+            throw new Error("Not Authorized");
 
-                if(rp.context.isAdmin)
-                {
-                    return doc;
-                }
+        if(rp.context.isAdmin)
+            // return doc;
+            return next(rp)
 
-                if(!rp.context.isUser)
-                {
-                    throw new Error("Not Authorized");
-                }
-
-                return doc;
-            }
+        if(!rp.context.isUser)
+            throw new Error("Not Authorized");
   
         return next(rp)
       })
