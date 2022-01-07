@@ -1,0 +1,32 @@
+name: Docker Image
+
+on:
+  push:
+    paths:
+      - 'src/**'
+    branches:
+      - master
+      - dev
+  pull_request:
+    paths:
+      - 'src/**'
+    branches:
+      - master
+      - dev
+
+
+jobs:
+
+  ts-type-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: [16]
+      - run: npm install -g typescript    
+      - name: testing typing
+        run: tsc --noEmit
