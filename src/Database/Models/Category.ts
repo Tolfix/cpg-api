@@ -3,6 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IDCategory } from "../../Interfaces/Categories";
 import Logger from "../../Lib/Logger";
+import GetText from "../../Texts/GetText";
 
 const CategorySchema = new Schema
 (
@@ -10,7 +11,8 @@ const CategorySchema = new Schema
 
         uid: {
             type: String,
-            required: true,
+            required: false,
+            description: GetText().txt_Uid_Description,
         },
 
         name: {

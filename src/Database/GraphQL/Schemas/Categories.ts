@@ -1,7 +1,8 @@
+import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import CategoryModel from "../../Models/Category";
 
-const CategoriesGraphQL = composeWithMongoose(CategoryModel);
+export const CategoriesGraphQL = composeWithMongoose(CategoryModel);
 export const startsWith = "Categories";
 export const CategoriesQuery = {
     categoryById: CategoriesGraphQL.getResolver("findById"),
@@ -14,12 +15,14 @@ export const CategoriesQuery = {
 }
 
 export const CategoriesMutation = {
-    categoryCreateOne: CategoriesGraphQL.getResolver("createOne"),
-    categoryCreateMany: CategoriesGraphQL.getResolver("createMany"),
-    categoryUpdateById: CategoriesGraphQL.getResolver("updateById"),
-    categoryUpdateOne: CategoriesGraphQL.getResolver("updateOne"),
-    categoryUpdateMany: CategoriesGraphQL.getResolver("updateMany"),
-    categoryRemoveById: CategoriesGraphQL.getResolver("removeById"),
-    categoryRemoveOne: CategoriesGraphQL.getResolver("removeOne"),
-    categoryRemoveMany: CategoriesGraphQL.getResolver("removeMany"),
+    ...resolverAdminAccess({
+        categoryCreateOne: CategoriesGraphQL.getResolver("createOne"),
+        categoryCreateMany: CategoriesGraphQL.getResolver("createMany"),
+        categoryUpdateById: CategoriesGraphQL.getResolver("updateById"),
+        categoryUpdateOne: CategoriesGraphQL.getResolver("updateOne"),
+        categoryUpdateMany: CategoriesGraphQL.getResolver("updateMany"),
+        categoryRemoveById: CategoriesGraphQL.getResolver("removeById"),
+        categoryRemoveOne: CategoriesGraphQL.getResolver("removeOne"),
+        categoryRemoveMany: CategoriesGraphQL.getResolver("removeMany"),
+    })
 };

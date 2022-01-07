@@ -3,6 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer";
 import Logger from "../../../Lib/Logger";
+import GetText from "../../../Texts/GetText";
 
 const CustomerSchema = new Schema
 (
@@ -10,7 +11,8 @@ const CustomerSchema = new Schema
 
         uid: {
             type: String,
-            required: true,
+            required: false,
+            description: GetText().txt_Uid_Description,
         },
 
         personal: {

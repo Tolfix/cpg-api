@@ -60,15 +60,12 @@ describe("Invoices", () => {
         // @ts-ignore
         const sent = await sendInvoiceEmail(invoice, customer);
 
-        if(sent)
-        {
-            const newInvoice = await InvoiceModel.findOne({ id: invoice.id });
-            // should be newInvoice.notified === true
-            expect(newInvoice?.notified).toBe(true);
-        }
-        else
+        if(!sent)
             return expect(sent).toBe(false);
-
+        
+        const newInvoice = await InvoiceModel.findOne({ id: invoice.id });
+        // should be newInvoice.notified === true
+        return expect(newInvoice?.notified).toBe(true);
     });
 
 

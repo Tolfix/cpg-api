@@ -3,6 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IQuotes } from "../../Interfaces/Quotes";
 import Logger from "../../Lib/Logger";
+import GetText from "../../Texts/GetText";
 import { A_CC_Payments } from "../../Types/PaymentMethod";
 
 const QuotesSchema = new Schema
@@ -11,7 +12,11 @@ const QuotesSchema = new Schema
 
         id: Number,
 
-        uid: String,
+        uid: {
+            type: String,
+            required: false,
+            description: GetText().txt_Uid_Description,
+        },
 
         customer_uid: {
             type: String,

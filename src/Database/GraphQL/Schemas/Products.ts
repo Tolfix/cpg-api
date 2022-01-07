@@ -1,3 +1,4 @@
+import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import ProductsModel from "../../Models/Products";
 
@@ -14,12 +15,14 @@ export const ProductsQuery = {
 }
 
 export const ProductsMutation = {
-    productCreateOne: ProductsGraphQL.getResolver("createOne"),
-    productCreateMany: ProductsGraphQL.getResolver("createMany"),
-    productUpdateById: ProductsGraphQL.getResolver("updateById"),
-    productUpdateOne: ProductsGraphQL.getResolver("updateOne"),
-    productUpdateMany: ProductsGraphQL.getResolver("updateMany"),
-    productRemoveById: ProductsGraphQL.getResolver("removeById"),
-    productRemoveOne: ProductsGraphQL.getResolver("removeOne"),
-    productRemoveMany: ProductsGraphQL.getResolver("removeMany"),
+    ...resolverAdminAccess({
+        productCreateOne: ProductsGraphQL.getResolver("createOne"),
+        productCreateMany: ProductsGraphQL.getResolver("createMany"),
+        productUpdateById: ProductsGraphQL.getResolver("updateById"),
+        productUpdateOne: ProductsGraphQL.getResolver("updateOne"),
+        productUpdateMany: ProductsGraphQL.getResolver("updateMany"),
+        productRemoveById: ProductsGraphQL.getResolver("removeById"),
+        productRemoveOne: ProductsGraphQL.getResolver("removeOne"),
+        productRemoveMany: ProductsGraphQL.getResolver("removeMany"),
+    })
 };

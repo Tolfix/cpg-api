@@ -2,6 +2,7 @@ import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IDIAdministrator } from "../../Interfaces/Admin/Administrators";
+import GetText from "../../Texts/GetText";
 
 const AdminSchema = new Schema
 (
@@ -9,7 +10,8 @@ const AdminSchema = new Schema
 
         uid: {
             type: String,
-            required: true,
+            required: false,
+            description: GetText().txt_Uid_Description,
         },
 
         username: {

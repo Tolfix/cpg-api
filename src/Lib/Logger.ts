@@ -42,6 +42,14 @@ const Logger = {
         console.log(time + " | " + colors.green(`API: `), ...body)
     },
 
+    graphql: <T extends any[]> (...body: T) => {
+        let time = getTime();
+        SaveLog(time, ...body);
+
+        console.log(time + " | " + colors.magenta(`GraphQL: `), ...body)
+    },
+
+
     plugin: <T extends any[]> (...body: T) => {
         let time = getTime();
         SaveLog(time, ...body);

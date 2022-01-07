@@ -3,6 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IProduct } from "../../Interfaces/Products";
 import Logger from "../../Lib/Logger";
+import GetText from "../../Texts/GetText";
 import { A_RecurringMethod } from "../../Types/PaymentMethod";
 import { A_PaymentTypes } from "../../Types/PaymentTypes";
 
@@ -12,7 +13,8 @@ const ProductSchema = new Schema
 
         uid: {
             type: String,
-            required: true,
+            required: false,
+            description: GetText().txt_Uid_Description,
         },
 
         name: {
