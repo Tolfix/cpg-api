@@ -51,6 +51,7 @@ export default async (server: any) =>
                             isAuth: true,
                             isAdmin: true,
                             isUser: false,
+                            userData: null,
                         }
                 }
             }
@@ -61,18 +62,21 @@ export default async (server: any) =>
                 let suc = jwt.verify(token, JWT_Access_Token)
                 // @ts-ignore
                 if(suc?.data === "admin")
-                return {
-                    isAuth: true,
-                    isAdmin: true,
-                    isUser: false,
-                }
-                
+                    return {
+                        isAuth: true,
+                        isAdmin: true,
+                        isUser: false,
+                        userData: null,
+                    }
+                console.log(suc)
                 // @ts-ignore
                 if(suc?.data?.["id"])
                     return {
                         isAuth: true,
                         isAdmin: false,
                         isUser: true,
+                        // @ts-ignore
+                        userData: suc?.data,
                     }
             }
 
@@ -80,6 +84,7 @@ export default async (server: any) =>
                 isAuth: false,
                 isAdmin: false,
                 isUser: false,
+                userData: null,
             }
         },
     });
