@@ -1,4 +1,4 @@
-name: Docker Image
+name: Typescript Typings
 
 on:
   push:
