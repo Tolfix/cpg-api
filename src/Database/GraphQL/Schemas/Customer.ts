@@ -3,7 +3,7 @@ import { composeWithMongoose } from "graphql-compose-mongoose";
 import CustomerModel from "../../Models/Customers/Customer";
 import { myProfileResolver } from "../Resolvers/Customer/Customer.resolver";
 
-const CustomersGraphQL = composeWithMongoose(CustomerModel);
+export const CustomersGraphQL = composeWithMongoose(CustomerModel);
 export const startsWith = "Customers";
 export const CustomersQuery = {
     ...resolverUserAccess({

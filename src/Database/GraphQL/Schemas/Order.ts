@@ -2,7 +2,7 @@ import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import OrdersModel from "../../Models/Orders";
 
-const OrderGraphQL = composeWithMongoose(OrdersModel);
+export const OrderGraphQL = composeWithMongoose(OrdersModel);
 export const startsWith = "Order";
 export const OrderQuery = {
     ...resolverAdminAccess({

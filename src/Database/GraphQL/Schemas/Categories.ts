@@ -2,7 +2,7 @@ import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import CategoryModel from "../../Models/Category";
 
-const CategoriesGraphQL = composeWithMongoose(CategoryModel);
+export const CategoriesGraphQL = composeWithMongoose(CategoryModel);
 export const startsWith = "Categories";
 export const CategoriesQuery = {
     categoryById: CategoriesGraphQL.getResolver("findById"),

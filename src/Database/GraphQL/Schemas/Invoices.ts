@@ -2,7 +2,7 @@ import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import invoiceModel from "../../Models/Invoices";
 
-const InvoicesGraphQL = composeWithMongoose(invoiceModel);
+export const InvoicesGraphQL = composeWithMongoose(invoiceModel);
 export const startsWith = "Invoices";
 export const InvoicesQuery = {
     ...resolverAdminAccess({

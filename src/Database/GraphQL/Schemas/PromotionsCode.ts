@@ -2,7 +2,7 @@ import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import PromotionsCodeModel from "../../Models/PromotionsCode";
 
-const PromotionCodeGraphQL = composeWithMongoose(PromotionsCodeModel);
+export const PromotionCodeGraphQL = composeWithMongoose(PromotionsCodeModel);
 export const startsWith = "PromotionCode";
 export const PromotionCodeQuery = {
     ...resolverAdminAccess({

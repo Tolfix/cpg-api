@@ -2,7 +2,7 @@ import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import ConfigurableOptionsModel from "../../Models/ConfigurableOptions";
 
-const ConfigurableOptionsGraphQL = composeWithMongoose(ConfigurableOptionsModel);
+export const ConfigurableOptionsGraphQL = composeWithMongoose(ConfigurableOptionsModel);
 export const startsWith = "ConfigurableOptions";
 export const ConfigurableOptionsQuery = {
     configurableOptionsById: ConfigurableOptionsGraphQL.getResolver("findById"),
