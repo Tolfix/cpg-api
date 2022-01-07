@@ -16,4 +16,4 @@ import "./Handlers/Cron";
 Logger.info(`Loading ./Handlers/Cron`);
 import AdminHandler from "./Admin/AdminHandler";
 Logger.info(`Loading ./Admin/AdminHandler`);
-new AdminHandle();
+new AdminHandl();
