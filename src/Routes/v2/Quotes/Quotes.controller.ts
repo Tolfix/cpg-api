@@ -15,7 +15,8 @@ const API = new BaseModelAPI<IQuotes>(idQuotes, QuotesModel);
 function insert(req: Request, res: Response)
 {
     API.create(req.body)
-        .then(async (result) => {
+        .then(async (result) =>
+        {
             
             if(req.body.send_email !== undefined && req.body.send_email)
             {
@@ -59,7 +60,8 @@ function insert(req: Request, res: Response)
 
 function getByUid(req: Request, res: Response)
 {
-    API.findByUid((req.params.uid as IQuotes["uid"])).then((result) => {
+    API.findByUid((req.params.uid as IQuotes["uid"])).then((result) =>
+    {
         APISuccess(result)(res);
     });
 }
@@ -79,14 +81,16 @@ function list(req: Request, res: Response)
     const sort = req.query._sort as string ?? "id";
     const order = req.query._order as string ?? "asc";
         
-    API.findAll(limit, start, sort, order).then((result: any) => {
+    API.findAll(limit, start, sort, order).then((result: any) =>
+    {
         APISuccess(result)(res)
     });
 }
 
 function patch(req: Request, res: Response)
 {
-    API.findAndPatch((req.params.uid as IQuotes["uid"]), req.body).then((result) => {
+    API.findAndPatch((req.params.uid as IQuotes["uid"]), req.body).then((result) =>
+    {
         // @ts-ignore
         mainEvent.emit("quotes_updated", result);
         APISuccess(result)(res);
@@ -96,7 +100,8 @@ function patch(req: Request, res: Response)
 function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.uid as IQuotes["uid"])
-        .then((result)=>{
+        .then((result)=>
+        {
             // @ts-ignore
             mainEvent.emit("quotes_deleted", result);
             APISuccess(result, 204)(res)
