@@ -37,7 +37,8 @@ async function createOrder(customer: ICustomer, products: Array<{
 {
     const order = await (new OrderModel({
         customer_uid: customer.id,
-        products: products.map(product => {            
+        products: products.map(product =>
+        {
             return {
                 product_id: product.product_id,
                 configurable_options: product?.configurable_options,
@@ -81,7 +82,8 @@ export default class OrderRoute
             OrderController.list
         ]);
 
-        this.router.post("/place", EnsureAuth(), async (req, res, next) => {
+        this.router.post("/place", EnsureAuth(), async (req, res, next) =>
+        {
             // @ts-ignore
             const customer_id = req.customer.id;
             const products = req.body.products as Array<{
@@ -200,7 +202,8 @@ export default class OrderRoute
 
             // Create new orders
             if(recurring_monthly.length > 0)
-                createOrder(customer, recurring_monthly.map(p => {
+                createOrder(customer, recurring_monthly.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -208,7 +211,8 @@ export default class OrderRoute
                 }), recurring_monthly, payment_method, "recurring", "monthly");
 
             if(recurring_quarterly.length > 0)
-                createOrder(customer, recurring_quarterly.map(p => {
+                createOrder(customer, recurring_quarterly.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -216,7 +220,8 @@ export default class OrderRoute
                 }), recurring_quarterly, payment_method, "recurring", "quarterly");
 
             if(recurring_semi_annually.length > 0)
-                createOrder(customer, recurring_semi_annually.map(p => {
+                createOrder(customer, recurring_semi_annually.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -224,7 +229,8 @@ export default class OrderRoute
                 }), recurring_semi_annually, payment_method, "recurring", "semi_annually");
 
             if(recurring_biennially.length > 0)
-                createOrder(customer, recurring_biennially.map(p => {
+                createOrder(customer, recurring_biennially.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -232,7 +238,8 @@ export default class OrderRoute
                 }), recurring_biennially, payment_method, "recurring", "biennially");
 
             if(recurring_triennially.length > 0)
-                createOrder(customer, recurring_triennially.map(p => {
+                createOrder(customer, recurring_triennially.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -240,7 +247,8 @@ export default class OrderRoute
                 }), recurring_triennially, payment_method, "recurring", "triennially");
 
             if(one_timers.length > 0)
-                createOrder(customer, one_timers.map(p => {
+                createOrder(customer, one_timers.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -248,7 +256,8 @@ export default class OrderRoute
                 }), one_timers, payment_method, "one_time");
 
             if(recurring_yearly.length > 0)
-                createOrder(customer, recurring_yearly.map(p => {
+                createOrder(customer, recurring_yearly.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
