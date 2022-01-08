@@ -17,7 +17,8 @@ export default class AdminHandler
 
     private action()
     {
-        prompt.get(['action'], async (err, result) => {
+        prompt.get(['action'], async (err, result) =>
+        {
 
             if(result.action === "help")
                 Logger.info(stripIndent`
@@ -86,7 +87,8 @@ export default class AdminHandler
     private async update_smtp()
     {
         const config = (await ConfigModel.find())[0];
-        return new Promise((resolve) => {
+        return new Promise((resolve) =>
+        {
             prompt.get([
                 {
                     name: "host",
@@ -119,7 +121,8 @@ export default class AdminHandler
                     enum: ["true", "false"],
                     required: true
                 },
-            ], async (err, result) => {
+            ], async (err, result) =>
+            {
                 const host = result.host as string;
                 const port = parseInt(result.port as string) as number;
                 const username = result.username as string;
@@ -146,7 +149,8 @@ export default class AdminHandler
 
     private async show_emails()
     {
-        return new Promise(async (resolve,) => {
+        return new Promise(async (resolve,) =>
+        {
             // Get our config from database
             const config = (await ConfigModel.find())[0];
             Logger.info(`Emails:`, config.smtp_emails);
@@ -156,7 +160,8 @@ export default class AdminHandler
 
     private async show_smtp()
     {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve) =>
+        {
             // Get our config from database
             const config = (await ConfigModel.find())[0];
             Logger.info(`SMTP Settings:`, config.smtp);
@@ -166,7 +171,8 @@ export default class AdminHandler
 
     private async create()
     {
-        return new Promise((resolve) => {
+        return new Promise((resolve) =>
+        {
             prompt.get([
                 {
                     name: "username",
@@ -178,7 +184,8 @@ export default class AdminHandler
                     description: "Password for administrator",
                     required: true
                 },
-            ], async (err, result) => {
+            ], async (err, result) =>
+            {
                 const password = result.password as string;
                 const username = result.username as string;
                 Logger.info(`Creating administrator..`);
@@ -190,18 +197,21 @@ export default class AdminHandler
 
     private async delete_admin()
     {
-        return new Promise((resolve) => {
+        return new Promise((resolve) =>
+        {
             prompt.get([
                 {
                     name: "username",
                     description: "Username for administrator",
                     required: true
                 },
-            ], async (err, result) => {
+            ], async (err, result) =>
+            {
                 const username = result.username as string;
                 Logger.info(`Deleting administrator..`);
 
-                AdminModel.findOneAndUpdate({ username: username }, (err: any) => {
+                AdminModel.findOneAndUpdate({ username: username }, (err: any) =>
+                {
                     if(err)
                         Logger.error(err);
                         
@@ -214,14 +224,16 @@ export default class AdminHandler
 
     private async add_email()
     {
-        return new Promise((resolve) => {
+        return new Promise((resolve) =>
+        {
             prompt.get([
                 {
                     name: "email",
                     description: "Email for administrator",
                     required: true
                 },
-            ], async (err, result) => {
+            ], async (err, result) =>
+            {
                 const email = result.email as string;
                 Logger.info(`Adding email..`);
                 // Check if email is valid
@@ -245,14 +257,16 @@ export default class AdminHandler
 
     private async delete_email()
     {
-        return new Promise((resolve) => {
+        return new Promise((resolve) =>
+        {
             prompt.get([
                 {
                     name: "email",
                     description: "Email for administrator",
                     required: true
                 },
-            ], async (err, result) => {
+            ], async (err, result) =>
+            {
                 const email = result.email as string;
                 Logger.info(`Deleting email..`);
                 // Get our config from database
@@ -271,14 +285,16 @@ export default class AdminHandler
     
     private async add_webhook()
     {
-        return new Promise((resolve) => {
+        return new Promise((resolve) =>
+        {
             prompt.get([
                 {
                     name: "url",
                     description: "URL for webhook",
                     required: true
                 },
-            ], async (err, result) => {
+            ], async (err, result) =>
+            {
                 const url = result.url as string;
                 Logger.info(`Adding webhook..`);
                 // Get our config from database
@@ -296,14 +312,16 @@ export default class AdminHandler
 
     private async delete_webhook()
     {
-        return new Promise((resolve) => {
+        return new Promise((resolve) =>
+        {
             prompt.get([
                 {
                     name: "url",
                     description: "URL for webhook",
                     required: true
                 },
-            ], async (err, result) => {
+            ], async (err, result) =>
+            {
                 const url = result.url as string;
                 Logger.info(`Deleting webhook..`);
                 // Get our config from database
@@ -321,7 +339,8 @@ export default class AdminHandler
 
     private async show_webhooks()
     {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve) =>
+        {
             // Get our config from database
             const config = (await ConfigModel.find())[0];
             Logger.info(`Webhooks:`, config.webhooks_urls);

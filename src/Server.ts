@@ -42,9 +42,11 @@ const sessionMiddleWare = session({
 server.use(sessionMiddleWare);
 
 server.use(express.urlencoded({ extended: true }));
-server.use((req, res, next) => {
+server.use((req, res, next) => 
+{
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    express.json({verify: (req, res, buf, encoding) => { 
+    express.json({verify: (req, res, buf, encoding) =>
+    { 
         // try {
         //     JSON.parse(buf.toString());
             // @ts-ignore
@@ -56,7 +58,8 @@ server.use((req, res, next) => {
     }})(req, res, next);
 });
 
-server.use((req, res, next) => {
+server.use((req, res, next) =>
+{
     res.setHeader('X-Powered-By', 'CPG-API');
     next();
 });
@@ -67,11 +70,13 @@ PluginHandler(server);
 
 server.listen(PORT, () => Logger.api(`Server listing on port ${PORT} | ${Full_Domain}`));
 
-(async () => {
+(async () =>
+{
     // Still experimental
 
     DebugMode ? await ApolloServer(server) : null;
-    server.use("*", (req, res) => {
+    server.use("*", (req, res) =>
+    {
         return APIError({
             text: `Couldn't find what you were looking for.`
         })(res);
