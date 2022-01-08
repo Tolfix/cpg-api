@@ -92,7 +92,8 @@ export async function createInvoiceFromOrder(order: IOrder)
             due_date: order.dates.next_recycle,
             invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
         },
-        amount: items.reduce((acc, item) => {
+        amount: items.reduce((acc, item) =>
+        {
             return acc + item.amount * item.quantity;
         }, 0),
         items: items,
