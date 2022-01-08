@@ -30,7 +30,7 @@ export default class BaseModelAPI<IModel extends { uid: string }>
             if(!result)
                 return;
 
-            let r = result.toJSON();
+            const r = result.toJSON();
             //@ts-ignore
             delete r._id;
             delete r.__v;
@@ -67,7 +67,7 @@ export default class BaseModelAPI<IModel extends { uid: string }>
             { id: uid },
             { uid: uid }
         ]}, data);
-    };
+    }
 
     public removeByUid(uid: IModel["uid"])
     {
@@ -85,5 +85,5 @@ export default class BaseModelAPI<IModel extends { uid: string }>
                 }
             });
         });
-    };
+    }
 }

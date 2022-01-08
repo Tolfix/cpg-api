@@ -442,7 +442,7 @@ export default class CustomerRouter
                 return APIError("Invalid email or password.")(res);
             }
 
-            let token = jwt.sign({
+            const token = jwt.sign({
                 data: {
                     id: customer.id,
                     email: customer.personal.email,

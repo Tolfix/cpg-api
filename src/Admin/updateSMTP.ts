@@ -10,4 +10,4 @@ export default async function updateSMTP(smtp: IConfigs["smtp"]): Promise<void>
 
     // Save our config
     await config.save();
-};
+}

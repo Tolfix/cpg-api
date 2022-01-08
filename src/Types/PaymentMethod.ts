@@ -1,5 +1,3 @@
-import { IPayments } from "../Interfaces/Payments";
-
 export type TPayments = "none" | "manual" | "bank" | "paypal" | "credit_card" | "swish";
 export const A_CC_Payments = [
     "credit_card",

@@ -30,7 +30,7 @@ function getByUid(req: Request, res: Response)
 
 function list(req: Request, res: Response)
 {
-    let limit = parseInt(req.query._end as string)
+    const limit = parseInt(req.query._end as string)
     && parseInt(req.query._end as string) <= 100 ? 
                                                 parseInt(req.query._end as string) 
                                                 :
@@ -40,8 +40,8 @@ function list(req: Request, res: Response)
         if(req.query._start)
             start = Number.isInteger(parseInt(req.query._start as string)) ? parseInt(req.query._start as string) : 0;
 
-    let sort = req.query._sort as string ?? "id";
-    let order = req.query._order as string ?? "asc";
+    const sort = req.query._sort as string ?? "id";
+    const order = req.query._order as string ?? "asc";
 
     API.findAll(limit, start, sort, order).then((result: any) => {
         APISuccess(result)(res)
@@ -70,7 +70,7 @@ function removeById(req: Request, res: Response)
             mainEvent.emit("invoice_deleted", result);            
             APISuccess(result, 204)(res)
         });
- };
+ }
 
 const CustomerController = {
     insert,

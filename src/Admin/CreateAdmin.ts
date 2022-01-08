@@ -14,7 +14,7 @@ export default function createAdmin(username: string, password: string)
             if(err)
                 return Logger.error(err);
 
-            let info = {
+            const info = {
                 username,
                 password: hash,
                 uid: idAdmin(),
@@ -25,4 +25,4 @@ export default function createAdmin(username: string, password: string)
             CacheAdmin.set(info.uid, info);
         });
     });
-};
+}

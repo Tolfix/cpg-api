@@ -86,7 +86,7 @@ export default class AdminHandler
     private async update_smtp()
     {
         const config = (await ConfigModel.find())[0];
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             prompt.get([
                 {
                     name: "host",
@@ -146,7 +146,7 @@ export default class AdminHandler
 
     private async show_emails()
     {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve,) => {
             // Get our config from database
             const config = (await ConfigModel.find())[0];
             Logger.info(`Emails:`, config.smtp_emails);
@@ -156,7 +156,7 @@ export default class AdminHandler
 
     private async show_smtp()
     {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
             // Get our config from database
             const config = (await ConfigModel.find())[0];
             Logger.info(`SMTP Settings:`, config.smtp);
@@ -166,7 +166,7 @@ export default class AdminHandler
 
     private async create()
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             prompt.get([
                 {
                     name: "username",
@@ -190,7 +190,7 @@ export default class AdminHandler
 
     private async delete_admin()
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             prompt.get([
                 {
                     name: "username",
@@ -214,7 +214,7 @@ export default class AdminHandler
 
     private async add_email()
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             prompt.get([
                 {
                     name: "email",
@@ -225,6 +225,7 @@ export default class AdminHandler
                 const email = result.email as string;
                 Logger.info(`Adding email..`);
                 // Check if email is valid
+                // eslint-disable-next-line no-useless-escape
                 if(!email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
                 {
                     Logger.error(`Invalid email`);
@@ -244,7 +245,7 @@ export default class AdminHandler
 
     private async delete_email()
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             prompt.get([
                 {
                     name: "email",
@@ -270,7 +271,7 @@ export default class AdminHandler
     
     private async add_webhook()
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             prompt.get([
                 {
                     name: "url",
@@ -295,7 +296,7 @@ export default class AdminHandler
 
     private async delete_webhook()
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             prompt.get([
                 {
                     name: "url",
@@ -316,15 +317,15 @@ export default class AdminHandler
                 return resolve(true)
             });
         });
-    };
+    }
 
     private async show_webhooks()
     {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
             // Get our config from database
             const config = (await ConfigModel.find())[0];
             Logger.info(`Webhooks:`, config.webhooks_urls);
             resolve(true);
         });
-    };
+    }
 }

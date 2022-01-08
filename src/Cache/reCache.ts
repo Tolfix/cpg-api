@@ -24,7 +24,7 @@ import { CacheInvoice } from "./CacheInvoices";
 export function reCache_Categories()
 {
     Logger.info(`Starting caching on categories..`);
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const categories = await CategoryModel.find();
         for (const c of categories)
         {
@@ -38,7 +38,7 @@ export function reCache_Categories()
 export async function reCache_Admin()
 {
     Logger.info(`Starting caching on admins..`);
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const admin = await AdminModel.find();
         for (const a of admin)
         {
@@ -55,7 +55,7 @@ export async function reCache_Admin()
 export async function reCache_Customers()
 {
     Logger.info(`Starting caching on customers..`);
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const customer = await CustomerModel.find();
         for (const c of customer)
         {
@@ -72,7 +72,7 @@ export async function reCache_Customers()
 export async function reCache_Product()
 {
     Logger.info(`Starting caching on products..`);
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const product = await ProductModel.find();
         for (const c of product)
         {
@@ -89,7 +89,7 @@ export async function reCache_Product()
 export async function reCache_Transactions()
 {
     Logger.info(`Starting caching on transactions..`);
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const transa = await TransactionsModel.find();
         for (const t of transa)
         {
@@ -106,7 +106,7 @@ export async function reCache_Transactions()
 export async function reCache_Orders()
 {
     Logger.info(`Starting caching on orders..`);
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const order = await OrderModel.find();
         for (const o of order)
         {
@@ -120,12 +120,12 @@ export async function reCache_Orders()
 export async function reCache_Configs()
 {
     Logger.info(`Starting caching on configs..`);
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const config = await ConfigModel.find();
         // Logger.debug(config);
         if(!config[0])
         {
-            let smtpData = {
+            const smtpData = {
                 smtp: {
                     host: "",
                     username: "",
@@ -146,7 +146,7 @@ export async function reCache_Configs()
         }
 
         Logger.cache(`Caching config`);
-        let c = config[0];
+        const c = config[0];
 
         CacheConfig.set("smtp", c.smtp);
         CacheConfig.set("smtp_emails", c.smtp_emails);
@@ -161,7 +161,7 @@ export async function reCache_Configs()
 export async function reCache_Images()
 {
     Logger.info(`Starting caching on images..`);
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const image = await ImageModel.find();
         for (const o of image)
         {
@@ -179,7 +179,7 @@ export async function reCache_Images()
  export async function reCache_Invoices()
  {
      Logger.info(`Starting caching on invoices..`);
-     return new Promise(async (resolve, reject) => {
+     return new Promise(async (resolve) => {
          const invoice = await InvoiceModel.find();
          for (const o of invoice)
          {

@@ -11,7 +11,7 @@ import dateFormat from "date-and-time";
 import nextRecycleDate from "../../../Lib/Dates/DateCycle";
 import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
 import { idOrder } from "../../../Lib/Generator";
-import { Company_Name, Full_Domain, Swish_Payee_Number } from "../../../Config";
+import { Company_Name } from "../../../Config";
 import { sendInvoiceEmail } from "../../../Lib/Invoices/SendEmail";
 import EnsureAuth from "../../../Middlewares/EnsureAuth";
 import { IOrder } from "../../../Interfaces/Orders";
@@ -153,13 +153,13 @@ export default class OrderRoute
                 promotion_code: promotion_code?.id,
             }
 
-            let one_timers = [];
-            let recurring_monthly = [];
-            let recurring_quarterly = [];
-            let recurring_semi_annually = [];
-            let recurring_biennially = [];
-            let recurring_triennially = [];
-            let recurring_yearly = [];
+            const one_timers = [];
+            const recurring_monthly = [];
+            const recurring_quarterly = [];
+            const recurring_semi_annually = [];
+            const recurring_biennially = [];
+            const recurring_triennially = [];
+            const recurring_yearly = [];
 
             // Possible to get a Dos attack
             // ! prevent this

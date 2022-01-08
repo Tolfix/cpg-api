@@ -75,7 +75,7 @@ export default class PromotionCodeRoute
                 }
             });
 
-            let new_changed_products = [];
+            const new_changed_products = [];
 
             // Loop through each product
             for(const product of filtered_products)
@@ -83,7 +83,7 @@ export default class PromotionCodeRoute
                 if(code.products_ids.includes(product.id))
                 {
                     Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
-                    let o_price = product.price;
+                    const o_price = product.price;
                     if(code.procentage)
                         product.price = product.price+(product.price*code.discount);
                     else

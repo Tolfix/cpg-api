@@ -9,7 +9,7 @@ import mainEvent from "../../Events/Main";
 
 export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: ICustomer): Promise<boolean>
 {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async(resolve) => {
 
         if(!Customer.personal.email)
             return;
@@ -72,7 +72,7 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
 
 export async function sendLateInvoiceEmail(invoice: IInvoice & Document, Customer: ICustomer)
 {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async(resolve) => {
 
         if(!Customer.personal.email)
             return;

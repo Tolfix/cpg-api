@@ -53,11 +53,11 @@ export default class ImagesRouter
             if(!data)
                 return APIError(`Unable to find image by id ${id}`)(res);
 
-            let binstr = Array.prototype.map.call(data.data, function (ch) {
+            const binstr = Array.prototype.map.call(data.data, function (ch) {
                 return String.fromCharCode(ch);
             }).join('');
             
-            let d = btoa(binstr);
+            const d = btoa(binstr);
 
             return APISuccess(d)(res);
         });
@@ -73,11 +73,11 @@ export default class ImagesRouter
             if(req.files)
             {
                 // @ts-ignore
-                let image = (req.files.image as UploadedFile);
+                const image = (req.files.image as UploadedFile);
 
                 Logger.debug(`Uploading image ${image.name}`);
 
-                let dataImage = {
+                const dataImage = {
                     uid: idImages(),
                     data: image.data,
                     type: image.mimetype,
@@ -110,6 +110,7 @@ export default class ImagesRouter
             if(!data)
                 return APIError(`Unable to find image by id ${id}`)(res);
             
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const [S, F] = await AW(ImageModel.deleteOne({ id: id }));
             
             if(F)

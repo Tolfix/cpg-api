@@ -1,5 +1,3 @@
-import { Document } from "mongoose";
-
 /**
  * @typedef Images
  * @property {string} uid
@@ -8,7 +6,6 @@ import { Document } from "mongoose";
  * @property {number} size
  * @property {string} name
  */
-export function Swagger_DOC () {};
 
 export interface IImage
 {

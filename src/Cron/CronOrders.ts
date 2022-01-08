@@ -17,9 +17,9 @@ export default function Cron_Orders()
         OrderModel.find({
             order_status: "active",
         }).then(async orders => {
-            let newInvoices = [];
+            const newInvoices = [];
             // orders.forEach(async order => {
-            for await(let order of orders)
+            for await(const order of orders)
             {
                 Logger.info(`Checking order ${order.id}`);
                 // Check if order.order_status is not "cancelled" or "fruad"
@@ -51,7 +51,7 @@ export default function Cron_Orders()
                 }
                 if(newInvoices.length > 0)
                     InvoiceCreatedReport(newInvoices);
-            };
+            }
         });
 
     }, null, true, "Europe/Stockholm");

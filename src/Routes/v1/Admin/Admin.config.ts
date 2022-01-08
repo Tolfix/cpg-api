@@ -32,7 +32,7 @@ export default class AdminRouter
          * @security Basic
          */
         this.router.post("/auth", EnsureAdmin, (req, res) => {
-            let token = jwt.sign({
+            const token = jwt.sign({
                 data: 'admin',
                 exp: Math.floor(Date.now() / 1000) + (((60 * 60)*24)*7)
             }, JWT_Access_Token);

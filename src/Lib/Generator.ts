@@ -84,12 +84,12 @@ export function idImages(): IImage["uid"]
 
 export function idConfigurableOptions(): IConfigurableOptions["uid"]
 {
-    let uid: IConfigurableOptions["uid"] = `CO_${crypto.randomBytes(20).toString("hex")}`;
+    const uid: IConfigurableOptions["uid"] = `CO_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
 
 export function idQuotes(): IQuotes["uid"]
 {
-    let uid: IQuotes["uid"] = `QUO_${crypto.randomBytes(20).toString("hex")}`;
+    const uid: IQuotes["uid"] = `QUO_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }

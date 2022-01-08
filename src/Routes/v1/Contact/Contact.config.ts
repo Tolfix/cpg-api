@@ -18,7 +18,7 @@ export default class ContactRouter
         this.server = server;
         this.server.use(`/${version}/contact`, this.router);
 
-        this.router.post("/", (req, res) => {
+        this.router.post("/", (req) => {
             const {
                 first_name,
                 last_name,

@@ -17,7 +17,6 @@ export async function run_swish_method(
     invoice: IInvoice, 
     req: Request, 
     res: Response, 
-    next: NextFunction
 )
 {
     if(Swish_Payee_Number !== "")
@@ -32,7 +31,6 @@ export async function run_paypal_method(
     invoice: IInvoice, 
     req: Request, 
     res: Response, 
-    next: NextFunction
 )
 {
     if(Paypal_Client_Secret !== "" && Paypal_Client_Id !== "")
@@ -47,7 +45,6 @@ export async function run_credit_card_method(
     invoice: IInvoice, 
     req: Request, 
     res: Response, 
-    next: NextFunction
 )
 {
     return APISuccess(`${Full_Domain}/v2/stripe/pay/${invoice.uid}`)(res);

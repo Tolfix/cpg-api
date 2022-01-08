@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
-import { DebugMode, Express_Session_Secret, Full_Domain, HomeDir, PORT } from "./Config";
+import { DebugMode, Express_Session_Secret, Full_Domain, PORT } from "./Config";
 import Logger from "./Lib/Logger";
 import RouteHandler from "./Handlers/Route";
 import { reCache } from "./Cache/reCache";
@@ -29,7 +29,7 @@ server.use(cors({
     credentials: true,
 }));
 
-let sessionMiddleWare = session({
+const sessionMiddleWare = session({
     secret: Express_Session_Secret,
     resave: false,
     saveUninitialized: true,
@@ -43,6 +43,7 @@ server.use(sessionMiddleWare);
 
 server.use(express.urlencoded({ extended: true }));
 server.use((req, res, next) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     express.json({verify: (req, res, buf, encoding) => { 
         // try {
         //     JSON.parse(buf.toString());

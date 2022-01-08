@@ -20,7 +20,6 @@ import { IPromotionsCodes } from "./PromotionsCodes";
  * @property {number} price_override Overwrite price from product
  * @property {object} dates
  */
-export function Swagger_DOC () {};
 
 export interface IOrder
 {

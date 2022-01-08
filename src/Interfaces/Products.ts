@@ -17,7 +17,6 @@ import { IImage } from "./Images";
  * @property {boolean} BStock - Should stock be enabled.
  * @property {Array.<string>} images - Images uid.
  */
-export function Swagger_DOC () {};
 export interface IProduct
 {
     id: number;
@@ -26,8 +25,8 @@ export interface IProduct
     description: string;
     category_uid: ICategory["uid"];
     stock: number;
-    BStock: Boolean;
-    hidden: Boolean;
+    BStock: boolean;
+    hidden: boolean;
     special: boolean;
     payment_type: Partial<TPaymentTypes>;
     price: number;

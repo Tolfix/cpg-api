@@ -29,9 +29,9 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
         const Customer = await CustomerModel.findOne({ id: invoice.customer_uid });
     
         if(!Customer)
-            throw new Error("Customer not found");
+            return reject("Customer not found");
     
-        let data = {
+        const data = {
             // @ts-ignore
             "documentTitle": `Invoice #${invoice.id}`,
             "images": {

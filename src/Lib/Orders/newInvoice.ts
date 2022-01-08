@@ -42,7 +42,7 @@ export async function createInvoiceFromOrder(order: IOrder)
     // Get customer id
     const Customer_Id = order.customer_uid;
 
-    let items = [];
+    const items = [];
     for await(let product of Products)
     {
         if(Promotion_Code)
@@ -60,6 +60,7 @@ export async function createInvoiceFromOrder(order: IOrder)
             const configurable_options = await ConfigurableOptionsModel.find({
                 id: {
                     // @ts-ignore
+                    // eslint-disable-next-line no-unsafe-optional-chaining
                     $in: [...LBProducts.get(product.id)?.configurable_options?.map(e => e.id ?? undefined)]
                 }
             });
@@ -133,7 +134,7 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
     if(code.products_ids.includes(product.id))
     {
         Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
-        let o_price = product.price;
+        const o_price = product.price;
         if(code.procentage)
             product.price = product.price+(product.price*code.discount);
         else

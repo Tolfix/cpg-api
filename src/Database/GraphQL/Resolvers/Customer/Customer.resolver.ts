@@ -14,11 +14,7 @@ export function myProfileResolver(
         type: object.getType(),
         args: {},
         resolve: async <TSource, TContext, TArgs>({
-            source,
-            args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -37,7 +33,7 @@ export function myProfileResolver(
             return data;
         }
     })
-};
+}
 
 export function myInvoicesResolver(
     object: ObjectTypeComposer
@@ -48,11 +44,7 @@ export function myInvoicesResolver(
         type: object.getType(),
         args: {},
         resolve: async <TSource, TContext, TArgs>({
-            source,
-            args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -81,7 +73,7 @@ export function myInvoicesResolver(
             return invoices;
         }
     })
-};
+}
 
 export function myInvoiceResolver(
     object: ObjectTypeComposer
@@ -94,11 +86,8 @@ export function myInvoiceResolver(
             id: "String!"
         },
         resolve: async <TSource, TContext, TArgs>({
-            source,
             args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -158,7 +147,7 @@ export function myInvoiceResolver(
             return invoice;
         }
     })
-};
+}
 
 export function myOrdersResolver(
     object: ObjectTypeComposer
@@ -169,11 +158,7 @@ export function myOrdersResolver(
         type: object.getType(),
         args: {},
         resolve: async <TSource, TContext, TArgs>({
-            source,
-            args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -202,7 +187,7 @@ export function myOrdersResolver(
             return orders;
         }
     })
-};
+}
 
 export function myOrderResolver(
     object: ObjectTypeComposer
@@ -215,11 +200,8 @@ export function myOrderResolver(
             id: "String!"
         },
         resolve: async <TSource, TContext, TArgs>({
-            source,
             args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -279,7 +261,7 @@ export function myOrderResolver(
             return order;
         }
     })
-};
+}
 
 export function myTransactionsResolver(
     object: ObjectTypeComposer
@@ -290,11 +272,7 @@ export function myTransactionsResolver(
         type: object.getType(),
         args: {},
         resolve: async <TSource, TContext, TArgs>({
-            source,
-            args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -323,7 +301,7 @@ export function myTransactionsResolver(
             return transactions;
         }
     })
-};
+}
 
 export function myTransactionResolver(
     object: ObjectTypeComposer
@@ -336,11 +314,8 @@ export function myTransactionResolver(
             id: "String!"
         },
         resolve: async <TSource, TContext, TArgs>({
-            source,
             args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -400,4 +375,4 @@ export function myTransactionResolver(
             return transaction;
         }
     })
-};
+}

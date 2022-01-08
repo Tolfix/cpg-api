@@ -20,7 +20,7 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
 
     const customer = await CustomerModel.findOne({ id: invoice.customer_uid });
 
-    let intent = (await Stripe.paymentIntents.create({
+    const intent = (await Stripe.paymentIntents.create({
         amount: (invoice.amount+invoice.amount*invoice.tax_rate/100) * 100,
         currency: Company_Currency ?? "sek",
         payment_method_types: ["card"],

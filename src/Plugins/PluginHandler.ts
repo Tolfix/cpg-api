@@ -72,7 +72,7 @@ export async function PluginHandler(server: Application)
 
         Logger.plugin(`Loaded plugin ${plugin}`)
     }
-};
+}
 
 export function installPlugin(plugin: string)
 {
@@ -85,7 +85,7 @@ export function installPlugin(plugin: string)
                 Logger.error(err);
                 return reject(err);
             }
-            npm.commands.install([plugin], function(err, data)
+            npm.commands.install([plugin], function(err)
             {
                 if(err)
                 {
@@ -96,11 +96,11 @@ export function installPlugin(plugin: string)
             });
         });
     }) 
-};
+}
 
 export function isPluginInstalled(plugin: string)
 {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         // Check node_modules for plugin
         const pluginPath = `${process.cwd()}/node_modules/${plugin}`;
         if(!fs.existsSync(pluginPath))
@@ -116,4 +116,4 @@ export function getPlugins()
     // get plugins starting with cpg-plugin
     const plugins = packages.filter(p => p.startsWith("cpg-plugin"));
     return plugins;
-};
+}

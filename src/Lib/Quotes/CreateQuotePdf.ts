@@ -20,9 +20,9 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
         const Customer = await CustomerModel.findOne({ id: quote.customer_uid });
     
         if(!Customer)
-            throw new Error("Customer not found");
+            return reject("Customer not found");
     
-        let data = {
+        const data = {
             "images": {
                 
             },

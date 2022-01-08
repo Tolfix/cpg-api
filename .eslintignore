@@ -1,0 +1,14 @@
+node_modules
+build
+logs
+.github
+test
+.env.example
+.env
+.gitignore
+Dockerfile
+jest.config.js
+package.json
+package.lock.json
+README.md
+tsconfig.json

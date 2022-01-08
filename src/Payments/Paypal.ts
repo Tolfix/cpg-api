@@ -14,9 +14,9 @@ if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
         'client_secret': Paypal_Client_Secret
     });
 
-export async function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypal.Link[] | undefined>
+export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypal.Link[] | undefined>
 {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve) => {
 
         function removeTags(str: string)
         {

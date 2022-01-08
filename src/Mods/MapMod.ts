@@ -1,5 +1,6 @@
 declare global
 {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Map<K, V>
     {
         array(): Array<V>

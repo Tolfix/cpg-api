@@ -18,7 +18,7 @@ export default function Cron_Invoices()
         // Mark it as sent notification.
         const getDates30DaysAhead = () =>
         {
-            let dates = [];
+            const dates = [];
             for (let i = 0; i < d_Days; i++)
                 dates.push(dateFormat.format(dateFormat.addDays(new Date(), i+1), "YYYY-MM-DD"))
             return dates;
@@ -26,7 +26,7 @@ export default function Cron_Invoices()
 
         const getDates30DaysAgo = () =>
         {
-            let dates = [];
+            const dates = [];
             for (let i = 0; i < d_Days; i++)
                 dates.push(dateFormat.format(dateFormat.addDays(new Date(), -i-1), "YYYY-MM-DD"))
             return dates;

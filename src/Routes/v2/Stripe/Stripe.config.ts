@@ -292,7 +292,7 @@ export default class StripeRouter
             switch (event.type)
             {
                 case 'payment_intent.succeeded': {
-                    let payment_intent = event.data.object as any;
+                    const payment_intent = event.data.object as any;
                     const intent = await RetrivePaymentIntent(payment_intent.id);
                     markInvoicePaid(intent);
                     break;
