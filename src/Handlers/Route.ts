@@ -14,9 +14,11 @@ export default function RouteHandler(server: Application): void
 {
     Logger.info("Loading routes...");
     const routeDir = HomeDir+"/build/Routes";
-    readdirSync(`${routeDir}`).forEach((version) => {
+    readdirSync(`${routeDir}`).forEach((version) =>
+    {
         Swagger(server, version);
-        readdirSync(`${routeDir}/${version}`).forEach((route) => {
+        readdirSync(`${routeDir}/${version}`).forEach((route) =>
+        {
             const routes = readdirSync(`${routeDir}/${version}/${route}`).filter((f) => f.endsWith('config.js'));
             for(const file of routes)
             {
