@@ -15,7 +15,8 @@ import { IQuotes } from "../../Interfaces/Quotes";
 
 export default function createQuotePdf(quote: IQuotes): Promise<string>
 {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) =>
+    {
 
         const Customer = await CustomerModel.findOne({ id: quote.customer_uid });
     
@@ -56,7 +57,8 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             "information": {
                 "number": quote.id,
             },
-            "products": quote.items.map((item) => {
+            "products": quote.items.map((item) =>
+            {
                 return {
                     "quantity": item.quantity,
                     "description": item.name,
@@ -75,7 +77,8 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             data["images"]["background"] = PDF_Template_Url;
         
         //@ts-ignore
-        easyinvoice.createInvoice(data, (result: { pdf: any; }) => {
+        easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
+        {
             return resolve(result.pdf);
         });
     })
