@@ -11,7 +11,8 @@ export default async (server: any) =>
 
     const apolloServer = new ApolloServer({
         schema: SchemaPoser,
-        context: async ({ req }) => {
+        context: async ({ req }) =>
+        {
             
             const authHeader = req.headers['authorization'];
             if(!authHeader)
