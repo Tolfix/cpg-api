@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+      - run: npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --force
       # - name: Install packages
       #   run: npm install --force
       - name: lint test
