@@ -7,7 +7,8 @@ export default async function
     {
         // @ts-ignore
         return [await data, null];
-    } catch (e)
+    }
+    catch (e)
     {
         return [null, e as PromiseRejectedResult];
     }
