@@ -10,7 +10,8 @@ class MainEvent extends events.EventEmitter
   {
     // Webhook
     // It sends webhooks specified url
-    (async () => {
+    (async () =>
+    {
       // Grabs the URLS from config
       const URLS = (await ConfigModel.find())[0].webhooks_urls;
       // // // // // // // // // //
