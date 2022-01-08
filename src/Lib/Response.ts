@@ -3,7 +3,8 @@ import Logger from "./Logger";
 
 export function APISuccess(msg: any, status = 200)
 {
-    return (res: Response) => {
+    return (res: Response) =>
+    {
         const ip = res.req.headers['x-forwarded-for'] || res.req.socket.remoteAddress;
         const url = res.req.originalUrl;
         const method = res.req.method;
@@ -16,7 +17,8 @@ export function APISuccess(msg: any, status = 200)
 
 export function APIError(msg: any, status = 400)
 {
-    return (res: Response) => {
+    return (res: Response) =>
+    {
         const ip = res.req.headers['x-forwarded-for'] || res.req.socket.remoteAddress;
         const url = res.req.originalUrl;
         const method = res.req.method;
