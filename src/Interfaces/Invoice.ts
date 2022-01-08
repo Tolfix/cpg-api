@@ -17,7 +17,6 @@ import { ITransactions } from "./Transactions";
  * @property {string} notes
  * @property {boolean} paid
  */
-export function SwaggerDOC () {};
 
 /**
  * @typedef InvoiceItem
@@ -25,14 +24,12 @@ export function SwaggerDOC () {};
  * @property {number} amount
  * @property {boolean} taxed
  */
-export function SwaggerDOC1 () {};
 
 /**
  * @typedef InvoiceDates
  * @property {string} invoice_date
  * @property {string} due_date
  */
-export function SwaggerDOC2 () {};
 
 /**
  * @typedef Status
@@ -45,7 +42,6 @@ export function SwaggerDOC2 () {};
  * @property {string} collections
  * @property {string} payment_pending
  */
-export function SwaggerDOC3 () {};
 export interface IInvoice
 {
     id: any;
@@ -59,8 +55,8 @@ export interface IInvoice
     status: TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
     tax_rate: number;
     notes: string;
-    paid: Boolean;
-    notified: Boolean;
+    paid: boolean;
+    notified: boolean;
 }
 
 export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";

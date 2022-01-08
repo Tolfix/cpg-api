@@ -10,7 +10,6 @@ import { IInvoice } from "./Invoice";
  * @property {number} amount
  * @property {number} fees 
  */
-export function SwaggerDOC () {};
 export interface ITransactions
 {
     uid: `TRAN_${string}`;
@@ -22,4 +21,4 @@ export interface ITransactions
     fees: number;
 }
 
-export interface IDTransactions extends ITransactions, Document {};
+export interface IDTransactions extends ITransactions, Document {}

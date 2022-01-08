@@ -1,5 +1,5 @@
 import { CronJob } from "cron";
-import OrderModel from "../Database/Models/Orders";
+import OrderModel from "../Database/Models/Orders.model";
 import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
 import { createInvoiceFromOrder } from "../Lib/Orders/newInvoice";
@@ -10,16 +10,18 @@ import { InvoiceCreatedReport } from "../Email/Reports/InvoiceReport";
 export default function Cron_Orders()
 {
     // Every hour
-    new CronJob("0 */12 * * *", () => {
+    new CronJob("0 */12 * * *", () =>
+    {
         Logger.info(`Checking orders..`);
 
         // Check if the order needs to create a new invoice if order.dates.next_recylce is withing 14 days
         OrderModel.find({
             order_status: "active",
-        }).then(async orders => {
-            let newInvoices = [];
+        }).then(async orders =>
+        {
+            const newInvoices = [];
             // orders.forEach(async order => {
-            for await(let order of orders)
+            for await(const order of orders)
             {
                 Logger.info(`Checking order ${order.id}`);
                 // Check if order.order_status is not "cancelled" or "fruad"
@@ -51,7 +53,7 @@ export default function Cron_Orders()
                 }
                 if(newInvoices.length > 0)
                     InvoiceCreatedReport(newInvoices);
-            };
+            }
         });
 
     }, null, true, "Europe/Stockholm");

@@ -1,7 +1,6 @@
 import { Application, Router } from "express";
-import { Document } from "mongoose";
-import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions";
-import ProductModel from "../../../Database/Models/Products";
+import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions.model";
+import ProductModel from "../../../Database/Models/Products.model";
 import { IProduct } from "../../../Interfaces/Products";
 import AW from "../../../Lib/AW";
 import { APIError, APISuccess } from "../../../Lib/Response";
@@ -26,7 +25,8 @@ export default class ProductsRouter
             ProductController.getByUid
         ]);
 
-        this.router.get("/:uid/configurable_options", async (req, res, next) => {
+        this.router.get("/:uid/configurable_options", async (req, res) =>
+        {
             const uid = req.params.uid;
             const [product, p_fail] = await AW(await ProductModel.findOne({ $or: [
                 { uid: uid as IProduct["uid"] },

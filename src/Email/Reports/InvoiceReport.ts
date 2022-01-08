@@ -4,7 +4,8 @@ import { SendEmail } from "../Send";
 
 export const InvoiceNotifiedReport = async (invoices: IInvoice[]) =>
 {
-    GetSMTPEmails().then((emails) => {
+    GetSMTPEmails().then((emails) =>
+    {
         for(const email of emails)
         {
             SendEmail(email, "Invoice(s) Notified", {
@@ -26,7 +27,8 @@ export const InvoiceNotifiedReport = async (invoices: IInvoice[]) =>
 
 export const InvoiceLateReport = async (invoices: IInvoice[]) =>
 {
-    GetSMTPEmails().then((emails) => {
+    GetSMTPEmails().then((emails) =>
+    {
         for(const email of emails)
         {
             SendEmail(email, "Invoice(s) Late Reminder", {
@@ -48,7 +50,8 @@ export const InvoiceLateReport = async (invoices: IInvoice[]) =>
 
 export const InvoiceCreatedReport = async (invoices: IInvoice[]) =>
 {
-    GetSMTPEmails().then((emails) => {
+    GetSMTPEmails().then((emails) =>
+    {
         for(const email of emails)
         {
             SendEmail(email, "Invoice(s) Created", {

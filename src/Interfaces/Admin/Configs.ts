@@ -7,13 +7,13 @@ export interface IConfigs
     webhooks_urls: Array<string>;
 }
 
-export interface IDConfigs extends IConfigs, Document {};
+export interface IDConfigs extends IConfigs, Document {}
 
 export interface ISmtp
 {
     host: string;
     username: string;
     password: string;
-    secure: Boolean;
+    secure: boolean;
     port: number;
 }

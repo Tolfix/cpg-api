@@ -11,7 +11,8 @@ export default async (server: any) =>
 
     const apolloServer = new ApolloServer({
         schema: SchemaPoser,
-        context: async ({ req, res }) => {
+        context: async ({ req }) =>
+        {
             
             const authHeader = req.headers['authorization'];
             if(!authHeader)
@@ -45,7 +46,7 @@ export default async (server: any) =>
                 // Check if admin
                 if(CacheAdmin.has(getAdminByUsername(login) ?? "ADM_"))
                 {
-                    let succeed = await bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"] ?? ""));
+                    const succeed = await bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"] ?? ""));
 
                     if(succeed)
                         return {
@@ -60,7 +61,7 @@ export default async (server: any) =>
             if(b64auth[0].toLocaleLowerCase() === "bearer")
             {
                 const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
-                let suc = jwt.verify(token, JWT_Access_Token)
+                const suc = jwt.verify(token, JWT_Access_Token)
                 // @ts-ignore
                 if(suc?.data === "admin")
                     return {

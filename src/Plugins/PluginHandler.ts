@@ -1,12 +1,12 @@
 import { Application } from "express";
-import CategoryModel from "../Database/Models/Category";
-import CustomerModel from "../Database/Models/Customers/Customer";
-import ImageModel from "../Database/Models/Images";
-import InvoiceModel from "../Database/Models/Invoices";
-import OrderModel from "../Database/Models/Orders";
-import ProductModel from "../Database/Models/Products";
-import TransactionsModel from "../Database/Models/Transactions";
-import ConfigurableOptionsModel from "../Database/Models/ConfigurableOptions";
+import CategoryModel from "../Database/Models/Category.model";
+import CustomerModel from "../Database/Models/Customers/Customer.model";
+import ImageModel from "../Database/Models/Images.model";
+import InvoiceModel from "../Database/Models/Invoices.model";
+import OrderModel from "../Database/Models/Orders.model";
+import ProductModel from "../Database/Models/Products.model";
+import TransactionsModel from "../Database/Models/Transactions.model";
+import ConfigurableOptionsModel from "../Database/Models/ConfigurableOptions.model";
 import mainEvent from "../Events/Main";
 import Logger from "../Lib/Logger";
 import { Plugins } from "../Config";
@@ -72,7 +72,7 @@ export async function PluginHandler(server: Application)
 
         Logger.plugin(`Loaded plugin ${plugin}`)
     }
-};
+}
 
 export function installPlugin(plugin: string)
 {
@@ -85,7 +85,7 @@ export function installPlugin(plugin: string)
                 Logger.error(err);
                 return reject(err);
             }
-            npm.commands.install([plugin], function(err, data)
+            npm.commands.install([plugin], function(err)
             {
                 if(err)
                 {
@@ -96,11 +96,12 @@ export function installPlugin(plugin: string)
             });
         });
     }) 
-};
+}
 
 export function isPluginInstalled(plugin: string)
 {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) =>
+    {
         // Check node_modules for plugin
         const pluginPath = `${process.cwd()}/node_modules/${plugin}`;
         if(!fs.existsSync(pluginPath))
@@ -116,4 +117,4 @@ export function getPlugins()
     // get plugins starting with cpg-plugin
     const plugins = packages.filter(p => p.startsWith("cpg-plugin"));
     return plugins;
-};
+}

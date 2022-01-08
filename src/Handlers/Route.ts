@@ -13,12 +13,14 @@ import Swagger from "./Swagger";
 export default function RouteHandler(server: Application): void
 {
     Logger.info("Loading routes...");
-    let routeDir = HomeDir+"/build/Routes";
-    readdirSync(`${routeDir}`).forEach((version) => {
+    const routeDir = HomeDir+"/build/Routes";
+    readdirSync(`${routeDir}`).forEach((version) =>
+    {
         Swagger(server, version);
-        readdirSync(`${routeDir}/${version}`).forEach((route) => {
+        readdirSync(`${routeDir}/${version}`).forEach((route) =>
+        {
             const routes = readdirSync(`${routeDir}/${version}/${route}`).filter((f) => f.endsWith('config.js'));
-            for(let file of routes)
+            for(const file of routes)
             {
                 const pull = require(`${routeDir}/${version}/${route}/${file}`).default;
                 if(pull)

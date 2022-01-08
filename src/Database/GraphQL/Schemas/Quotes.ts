@@ -1,6 +1,6 @@
 import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
-import QuotesModel from "../../Models/Quotes";
+import QuotesModel from "../../Models/Quotes.model";
 
 export const QuotesGraphQL = composeWithMongoose(QuotesModel);
 export const startsWith = "Quotes";

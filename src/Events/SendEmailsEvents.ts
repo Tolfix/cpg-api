@@ -2,10 +2,12 @@ import { GetSMTPEmails } from "../Config";
 import { SendEmail } from "../Email/Send";
 import mainEvent from "./Main";
 
-mainEvent.on("invoice_created", async (invoice) => {
+mainEvent.on("invoice_created", async (invoice) =>
+{
     // Send email to our admins from config
     const emails = await GetSMTPEmails();
-    emails.forEach(async (email) => {
+    emails.forEach(async (email) =>
+    {
     
         await SendEmail(email, "Invoice created", {
             isHTML: false,
@@ -16,10 +18,12 @@ mainEvent.on("invoice_created", async (invoice) => {
 });
 
 // Send email to our admins when invoice is paid
-mainEvent.on("invoice_paid", async (invoice) => {
+mainEvent.on("invoice_paid", async (invoice) =>
+{
     // Send email to our admins from config
     const emails = await GetSMTPEmails();
-    emails.forEach(async (email) => {
+    emails.forEach(async (email) =>
+    {
     
         await SendEmail(email, "Invoice paid", {
             isHTML: false,
@@ -30,10 +34,12 @@ mainEvent.on("invoice_paid", async (invoice) => {
 });
 
 // Send email to our admins when invoice is deleted
-mainEvent.on("invoice_deleted", async (invoice) => {
+mainEvent.on("invoice_deleted", async (invoice) =>
+{
     // Send email to our admins from config
     const emails = await GetSMTPEmails();
-    emails.forEach(async (email) => {
+    emails.forEach(async (email) =>
+    {
     
         await SendEmail(email, "Invoice deleted", {
             isHTML: false,
@@ -44,10 +50,12 @@ mainEvent.on("invoice_deleted", async (invoice) => {
 });
 
 // Send email to our admins when invoice is notified
-mainEvent.on("invoice_notified", async (invoice) => {
+mainEvent.on("invoice_notified", async (invoice) =>
+{
     // Send email to our admins from config
     const emails = await GetSMTPEmails();
-    emails.forEach(async (email) => {
+    emails.forEach(async (email) =>
+    {
     
         await SendEmail(email, "Invoice notified", {
             isHTML: false,

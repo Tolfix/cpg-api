@@ -1,18 +1,18 @@
-import InvoiceModel from "../../Database/Models/Invoices";
-import ProductModel from "../../Database/Models/Products";
+import InvoiceModel from "../../Database/Models/Invoices.model";
+import ProductModel from "../../Database/Models/Products.model";
 import { IInvoice_Dates } from "../../Interfaces/Invoice";
 import { IOrder } from "../../Interfaces/Orders";
 import { idInvoice } from "../Generator";
 import dateFormat from "date-and-time";
 import getCategoryByProduct from "../Products/getCategoryByProduct";
 import { IProduct } from "../../Interfaces/Products";
-import ConfigurableOptionsModel from "../../Database/Models/ConfigurableOptions";
+import ConfigurableOptionsModel from "../../Database/Models/ConfigurableOptions.model";
 import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions";
 import mainEvent from "../../Events/Main";
 import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes";
 import { Document } from "mongoose";
 import Logger from "../Logger";
-import PromotionCodeModel from "../../Database/Models/PromotionsCode";
+import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
 
 
 // Create a method that checks if the order next recycle is within 14 days
@@ -42,7 +42,7 @@ export async function createInvoiceFromOrder(order: IOrder)
     // Get customer id
     const Customer_Id = order.customer_uid;
 
-    let items = [];
+    const items = [];
     for await(let product of Products)
     {
         if(Promotion_Code)
@@ -60,6 +60,7 @@ export async function createInvoiceFromOrder(order: IOrder)
             const configurable_options = await ConfigurableOptionsModel.find({
                 id: {
                     // @ts-ignore
+                    // eslint-disable-next-line no-unsafe-optional-chaining
                     $in: [...LBProducts.get(product.id)?.configurable_options?.map(e => e.id ?? undefined)]
                 }
             });
@@ -91,7 +92,8 @@ export async function createInvoiceFromOrder(order: IOrder)
             due_date: order.dates.next_recycle,
             invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
         },
-        amount: items.reduce((acc, item) => {
+        amount: items.reduce((acc, item) =>
+        {
             return acc + item.amount * item.quantity;
         }, 0),
         items: items,
@@ -133,7 +135,7 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
     if(code.products_ids.includes(product.id))
     {
         Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
-        let o_price = product.price;
+        const o_price = product.price;
         if(code.procentage)
             product.price = product.price+(product.price*code.discount);
         else

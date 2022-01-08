@@ -1,6 +1,6 @@
 import { resolverAdminAccess, resolverUserAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
-import CustomerModel from "../../Models/Customers/Customer";
+import CustomerModel from "../../Models/Customers/Customer.model";
 import { myInvoiceResolver, myInvoicesResolver, myOrderResolver, myOrdersResolver, myProfileResolver, myTransactionResolver, myTransactionsResolver } from "../Resolvers/Customer/Customer.resolver";
 import { InvoicesGraphQL } from "./Invoices";
 import { OrderGraphQL } from "./Order";

@@ -1,6 +1,6 @@
 import paypal from "paypal-rest-sdk";
 import { Company_Currency, DebugMode, Domain, Http_Schema, Paypal_Client_Id, Paypal_Client_Secret, PORT } from "../Config";
-import TransactionsModel from "../Database/Models/Transactions";
+import TransactionsModel from "../Database/Models/Transactions.model";
 import { IInvoice } from "../Interfaces/Invoice";
 import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
@@ -14,9 +14,10 @@ if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
         'client_secret': Paypal_Client_Secret
     });
 
-export async function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypal.Link[] | undefined>
+export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypal.Link[] | undefined>
 {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve) =>
+    {
 
         function removeTags(str: string)
         {
@@ -46,7 +47,8 @@ export async function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise
             transactions: [
                 {
                     item_list: {
-                        items: invoice.items.map((item) => {
+                        items: invoice.items.map((item) =>
+                        {
                             return {
                                 name: removeTags(item.notes),
                                 price: (item.amount+(item.amount*invoice.tax_rate/100)).toString(),
@@ -70,7 +72,8 @@ export async function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise
         };
 
         // @ts-ignore
-        paypal.payment.create(create_payment_json, function (error, payment) {
+        paypal.payment.create(create_payment_json, function (error, payment)
+        {
             if (error || !payment)
                 throw error;
 

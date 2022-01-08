@@ -1,6 +1,6 @@
 import { Application, Router } from "express";
 import { Company_Website } from "../../../Config";
-import InvoiceModel from "../../../Database/Models/Invoices";
+import InvoiceModel from "../../../Database/Models/Invoices.model";
 import { IInvoice } from "../../../Interfaces/Invoice";
 import { createPaypalPaymentFromInvoice, retrievePaypalTransaction } from "../../../Payments/Paypal";
 
@@ -14,7 +14,8 @@ export default class PaypalRouter
         this.server = server;
         this.server.use(`/${version}/paypal`, this.router);
 
-        this.router.get("/pay/:invoiceUid", async (req, res) => {
+        this.router.get("/pay/:invoiceUid", async (req, res) =>
+        {
             const invoiceUid = req.params.invoiceUid;
             const invoice = await InvoiceModel.findOne({ uid: invoiceUid as IInvoice["uid"] });
 
@@ -34,7 +35,8 @@ export default class PaypalRouter
                     return res.redirect(link.href);
         });
 
-        this.router.get("/success", async (req, res) => {
+        this.router.get("/success", async (req, res) =>
+        {
             const payerId = req.query.PayerID as string;
             const paymentId = req.query.paymentId as string;
 

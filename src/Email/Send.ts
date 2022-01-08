@@ -3,7 +3,6 @@ import { Company_Name, GetSMTPConfig } from "../Config";
 import { IConfigs } from "../Interfaces/Admin/Configs";
 import AW from "../Lib/AW";
 import Logger from "../Lib/Logger";
-var AWS = require('aws-sdk/dist/aws-sdk-react-native');
 
 /**
  * @description
@@ -17,8 +16,8 @@ export async function SendEmail(
         body: any;
         attachments?: any;
     },
-    callback?: (error: Error|null, sent: Boolean|null) => void
-): Promise<Boolean | void>
+    callback?: (error: Error|null, sent: boolean|null) => void
+): Promise<boolean | void>
 {
     const [SMTPConfig, SMTP_Error] = await AW<IConfigs["smtp"]>(await GetSMTPConfig());
     if(!SMTPConfig || SMTP_Error)
@@ -40,7 +39,7 @@ export async function SendEmail(
         },
     }
 
-    let email: {
+    const email: {
         from: string;
         to: string;
         subject: string;
@@ -67,9 +66,11 @@ export async function SendEmail(
 
     Logger.info(`Sending email to ${reciever}`);
 
-    transport.sendMail(email).then(e => {
+    transport.sendMail(email).then(() =>
+    {
         callback ? callback?.(null, true) : Promise.resolve(true);
-    }).catch(e => {
+    }).catch(e =>
+    {
         callback ? callback?.(e, false) : Promise.resolve(false);
     });
 }

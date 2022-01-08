@@ -1,7 +1,7 @@
 import request from "request";
 import events from "events";
 import { MainOnEvents } from "../Interfaces/Events/MainOnEvents";
-import ConfigModel from "../Database/Models/Configs";
+import ConfigModel from "../Database/Models/Configs.model";
 import { Webhook_Secret } from "../Config";
 
 class MainEvent extends events.EventEmitter
@@ -10,7 +10,8 @@ class MainEvent extends events.EventEmitter
   {
     // Webhook
     // It sends webhooks specified url
-    (async () => {
+    (async () =>
+    {
       // Grabs the URLS from config
       const URLS = (await ConfigModel.find())[0].webhooks_urls;
       // // // // // // // // // //

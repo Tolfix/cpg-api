@@ -7,9 +7,9 @@ const schemaComposer = new SchemaComposer();
 
 // Go through each in ./Schemas/*.js files and add them to schemaComposer
 Logger.graphql("Loading GraphQL schemas...");
-let schemaDir = HomeDir+"/build/Database/GraphQL/Schemas";
+const schemaDir = HomeDir+"/build/Database/GraphQL/Schemas";
 const files = fs.readdirSync(`${schemaDir}`).filter((f) => f.endsWith('.js'));
-for(let f of files)
+for(const f of files)
 {
 
     // Now we require the file.

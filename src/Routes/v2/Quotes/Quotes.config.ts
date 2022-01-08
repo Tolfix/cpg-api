@@ -1,9 +1,9 @@
 import { Application, Router } from "express";
-import CustomerModel from "../../../Database/Models/Customers/Customer";
-import QuotesModel from "../../../Database/Models/Quotes";
+import CustomerModel from "../../../Database/Models/Customers/Customer.model";
+import QuotesModel from "../../../Database/Models/Quotes.model";
 import AW from "../../../Lib/AW";
 import createQuotePdf from "../../../Lib/Quotes/CreateQuotePdf";
-import { APIError, APISuccess } from "../../../Lib/Response";
+import { APIError } from "../../../Lib/Response";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import QuotesController from "./Quotes.controller";
 
@@ -27,7 +27,8 @@ export default class QuotesRouter
             QuotesController.getByUid
         ]);
 
-        this.router.get("/:uid/view", async (req, res) => {
+        this.router.get("/:uid/view", async (req, res) =>
+        {
             // 
             const uid = req.params.uid;
             const [quote, e_quote] = await AW(await QuotesModel.findOne({ uid: uid }));

@@ -5,17 +5,17 @@ import { Full_Domain, GetSMTPEmails, JWT_Access_Token } from "../../../Config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APIError, APISuccess } from "../../../Lib/Response";
-import CustomerModel from "../../../Database/Models/Customers/Customer";
+import CustomerModel from "../../../Database/Models/Customers/Customer.model";
 import Logger from "../../../Lib/Logger";
 import EnsureAuth from "../../../Middlewares/EnsureAuth";
 import crypto from "crypto";
-import PasswordResetModel from "../../../Database/Models/Customers/PasswordReset";
+import PasswordResetModel from "../../../Database/Models/Customers/PasswordReset.model";
 import { SendEmail } from "../../../Email/Send";
 import Footer from "../../../Email/Templates/General/Footer";
-import InvoiceModel from "../../../Database/Models/Invoices";
-import OrderModel from "../../../Database/Models/Orders";
+import InvoiceModel from "../../../Database/Models/Invoices.model";
+import OrderModel from "../../../Database/Models/Orders.model";
 import { ICustomer } from "../../../Interfaces/Customer";
-import TransactionsModel from "../../../Database/Models/Transactions";
+import TransactionsModel from "../../../Database/Models/Transactions.model";
 
 export default class CustomerRouter
 {
@@ -38,7 +38,8 @@ export default class CustomerRouter
             CustomerController.getMyProfile
         ]);
 
-        this.router.get("/my/invoices", EnsureAuth(), async (req, res) => {
+        this.router.get("/my/invoices", EnsureAuth(), async (req, res) =>
+        {
             const customer = await CustomerModel.findOne({
                 // @ts-ignore
                 id: req.customer.id
@@ -57,7 +58,8 @@ export default class CustomerRouter
             return APISuccess(invoices)(res);
         });
 
-        this.router.get("/my/invoices/:id", EnsureAuth(), async (req, res) => {
+        this.router.get("/my/invoices/:id", EnsureAuth(), async (req, res) =>
+        {
             const invoiceId = req.params.id;
 
             if(!invoiceId)
@@ -90,7 +92,8 @@ export default class CustomerRouter
             return APISuccess(invoice)(res);
         });
 
-        this.router.get("/my/orders", EnsureAuth(), async (req, res) => {
+        this.router.get("/my/orders", EnsureAuth(), async (req, res) =>
+        {
             const customer = await CustomerModel.findOne({
                 // @ts-ignore
                 id: req.customer.id
@@ -109,7 +112,8 @@ export default class CustomerRouter
             return APISuccess(orders)(res);
         });
 
-        this.router.get("/my/orders/:id", EnsureAuth(), async (req, res) => {
+        this.router.get("/my/orders/:id", EnsureAuth(), async (req, res) =>
+        {
             const orderId = req.params.id;
 
             if(!orderId)
@@ -141,7 +145,8 @@ export default class CustomerRouter
             return APISuccess(order)(res);
         });
 
-        this.router.post("/my/orders/:id/cancel", EnsureAuth(), async (req, res) => {
+        this.router.post("/my/orders/:id/cancel", EnsureAuth(), async (req, res) =>
+        {
             const orderId = req.params.id;
 
             if(!orderId)
@@ -173,7 +178,8 @@ export default class CustomerRouter
             order.order_status = "cancelled";
             await order.save();
 
-            GetSMTPEmails().then(emails => {
+            GetSMTPEmails().then(emails =>
+            {
                 for(const email of emails)
                 {
                     SendEmail(email, `Order Cancelled #${order.id}`, {
@@ -189,7 +195,8 @@ export default class CustomerRouter
             return APISuccess("Order cancelled.")(res);
         });
 
-        this.router.get("/my/transactions", EnsureAuth(), async (req, res) => {
+        this.router.get("/my/transactions", EnsureAuth(), async (req, res) =>
+        {
             const customer = await CustomerModel.findOne({
                 // @ts-ignore
                 id: req.customer.id
@@ -208,7 +215,8 @@ export default class CustomerRouter
             return APISuccess(transactions)(res);
         });
 
-        this.router.get("/my/transactions/:id", EnsureAuth(), async (req, res) => {
+        this.router.get("/my/transactions/:id", EnsureAuth(), async (req, res) =>
+        {
             const transactionId = req.params.id;
 
             if(!transactionId)
@@ -237,7 +245,8 @@ export default class CustomerRouter
             return APISuccess(transactions)(res);
         });
 
-        this.router.post("/my/reset-password", async (req, res) => {
+        this.router.post("/my/reset-password", async (req, res) =>
+        {
             const email = req.body.email;
             const customer = await CustomerModel.findOne({ "personal.email": email });
             if(!customer)
@@ -262,7 +271,8 @@ export default class CustomerRouter
             return APISuccess(`Succesfully created a reset password email`)(res);
         });
 
-        this.router.get("/my/reset-password/:token", async (req, res) => {
+        this.router.get("/my/reset-password/:token", async (req, res) =>
+        {
             const token = req.params.token;
             const passwordReset = await PasswordResetModel.findOne({ token: token }) as any;
             if(!passwordReset)
@@ -323,7 +333,8 @@ export default class CustomerRouter
             `);
         });
 
-        this.router.post("/my/new-password", async (req, res) => {
+        this.router.post("/my/new-password", async (req, res) =>
+        {
             const token = req.query.token;
             const password = req.body.password;
 
@@ -397,7 +408,8 @@ export default class CustomerRouter
             CustomerController.removeById
         ]);
 
-        this.router.post("/authenticate", async (req, res) => {
+        this.router.post("/authenticate", async (req, res) =>
+        {
             
             const { username, password } = req.body;
             
@@ -442,7 +454,7 @@ export default class CustomerRouter
                 return APIError("Invalid email or password.")(res);
             }
 
-            let token = jwt.sign({
+            const token = jwt.sign({
                 data: {
                     id: customer.id,
                     email: customer.personal.email,

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import CustomerModel from "../../../Database/Models/Customers/Customer";
+import CustomerModel from "../../../Database/Models/Customers/Customer.model";
 import { ICustomer } from "../../../Interfaces/Customer";
 import { idCustomer } from "../../../Lib/Generator";
 import { APIError, APISuccess } from "../../../Lib/Response";
@@ -16,8 +16,10 @@ const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
 function insert(req: Request, res: Response)
 {
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password ?? "123qwe123", salt, async (err, hash) => {
+    bcrypt.genSalt(10, (err, salt) =>
+    {
+        bcrypt.hash(req.body.password ?? "123qwe123", salt, async (err, hash) =>
+        {
             if(err)
                 Logger.error(err);
 
@@ -32,7 +34,8 @@ function insert(req: Request, res: Response)
                 return APIError(`Email ${email} already exists`, 409)(res);
 
             API.create(req.body)
-                .then((result) => {
+                .then((result) =>
+                {
                     
                     mainEvent.emit("customer_created", result);
 
@@ -59,14 +62,15 @@ function insert(req: Request, res: Response)
 
 function getByUid(req: Request, res: Response)
 {
-    API.findByUid((req.params.uid as ICustomer["uid"])).then((result) => {
+    API.findByUid((req.params.uid as ICustomer["uid"])).then((result) =>
+    {
         APISuccess(result)(res);
     });
 }
 
 function list(req: Request, res: Response)
 {
-    let limit = parseInt(req.query._end as string)
+    const limit = parseInt(req.query._end as string)
     && parseInt(req.query._end as string) <= 100 ? 
                                                 parseInt(req.query._end as string) 
                                                 :
@@ -76,10 +80,11 @@ function list(req: Request, res: Response)
         if(req.query._start)
             start = Number.isInteger(parseInt(req.query._start as string)) ? parseInt(req.query._start as string) : 0;
 
-    let sort = req.query._sort as string ?? "id";
-    let order = req.query._order as string ?? "asc";
+    const sort = req.query._sort as string ?? "id";
+    const order = req.query._order as string ?? "asc";
         
-    API.findAll(limit, start, sort, order).then((result: any) => {
+    API.findAll(limit, start, sort, order).then((result: any) =>
+    {
         APISuccess(result)(res)
     });
 }
@@ -97,7 +102,8 @@ async function patch(req: Request, res: Response)
             req.body.password = hash;
         }
     }
-    API.findAndPatch((req.params.uid as ICustomer["uid"]), req.body).then((result) => {
+    API.findAndPatch((req.params.uid as ICustomer["uid"]), req.body).then((result) =>
+    {
         // @ts-ignore
         mainEvent.emit("customer_updated", result);
         APISuccess(result)(res);
@@ -107,17 +113,19 @@ async function patch(req: Request, res: Response)
 function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.uid as ICustomer["uid"])
-        .then((result)=>{
+        .then((result)=>
+        {
             // @ts-ignore
             mainEvent.emit("customer_deleted", result);
             APISuccess(result, 204)(res)
         });
-};
+}
 
 function getMyProfile(req: Request, res: Response)
 {
     // @ts-ignore
-    API.findByUid((req.customer.id as ICustomer["uid"])).then((result) => {
+    API.findByUid((req.customer.id as ICustomer["uid"])).then((result) =>
+    {
         APISuccess(result)(res);
     });
 }

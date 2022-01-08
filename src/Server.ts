@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
-import { DebugMode, Express_Session_Secret, Full_Domain, HomeDir, PORT } from "./Config";
+import { Express_Session_Secret, Full_Domain, PORT } from "./Config";
 import Logger from "./Lib/Logger";
 import RouteHandler from "./Handlers/Route";
 import { reCache } from "./Cache/reCache";
@@ -29,7 +29,7 @@ server.use(cors({
     credentials: true,
 }));
 
-let sessionMiddleWare = session({
+const sessionMiddleWare = session({
     secret: Express_Session_Secret,
     resave: false,
     saveUninitialized: true,
@@ -42,8 +42,11 @@ let sessionMiddleWare = session({
 server.use(sessionMiddleWare);
 
 server.use(express.urlencoded({ extended: true }));
-server.use((req, res, next) => {
-    express.json({verify: (req, res, buf, encoding) => { 
+server.use((req, res, next) => 
+{
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    express.json({verify: (req, res, buf, encoding) =>
+    { 
         // try {
         //     JSON.parse(buf.toString());
             // @ts-ignore
@@ -55,7 +58,8 @@ server.use((req, res, next) => {
     }})(req, res, next);
 });
 
-server.use((req, res, next) => {
+server.use((req, res, next) =>
+{
     res.setHeader('X-Powered-By', 'CPG-API');
     next();
 });
@@ -66,11 +70,13 @@ PluginHandler(server);
 
 server.listen(PORT, () => Logger.api(`Server listing on port ${PORT} | ${Full_Domain}`));
 
-(async () => {
+(async () =>
+{
     // Still experimental
 
-    DebugMode ? await ApolloServer(server) : null;
-    server.use("*", (req, res) => {
+    ApolloServer(server);
+    server.use("*", (req, res) =>
+    {
         return APIError({
             text: `Couldn't find what you were looking for.`
         })(res);

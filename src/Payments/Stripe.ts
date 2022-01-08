@@ -1,7 +1,7 @@
 import stripe from "stripe";
 import { Company_Currency, DebugMode, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
-import CustomerModel from "../Database/Models/Customers/Customer";
-import TransactionsModel from "../Database/Models/Transactions";
+import CustomerModel from "../Database/Models/Customers/Customer.model";
+import TransactionsModel from "../Database/Models/Transactions.model";
 import { IInvoice } from "../Interfaces/Invoice";
 import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
@@ -20,7 +20,7 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
 
     const customer = await CustomerModel.findOne({ id: invoice.customer_uid });
 
-    let intent = (await Stripe.paymentIntents.create({
+    const intent = (await Stripe.paymentIntents.create({
         amount: (invoice.amount+invoice.amount*invoice.tax_rate/100) * 100,
         currency: Company_Currency ?? "sek",
         payment_method_types: ["card"],

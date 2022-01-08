@@ -14,7 +14,6 @@
  * @property {string} country - Country of customer
  * @property {object} extra - Extra data of customer
  */
-export function Swagger_DOC () {};
 
 export interface ICustomer
 {

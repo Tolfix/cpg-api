@@ -1,4 +1,4 @@
-import CustomerModel from "../../Database/Models/Customers/Customer";
+import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import easyinvoice from 'easyinvoice';
 import { 
     Company_Address,
@@ -15,14 +15,15 @@ import { IQuotes } from "../../Interfaces/Quotes";
 
 export default function createQuotePdf(quote: IQuotes): Promise<string>
 {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) =>
+    {
 
         const Customer = await CustomerModel.findOne({ id: quote.customer_uid });
     
         if(!Customer)
-            throw new Error("Customer not found");
+            return reject("Customer not found");
     
-        let data = {
+        const data = {
             "images": {
                 
             },
@@ -56,7 +57,8 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             "information": {
                 "number": quote.id,
             },
-            "products": quote.items.map((item) => {
+            "products": quote.items.map((item) =>
+            {
                 return {
                     "quantity": item.quantity,
                     "description": item.name,
@@ -75,7 +77,8 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             data["images"]["background"] = PDF_Template_Url;
         
         //@ts-ignore
-        easyinvoice.createInvoice(data, (result: { pdf: any; }) => {
+        easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
+        {
             return resolve(result.pdf);
         });
     })

@@ -1,4 +1,4 @@
-import CustomerModel from "../../Database/Models/Customers/Customer";
+import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import { IInvoice } from "../../Interfaces/Invoice";
 import easyinvoice from 'easyinvoice';
 import { createSwishQRCode } from "../../Payments/Swish";
@@ -24,14 +24,15 @@ import qrcode from "qrcode";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) =>
+    {
 
         const Customer = await CustomerModel.findOne({ id: invoice.customer_uid });
     
         if(!Customer)
-            throw new Error("Customer not found");
+            return reject("Customer not found");
     
-        let data = {
+        const data = {
             // @ts-ignore
             "documentTitle": `Invoice #${invoice.id}`,
             "images": {
@@ -113,7 +114,8 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "date": invoice.dates.invoice_date,
                 "due-date": invoice.dates.due_date
             },
-            "products": invoice.items.map((item) => {
+            "products": invoice.items.map((item) =>
+            {
                 return {
                     "quantity": item.quantity,
                     "description": item.notes,
@@ -135,7 +137,8 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             data["images"]["background"] = PDF_Template_Url;
         
         //@ts-ignore
-        easyinvoice.createInvoice(data, (result: { pdf: any; }) => {
+        easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
+        {
             return resolve(result.pdf);
         });
     })

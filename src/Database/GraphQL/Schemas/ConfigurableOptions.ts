@@ -1,6 +1,6 @@
 import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
-import ConfigurableOptionsModel from "../../Models/ConfigurableOptions";
+import ConfigurableOptionsModel from "../../Models/ConfigurableOptions.model";
 
 export const ConfigurableOptionsGraphQL = composeWithMongoose(ConfigurableOptionsModel);
 export const startsWith = "ConfigurableOptions";

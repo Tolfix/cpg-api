@@ -1,5 +1,5 @@
 import { Application, Router } from "express";
-import InvoiceModel from "../../../Database/Models/Invoices";
+import InvoiceModel from "../../../Database/Models/Invoices.model";
 import createPDFInvoice from "../../../Lib/Invoices/CreatePDFInvoice";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
 import InvoiceController from "./Invoices.controller";
@@ -45,7 +45,8 @@ export default class InvoiceRouter
             InvoiceController.removeById
         ]);
 
-        this.router.get("/:uid/pdf", EnsureAdmin, async (req, res) => {
+        this.router.get("/:uid/pdf", EnsureAdmin, async (req, res) =>
+        {
             
             const invoice = await InvoiceModel.findOne({ id: req.params.uid });
 

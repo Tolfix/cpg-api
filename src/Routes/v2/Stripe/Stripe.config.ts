@@ -5,7 +5,7 @@ import {
     Stripe_PK_Public, Stripe_PK_Public_Test, 
     Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret
 } from "../../../Config";
-import InvoiceModel from "../../../Database/Models/Invoices";
+import InvoiceModel from "../../../Database/Models/Invoices.model";
 import { APIError } from "../../../Lib/Response";
 import stripe from "stripe";
 import { CreatePaymentIntent, markInvoicePaid, RetrivePaymentIntent } from "../../../Payments/Stripe";
@@ -188,7 +188,8 @@ export default class StripeRouter
             `)
         });
 
-        this.router.get("/:invoiceId/complete", async (req, res) => {
+        this.router.get("/:invoiceId/complete", async (req, res) =>
+        {
             const invoiceId = req.params.invoiceId;
             const payment_intent = req.query.payment_intent as string;
             const invoice = await InvoiceModel.findOne( { id: invoiceId } );
@@ -204,7 +205,8 @@ export default class StripeRouter
             let href = "";
             let status = "";
 
-            switch (intent.status) {
+            switch (intent.status)
+            {
                 case 'succeeded':
                     message = 'Success! Payment received.';
                     href = Company_Website;
@@ -281,10 +283,13 @@ export default class StripeRouter
         {
             const sig = req.headers['stripe-signature'] as string;
             let event;
-            try {
+            try
+            {
                 // @ts-ignore
                 event = Stripe.webhooks.constructEvent(req.rawBody, sig, Stripe_Webhook_Secret);
-            } catch (err) {
+            } 
+            catch (err)
+            {
                 // @ts-ignore
                 return res.status(400).send(`Webhook Error: ${err.message}`);
             }
@@ -292,7 +297,7 @@ export default class StripeRouter
             switch (event.type)
             {
                 case 'payment_intent.succeeded': {
-                    let payment_intent = event.data.object as any;
+                    const payment_intent = event.data.object as any;
                     const intent = await RetrivePaymentIntent(payment_intent.id);
                     markInvoicePaid(intent);
                     break;

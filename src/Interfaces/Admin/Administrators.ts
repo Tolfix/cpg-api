@@ -8,4 +8,4 @@ export interface IAdministrator
     createdAt: Date;
 }
 
-export interface IDIAdministrator extends IAdministrator, Document {};
+export interface IDIAdministrator extends IAdministrator, Document {}

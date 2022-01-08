@@ -26,11 +26,12 @@ export default class BaseModelAPI<IModel extends { uid: string }>
         return this.iModel.findOne({ $or: [
             { id: uid },
             { uid: uid }
-        ]}).then((result: any) => {
+        ]}).then((result: any) =>
+        {
             if(!result)
                 return;
 
-            let r = result.toJSON();
+            const r = result.toJSON();
             //@ts-ignore
             delete r._id;
             delete r.__v;
@@ -40,16 +41,21 @@ export default class BaseModelAPI<IModel extends { uid: string }>
 
     public findAll(limit: number, skip: number, sort: string, order: string): Promise<Array<IModel>>
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) =>
+        {
             this.iModel.find()
                 .select("-_id -__v")
                 .limit(limit)
                 .skip(skip)
                 .sort({ sort: order })
-                .exec(function (err: any, users: any) {
-                    if (err) {
+                .exec(function (err: any, users: any)
+                {
+                    if (err)
+                    {
                         reject(err);
-                    } else {
+                    }
+                    else
+                    {
                         resolve(users);
                     }
                 })
@@ -67,23 +73,28 @@ export default class BaseModelAPI<IModel extends { uid: string }>
             { id: uid },
             { uid: uid }
         ]}, data);
-    };
+    }
 
     public removeByUid(uid: IModel["uid"])
     {
         if(!uid || uid === "undefined")
             return Promise.resolve([]);
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) =>
+        {
             this.iModel.deleteMany({ $or: [
                 { id: uid },
                 { uid: uid }
-            ]}, (err: any) => {
-                if (err) {
+            ]}, (err: any) =>
+            {
+                if (err)
+                {
                     reject(err);
-                } else {
+                }
+                else
+                {
                     resolve(err);
                 }
             });
         });
-    };
+    }
 }

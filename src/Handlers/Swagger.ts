@@ -6,7 +6,7 @@ export default function Swagger(server: Application, version: string)
     const expressSwagger = require('express-swagger-generator')();
     const swaggerUi = require("swagger-ui-express");
 
-    let options = {
+    const options = {
         swaggerDefinition: {
             info: {
                 description: 'CPG API Swagger',
@@ -35,6 +35,6 @@ export default function Swagger(server: Application, version: string)
         basedir: __dirname, //app absolute path
         files: [`${HomeDir}/build/Routes/${version}/**/*.js`, `${HomeDir}/build/Interfaces/**/*.js`] //Path to the API handle folder
     };
-    let a = expressSwagger(options)
+    const a = expressSwagger(options)
     server.use(`${version}/api-docs`, swaggerUi.serve, swaggerUi.setup(a));
 }

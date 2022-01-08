@@ -1,6 +1,6 @@
 import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
-import invoiceModel from "../../Models/Invoices";
+import invoiceModel from "../../Models/Invoices.model";
 
 export const InvoicesGraphQL = composeWithMongoose(invoiceModel);
 export const startsWith = "Invoices";

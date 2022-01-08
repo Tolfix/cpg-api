@@ -1,6 +1,6 @@
 import { Application, Router } from "express";
-import ProductModel from "../../../Database/Models/Products";
-import PromotionCodeModel from "../../../Database/Models/PromotionsCode";
+import ProductModel from "../../../Database/Models/Products.model";
+import PromotionCodeModel from "../../../Database/Models/PromotionsCode.model";
 import Logger from "../../../Lib/Logger";
 import { APIError, APISuccess } from "../../../Lib/Response";
 import EnsureAdmin from "../../../Middlewares/EnsureAdmin";
@@ -26,7 +26,8 @@ export default class PromotionCodeRoute
             PromotionCodeController.getByUid
         ]);
 
-        this.router.get("/:name/apply", async (req, res) => {
+        this.router.get("/:name/apply", async (req, res) =>
+        {
             const name = req.params.name;
             const _products = req.body.products as number[];
 
@@ -62,7 +63,8 @@ export default class PromotionCodeRoute
             Logger.info(`Promotion code ${code.name} (${code.id}) is valid`);
 
             // Filter products which is not included in the promotion code
-            const filtered_products = products.filter(product => {
+            const filtered_products = products.filter(product =>
+            {
                 if(code.products_ids.includes(product.id))
                 {
                     Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
@@ -75,7 +77,7 @@ export default class PromotionCodeRoute
                 }
             });
 
-            let new_changed_products = [];
+            const new_changed_products = [];
 
             // Loop through each product
             for(const product of filtered_products)
@@ -83,7 +85,7 @@ export default class PromotionCodeRoute
                 if(code.products_ids.includes(product.id))
                 {
                     Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
-                    let o_price = product.price;
+                    const o_price = product.price;
                     if(code.procentage)
                         product.price = product.price+(product.price*code.discount);
                     else
@@ -106,7 +108,8 @@ export default class PromotionCodeRoute
             if(new_changed_products.length === 0)
                 return APIError(`Promotion code ${name} is not valid for any of the products`, 400)(res);
 
-            APISuccess(new_changed_products.map(p => {
+            APISuccess(new_changed_products.map(p =>
+            {
                 return {
                     id: p.id,
                     new_price: p.price,

@@ -1,4 +1,4 @@
-/* Copyright (C) 2021 Tolfix - All Rights Reserved */
+/* Copyright (C) 2022 Tolfix - All Rights Reserved */
 require("dotenv").config();
 import Logger from "./Lib/Logger";
 import { GetVersion } from "./Config";

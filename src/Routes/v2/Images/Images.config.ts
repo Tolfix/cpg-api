@@ -6,7 +6,7 @@ import { CacheImages } from "../../../Cache/CacheImage";
 import { IImage } from "../../../Interfaces/Images";
 import { UploadedFile } from "express-fileupload";
 import { idImages } from "../../../Lib/Generator";
-import ImageModel from "../../../Database/Models/Images";
+import ImageModel from "../../../Database/Models/Images.model";
 import AW from "../../../Lib/AW";
 
 export default class ImagesRouter
@@ -26,8 +26,10 @@ export default class ImagesRouter
          * @returns {Images} 200 - Images data
          * @security JWT
          */
-        this.router.get("/", (req, res) => {
-            return APISuccess(CacheImages.array().map(e => {
+        this.router.get("/", (req, res) =>
+        {
+            return APISuccess(CacheImages.array().map(e =>
+            {
                 return {
                     uid: e.uid,
                     name: e.name,
@@ -45,7 +47,8 @@ export default class ImagesRouter
          * @returns {APIError} 404 - Failed to find
          * @security Basic
          */
-        this.router.get("/:id", (req, res) => {
+        this.router.get("/:id", (req, res) =>
+        {
             const id = req.params.id as IImage["id"];
 
             const data = CacheImages.get(id);
@@ -53,11 +56,12 @@ export default class ImagesRouter
             if(!data)
                 return APIError(`Unable to find image by id ${id}`)(res);
 
-            let binstr = Array.prototype.map.call(data.data, function (ch) {
+            const binstr = Array.prototype.map.call(data.data, function (ch)
+            {
                 return String.fromCharCode(ch);
             }).join('');
             
-            let d = btoa(binstr);
+            const d = btoa(binstr);
 
             return APISuccess(d)(res);
         });
@@ -69,15 +73,16 @@ export default class ImagesRouter
          * @param {file} image.formData.required Image data as formdata
          * @security Basic
          */
-        this.router.post("/", EnsureAdmin, async (req, res) => {
+        this.router.post("/", EnsureAdmin, async (req, res) =>
+        {
             if(req.files)
             {
                 // @ts-ignore
-                let image = (req.files.image as UploadedFile);
+                const image = (req.files.image as UploadedFile);
 
                 Logger.debug(`Uploading image ${image.name}`);
 
-                let dataImage = {
+                const dataImage = {
                     uid: idImages(),
                     data: image.data,
                     type: image.mimetype,
@@ -104,12 +109,14 @@ export default class ImagesRouter
          * @param {string} uid.path.required - uid for image
          * @security Basic
          */
-         this.router.delete("/:id", EnsureAdmin, async (req, res) => {
+         this.router.delete("/:id", EnsureAdmin, async (req, res) =>
+         {
             const id = req.params.id as IImage["id"];
             const data = CacheImages.get(id);
             if(!data)
                 return APIError(`Unable to find image by id ${id}`)(res);
             
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const [S, F] = await AW(ImageModel.deleteOne({ id: id }));
             
             if(F)

@@ -1,8 +1,8 @@
 import { CronJob } from "cron";
-import InvoiceModel from "../Database/Models/Invoices";
+import InvoiceModel from "../Database/Models/Invoices.model";
 import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
-import CustomerModel from "../Database/Models/Customers/Customer";
+import CustomerModel from "../Database/Models/Customers/Customer.model";
 import { d_Days } from "../Config";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../Lib/Invoices/SendEmail";
 import { InvoiceNotifiedReport } from "../Email/Reports/InvoiceReport";
@@ -10,7 +10,8 @@ import { InvoiceNotifiedReport } from "../Email/Reports/InvoiceReport";
 export default function Cron_Invoices()
 {
     // Every hour
-    new CronJob("0 */12 * * *", () => {
+    new CronJob("0 */12 * * *", () =>
+    {
         Logger.info(`Checking invoices..`);
 
         // Trigger if a invoice is dued in the next 2 weeks.
@@ -18,7 +19,7 @@ export default function Cron_Invoices()
         // Mark it as sent notification.
         const getDates30DaysAhead = () =>
         {
-            let dates = [];
+            const dates = [];
             for (let i = 0; i < d_Days; i++)
                 dates.push(dateFormat.format(dateFormat.addDays(new Date(), i+1), "YYYY-MM-DD"))
             return dates;
@@ -26,7 +27,7 @@ export default function Cron_Invoices()
 
         const getDates30DaysAgo = () =>
         {
-            let dates = [];
+            const dates = [];
             for (let i = 0; i < d_Days; i++)
                 dates.push(dateFormat.format(dateFormat.addDays(new Date(), -i-1), "YYYY-MM-DD"))
             return dates;
@@ -40,7 +41,8 @@ export default function Cron_Invoices()
             status: {
                 $not: /fraud|cancelled/g
             }
-        }).then(async (invoices) => {
+        }).then(async (invoices) =>
+        {
             Logger.info(`Found ${invoices.length} invoices to notify.`);
             for await(const invoice of invoices)
             {
@@ -66,7 +68,8 @@ export default function Cron_Invoices()
             status: {
                 $not: /fraud|cancelled/g
             }
-        }).then(async (invoices) => {
+        }).then(async (invoices) =>
+        {
             for await(const invoice of invoices)
             {
                 // Get customer

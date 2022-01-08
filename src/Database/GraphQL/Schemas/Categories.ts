@@ -1,6 +1,6 @@
 import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
-import CategoryModel from "../../Models/Category";
+import CategoryModel from "../../Models/Category.model";
 
 export const CategoriesGraphQL = composeWithMongoose(CategoryModel);
 export const startsWith = "Categories";

@@ -1,9 +1,9 @@
 import { ObjectTypeComposer, ResolverResolveParams, Resolver, schemaComposer } from "graphql-compose";
 import { ICustomer } from "../../../../Interfaces/Customer";
-import CustomerModel from "../../../Models/Customers/Customer";
-import InvoiceModel from "../../../Models/Invoices";
-import OrderModel from "../../../Models/Orders";
-import TransactionsModel from "../../../Models/Transactions";
+import CustomerModel from "../../../Models/Customers/Customer.model";
+import InvoiceModel from "../../../Models/Invoices.model";
+import OrderModel from "../../../Models/Orders.model";
+import TransactionsModel from "../../../Models/Transactions.model";
 
 export function myProfileResolver(
     object: ObjectTypeComposer
@@ -14,11 +14,7 @@ export function myProfileResolver(
         type: object.getType(),
         args: {},
         resolve: async <TSource, TContext, TArgs>({
-            source,
-            args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -26,7 +22,8 @@ export function myProfileResolver(
                 id: ICustomer["id"],
                 email: ICustomer["personal"]["email"],
             }
-        } & TContext, TArgs>) => {
+        } & TContext, TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -37,7 +34,7 @@ export function myProfileResolver(
             return data;
         }
     })
-};
+}
 
 export function myInvoicesResolver(
     object: ObjectTypeComposer
@@ -48,11 +45,7 @@ export function myInvoicesResolver(
         type: object.getType(),
         args: {},
         resolve: async <TSource, TContext, TArgs>({
-            source,
-            args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -60,7 +53,8 @@ export function myInvoicesResolver(
                 id: ICustomer["id"],
                 email: ICustomer["personal"]["email"],
             }
-        } & TContext, TArgs>) => {
+        } & TContext, TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -81,7 +75,7 @@ export function myInvoicesResolver(
             return invoices;
         }
     })
-};
+}
 
 export function myInvoiceResolver(
     object: ObjectTypeComposer
@@ -94,11 +88,8 @@ export function myInvoiceResolver(
             id: "String!"
         },
         resolve: async <TSource, TContext, TArgs>({
-            source,
             args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -108,7 +99,8 @@ export function myInvoiceResolver(
             }
         } & TContext, {
             id: unknown
-        } & TArgs>) => {
+        } & TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -158,7 +150,7 @@ export function myInvoiceResolver(
             return invoice;
         }
     })
-};
+}
 
 export function myOrdersResolver(
     object: ObjectTypeComposer
@@ -169,11 +161,7 @@ export function myOrdersResolver(
         type: object.getType(),
         args: {},
         resolve: async <TSource, TContext, TArgs>({
-            source,
-            args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -181,7 +169,8 @@ export function myOrdersResolver(
                 id: ICustomer["id"],
                 email: ICustomer["personal"]["email"],
             }
-        } & TContext, TArgs>) => {
+        } & TContext, TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -202,7 +191,7 @@ export function myOrdersResolver(
             return orders;
         }
     })
-};
+}
 
 export function myOrderResolver(
     object: ObjectTypeComposer
@@ -215,11 +204,8 @@ export function myOrderResolver(
             id: "String!"
         },
         resolve: async <TSource, TContext, TArgs>({
-            source,
             args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -229,7 +215,8 @@ export function myOrderResolver(
             }
         } & TContext, {
             id: unknown
-        } & TArgs>) => {
+        } & TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -279,7 +266,7 @@ export function myOrderResolver(
             return order;
         }
     })
-};
+}
 
 export function myTransactionsResolver(
     object: ObjectTypeComposer
@@ -290,11 +277,7 @@ export function myTransactionsResolver(
         type: object.getType(),
         args: {},
         resolve: async <TSource, TContext, TArgs>({
-            source,
-            args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -302,7 +285,8 @@ export function myTransactionsResolver(
                 id: ICustomer["id"],
                 email: ICustomer["personal"]["email"],
             }
-        } & TContext, TArgs>) => {
+        } & TContext, TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -323,7 +307,7 @@ export function myTransactionsResolver(
             return transactions;
         }
     })
-};
+}
 
 export function myTransactionResolver(
     object: ObjectTypeComposer
@@ -336,11 +320,8 @@ export function myTransactionResolver(
             id: "String!"
         },
         resolve: async <TSource, TContext, TArgs>({
-            source,
             args,
             context,
-            info,
-            projection,
         }: ResolverResolveParams<TSource, {
             isAdmin: boolean;
             isUser: boolean;
@@ -350,7 +331,8 @@ export function myTransactionResolver(
             }
         } & TContext, {
             id: unknown
-        } & TArgs>) => {
+        } & TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -400,4 +382,4 @@ export function myTransactionResolver(
             return transaction;
         }
     })
-};
+}

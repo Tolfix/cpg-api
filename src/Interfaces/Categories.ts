@@ -7,7 +7,7 @@ export interface ICategory
     name: string;
     description: string;
     images?: IImage["id"][];
-    private: Boolean;
+    private: boolean;
 }
 
-export interface IDCategory extends Document, ICategory {};
+export interface IDCategory extends Document, ICategory {}

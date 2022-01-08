@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
-import CustomerModel from "../../../Database/Models/Customers/Customer";
-import OrderModel from "../../../Database/Models/Orders";
-import ProductModel from "../../../Database/Models/Products";
+import CustomerModel from "../../../Database/Models/Customers/Customer.model";
+import OrderModel from "../../../Database/Models/Orders.model";
+import ProductModel from "../../../Database/Models/Products.model";
 import { IPayments } from "../../../Interfaces/Payments";
 import { IProduct } from "../../../Interfaces/Products";
 import { APIError, APISuccess } from "../../../Lib/Response";
@@ -11,7 +11,7 @@ import dateFormat from "date-and-time";
 import nextRecycleDate from "../../../Lib/Dates/DateCycle";
 import { createInvoiceFromOrder } from "../../../Lib/Orders/newInvoice";
 import { idOrder } from "../../../Lib/Generator";
-import { Company_Name, Full_Domain, Swish_Payee_Number } from "../../../Config";
+import { Company_Name } from "../../../Config";
 import { sendInvoiceEmail } from "../../../Lib/Invoices/SendEmail";
 import EnsureAuth from "../../../Middlewares/EnsureAuth";
 import { IOrder } from "../../../Interfaces/Orders";
@@ -20,7 +20,7 @@ import { SendEmail } from "../../../Email/Send";
 import NewOrderCreated from "../../../Email/Templates/Orders/NewOrderCreated";
 import { IConfigurableOptions } from "../../../Interfaces/ConfigurableOptions";
 import mainEvent from "../../../Events/Main";
-import PromotionCodeModel from "../../../Database/Models/PromotionsCode";
+import PromotionCodeModel from "../../../Database/Models/PromotionsCode.model";
 import Logger from "../../../Lib/Logger";
 import { ce_orders } from "../../../Lib/Orders/PlaceOrder";
 import { TRecurringMethod } from "../../../Types/PaymentMethod";
@@ -37,7 +37,8 @@ async function createOrder(customer: ICustomer, products: Array<{
 {
     const order = await (new OrderModel({
         customer_uid: customer.id,
-        products: products.map(product => {            
+        products: products.map(product =>
+        {
             return {
                 product_id: product.product_id,
                 configurable_options: product?.configurable_options,
@@ -81,7 +82,8 @@ export default class OrderRoute
             OrderController.list
         ]);
 
-        this.router.post("/place", EnsureAuth(), async (req, res, next) => {
+        this.router.post("/place", EnsureAuth(), async (req, res, next) =>
+        {
             // @ts-ignore
             const customer_id = req.customer.id;
             const products = req.body.products as Array<{
@@ -153,13 +155,13 @@ export default class OrderRoute
                 promotion_code: promotion_code?.id,
             }
 
-            let one_timers = [];
-            let recurring_monthly = [];
-            let recurring_quarterly = [];
-            let recurring_semi_annually = [];
-            let recurring_biennially = [];
-            let recurring_triennially = [];
-            let recurring_yearly = [];
+            const one_timers = [];
+            const recurring_monthly = [];
+            const recurring_quarterly = [];
+            const recurring_semi_annually = [];
+            const recurring_biennially = [];
+            const recurring_triennially = [];
+            const recurring_yearly = [];
 
             // Possible to get a Dos attack
             // ! prevent this
@@ -200,7 +202,8 @@ export default class OrderRoute
 
             // Create new orders
             if(recurring_monthly.length > 0)
-                createOrder(customer, recurring_monthly.map(p => {
+                createOrder(customer, recurring_monthly.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -208,7 +211,8 @@ export default class OrderRoute
                 }), recurring_monthly, payment_method, "recurring", "monthly");
 
             if(recurring_quarterly.length > 0)
-                createOrder(customer, recurring_quarterly.map(p => {
+                createOrder(customer, recurring_quarterly.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -216,7 +220,8 @@ export default class OrderRoute
                 }), recurring_quarterly, payment_method, "recurring", "quarterly");
 
             if(recurring_semi_annually.length > 0)
-                createOrder(customer, recurring_semi_annually.map(p => {
+                createOrder(customer, recurring_semi_annually.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -224,7 +229,8 @@ export default class OrderRoute
                 }), recurring_semi_annually, payment_method, "recurring", "semi_annually");
 
             if(recurring_biennially.length > 0)
-                createOrder(customer, recurring_biennially.map(p => {
+                createOrder(customer, recurring_biennially.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -232,7 +238,8 @@ export default class OrderRoute
                 }), recurring_biennially, payment_method, "recurring", "biennially");
 
             if(recurring_triennially.length > 0)
-                createOrder(customer, recurring_triennially.map(p => {
+                createOrder(customer, recurring_triennially.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -240,7 +247,8 @@ export default class OrderRoute
                 }), recurring_triennially, payment_method, "recurring", "triennially");
 
             if(one_timers.length > 0)
-                createOrder(customer, one_timers.map(p => {
+                createOrder(customer, one_timers.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
@@ -248,7 +256,8 @@ export default class OrderRoute
                 }), one_timers, payment_method, "one_time");
 
             if(recurring_yearly.length > 0)
-                createOrder(customer, recurring_yearly.map(p => {
+                createOrder(customer, recurring_yearly.map(p =>
+                {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
                         quantity: 1
