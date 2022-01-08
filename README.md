@@ -4,6 +4,13 @@
   <strong>C</strong>entral <strong>P</strong>ayment <strong>G</strong>ateway - API
 </p>
 
+#
+[![Typescript Typings](https://github.com/Tolfix/cpg-api/actions/workflows/type-testing.yml/badge.svg?branch=master&event=push)](https://github.com/Tolfix/cpg-api/actions/workflows/type-testing.yml)
+[![Docker Image](https://github.com/Tolfix/cpg-api/actions/workflows/docker.yml/badge.svg?branch=master&event=push)](https://github.com/Tolfix/cpg-api/actions/workflows/docker.yml)
+[![CodeQL](https://github.com/Tolfix/cpg-api/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/Tolfix/cpg-api/actions/workflows/codeql-analysis.yml)
+![Build Version](https://img.shields.io/github/v/release/Tolfix/cpg-api)
+
+
 # ⭐ | CPG-API
 CPG-API is being used to create products, invoices, orders, transactions and payments for customers, to grow your business.
 
