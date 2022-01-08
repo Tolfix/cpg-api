@@ -17,7 +17,7 @@ on:
 
 jobs:
 
-  ts-type-test:
+  ts-lint-test:
 
     runs-on: ubuntu-latest
     
