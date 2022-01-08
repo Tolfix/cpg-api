@@ -12,7 +12,19 @@
 
 
 # ⭐ | CPG-API
-CPG-API is being used to create products, invoices, orders, transactions and payments for customers, to grow your business.
+CPG-API is being used to create products, invoices, orders, transactions and payments for customers, to grow your business. It offers various of methods for developers to customize `cpg`.
+
+# 📝| Table of content
+* [Documentations](#--documentations)
+* [Setup](#--setup)
+  * [Installing](#installing)
+  * [Building](#building)
+  * [Running](#running)
+* [Plugins](#--plugins)
+  * [Installing](#installing-1)
+  * [Deleting](#deleting)
+* [Contribute](#--contribute)
+* [Discord](#--discord)
 
 # 📋 | Documentations
 You can read our documentations in our [`Wiki`](https://github.com/Tolfix/CPG-API/wiki)
@@ -52,6 +64,7 @@ npm run build
 ## Running
 You can run `CPG` by using `npm run start` or `node ./build/Main.js`.
 Would recommend to use `pm2`.
+
 # 🎨 | Plugins
 Plugins allows you to install others features to CPG. Be aware it can be `dangerous` due to plugins get accessed to alot, you can trust `Tolfix` owns plugins, or plugins you created yourself, otherwise there is no guarantee.
 
