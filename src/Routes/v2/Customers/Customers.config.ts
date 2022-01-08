@@ -5,17 +5,17 @@ import { Full_Domain, GetSMTPEmails, JWT_Access_Token } from "../../../Config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APIError, APISuccess } from "../../../Lib/Response";
-import CustomerModel from "../../../Database/Models/Customers/Customer";
+import CustomerModel from "../../../Database/Models/Customers/Customer.model";
 import Logger from "../../../Lib/Logger";
 import EnsureAuth from "../../../Middlewares/EnsureAuth";
 import crypto from "crypto";
-import PasswordResetModel from "../../../Database/Models/Customers/PasswordReset";
+import PasswordResetModel from "../../../Database/Models/Customers/PasswordReset.model";
 import { SendEmail } from "../../../Email/Send";
 import Footer from "../../../Email/Templates/General/Footer";
-import InvoiceModel from "../../../Database/Models/Invoices";
-import OrderModel from "../../../Database/Models/Orders";
+import InvoiceModel from "../../../Database/Models/Invoices.model";
+import OrderModel from "../../../Database/Models/Orders.model";
 import { ICustomer } from "../../../Interfaces/Customer";
-import TransactionsModel from "../../../Database/Models/Transactions";
+import TransactionsModel from "../../../Database/Models/Transactions.model";
 
 export default class CustomerRouter
 {

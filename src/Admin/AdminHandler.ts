@@ -1,8 +1,8 @@
 import { stripIndent } from "common-tags";
 import prompt from "prompt";
 import { CacheAdmin } from "../Cache/CacheAdmin";
-import AdminModel from "../Database/Models/Administrators";
-import ConfigModel from "../Database/Models/Configs";
+import AdminModel from "../Database/Models/Administrators.model";
+import ConfigModel from "../Database/Models/Configs.model";
 import Logger from "../Lib/Logger";
 import createAdmin from "./CreateAdmin";
 import updateSMTP from "./updateSMTP";

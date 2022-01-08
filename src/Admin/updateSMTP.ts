@@ -1,4 +1,4 @@
-import ConfigModel from "../Database/Models/Configs";
+import ConfigModel from "../Database/Models/Configs.model";
 import { IConfigs } from "../Interfaces/Admin/Configs";
 
 export default async function updateSMTP(smtp: IConfigs["smtp"]): Promise<void>

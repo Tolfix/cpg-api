@@ -6,7 +6,7 @@ import { CacheImages } from "../../../Cache/CacheImage";
 import { IImage } from "../../../Interfaces/Images";
 import { UploadedFile } from "express-fileupload";
 import { idImages } from "../../../Lib/Generator";
-import ImageModel from "../../../Database/Models/Images";
+import ImageModel from "../../../Database/Models/Images.model";
 import AW from "../../../Lib/AW";
 
 export default class ImagesRouter

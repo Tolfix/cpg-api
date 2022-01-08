@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import ProductModel from "../../../Database/Models/Products";
+import ProductModel from "../../../Database/Models/Products.model";
 import mainEvent from "../../../Events/Main";
 import { IProduct } from "../../../Interfaces/Products";
 import { idProduct } from "../../../Lib/Generator";

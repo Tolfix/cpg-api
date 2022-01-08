@@ -1,10 +1,10 @@
-import AdminModel from "../Database/Models/Administrators";
-import CategoryModel from "../Database/Models/Category";
-import CustomerModel from "../Database/Models/Customers/Customer";
-import ImageModel from "../Database/Models/Images";
-import OrderModel from "../Database/Models/Orders";
-import ProductModel from "../Database/Models/Products";
-import TransactionsModel from "../Database/Models/Transactions";
+import AdminModel from "../Database/Models/Administrators.model";
+import CategoryModel from "../Database/Models/Category.model";
+import CustomerModel from "../Database/Models/Customers/Customer.model";
+import ImageModel from "../Database/Models/Images.model";
+import OrderModel from "../Database/Models/Orders.model";
+import ProductModel from "../Database/Models/Products.model";
+import TransactionsModel from "../Database/Models/Transactions.model";
 import Logger from "../Lib/Logger";
 import { CacheAdmin } from "./CacheAdmin";
 import { CacheCategories } from "./CacheCategories";
@@ -13,9 +13,9 @@ import { CacheOrder } from "./CacheOrder";
 import { CacheProduct } from "./CacheProduct";
 import { CacheTransactions } from "./CacheTransactions";
 import { CacheImages } from "./CacheImage";
-import ConfigModel from "../Database/Models/Configs";
+import ConfigModel from "../Database/Models/Configs.model";
 import { CacheConfig } from "./CacheConfigs";
-import InvoiceModel from "../Database/Models/Invoices";
+import InvoiceModel from "../Database/Models/Invoices.model";
 import { CacheInvoice } from "./CacheInvoices";
 
 /**

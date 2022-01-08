@@ -1,8 +1,8 @@
 import { CronJob } from "cron";
-import InvoiceModel from "../Database/Models/Invoices";
+import InvoiceModel from "../Database/Models/Invoices.model";
 import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
-import CustomerModel from "../Database/Models/Customers/Customer";
+import CustomerModel from "../Database/Models/Customers/Customer.model";
 import { d_Days } from "../Config";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../Lib/Invoices/SendEmail";
 import { InvoiceNotifiedReport } from "../Email/Reports/InvoiceReport";

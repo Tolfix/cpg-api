@@ -1,9 +1,9 @@
 import { ObjectTypeComposer, ResolverResolveParams, Resolver, schemaComposer } from "graphql-compose";
 import { ICustomer } from "../../../../Interfaces/Customer";
-import CustomerModel from "../../../Models/Customers/Customer";
-import InvoiceModel from "../../../Models/Invoices";
-import OrderModel from "../../../Models/Orders";
-import TransactionsModel from "../../../Models/Transactions";
+import CustomerModel from "../../../Models/Customers/Customer.model";
+import InvoiceModel from "../../../Models/Invoices.model";
+import OrderModel from "../../../Models/Orders.model";
+import TransactionsModel from "../../../Models/Transactions.model";
 
 export function myProfileResolver(
     object: ObjectTypeComposer

@@ -1,4 +1,4 @@
-import ProductModel from "../../Database/Models/Products";
+import ProductModel from "../../Database/Models/Products.model";
 
 export default async (id: number) =>
 {

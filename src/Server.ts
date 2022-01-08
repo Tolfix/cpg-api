@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
-import { DebugMode, Express_Session_Secret, Full_Domain, PORT } from "./Config";
+import { Express_Session_Secret, Full_Domain, PORT } from "./Config";
 import Logger from "./Lib/Logger";
 import RouteHandler from "./Handlers/Route";
 import { reCache } from "./Cache/reCache";

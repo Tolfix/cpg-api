@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import PromotionCodeModel from "../../../Database/Models/PromotionsCode";
+import PromotionCodeModel from "../../../Database/Models/PromotionsCode.model";
 import mainEvent from "../../../Events/Main";
 import { IPromotionsCodes } from "../../../Interfaces/PromotionsCodes";
 import { idCategory } from "../../../Lib/Generator";

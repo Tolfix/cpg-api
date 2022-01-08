@@ -1,18 +1,18 @@
-import InvoiceModel from "../../Database/Models/Invoices";
-import ProductModel from "../../Database/Models/Products";
+import InvoiceModel from "../../Database/Models/Invoices.model";
+import ProductModel from "../../Database/Models/Products.model";
 import { IInvoice_Dates } from "../../Interfaces/Invoice";
 import { IOrder } from "../../Interfaces/Orders";
 import { idInvoice } from "../Generator";
 import dateFormat from "date-and-time";
 import getCategoryByProduct from "../Products/getCategoryByProduct";
 import { IProduct } from "../../Interfaces/Products";
-import ConfigurableOptionsModel from "../../Database/Models/ConfigurableOptions";
+import ConfigurableOptionsModel from "../../Database/Models/ConfigurableOptions.model";
 import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions";
 import mainEvent from "../../Events/Main";
 import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes";
 import { Document } from "mongoose";
 import Logger from "../Logger";
-import PromotionCodeModel from "../../Database/Models/PromotionsCode";
+import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
 
 
 // Create a method that checks if the order next recycle is within 14 days

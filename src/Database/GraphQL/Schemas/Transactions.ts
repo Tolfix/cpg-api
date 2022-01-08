@@ -1,6 +1,6 @@
 import { resolverAdminAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
-import TransactionsModel from "../../Models/Transactions";
+import TransactionsModel from "../../Models/Transactions.model";
 
 export const TransactionGraphQL = composeWithMongoose(TransactionsModel);
 export const startsWith = "Transaction";

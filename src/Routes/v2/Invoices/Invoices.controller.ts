@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import InvoiceModel from "../../../Database/Models/Invoices";
+import InvoiceModel from "../../../Database/Models/Invoices.model";
 import mainEvent from "../../../Events/Main";
 import { IInvoice } from "../../../Interfaces/Invoice";
 import { idInvoice } from "../../../Lib/Generator";

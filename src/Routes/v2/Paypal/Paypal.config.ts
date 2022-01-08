@@ -1,6 +1,6 @@
 import { Application, Router } from "express";
 import { Company_Website } from "../../../Config";
-import InvoiceModel from "../../../Database/Models/Invoices";
+import InvoiceModel from "../../../Database/Models/Invoices.model";
 import { IInvoice } from "../../../Interfaces/Invoice";
 import { createPaypalPaymentFromInvoice, retrievePaypalTransaction } from "../../../Payments/Paypal";
 
