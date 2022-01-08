@@ -188,7 +188,8 @@ export default class StripeRouter
             `)
         });
 
-        this.router.get("/:invoiceId/complete", async (req, res) => {
+        this.router.get("/:invoiceId/complete", async (req, res) =>
+        {
             const invoiceId = req.params.invoiceId;
             const payment_intent = req.query.payment_intent as string;
             const invoice = await InvoiceModel.findOne( { id: invoiceId } );
@@ -204,7 +205,8 @@ export default class StripeRouter
             let href = "";
             let status = "";
 
-            switch (intent.status) {
+            switch (intent.status)
+            {
                 case 'succeeded':
                     message = 'Success! Payment received.';
                     href = Company_Website;
@@ -281,10 +283,13 @@ export default class StripeRouter
         {
             const sig = req.headers['stripe-signature'] as string;
             let event;
-            try {
+            try
+            {
                 // @ts-ignore
                 event = Stripe.webhooks.constructEvent(req.rawBody, sig, Stripe_Webhook_Secret);
-            } catch (err) {
+            } 
+            catch (err)
+            {
                 // @ts-ignore
                 return res.status(400).send(`Webhook Error: ${err.message}`);
             }
