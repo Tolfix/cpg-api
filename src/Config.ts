@@ -64,7 +64,8 @@ export const Webhook_Secret = process.env.WEBHOOK_SECRET ?? "";
 
 export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () =>
 {
-    return ConfigModel.find().then(config => {
+    return ConfigModel.find().then(config =>
+    {
         //@ts-ignore
         return config[0].smtp;
     });
@@ -72,7 +73,8 @@ export const GetSMTPConfig: () => Promise<IConfigs["smtp"]> = () =>
 
 export const GetSMTPEmails: () => Promise<IConfigs["smtp_emails"]> = () =>
 {
-    return ConfigModel.find().then(config => {
+    return ConfigModel.find().then(config =>
+    {
         //@ts-ignore
         return config[0].smtp_emails;
     });
