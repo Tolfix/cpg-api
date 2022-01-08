@@ -100,7 +100,8 @@ export function installPlugin(plugin: string)
 
 export function isPluginInstalled(plugin: string)
 {
-    return new Promise((resolve) => {
+    return new Promise((resolve) =>
+    {
         // Check node_modules for plugin
         const pluginPath = `${process.cwd()}/node_modules/${plugin}`;
         if(!fs.existsSync(pluginPath))
