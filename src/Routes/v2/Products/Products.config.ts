@@ -25,7 +25,8 @@ export default class ProductsRouter
             ProductController.getByUid
         ]);
 
-        this.router.get("/:uid/configurable_options", async (req, res) => {
+        this.router.get("/:uid/configurable_options", async (req, res) =>
+        {
             const uid = req.params.uid;
             const [product, p_fail] = await AW(await ProductModel.findOne({ $or: [
                 { uid: uid as IProduct["uid"] },
