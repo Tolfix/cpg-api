@@ -1,7 +1,7 @@
 {
-  "name": "cpg",
+  "name": "cpg-api",
   "version": "v1.6",
-  "description": "CPG",
+  "description": "Central Payment Gateway",
   "main": "./build/Main.js",
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -61,7 +61,7 @@
   },
   "keywords": [],
   "author": "Tolfix",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Tolfix/CGP-API/issues"
   },
