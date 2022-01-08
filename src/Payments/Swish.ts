@@ -3,7 +3,8 @@ import request from "request";
 // Create qr code for Swish from IInvoice interface
 export function createSwishQRCode(number: string, amount: number, notes: string): Promise<string>
 {
-    return new Promise((resolve) => {
+    return new Promise((resolve) =>
+    {
         const url = "https://mpc.getswish.net/qrg-swish";
         const endpoint = "/api/v1/prefilled";
 
@@ -30,7 +31,8 @@ export function createSwishQRCode(number: string, amount: number, notes: string)
             json: true,
             encoding: null,
             body: data
-        }, (error, response, body) => {
+        }, (error, response, body) =>
+        {
             if (!error && response.statusCode === 200)
                 resolve(Buffer.from(body).toString("base64"));
         });
