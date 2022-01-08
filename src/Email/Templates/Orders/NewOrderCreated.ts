@@ -9,14 +9,16 @@ export default async (order: IOrder, customer: ICustomer) => `Hello ${getFullNam
 <br />
 Order nmr.: ${order.id}
 <br />
-Products: <br/>${(await Promise.all(order.products.map(async (product) => {
+Products: <br/>${(await Promise.all(order.products.map(async (product) =>
+{
     const p = await getProductById(product.product_id as any);
     if (!p)
         return '';
     return `${p.name} - (${p.price} ${Company_Currency.toLocaleUpperCase()})`;
 }))).join("<br />")}
 <br />
-Total: ${(await Promise.all(order.products.map(async (product) => {
+Total: ${(await Promise.all(order.products.map(async (product) =>
+{
     const p = await getProductById(product.product_id as any);
     if (!p)
         return 0;
