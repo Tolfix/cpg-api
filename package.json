@@ -1,6 +1,6 @@
 {
   "name": "cpg",
-  "version": "v1.4",
+  "version": "v1.5",
   "description": "CPG",
   "main": "./build/Main.js",
   "dependencies": {

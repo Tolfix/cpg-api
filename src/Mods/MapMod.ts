@@ -2,7 +2,7 @@ declare global
 {
     interface Map<K, V>
     {
-        array: () => Array<V>
+        array(): Array<V>
     }
 }
 
