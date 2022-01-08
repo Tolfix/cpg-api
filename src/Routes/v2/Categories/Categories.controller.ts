@@ -12,7 +12,8 @@ const API = new BaseModelAPI<ICategory>(idCategory, CategoryModel);
 function insert(req: Request, res: Response)
 {
     API.create(req.body)
-        .then((result) => {
+        .then((result) =>
+        {
 
             mainEvent.emit("categories_created", result);
 
@@ -24,7 +25,8 @@ function insert(req: Request, res: Response)
 
 function getByUid(req: Request, res: Response)
 {
-    API.findByUid((req.params.uid as ICategory["uid"])).then((result) => {
+    API.findByUid((req.params.uid as ICategory["uid"])).then((result) =>
+    {
         APISuccess(result)(res);
     });
 }
@@ -44,14 +46,16 @@ function list(req: Request, res: Response)
     const sort = req.query._sort as string ?? "id";
     const order = req.query._order as string ?? "asc";
         
-    API.findAll(limit, start, sort, order).then((result: any) => {
+    API.findAll(limit, start, sort, order).then((result: any) =>
+    {
         APISuccess(result)(res)
     })
 }
 
 function patch(req: Request, res: Response)
 {
-    API.findAndPatch((req.params.uid as ICategory["uid"]), req.body).then((result) => {
+    API.findAndPatch((req.params.uid as ICategory["uid"]), req.body).then((result) =>
+    {
         // @ts-ignore
         mainEvent.emit("categories_updated", result);
         APISuccess(result)(res);
@@ -61,7 +65,8 @@ function patch(req: Request, res: Response)
 function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.uid as ICategory["uid"])
-        .then((result)=> {
+        .then((result)=>
+        {
             // @ts-ignore
             mainEvent.emit("categories_deleted", result);
             APISuccess({}, 204)(res)
@@ -72,7 +77,8 @@ function getProductsByUid(req: Request, res: Response)
 {
     ProductModel.find({ 
         category_uid: req.params.uid as ICategory["uid"]
-    }).then((result) => {
+    }).then((result) =>
+    {
       APISuccess(result)(res);  
     })
 }
