@@ -66,9 +66,11 @@ export async function SendEmail(
 
     Logger.info(`Sending email to ${reciever}`);
 
-    transport.sendMail(email).then(() => {
+    transport.sendMail(email).then(() =>
+    {
         callback ? callback?.(null, true) : Promise.resolve(true);
-    }).catch(e => {
+    }).catch(e =>
+    {
         callback ? callback?.(e, false) : Promise.resolve(false);
     });
 }
