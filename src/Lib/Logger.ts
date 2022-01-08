@@ -20,29 +20,34 @@ export function SaveLog(date: string, ...args: string[])
 
 
 const Logger = {
-    trace: () => {
+    trace: () =>
+    {
         const err = new Error();
         const lines = err.stack?.split("\n");
         //@ts-ignore
         return lines[2].substring(lines[2].indexOf("("), lines[2].lastIndexOf(")") + 1)
     },
 
-    debug: <T extends any[]> (...body: T) => {
-        if(DebugMode) {
+    debug: <T extends any[]> (...body: T) =>
+    {
+        if(DebugMode)
+        {
             const time = getTime();
             SaveLog(time, ...body);
             console.log(time + " | " + colors.cyan(`debug: `), ...body)
         }
     },
 
-    api: <T extends any[]> (...body: T) => {
+    api: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
         console.log(time + " | " + colors.green(`API: `), ...body)
     },
 
-    graphql: <T extends any[]> (...body: T) => {
+    graphql: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
@@ -50,56 +55,64 @@ const Logger = {
     },
 
 
-    plugin: <T extends any[]> (...body: T) => {
+    plugin: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
         console.log(time + " | " + colors.green(`Plugin: `), ...body)
     },
 
-    cache: <T extends any[]> (...body: T) => {
+    cache: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
         console.log(time + " | " + colors.magenta(`cach`)+colors.yellow("e: "), ...body)
     },
 
-    rainbow: <T extends any[]> (...body: T) => {
+    rainbow: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
         console.log(time + " | " + colors.rainbow(`rainbow: `), ...body)
     },
 
-    verbos: <T extends any[]> (...body: T) => {
+    verbos: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
         console.log(time + " | " + colors.magenta(`verbos: `), ...body)
     },
 
-    error: <T extends any[]> (...body: T) => {
+    error: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
         console.log(time + " | ", colors.red(`error: `), ...body)
     },
 
-    warning: <T extends any[]> (...body: T) => {
+    warning: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
         console.log(time + " | ", colors.yellow(`warning: `), ...body)
     },
 
-    info: <T extends any[]> (...body: T) => {
+    info: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
         console.log(time + " | ", colors.blue(`info: `), ...body)
     },
 
-    db: <T extends any[]> (...body: T) => {
+    db: <T extends any[]> (...body: T) =>
+    {
         const time = getTime();
         SaveLog(time, ...body);
 
