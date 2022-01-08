@@ -10,7 +10,8 @@ import { InvoiceNotifiedReport } from "../Email/Reports/InvoiceReport";
 export default function Cron_Invoices()
 {
     // Every hour
-    new CronJob("0 */12 * * *", () => {
+    new CronJob("0 */12 * * *", () =>
+    {
         Logger.info(`Checking invoices..`);
 
         // Trigger if a invoice is dued in the next 2 weeks.
@@ -40,7 +41,8 @@ export default function Cron_Invoices()
             status: {
                 $not: /fraud|cancelled/g
             }
-        }).then(async (invoices) => {
+        }).then(async (invoices) =>
+        {
             Logger.info(`Found ${invoices.length} invoices to notify.`);
             for await(const invoice of invoices)
             {
@@ -66,7 +68,8 @@ export default function Cron_Invoices()
             status: {
                 $not: /fraud|cancelled/g
             }
-        }).then(async (invoices) => {
+        }).then(async (invoices) =>
+        {
             for await(const invoice of invoices)
             {
                 // Get customer
