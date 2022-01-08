@@ -27,7 +27,8 @@ export default class QuotesRouter
             QuotesController.getByUid
         ]);
 
-        this.router.get("/:uid/view", async (req, res) => {
+        this.router.get("/:uid/view", async (req, res) =>
+        {
             // 
             const uid = req.params.uid;
             const [quote, e_quote] = await AW(await QuotesModel.findOne({ uid: uid }));
