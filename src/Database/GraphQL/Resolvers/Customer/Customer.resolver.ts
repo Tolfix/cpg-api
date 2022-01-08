@@ -22,7 +22,8 @@ export function myProfileResolver(
                 id: ICustomer["id"],
                 email: ICustomer["personal"]["email"],
             }
-        } & TContext, TArgs>) => {
+        } & TContext, TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -52,7 +53,8 @@ export function myInvoicesResolver(
                 id: ICustomer["id"],
                 email: ICustomer["personal"]["email"],
             }
-        } & TContext, TArgs>) => {
+        } & TContext, TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -97,7 +99,8 @@ export function myInvoiceResolver(
             }
         } & TContext, {
             id: unknown
-        } & TArgs>) => {
+        } & TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -166,7 +169,8 @@ export function myOrdersResolver(
                 id: ICustomer["id"],
                 email: ICustomer["personal"]["email"],
             }
-        } & TContext, TArgs>) => {
+        } & TContext, TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -211,7 +215,8 @@ export function myOrderResolver(
             }
         } & TContext, {
             id: unknown
-        } & TArgs>) => {
+        } & TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -280,7 +285,8 @@ export function myTransactionsResolver(
                 id: ICustomer["id"],
                 email: ICustomer["personal"]["email"],
             }
-        } & TContext, TArgs>) => {
+        } & TContext, TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
@@ -325,7 +331,8 @@ export function myTransactionResolver(
             }
         } & TContext, {
             id: unknown
-        } & TArgs>) => {
+        } & TArgs>) =>
+        {
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
