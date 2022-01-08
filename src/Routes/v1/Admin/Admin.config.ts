@@ -19,7 +19,8 @@ export default class AdminRouter
          * @group Admin - Admin routes
          * @security JWT
          */
-        this.router.get("/validate", EnsureAdmin, (req, res) => {
+        this.router.get("/validate", EnsureAdmin, (req, res) =>
+        {
             APISuccess("Authenticated", 202)(res);
         });
 
@@ -31,7 +32,8 @@ export default class AdminRouter
          * @returns {APIError} 404 - Failed
          * @security Basic
          */
-        this.router.post("/auth", EnsureAdmin, (req, res) => {
+        this.router.post("/auth", EnsureAdmin, (req, res) =>
+        {
             const token = jwt.sign({
                 data: 'admin',
                 exp: Math.floor(Date.now() / 1000) + (((60 * 60)*24)*7)
