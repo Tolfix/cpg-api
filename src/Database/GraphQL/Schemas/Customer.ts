@@ -1,7 +1,7 @@
 import { resolverAdminAccess, resolverUserAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import CustomerModel from "../../Models/Customers/Customer";
-import { myInvoiceResolver, myInvoicesResolver, myOrderResolver, myOrdersResolver, myProfileResolver } from "../Resolvers/Customer/Customer.resolver";
+import { myInvoiceResolver, myInvoicesResolver, myOrderResolver, myOrdersResolver, myProfileResolver, myTransactionResolver, myTransactionsResolver } from "../Resolvers/Customer/Customer.resolver";
 
 export const CustomersGraphQL = composeWithMongoose(CustomerModel);
 export const startsWith = "Customers";
@@ -12,6 +12,8 @@ export const CustomersQuery = {
         myInvoice: myInvoiceResolver(CustomersGraphQL),
         myOrders: myOrdersResolver(CustomersGraphQL),
         myOrder: myOrderResolver(CustomersGraphQL),
+        myTransactions: myTransactionsResolver(CustomersGraphQL),
+        myTransaction: myTransactionResolver(CustomersGraphQL),
     }),
     ...resolverAdminAccess({
         customerById: CustomersGraphQL.getResolver("findById"),
