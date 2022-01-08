@@ -45,7 +45,8 @@ export default class InvoiceRouter
             InvoiceController.removeById
         ]);
 
-        this.router.get("/:uid/pdf", EnsureAdmin, async (req, res) => {
+        this.router.get("/:uid/pdf", EnsureAdmin, async (req, res) =>
+        {
             
             const invoice = await InvoiceModel.findOne({ id: req.params.uid });
 
