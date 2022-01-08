@@ -74,7 +74,7 @@ server.listen(PORT, () => Logger.api(`Server listing on port ${PORT} | ${Full_Do
 {
     // Still experimental
 
-    DebugMode ? await ApolloServer(server) : null;
+    ApolloServer(server);
     server.use("*", (req, res) =>
     {
         return APIError({
