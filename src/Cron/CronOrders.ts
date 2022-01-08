@@ -10,13 +10,15 @@ import { InvoiceCreatedReport } from "../Email/Reports/InvoiceReport";
 export default function Cron_Orders()
 {
     // Every hour
-    new CronJob("0 */12 * * *", () => {
+    new CronJob("0 */12 * * *", () =>
+    {
         Logger.info(`Checking orders..`);
 
         // Check if the order needs to create a new invoice if order.dates.next_recylce is withing 14 days
         OrderModel.find({
             order_status: "active",
-        }).then(async orders => {
+        }).then(async orders =>
+        {
             const newInvoices = [];
             // orders.forEach(async order => {
             for await(const order of orders)
