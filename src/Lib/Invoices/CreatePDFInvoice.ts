@@ -24,7 +24,8 @@ import qrcode from "qrcode";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) =>
+    {
 
         const Customer = await CustomerModel.findOne({ id: invoice.customer_uid });
     
@@ -113,7 +114,8 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "date": invoice.dates.invoice_date,
                 "due-date": invoice.dates.due_date
             },
-            "products": invoice.items.map((item) => {
+            "products": invoice.items.map((item) =>
+            {
                 return {
                     "quantity": item.quantity,
                     "description": item.notes,
@@ -135,7 +137,8 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             data["images"]["background"] = PDF_Template_Url;
         
         //@ts-ignore
-        easyinvoice.createInvoice(data, (result: { pdf: any; }) => {
+        easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
+        {
             return resolve(result.pdf);
         });
     })
