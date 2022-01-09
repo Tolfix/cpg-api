@@ -11,6 +11,7 @@ import { Company_Name } from "../../../Config";
 import Footer from "../../../Email/Templates/General/Footer";
 import getFullName from "../../../Lib/Customers/getFullName";
 import mainEvent from "../../../Events/Main";
+import { sanitizeMongoose } from "../../../Lib/Sanitize";
 
 const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
@@ -28,7 +29,7 @@ function insert(req: Request, res: Response)
             const email = req.body?.personal?.email;
 
             // Check if email already exists
-            const doesExist = await CustomerModel.findOne({ "personal.email": email });
+            const doesExist = await CustomerModel.findOne({ "personal.email": sanitizeMongoose(email) });
 
             if(doesExist)
                 return APIError(`Email ${email} already exists`, 409)(res);

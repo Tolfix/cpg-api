@@ -13,6 +13,7 @@ import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes";
 import { Document } from "mongoose";
 import Logger from "../Logger";
 import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
+import { sanitizeMongoose } from "../Sanitize";
 
 
 // Create a method that checks if the order next recycle is within 14 days
@@ -37,7 +38,7 @@ export async function createInvoiceFromOrder(order: IOrder)
     // Get our products
     const Products = await getProductsByOrder(order);
     const LBProducts = createMapProductsFromOrder(order);
-    const Promotion_Code = await PromotionCodeModel.findOne({ id: order.promotion_code });
+    const Promotion_Code = await PromotionCodeModel.findOne({ id: sanitizeMongoose(order.promotion_code) });
 
     // Get customer id
     const Customer_Id = order.customer_uid;

@@ -25,6 +25,7 @@ import Logger from "../../../Lib/Logger";
 import { ce_orders } from "../../../Lib/Orders/PlaceOrder";
 import { TRecurringMethod } from "../../../Types/PaymentMethod";
 import { TPaymentTypes } from "../../../Types/PaymentTypes";
+import { sanitizeMongoose } from "../../../Lib/Sanitize";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -97,7 +98,7 @@ export default class OrderRoute
             const payment_method = req.body.payment_method as keyof IPayments;
             const __promotion_code = req.body.promotion_code;
             const promotion_code = await PromotionCodeModel.findOne({
-                name: __promotion_code,
+                name: sanitizeMongoose(__promotion_code),
             });
             // @ts-ignore
             Logger.info(`Order placed by ${req.customer.email}`, `General information:`, products, payment_method, promotion_code);

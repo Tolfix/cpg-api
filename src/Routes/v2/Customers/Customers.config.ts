@@ -16,6 +16,7 @@ import InvoiceModel from "../../../Database/Models/Invoices.model";
 import OrderModel from "../../../Database/Models/Orders.model";
 import { ICustomer } from "../../../Interfaces/Customer";
 import TransactionsModel from "../../../Database/Models/Transactions.model";
+import { sanitizeMongoose } from "../../../Lib/Sanitize";
 
 export default class CustomerRouter
 {
@@ -248,7 +249,11 @@ export default class CustomerRouter
         this.router.post("/my/reset-password", async (req, res) =>
         {
             const email = req.body.email;
-            const customer = await CustomerModel.findOne({ "personal.email": email });
+
+            if(!email)
+                return APIError(`Invalid email`)(res);
+
+            const customer = await CustomerModel.findOne({ "personal.email": sanitizeMongoose(email) });
             if(!customer)
                 return APIError(`Unable to find user with email ${email}`)(res);
 
@@ -341,7 +346,10 @@ export default class CustomerRouter
             if(!password)
                 return APIError(`Password is required`)(res);
             
-            const passwordReset = await PasswordResetModel.findOne({ token: token }) as any;
+            if(!token)
+                return APIError(`Token is required`)(res);
+
+            const passwordReset = await PasswordResetModel.findOne({ token: sanitizeMongoose(token) }) as any;
             if(!passwordReset)
                 return APIError(`Unable to find password reset token`)(res);
             
@@ -418,7 +426,7 @@ export default class CustomerRouter
             if(!username || !password)
                 return APIError("Please include username and password in body.")(res);
             
-            const customer = await CustomerModel.findOne({ "personal.email": username });
+            const customer = await CustomerModel.findOne({ "personal.email": sanitizeMongoose(username) });
 
             if(!customer)
                 return APIError("Invalid email or password.")(res);
