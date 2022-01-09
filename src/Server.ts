@@ -13,7 +13,8 @@ import ApolloServer from "./Database/GraphQL/ApolloServer";
 
 declare module "express-session"
 {
-    interface SessionData {
+    interface SessionData
+    {
         payload?: ICustomer;
     }
 }
@@ -47,14 +48,26 @@ server.use((req, res, next) =>
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     express.json({verify: (req, res, buf, encoding) =>
     { 
-        // try {
-        //     JSON.parse(buf.toString());
-            // @ts-ignore
-            req.rawBody = buf;
-        // } catch (e) {
-        //     // @ts-ignore
-        //     APIError("Invalid JSON")(res);
-        // }
+        // Check if content type is application/json
+        // And method is POST|PUT|PATCH, since we don't care to look at GET requests
+        if(req.headers["content-type"] === "application/json" && req.method?.match(/POST|PATCH|PUT/g))
+        {
+            // Fix to issue #29
+            // https://github.com/Tolfix/cpg-api/issues/29
+            // Not good method to return node errors to user.
+            try
+            {
+                JSON.parse(buf.toString());
+            }
+            catch (e)
+            {
+                // @ts-ignore
+                APIError("Invalid JSON")(res);
+            }
+        }
+        
+        // @ts-ignore
+        req.rawBody = buf;
     }})(req, res, next);
 });
 
