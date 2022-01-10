@@ -54,7 +54,7 @@ server.use((req, res, next) =>
         {
             // Fix to issue #29
             // https://github.com/Tolfix/cpg-api/issues/29
-            // Not good method to return node errors to user.
+            // Not good "method" to return node errors to user.
             try
             {
                 JSON.parse(buf.toString());
