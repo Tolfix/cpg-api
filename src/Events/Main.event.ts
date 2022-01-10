@@ -8,25 +8,28 @@ class MainEvent extends events.EventEmitter
 {
   public emit<K extends keyof MainOnEvents>(event: K, args: MainOnEvents[K]): boolean
   {
+    super.emit(event, args);
     // Webhook
     // It sends webhooks specified url
     (async () =>
-    {
-      // Grabs the URLS from config
-      const URLS = (await ConfigModel.find())[0].webhooks_urls;
-      // // // // // // // // // //
-      if (URLS.length > 0)
-        for (const URL of URLS)
-          request.post(URL, {
-            json: {
-              event: event,
-              data: args,
-              secret: Webhook_Secret,
-            }
-          });
-      // // // // // // // // // //
-    })();
-    return super.emit(event, args);
+      {
+        // Grabs the URLS from config
+        const URLS = (await ConfigModel.find())?.[0].webhooks_urls;
+        // // // // // // // // // //
+        if (URLS.length > 0)
+          for (const URL of URLS)
+            request.post(URL, {
+              json: {
+                event: event,
+                data: args,
+                secret: Webhook_Secret,
+              }
+            });
+        // // // // // // // // // //
+      }
+    )();
+
+    return true;
   }
 
   public on<K extends keyof MainOnEvents>(eventName: K, listener: (args: MainOnEvents[K]) => void)
@@ -34,5 +37,6 @@ class MainEvent extends events.EventEmitter
       return super.on(eventName, listener);
   }
 }
+
 const mainEvent = new MainEvent();
 export default mainEvent;
