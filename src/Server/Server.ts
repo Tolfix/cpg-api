@@ -6,7 +6,7 @@ import { Express_Session_Secret, Full_Domain, PORT } from "../Config";
 import Logger from "../Lib/Logger";
 import RouteHandler from "../Handlers/RouteHandler";
 import { reCache } from "../Cache/reCache";
-import { ICustomer } from "../Interfaces/Customer";
+import { ICustomer } from "../Interfaces/Customer.interface";
 import { APIError } from "../Lib/Response";
 import { PluginHandler } from "../Plugins/PluginHandler";
 import ApolloServer from "../Database/GraphQL/ApolloServer";

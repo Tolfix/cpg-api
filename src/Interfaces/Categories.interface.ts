@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { IImage } from "./Images";
+import { IImage } from "./Images.interface";
 
 export interface ICategory
 {

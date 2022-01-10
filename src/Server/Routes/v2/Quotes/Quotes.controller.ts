@@ -4,7 +4,7 @@ import CustomerModel from "../../../../Database/Models/Customers/Customer.model"
 import QuotesModel from "../../../../Database/Models/Quotes.model";
 import { SendEmail } from "../../../../Email/Send";
 import mainEvent from "../../../../Events/Main";
-import { IQuotes } from "../../../../Interfaces/Quotes";
+import { IQuotes } from "../../../../Interfaces/Quotes.interface";
 import getFullName from "../../../../Lib/Customers/getFullName";
 import { idQuotes } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";

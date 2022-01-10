@@ -1,7 +1,7 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IProduct } from "../../Interfaces/Products";
+import { IProduct } from "../../Interfaces/Products.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Texts/GetText";
 import { A_RecurringMethod } from "../../Types/PaymentMethod";

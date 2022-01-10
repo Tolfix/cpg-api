@@ -1,9 +1,9 @@
-import { IConfigurableOptions } from "./ConfigurableOptions";
-import { ICustomer } from "./Customer";
-import { TOrderStatus } from "./Orders";
-import { IPayments } from "./Payments";
-import { IProduct } from "./Products";
-import { ITransactions } from "./Transactions";
+import { IConfigurableOptions } from "./ConfigurableOptions.interface";
+import { ICustomer } from "./Customer.interface";
+import { TOrderStatus } from "./Orders.interface";
+import { IPayments } from "./Payments.interface";
+import { IProduct } from "./Products.interface";
+import { ITransactions } from "./Transactions.interface";
 
 /**
  * @typedef InvoiceCreate

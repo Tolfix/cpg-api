@@ -3,7 +3,7 @@ import Logger from "../../../../Lib/Logger";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import { CacheImages } from "../../../../Cache/CacheImage";
-import { IImage } from "../../../../Interfaces/Images";
+import { IImage } from "../../../../Interfaces/Images.interface";
 import { UploadedFile } from "express-fileupload";
 import { idImages } from "../../../../Lib/Generator";
 import ImageModel from "../../../../Database/Models/Images.model";

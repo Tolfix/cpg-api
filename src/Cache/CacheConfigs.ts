@@ -1,4 +1,4 @@
-import { IConfigs } from "../Interfaces/Admin/Configs";
+import { IConfigs } from "../Interfaces/Admin/Configs.interface";
 
 export type CacheCN = keyof IConfigs;
 /**

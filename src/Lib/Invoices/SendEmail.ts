@@ -1,8 +1,8 @@
 import { Document } from "mongoose";
 import { Company_Name, Full_Domain } from "../../Config";
 import Footer from "../../Email/Templates/General/Footer";
-import { ICustomer } from "../../Interfaces/Customer";
-import { IInvoice } from "../../Interfaces/Invoice";
+import { ICustomer } from "../../Interfaces/Customer.interface";
+import { IInvoice } from "../../Interfaces/Invoice.interface";
 import createPDFInvoice from "./CreatePDFInvoice";
 import {SendEmail} from "../../Email/Send"
 import mainEvent from "../../Events/Main";

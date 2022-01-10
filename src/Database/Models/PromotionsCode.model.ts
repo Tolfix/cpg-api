@@ -1,7 +1,7 @@
 import mongoose,{ Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes";
+import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes.interface";
 import Logger from "../../Lib/Logger";
 
 const PromotionCodeSchema = new Schema

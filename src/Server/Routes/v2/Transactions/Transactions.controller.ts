@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
 import mainEvent from "../../../../Events/Main";
-import { ITransactions } from "../../../../Interfaces/Transactions";
+import { ITransactions } from "../../../../Interfaces/Transactions.interface";
 import { idTransicitons } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";

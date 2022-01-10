@@ -1,4 +1,4 @@
-import { IProduct } from "./Products";
+import { IProduct } from "./Products.interface";
 
 export interface IPromotionsCodes
 {

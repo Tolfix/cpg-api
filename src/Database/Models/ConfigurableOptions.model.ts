@@ -1,7 +1,7 @@
 import mongoose, { model, Schema, Document } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions";
+import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions.interface";
 import Logger from "../../Lib/Logger";
 
 const ConfigurableOptionsSchema = new Schema

@@ -1,6 +1,6 @@
 import request from "request";
 import events from "events";
-import { MainOnEvents } from "../Interfaces/Events/MainOnEvents";
+import { MainOnEvents } from "../Interfaces/Events/MainOnEvents.interface";
 import ConfigModel from "../Database/Models/Configs.model";
 import { Webhook_Secret } from "../Config";
 

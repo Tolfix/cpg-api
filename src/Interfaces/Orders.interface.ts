@@ -1,11 +1,11 @@
 import { TRecurringMethod } from "../Types/PaymentMethod";
 import { TPaymentTypes } from "../Types/PaymentTypes";
-import { IConfigurableOptions } from "./ConfigurableOptions";
-import { ICustomer } from "./Customer";
-import { IInvoice } from "./Invoice";
-import { IPayments } from "./Payments";
-import { IProduct } from "./Products";
-import { IPromotionsCodes } from "./PromotionsCodes";
+import { IConfigurableOptions } from "./ConfigurableOptions.interface";
+import { ICustomer } from "./Customer.interface";
+import { IInvoice } from "./Invoice.interface";
+import { IPayments } from "./Payments.interface";
+import { IProduct } from "./Products.interface";
+import { IPromotionsCodes } from "./PromotionsCodes.interface";
 
 /**
  * @typedef Order

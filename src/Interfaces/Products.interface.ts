@@ -1,7 +1,7 @@
 import { TRecurringMethod } from "../Types/PaymentMethod";
 import { TPaymentTypes } from "../Types/PaymentTypes";
-import { ICategory } from "./Categories";
-import { IImage } from "./Images";
+import { ICategory } from "./Categories.interface";
+import { IImage } from "./Images.interface";
 
 /**
  * @typedef Product

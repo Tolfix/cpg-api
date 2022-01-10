@@ -2,7 +2,7 @@ import stripe from "stripe";
 import { Company_Currency, DebugMode, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
-import { IInvoice } from "../Interfaces/Invoice";
+import { IInvoice } from "../Interfaces/Invoice.interface";
 import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import { getDate } from "../Lib/Time";

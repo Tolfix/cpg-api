@@ -1,13 +1,13 @@
-import { ICategory } from "../Categories";
-import { IConfigurableOptions } from "../ConfigurableOptions";
-import { ICustomer } from "../Customer";
-import { ILoggingTypes } from "../ILogging";
-import { IImage } from "../Images";
-import { IInvoice } from "../Invoice";
-import { IOrder } from "../Orders";
-import { IProduct } from "../Products";
-import { IQuotes } from "../Quotes";
-import { ITransactions } from "../Transactions";
+import { ICategory } from "../Categories.interface";
+import { IConfigurableOptions } from "../ConfigurableOptions.interface";
+import { ICustomer } from "../Customer.interface";
+import { ILoggingTypes } from "../Logging.interface";
+import { IImage } from "../Images.interface";
+import { IInvoice } from "../Invoice.interface";
+import { IOrder } from "../Orders.interface";
+import { IProduct } from "../Products.interface";
+import { IQuotes } from "../Quotes.interface";
+import { ITransactions } from "../Transactions.interface";
 
 export interface MainOnEvents
 {

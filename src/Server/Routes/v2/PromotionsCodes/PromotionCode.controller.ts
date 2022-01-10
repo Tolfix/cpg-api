@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
 import mainEvent from "../../../../Events/Main";
-import { IPromotionsCodes } from "../../../../Interfaces/PromotionsCodes";
+import { IPromotionsCodes } from "../../../../Interfaces/PromotionsCodes.interface";
 import { idCategory } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";

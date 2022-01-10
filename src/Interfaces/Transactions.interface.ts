@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
-import { ICustomer } from "./Customer";
-import { IInvoice } from "./Invoice";
+import { ICustomer } from "./Customer.interface";
+import { IInvoice } from "./Invoice.interface";
 
 /**
  * @typedef Transactions

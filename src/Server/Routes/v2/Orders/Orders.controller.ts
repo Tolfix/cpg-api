@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import dateFormat from "date-and-time";
 import OrderModel from "../../../../Database/Models/Orders.model";
-import { IOrder } from "../../../../Interfaces/Orders";
+import { IOrder } from "../../../../Interfaces/Orders.interface";
 import nextRycleDate from "../../../../Lib/Dates/DateCycle";
 import { idOrder } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";

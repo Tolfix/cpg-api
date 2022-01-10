@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import ConfigurableOptionsModel from "../../../../Database/Models/ConfigurableOptions.model";
 import mainEvent from "../../../../Events/Main";
-import { IConfigurableOptions } from "../../../../Interfaces/ConfigurableOptions";
+import { IConfigurableOptions } from "../../../../Interfaces/ConfigurableOptions.interface";
 import { idConfigurableOptions } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";

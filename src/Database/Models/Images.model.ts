@@ -1,7 +1,7 @@
 import mongoose,{ Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IImage } from "../../Interfaces/Images";
+import { IImage } from "../../Interfaces/Images.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Texts/GetText";
 

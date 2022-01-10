@@ -14,7 +14,7 @@ import { SendEmail } from "../../../../Email/Send";
 import Footer from "../../../../Email/Templates/General/Footer";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import OrderModel from "../../../../Database/Models/Orders.model";
-import { ICustomer } from "../../../../Interfaces/Customer";
+import { ICustomer } from "../../../../Interfaces/Customer.interface";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 

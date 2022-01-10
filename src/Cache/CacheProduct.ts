@@ -1,5 +1,5 @@
-import { ICategory } from "../Interfaces/Categories";
-import { IProduct } from "../Interfaces/Products";
+import { ICategory } from "../Interfaces/Categories.interface";
+import { IProduct } from "../Interfaces/Products.interface";
 
 /**
  * @deprecated

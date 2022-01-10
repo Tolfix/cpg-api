@@ -1,4 +1,4 @@
-import { IInvoice } from "../Interfaces/Invoice";
+import { IInvoice } from "../Interfaces/Invoice.interface";
 
 /**
  * @deprecated

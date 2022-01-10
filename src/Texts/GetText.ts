@@ -1,5 +1,5 @@
-import { IAllLanguages } from "../Interfaces/Lang/AllLang";
-import { IGetText } from "../Interfaces/Lang/GetText";
+import { IAllLanguages } from "../Interfaces/Lang/AllLang.interface";
+import { IGetText } from "../Interfaces/Lang/GetText.interface";
 
 export default (lang: keyof IAllLanguages = "en"): IGetText =>
 {

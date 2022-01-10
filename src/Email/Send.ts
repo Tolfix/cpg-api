@@ -1,6 +1,6 @@
 import mail from "nodemailer";
 import { Company_Name, GetSMTPConfig } from "../Config";
-import { IConfigs } from "../Interfaces/Admin/Configs";
+import { IConfigs } from "../Interfaces/Admin/Configs.interface";
 import AW from "../Lib/AW";
 import Logger from "../Lib/Logger";
 

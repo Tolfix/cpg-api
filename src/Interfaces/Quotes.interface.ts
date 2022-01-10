@@ -1,6 +1,6 @@
-import { IInvoice } from "./Invoice";
-import { IPayments } from "./Payments";
-import { IPromotionsCodes } from "./PromotionsCodes";
+import { IInvoice } from "./Invoice.interface";
+import { IPayments } from "./Payments.interface";
+import { IPromotionsCodes } from "./PromotionsCodes.interface";
 
 export interface IQuotes
 {
