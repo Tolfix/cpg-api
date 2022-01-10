@@ -3,7 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IProduct } from "../../Interfaces/Products.interface";
 import Logger from "../../Lib/Logger";
-import GetText from "../../Texts/GetText";
+import GetText from "../../Translation/GetText";
 import { A_RecurringMethod } from "../../Types/PaymentMethod";
 import { A_PaymentTypes } from "../../Types/PaymentTypes";
 

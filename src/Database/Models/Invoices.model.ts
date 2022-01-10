@@ -3,7 +3,7 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { A_InvoiceStatus, IInvoice } from "../../Interfaces/Invoice.interface";
 import Logger from "../../Lib/Logger";
-import GetText from "../../Texts/GetText";
+import GetText from "../../Translation/GetText";
 
 const InvoiceSchema = new Schema
 (

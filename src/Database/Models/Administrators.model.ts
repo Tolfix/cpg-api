@@ -2,7 +2,7 @@ import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IDIAdministrator } from "../../Interfaces/Admin/Administrators.interface";
-import GetText from "../../Texts/GetText";
+import GetText from "../../Translation/GetText";
 
 const AdminSchema = new Schema
 (
