@@ -6,10 +6,10 @@ import { GetVersion } from "./Config";
 Logger.info(`Starting CPG-API with version ${GetVersion()}`);
 Logger.info("Adding .env variables");
 
-Logger.info(`Loading ./Mods/MapMod`);
-import "./Mods/MapMod";
+import "./Mods/Map.mod";
+import "./Mods/Number.mod";
 
-Logger.info(`Loading ./Events/NodeEvents`);
+Logger.info(`Loading ./Events/Node.events`);
 import "./Events/Node.events";
 
 Logger.info(`Loading ./Server`);
@@ -18,7 +18,7 @@ import "./Server/Server";
 Logger.info(`Loading ./Database/Mongo`);
 import "./Database/Mongo";
 
-Logger.info(`Loading ./Handlers/Cron`);
+Logger.info(`Loading ./Handlers/CronHandler`);
 import "./Handlers/CronHandler";
 
 import AdminHandler from "./Admin/AdminHandler";

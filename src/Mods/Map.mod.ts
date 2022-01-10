@@ -1,3 +1,5 @@
+export{};
+
 declare global
 {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -7,10 +9,9 @@ declare global
     }
 }
 
-export default Object.defineProperty(Map.prototype, "array", {
+Object.defineProperty(Map.prototype, "array", {
     value: function()
     {
         return [...(this.values())];
     }
 });
-
