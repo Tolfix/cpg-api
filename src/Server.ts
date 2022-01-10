@@ -84,14 +84,13 @@ PluginHandler(server);
 server.listen(PORT, () => Logger.api(`Server listing on port ${PORT} | ${Full_Domain}`));
 
 (async () =>
-{
-    // Still experimental
-
-    ApolloServer(server);
-    server.use("*", (req, res) =>
     {
-        return APIError({
-            text: `Couldn't find what you were looking for.`
-        })(res);
-    });
-})();
+        ApolloServer(server);
+        server.use("*", (req, res) =>
+        {
+            return APIError({
+                text: `Couldn't find what you were looking for.`
+            })(res);
+        });
+    }
+)();

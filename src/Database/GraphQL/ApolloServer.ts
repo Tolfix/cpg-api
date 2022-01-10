@@ -5,8 +5,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { CacheAdmin, getAdminByUsername } from '../../Cache/CacheAdmin';
 import Logger from '../../Lib/Logger';
+import { Application } from "express";
 
-export default async (server: any) =>
+export default async (server: Application) =>
 {
 
     const apolloServer = new ApolloServer({
