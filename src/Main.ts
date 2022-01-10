@@ -19,7 +19,7 @@ Logger.info(`Loading ./Database/Mongo`);
 import "./Database/Mongo";
 
 Logger.info(`Loading ./Handlers/CronHandler`);
-import "./Handlers/CronHandler";
+import "./Handlers/Cron.handler";
 
 import AdminHandler from "./Admin/AdminHandler";
 Logger.info(`Loading ./Admin/AdminHandler`);

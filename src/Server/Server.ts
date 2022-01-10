@@ -4,7 +4,7 @@ import session from "express-session";
 import fileUpload from "express-fileupload";
 import { Express_Session_Secret, Full_Domain, PORT } from "../Config";
 import Logger from "../Lib/Logger";
-import RouteHandler from "../Handlers/RouteHandler";
+import RouteHandler from "../Handlers/Route.handler";
 import { reCache } from "../Cache/reCache";
 import { ICustomer } from "../Interfaces/Customer.interface";
 import { APIError } from "../Lib/Response";
