@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import ProductModel from "../../../../Database/Models/Products.model";
-import mainEvent from "../../../../Events/Main";
+import mainEvent from "../../../../Events/Main.event";
 import { IProduct } from "../../../../Interfaces/Products.interface";
 import { idProduct } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";

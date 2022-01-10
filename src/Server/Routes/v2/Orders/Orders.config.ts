@@ -19,7 +19,7 @@ import { ICustomer } from "../../../../Interfaces/Customer.interface";
 import { SendEmail } from "../../../../Email/Send";
 import NewOrderCreated from "../../../../Email/Templates/Orders/NewOrderCreated";
 import { IConfigurableOptions } from "../../../../Interfaces/ConfigurableOptions.interface";
-import mainEvent from "../../../../Events/Main";
+import mainEvent from "../../../../Events/Main.event";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
 import Logger from "../../../../Lib/Logger";
 import { ce_orders } from "../../../../Lib/Orders/PlaceOrder";

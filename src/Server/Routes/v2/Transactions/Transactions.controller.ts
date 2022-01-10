@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
-import mainEvent from "../../../../Events/Main";
+import mainEvent from "../../../../Events/Main.event";
 import { ITransactions } from "../../../../Interfaces/Transactions.interface";
 import { idTransicitons } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";

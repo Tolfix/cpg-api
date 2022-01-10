@@ -5,7 +5,7 @@ import { ICustomer } from "../../Interfaces/Customer.interface";
 import { IInvoice } from "../../Interfaces/Invoice.interface";
 import createPDFInvoice from "./CreatePDFInvoice";
 import {SendEmail} from "../../Email/Send"
-import mainEvent from "../../Events/Main";
+import mainEvent from "../../Events/Main.event";
 
 export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: ICustomer): Promise<boolean>
 {

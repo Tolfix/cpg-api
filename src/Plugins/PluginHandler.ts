@@ -7,7 +7,7 @@ import OrderModel from "../Database/Models/Orders.model";
 import ProductModel from "../Database/Models/Products.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
 import ConfigurableOptionsModel from "../Database/Models/ConfigurableOptions.model";
-import mainEvent from "../Events/Main";
+import mainEvent from "../Events/Main.event";
 import Logger from "../Lib/Logger";
 import { Plugins } from "../Config";
 import npm from "npm";

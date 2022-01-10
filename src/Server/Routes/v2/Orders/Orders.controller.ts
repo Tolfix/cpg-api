@@ -11,7 +11,7 @@ import { SendEmail } from "../../../../Email/Send";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import NewOrderCreated from "../../../../Email/Templates/Orders/NewOrderCreated";
 import { Company_Name } from "../../../../Config";
-import mainEvent from "../../../../Events/Main";
+import mainEvent from "../../../../Events/Main.event";
 
 const API = new BaseModelAPI<IOrder>(idOrder, OrderModel);
 

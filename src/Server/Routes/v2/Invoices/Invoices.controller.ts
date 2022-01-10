@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
-import mainEvent from "../../../../Events/Main";
+import mainEvent from "../../../../Events/Main.event";
 import { IInvoice } from "../../../../Interfaces/Invoice.interface";
 import { idInvoice } from "../../../../Lib/Generator";
 import { APIError, APISuccess } from "../../../../Lib/Response";

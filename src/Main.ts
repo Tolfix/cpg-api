@@ -10,7 +10,7 @@ Logger.info(`Loading ./Mods/MapMod`);
 import "./Mods/MapMod";
 
 Logger.info(`Loading ./Events/NodeEvents`);
-import "./Events/NodeEvents";
+import "./Events/Node.events";
 
 Logger.info(`Loading ./Server`);
 import "./Server/Server";

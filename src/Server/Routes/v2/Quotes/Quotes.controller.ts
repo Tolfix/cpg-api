@@ -3,7 +3,7 @@ import { Company_Name, Full_Domain } from "../../../../Config";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import QuotesModel from "../../../../Database/Models/Quotes.model";
 import { SendEmail } from "../../../../Email/Send";
-import mainEvent from "../../../../Events/Main";
+import mainEvent from "../../../../Events/Main.event";
 import { IQuotes } from "../../../../Interfaces/Quotes.interface";
 import getFullName from "../../../../Lib/Customers/getFullName";
 import { idQuotes } from "../../../../Lib/Generator";

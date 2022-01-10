@@ -1,7 +1,7 @@
 import colors from "colors";
 import fs from "fs";
 import { DebugMode, HomeDir } from "../Config";
-import mainEvent from "../Events/Main";
+import mainEvent from "../Events/Main.event";
 import { getDate, getTime } from "./Time";
 
 // A method which takes a ...string[] and stores in a .txt file locally in ./logs/

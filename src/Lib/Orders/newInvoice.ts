@@ -8,7 +8,7 @@ import getCategoryByProduct from "../Products/getCategoryByProduct";
 import { IProduct } from "../../Interfaces/Products.interface";
 import ConfigurableOptionsModel from "../../Database/Models/ConfigurableOptions.model";
 import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions.interface";
-import mainEvent from "../../Events/Main";
+import mainEvent from "../../Events/Main.event";
 import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes.interface";
 import { Document } from "mongoose";
 import Logger from "../Logger";

@@ -1,6 +1,6 @@
 import { GetSMTPEmails } from "../Config";
 import { SendEmail } from "../Email/Send";
-import mainEvent from "./Main";
+import mainEvent from "./Main.event";
 
 mainEvent.on("invoice_created", async (invoice) =>
 {

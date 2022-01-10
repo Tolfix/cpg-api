@@ -10,7 +10,7 @@ import { SendEmail } from "../../../../Email/Send";
 import { Company_Name } from "../../../../Config";
 import Footer from "../../../../Email/Templates/General/Footer";
 import getFullName from "../../../../Lib/Customers/getFullName";
-import mainEvent from "../../../../Events/Main";
+import mainEvent from "../../../../Events/Main.event";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 
 const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
