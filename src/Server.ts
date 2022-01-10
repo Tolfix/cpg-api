@@ -62,7 +62,7 @@ server.use((req, res, next) =>
             catch (e)
             {
                 // @ts-ignore
-                APIError("Invalid JSON")(res);
+                APIError(`Invalid JSON, ${(e.toString())}`)(res);
             }
         }
         
