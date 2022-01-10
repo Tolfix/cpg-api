@@ -11,7 +11,7 @@ import {
     Company_Tax_Registered,
     Company_Currency
 } from "../../Config";
-import { IQuotes } from "../../Interfaces/Quotes";
+import { IQuotes } from "../../Interfaces/Quotes.interface";
 
 export default function createQuotePdf(quote: IQuotes): Promise<string>
 {

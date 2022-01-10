@@ -1,5 +1,5 @@
 import { ObjectTypeComposer, ResolverResolveParams, Resolver, schemaComposer } from "graphql-compose";
-import { ICustomer } from "../../../../Interfaces/Customer";
+import { ICustomer } from "../../../../Interfaces/Customer.interface";
 import CustomerModel from "../../../Models/Customers/Customer.model";
 import InvoiceModel from "../../../Models/Invoices.model";
 import OrderModel from "../../../Models/Orders.model";

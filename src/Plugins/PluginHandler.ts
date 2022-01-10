@@ -7,12 +7,12 @@ import OrderModel from "../Database/Models/Orders.model";
 import ProductModel from "../Database/Models/Products.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
 import ConfigurableOptionsModel from "../Database/Models/ConfigurableOptions.model";
-import mainEvent from "../Events/Main";
+import mainEvent from "../Events/Main.event";
 import Logger from "../Lib/Logger";
 import { Plugins } from "../Config";
 import npm from "npm";
 import fs from "fs";
-import MainCache from "../Cache/MainCache";
+import MainCache from "../Cache/Cache.cache";
 
 // find installed npm packages in package.json and get plugins starting with cpg_plugin
 // then require it and call the new 

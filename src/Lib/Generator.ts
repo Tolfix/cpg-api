@@ -1,22 +1,22 @@
 import crypto from "crypto";
-import { CacheAdmin } from "../Cache/CacheAdmin";
-import { CacheCategories } from "../Cache/CacheCategories";
-import { CacheCustomer } from "../Cache/CacheCustomer";
-import { CacheImages } from "../Cache/CacheImage";
-import { CacheInvoice } from "../Cache/CacheInvoices";
-import { CacheOrder } from "../Cache/CacheOrder";
-import { CacheProduct } from "../Cache/CacheProduct";
-import { CacheTransactions } from "../Cache/CacheTransactions";
-import { IAdministrator } from "../Interfaces/Admin/Administrators";
-import { ICategory } from "../Interfaces/Categories";
-import { IConfigurableOptions } from "../Interfaces/ConfigurableOptions";
-import { ICustomer } from "../Interfaces/Customer";
-import { IImage } from "../Interfaces/Images";
-import { IInvoice } from "../Interfaces/Invoice";
-import { IOrder } from "../Interfaces/Orders";
-import { IProduct } from "../Interfaces/Products";
-import { IQuotes } from "../Interfaces/Quotes";
-import { ITransactions } from "../Interfaces/Transactions";
+import { CacheAdmin } from "../Cache/Admin.cache";
+import { CacheCategories } from "../Cache/Categories.cache";
+import { CacheCustomer } from "../Cache/Customer.cache";
+import { CacheImages } from "../Cache/Image.cache";
+import { CacheInvoice } from "../Cache/Invoices.cache";
+import { CacheOrder } from "../Cache/Order.cache";
+import { CacheProduct } from "../Cache/Product.cache";
+import { CacheTransactions } from "../Cache/Transactions.cache";
+import { IAdministrator } from "../Interfaces/Admin/Administrators.interface";
+import { ICategory } from "../Interfaces/Categories.interface";
+import { IConfigurableOptions } from "../Interfaces/ConfigurableOptions.interface";
+import { ICustomer } from "../Interfaces/Customer.interface";
+import { IImage } from "../Interfaces/Images.interface";
+import { IInvoice } from "../Interfaces/Invoice.interface";
+import { IOrder } from "../Interfaces/Orders.interface";
+import { IProduct } from "../Interfaces/Products.interface";
+import { IQuotes } from "../Interfaces/Quotes.interface";
+import { ITransactions } from "../Interfaces/Transactions.interface";
 
 export function idCustomer(): ICustomer["uid"]
 {

@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { CacheAdmin, getAdminByUsername } from "../Cache/CacheAdmin";
+import { CacheAdmin, getAdminByUsername } from "../Cache/Admin.cache";
 import AdminModel from "../Database/Models/Administrators.model";
 import { idAdmin } from "../Lib/Generator";
 import Logger from "../Lib/Logger";

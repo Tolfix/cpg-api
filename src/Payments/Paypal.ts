@@ -1,7 +1,7 @@
 import paypal from "paypal-rest-sdk";
 import { Company_Currency, DebugMode, Domain, Http_Schema, Paypal_Client_Id, Paypal_Client_Secret, PORT } from "../Config";
 import TransactionsModel from "../Database/Models/Transactions.model";
-import { IInvoice } from "../Interfaces/Invoice";
+import { IInvoice } from "../Interfaces/Invoice.interface";
 import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import Logger from "../Lib/Logger";

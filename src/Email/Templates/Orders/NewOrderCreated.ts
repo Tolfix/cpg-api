@@ -1,6 +1,6 @@
 import { Company_Currency } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer";
-import { IOrder } from "../../../Interfaces/Orders";
+import { ICustomer } from "../../../Interfaces/Customer.interface";
+import { IOrder } from "../../../Interfaces/Orders.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
 import getProductById from "../../../Lib/Products/getProductById";
 import Footer from "../General/Footer";

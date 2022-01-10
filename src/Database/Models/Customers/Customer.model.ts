@@ -1,9 +1,9 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer";
+import { ICustomer } from "../../../Interfaces/Customer.interface";
 import Logger from "../../../Lib/Logger";
-import GetText from "../../../Texts/GetText";
+import GetText from "../../../Translation/GetText";
 
 const CustomerSchema = new Schema
 (

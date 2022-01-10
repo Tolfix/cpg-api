@@ -1,6 +1,6 @@
 import { stripIndent } from "common-tags";
 import prompt from "prompt";
-import { CacheAdmin } from "../Cache/CacheAdmin";
+import { CacheAdmin } from "../Cache/Admin.cache";
 import AdminModel from "../Database/Models/Administrators.model";
 import ConfigModel from "../Database/Models/Configs.model";
 import Logger from "../Lib/Logger";

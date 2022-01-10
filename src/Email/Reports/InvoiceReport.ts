@@ -1,5 +1,5 @@
 import { GetSMTPEmails } from "../../Config";
-import { IInvoice } from "../../Interfaces/Invoice";
+import { IInvoice } from "../../Interfaces/Invoice.interface";
 import { SendEmail } from "../Send";
 
 export const InvoiceNotifiedReport = async (invoices: IInvoice[]) =>

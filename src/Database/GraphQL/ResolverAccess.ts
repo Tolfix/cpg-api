@@ -18,7 +18,7 @@ export function resolverAdminAccess(resolvers: {
             if(!rp.context.isAdmin)
                 throw new Error("Not Authorized");
 
-            return next(rp)
+            return next(rp);
         })
     })
     return resolvers

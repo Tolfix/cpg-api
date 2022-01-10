@@ -1,5 +1,5 @@
 import CategoryModel from "../../Database/Models/Category.model";
-import { IProduct } from "../../Interfaces/Products";
+import { IProduct } from "../../Interfaces/Products.interface";
 
 export default async (product: IProduct) =>
 {

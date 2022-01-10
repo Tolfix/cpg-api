@@ -1,5 +1,5 @@
 import ConfigModel from "./Database/Models/Configs.model";
-import { IConfigs } from "./Interfaces/Admin/Configs";
+import { IConfigs } from "./Interfaces/Admin/Configs.interface";
 
 /**
  * @description

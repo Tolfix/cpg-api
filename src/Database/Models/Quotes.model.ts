@@ -1,9 +1,9 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { IQuotes } from "../../Interfaces/Quotes";
+import { IQuotes } from "../../Interfaces/Quotes.interface";
 import Logger from "../../Lib/Logger";
-import GetText from "../../Texts/GetText";
+import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "../../Types/PaymentMethod";
 
 const QuotesSchema = new Schema
