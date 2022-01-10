@@ -3,7 +3,7 @@ import { Full_Domain, JWT_Access_Token } from '../../Config';
 import SchemaPoser from './SchemaPoser';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { CacheAdmin, getAdminByUsername } from '../../Cache/CacheAdmin';
+import { CacheAdmin, getAdminByUsername } from '../../Cache/Admin.cache';
 import Logger from '../../Lib/Logger';
 import { Application } from "express";
 

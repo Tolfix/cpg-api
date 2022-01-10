@@ -1,10 +1,10 @@
 import { ce_orders } from "../Lib/Orders/PlaceOrder";
-import { CacheAdmin } from "./CacheAdmin";
-import { CacheCustomer } from "./CacheCustomer";
-import { CacheInvoice } from "./CacheInvoices";
-import { CacheOrder } from "./CacheOrder";
-import { CacheProduct } from "./CacheProduct";
-import { CacheTransactions } from "./CacheTransactions";
+import { CacheAdmin } from "./Admin.cache";
+import { CacheCustomer } from "./Customer.cache";
+import { CacheInvoice } from "./Invoices.cache";
+import { CacheOrder } from "./Order.cache";
+import { CacheProduct } from "./Product.cache";
+import { CacheTransactions } from "./Transactions.cache";
 
 // Here contains the object of every cache
 export default {

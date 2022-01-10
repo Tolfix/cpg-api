@@ -2,7 +2,6 @@ import { Application } from "express";
 import { readdirSync } from "fs";
 import { HomeDir } from "../Config";
 import Logger from "../Lib/Logger";
-import Swagger from "./Swagger";
 
 /**
  * 
@@ -16,7 +15,7 @@ export default function RouteHandler(server: Application): void
     const routeDir = HomeDir+"/build/Server/Routes";
     readdirSync(`${routeDir}`).forEach((version) =>
     {
-        Swagger(server, version);
+        // Swagger(server, version);
         readdirSync(`${routeDir}/${version}`).forEach((route) =>
         {
             const routes = readdirSync(`${routeDir}/${version}/${route}`).filter((f) => f.endsWith('config.js'));

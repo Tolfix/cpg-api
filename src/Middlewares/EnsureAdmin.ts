@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import bcrypt from "bcryptjs";
-import { CacheAdmin, getAdminByUsername } from "../Cache/CacheAdmin";
+import { CacheAdmin, getAdminByUsername } from "../Cache/Admin.cache";
 import { APIError } from "../Lib/Response";
 import jwt from "jsonwebtoken";
 import { JWT_Access_Token } from "../Config";

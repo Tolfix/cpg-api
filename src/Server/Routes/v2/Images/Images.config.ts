@@ -2,7 +2,7 @@ import { Application, Router } from "express";
 import Logger from "../../../../Lib/Logger";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
-import { CacheImages } from "../../../../Cache/CacheImage";
+import { CacheImages } from "../../../../Cache/Image.cache";
 import { IImage } from "../../../../Interfaces/Images.interface";
 import { UploadedFile } from "express-fileupload";
 import { idImages } from "../../../../Lib/Generator";
