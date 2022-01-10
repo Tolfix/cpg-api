@@ -1,6 +1,7 @@
 import { ICategory } from "../Categories";
 import { IConfigurableOptions } from "../ConfigurableOptions";
 import { ICustomer } from "../Customer";
+import { ILoggingTypes } from "../ILogging";
 import { IImage } from "../Images";
 import { IInvoice } from "../Invoice";
 import { IOrder } from "../Orders";
@@ -47,4 +48,10 @@ export interface MainOnEvents
     quotes_created: IQuotes;
     quotes_updated: IQuotes;
     quotes_deleted: IQuotes;
+
+    logging: {
+        message: string;
+        type: keyof ILoggingTypes;
+        time: string;
+    }
 }
