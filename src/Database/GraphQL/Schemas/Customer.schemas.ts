@@ -2,9 +2,9 @@ import { resolverAdminAccess, resolverUserAccess } from "../ResolverAccess";
 import { composeWithMongoose } from "graphql-compose-mongoose";
 import CustomerModel from "../../Models/Customers/Customer.model";
 import { myInvoiceResolver, myInvoicesResolver, myOrderResolver, myOrdersResolver, myProfileResolver, myTransactionResolver, myTransactionsResolver } from "../Resolvers/Customer/Customer.resolver";
-import { InvoicesGraphQL } from "./Invoices";
-import { OrderGraphQL } from "./Order";
-import { TransactionGraphQL } from "./Transactions";
+import { InvoicesGraphQL } from "./Invoices.schemas";
+import { OrderGraphQL } from "./Order.schemas";
+import { TransactionGraphQL } from "./Transactions.schemas";
 
 export const CustomersGraphQL = composeWithMongoose(CustomerModel);
 export const startsWith = "Customers";
