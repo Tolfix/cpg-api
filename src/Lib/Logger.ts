@@ -1,6 +1,7 @@
 import colors from "colors";
 import fs from "fs";
 import { DebugMode, HomeDir } from "../Config";
+import mainEvent from "../Events/Main";
 import { getDate, getTime } from "./Time";
 
 // A method which takes a ...string[] and stores in a .txt file locally in ./logs/
@@ -34,6 +35,11 @@ const Logger = {
         {
             const time = getTime();
             SaveLog(time, ...body);
+            mainEvent.emit("logging", {
+                message: body.join(" "),
+                type: "debug",
+                time: time,
+            });
             console.log(time + " | " + colors.cyan(`debug: `), ...body)
         }
     },
@@ -42,7 +48,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "api",
+            time: time,
+        });
         console.log(time + " | " + colors.green(`API: `), ...body)
     },
 
@@ -50,7 +60,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "graphql",
+            time: time,
+        });
         console.log(time + " | " + colors.magenta(`GraphQL: `), ...body)
     },
 
@@ -59,7 +73,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "plugin",
+            time: time,
+        });
         console.log(time + " | " + colors.green(`Plugin: `), ...body)
     },
 
@@ -67,7 +85,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "cache",
+            time: time,
+        });
         console.log(time + " | " + colors.magenta(`cach`)+colors.yellow("e: "), ...body)
     },
 
@@ -75,7 +97,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "rainbow",
+            time: time,
+        });
         console.log(time + " | " + colors.rainbow(`rainbow: `), ...body)
     },
 
@@ -83,7 +109,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "verbos",
+            time: time,
+        });
         console.log(time + " | " + colors.magenta(`verbos: `), ...body)
     },
 
@@ -91,7 +121,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "error",
+            time: time,
+        });
         console.log(time + " | ", colors.red(`error: `), ...body)
     },
 
@@ -99,7 +133,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "warning",
+            time: time,
+        });
         console.log(time + " | ", colors.yellow(`warning: `), ...body)
     },
 
@@ -107,7 +145,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "info",
+            time: time,
+        });
         console.log(time + " | ", colors.blue(`info: `), ...body)
     },
 
@@ -115,7 +157,11 @@ const Logger = {
     {
         const time = getTime();
         SaveLog(time, ...body);
-
+        mainEvent.emit("logging", {
+            message: body.join(" "),
+            type: "db",
+            time: time,
+        });
         console.log(time + " | ", colors.cyan(`data`)+colors.green("base: "), ...body)
     },
 }
