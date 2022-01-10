@@ -1,6 +1,12 @@
 import { Application } from "express";
 import { HomeDir } from "../Config";
 
+/**
+ * 
+ * @param server 
+ * @param version
+ * @deprecated 
+ */
 export default function Swagger(server: Application, version: string)
 {
     const expressSwagger = require('express-swagger-generator')();

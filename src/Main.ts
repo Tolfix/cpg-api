@@ -13,13 +13,13 @@ Logger.info(`Loading ./Events/NodeEvents`);
 import "./Events/NodeEvents";
 
 Logger.info(`Loading ./Server`);
-import "./Server";
+import "./Server/Server";
 
 Logger.info(`Loading ./Database/Mongo`);
 import "./Database/Mongo";
 
 Logger.info(`Loading ./Handlers/Cron`);
-import "./Handlers/Cron";
+import "./Handlers/CronHandler";
 
 import AdminHandler from "./Admin/AdminHandler";
 Logger.info(`Loading ./Admin/AdminHandler`);
