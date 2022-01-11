@@ -7,7 +7,7 @@ import { d_Days } from "../Config";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../Lib/Invoices/SendEmail";
 import { InvoiceNotifiedReport } from "../Email/Reports/InvoiceReport";
 
-export default function Cron_Invoices()
+export = function Cron_Invoices()
 {
     // Every hour
     new CronJob("0 */12 * * *", () =>

@@ -68,7 +68,7 @@ async function createOrder(customer: ICustomer, products: Array<{
     });
 }
 
-export default class OrderRoute
+export = class OrderRoute
 {
     private server: Application;
     private router = Router();

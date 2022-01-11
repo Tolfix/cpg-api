@@ -7,7 +7,7 @@ import { APIError } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import QuotesController from "./Quotes.controller";
 
-export default class QuotesRouter
+export = class QuotesRouter
 {
     private server: Application;
     private router = Router();

@@ -19,8 +19,8 @@ declare module "express-session"
     }
 }
 
-const server = express();
-    
+export const server = express();
+
 server.use(fileUpload({
     createParentPath: true,
 }));

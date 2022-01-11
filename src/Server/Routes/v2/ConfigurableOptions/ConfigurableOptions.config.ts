@@ -2,7 +2,7 @@ import { Application, Router } from "express";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import ConfigurableOptionsController from "./ConfigurableOptions.controller";
 
-export default class ProductsRouter
+export = class ProductsRouter
 {
     private server: Application;
     private router = Router();

@@ -7,7 +7,7 @@ import nextRecycleDate from "../Lib/Dates/DateCycle";
 import { d_Days } from "../Config";
 import { InvoiceCreatedReport } from "../Email/Reports/InvoiceReport";
 
-export default function Cron_Orders()
+export = function Cron_Orders()
 {
     // Every hour
     new CronJob("0 */12 * * *", () =>

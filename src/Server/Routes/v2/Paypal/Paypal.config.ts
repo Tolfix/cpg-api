@@ -4,7 +4,7 @@ import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import { IInvoice } from "../../../../Interfaces/Invoice.interface";
 import { createPaypalPaymentFromInvoice, retrievePaypalTransaction } from "../../../../Payments/Paypal";
 
-export default class PaypalRouter
+export = class PaypalRouter
 {
     private server: Application;
     private router = Router();

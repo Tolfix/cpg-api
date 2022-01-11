@@ -7,7 +7,7 @@ import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import ProductController from "./Products.controller";
 
-export default class ProductsRouter
+export = class ProductsRouter
 {
     private server: Application;
     private router = Router();

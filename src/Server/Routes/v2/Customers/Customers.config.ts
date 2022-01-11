@@ -18,7 +18,7 @@ import { ICustomer } from "../../../../Interfaces/Customer.interface";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 
-export default class CustomerRouter
+export = class CustomerRouter
 {
     private server: Application;
     private router = Router();

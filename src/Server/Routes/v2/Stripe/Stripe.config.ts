@@ -13,7 +13,7 @@ const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
 
-export default class StripeRouter
+export = class StripeRouter
 {
     private server: Application;
     private router = Router();
