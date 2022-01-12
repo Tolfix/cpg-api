@@ -36,4 +36,16 @@ export = <IGetText>{
         txt_Paypal_Created_Transaction_From_Invoice: (t, i) => `Created transaction ${t.uid} from invoice ${i.uid}`,
         txt_Paypal_Creating_Payment_For_Invoice: (i) => `Creating payment for invoice ${i.uid}`,
     },
+    invoice: {
+        txt_Invoice: "Invoice",
+        txt_Date: "Date",
+        txt_DueDate: "Due date",
+        txt_Number: "Number",
+        txt_Price: "Price",
+        txt_ProductTotal: "Product total",
+        txt_Products: "Products",
+        txt_Quantity: "Quantity",
+        txt_SubTotal: "Sub total",
+        txt_Total: "Total",
+    }
 };
