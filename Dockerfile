@@ -22,8 +22,8 @@ COPY . ./
 RUN tsc -b
 
 # Remove unused files
-RUN rm -r ./src && \
-    rm -r ./test
+#RUN rm -r ./src && \
+#    rm -r ./test
 
 ENV JWT_ACCESS_TOKEN ""
 ENV DEBUG "false"
