@@ -1,11 +1,13 @@
+import { Default_Language } from "../Config";
 import { IAllLanguages } from "../Interfaces/Lang/AllLang.interface";
 import { IGetText } from "../Interfaces/Lang/GetText.interface";
 
-export default (lang: keyof IAllLanguages = "en"): IGetText =>
+export default (lang: keyof IAllLanguages = Default_Language): IGetText =>
 {
     // Make a translation, depending on the lang later
     // for now lets set it as default = en
 
-    const texts = require(`./${lang}/Lang_${lang}.js`);
+    /** @type {import('../Interfaces/Lang/GetText.interface').IGetText} */
+    const texts: import('../Interfaces/Lang/GetText.interface').IGetText = require(`./${lang}/Lang_${lang}.js`);
     return texts as IGetText;
 };
