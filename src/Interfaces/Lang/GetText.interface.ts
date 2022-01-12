@@ -19,6 +19,8 @@ export interface IGetText
     plugins: IGetText_Plugins;
 
     paypal: IGetText_Paypal;
+
+    invoice: IGetText_Invoice;
 }
 
 export interface IGetText_Cron
@@ -61,4 +63,18 @@ export interface IGetText_Paypal
 {
     txt_Paypal_Creating_Payment_For_Invoice: (invoice: IInvoice) => string;
     txt_Paypal_Created_Transaction_From_Invoice: (transaction: ITransactions, invoice: IInvoice) => string;
+}
+
+export interface IGetText_Invoice
+{
+    txt_Invoice: string;
+    txt_Number: string;
+    txt_Date: string;
+    txt_DueDate: string;
+    txt_SubTotal: string;
+    txt_Products: string;
+    txt_Total: string;
+    txt_Quantity: string;
+    txt_Price: string;
+    txt_ProductTotal: string;
 }
