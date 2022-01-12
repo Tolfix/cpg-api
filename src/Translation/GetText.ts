@@ -8,6 +8,6 @@ export default (lang: keyof IAllLanguages = Default_Language): IGetText =>
     // for now lets set it as default = en
 
     /** @type {import('../Interfaces/Lang/GetText.interface').IGetText} */
-    const texts: import('../Interfaces/Lang/GetText.interface').IGetText = require(`./${lang}/Lang_${lang}.js`);
+    const texts = require(`./${lang}/Lang_${lang}.js`);
     return texts as IGetText;
 };
