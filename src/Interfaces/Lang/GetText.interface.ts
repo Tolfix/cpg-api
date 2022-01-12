@@ -48,7 +48,7 @@ export interface IGetText_Graphql
     txt_Schemas_Adding: (schema: string) => string;
 
     txt_Resolver_Checking_Admin: (resolver: string) => string;
-
+    txt_Resolver_Checking_User: (resolver: string) => string;
     txt_Apollo_Starting: string;
 }
 

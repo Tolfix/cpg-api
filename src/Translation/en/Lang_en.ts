@@ -24,7 +24,8 @@ export = <IGetText>{
     graphql: {
         txt_Schemas_Loading: "Loading schemas..",
         txt_Schemas_Adding: (schema: string) => `Adding schema ${schema}`,
-        txt_Resolver_Checking_Admin: (resolver: string) => `Checking resolver ${resolver}`,
+        txt_Resolver_Checking_Admin: (resolver: string) => `Checking if user is admin on resolver ${resolver}`,
+        txt_Resolver_Checking_User: (resolver: string) => `Checking if user is user on resolver ${resolver}`,
         txt_Apollo_Starting: "Starting Apollo server..",
     },
     plugins: {
