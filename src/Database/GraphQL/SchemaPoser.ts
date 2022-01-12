@@ -2,11 +2,13 @@ import { SchemaComposer } from 'graphql-compose';
 import fs from "fs";
 import { HomeDir } from '../../Config';
 import Logger from '../../Lib/Logger';
+import GetText from '../../Translation/GetText';
 
 const schemaComposer = new SchemaComposer();
 
 // Go through each in ./Schemas/*.js files and add them to schemaComposer
-Logger.graphql("Loading GraphQL schemas...");
+Logger.graphql(GetText().graphql.txt_Schemas_Loading);
+// Logger.graphql("Loading GraphQL schemas...");
 const schemaDir = HomeDir+"/build/Database/GraphQL/Schemas";
 const files = fs.readdirSync(`${schemaDir}`).filter((f) => f.endsWith('schemas.js'));
 for(const f of files)
@@ -23,7 +25,8 @@ for(const f of files)
     const query = schema[`${name}Query`];
     const mutation = schema[`${name}Mutation`];
 
-    Logger.graphql(`Adding GraphQL schema/query ${name}`);
+    Logger.graphql(GetText().graphql.txt_Schemas_Adding(name));
+    // Logger.graphql(`Adding GraphQL schema/query ${name}`);
 
     // Add the query and mutation to the schemaComposer
     if(query)
