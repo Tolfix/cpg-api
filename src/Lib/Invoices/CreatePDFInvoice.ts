@@ -21,6 +21,7 @@ import {
     Company_Currency
 } from "../../Config";
 import qrcode from "qrcode";
+import GetText from "../../Translation/GetText";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {
@@ -34,9 +35,20 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
     
         const data = {
             // @ts-ignore
-            "documentTitle": `Invoice #${invoice.id}`,
             "images": {
                 
+            },
+            "translate": {
+                "invoice": GetText().invoice.txt_Invoice,
+                "number": GetText().invoice.txt_Number,
+                "date": GetText().invoice.txt_Date,
+                "due-date": GetText().invoice.txt_DueDate,
+                "subtotal": GetText().invoice.txt_SubTotal,
+                "products": GetText().invoice.txt_Products,
+                "quantity": GetText().invoice.txt_Quantity,
+                "price": GetText().invoice.txt_Price,
+                "product-total": GetText().invoice.txt_ProductTotal,
+                "total": GetText().invoice.txt_Total,
             },
             "taxNotation": "vat",
             "settings": {
@@ -52,7 +64,6 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "zip": Company_Zip,
                 "city": Company_City,
                 "country": Company_Country,
-                "custom1": `<br/><strong>Innehar ${Company_Tax_Registered ? "" : "inte"} F-Skattsedel</strong>`,
             },
             "client": {
                 "company": Customer.billing.company ?? `${Customer.personal.first_name} ${Customer.personal.last_name}`,
@@ -127,6 +138,12 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             
             `,
         };
+
+        if(
+            Customer.billing.country.toLowerCase() === "sweden" ||
+            Customer.billing.country.toLowerCase() === "sverige"
+        )
+            data["client"]["custom1"] = `<br/><strong>Innehar ${Company_Tax_Registered ? "" : "inte"} F-Skattsedel</strong>`;
 
         if(Company_Logo_Url && PDF_Template_Url === "")
             // @ts-ignore
