@@ -1,5 +1,6 @@
 import ConfigModel from "./Database/Models/Configs.model";
 import { IConfigs } from "./Interfaces/Admin/Configs.interface";
+import { IAllLanguages } from "./Interfaces/Lang/AllLang.interface";
 
 /**
  * @description
@@ -52,6 +53,10 @@ export const Company_Currency = process.env.COMPANY_CURRENCY ?? "sek";
 export const Company_Tax_Registered = process.env.COMPANY_TAX_REGISTERED === "true" ? true : false;
 export const Company_Logo_Url = process.env.COMPANY_LOGO_URL ?? "";
 export const Company_Website = process.env.COMPANY_WEBSITE ?? "";
+
+export const Default_Language: keyof IAllLanguages = (
+    process.env.DEFAULT_LANGUAGE ? process.env.DEFAULT_LANGUAGE as keyof IAllLanguages : "en"
+);
 
 // PDF
 export const PDF_Template_Url = process.env.PDF_TEMPLATE_URL ?? "";
