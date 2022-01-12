@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
-import { Express_Session_Secret, Full_Domain, PORT } from "../Config";
+import { Default_Language, Express_Session_Secret, Full_Domain, PORT } from "../Config";
 import Logger from "../Lib/Logger";
 import RouteHandler from "../Handlers/Route.handler";
 import { reCache } from "../Cache/reCache";
@@ -10,6 +10,7 @@ import { ICustomer } from "../Interfaces/Customer.interface";
 import { APIError } from "../Lib/Response";
 import { PluginHandler } from "../Plugins/PluginHandler";
 import ApolloServer from "../Database/GraphQL/ApolloServer";
+import GetText from "../Translation/GetText";
 
 declare module "express-session"
 {
@@ -81,16 +82,14 @@ reCache();
 RouteHandler(server);
 PluginHandler(server);
 
-server.listen(PORT, () => Logger.api(`Server listing on port ${PORT} | ${Full_Domain}`));
+server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listing} ${PORT} | ${Full_Domain}`));
 
 (async () =>
     {
         ApolloServer(server);
         server.use("*", (req, res) =>
         {
-            return APIError({
-                text: `Couldn't find what you were looking for.`
-            })(res);
+            return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
         });
     }
 )();

@@ -4,15 +4,17 @@ import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
 import { createInvoiceFromOrder } from "../Lib/Orders/newInvoice";
 import nextRecycleDate from "../Lib/Dates/DateCycle";
-import { d_Days } from "../Config";
+import { Default_Language, d_Days } from "../Config";
 import { InvoiceCreatedReport } from "../Email/Reports/InvoiceReport";
+import GetText from "../Translation/GetText";
 
 export = function Cron_Orders()
 {
     // Every hour
     new CronJob("0 */12 * * *", () =>
     {
-        Logger.info(`Checking orders..`);
+        Logger.info(GetText(Default_Language).cron.txt_Orders_Checking);
+        // Logger.info(`Checking orders..`);
 
         // Check if the order needs to create a new invoice if order.dates.next_recylce is withing 14 days
         OrderModel.find({
@@ -23,7 +25,8 @@ export = function Cron_Orders()
             // orders.forEach(async order => {
             for await(const order of orders)
             {
-                Logger.info(`Checking order ${order.id}`);
+                Logger.info(GetText(Default_Language).cron.txt_Order_Checking(order.id));
+                // Logger.info(`Checking order ${order.id}`);
                 // Check if order.order_status is not "cancelled" or "fruad"
                 if(order.order_status.match(/cancelled|fraud/i) === null)
                 {

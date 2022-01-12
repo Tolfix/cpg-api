@@ -1,6 +1,6 @@
 import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
-import { MongoDB_URI } from "../../Config";
+import { Default_Language, MongoDB_URI } from "../../Config";
 import { IDCategory } from "../../Interfaces/Categories.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
@@ -12,7 +12,7 @@ const CategorySchema = new Schema
         uid: {
             type: String,
             required: false,
-            description: GetText().txt_Uid_Description,
+            description: GetText(Default_Language).txt_Uid_Description,
         },
 
         name: {
@@ -41,7 +41,8 @@ const CategorySchema = new Schema
 // Log when creation
 CategorySchema.post('save', function(doc: IDCategory & Document)
 {
-    Logger.db(`Created category ${doc.id}`);
+    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    // Logger.db(`Created category ${doc.id}`);
 });
 
 const connection = mongoose.createConnection(MongoDB_URI);

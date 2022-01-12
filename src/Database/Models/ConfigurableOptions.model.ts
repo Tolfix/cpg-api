@@ -1,8 +1,9 @@
 import mongoose, { model, Schema, Document } from "mongoose"
 import increment from "mongoose-auto-increment";
-import { MongoDB_URI } from "../../Config";
+import { Default_Language, MongoDB_URI } from "../../Config";
 import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions.interface";
 import Logger from "../../Lib/Logger";
+import GetText from "../../Translation/GetText";
 
 const ConfigurableOptionsSchema = new Schema
 (
@@ -34,7 +35,8 @@ const ConfigurableOptionsSchema = new Schema
 // Log when creation
 ConfigurableOptionsSchema.post('save', function(doc: IConfigurableOptions & Document)
 {
-    Logger.db(`Created configurable_options ${doc.id}`);
+    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    // Logger.db(`Created configurable_options ${doc.id}`);
 });
 
 const connection = mongoose.createConnection(MongoDB_URI);

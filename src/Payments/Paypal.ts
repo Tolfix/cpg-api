@@ -6,6 +6,7 @@ import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import Logger from "../Lib/Logger";
 import { getDate } from "../Lib/Time";
+import GetText from "../Translation/GetText";
 
 if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
     paypal.configure({
@@ -32,7 +33,8 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
             return str.replace( /(<([^>]+)>)/ig, '');
         }
 
-        Logger.warning(`Creating payment paypal for invoice ${invoice.uid}`);
+        Logger.warning(GetText().paypal.txt_Paypal_Creating_Payment_For_Invoice(invoice))
+        // Logger.warning(`Creating payment paypal for invoice ${invoice.uid}`);
 
         const create_payment_json =
         {
@@ -77,7 +79,8 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
             if (error || !payment)
                 throw error;
 
-            Logger.warning(`Created payment paypal for invoice ${invoice.uid}`);
+            Logger.warning(GetText().paypal.txt_Paypal_Creating_Payment_For_Invoice(invoice))
+            // Logger.warning(`Created payment paypal for invoice ${invoice.uid}`);
 
             resolve(payment?.links)
         });
@@ -116,7 +119,8 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
                 uid: idTransicitons(),
             }).save());
 
-            Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.uid}`);
+            Logger.warning(GetText().paypal.txt_Paypal_Created_Transaction_From_Invoice(newTrans, invoice));
+            // Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.uid}`);
 
             invoice?.transactions.push(newTrans.id);
 

@@ -13,6 +13,7 @@ import { Plugins } from "../Config";
 import npm from "npm";
 import fs from "fs";
 import MainCache from "../Cache/Cache.cache";
+import GetText from "../Translation/GetText";
 
 // find installed npm packages in package.json and get plugins starting with cpg_plugin
 // then require it and call the new 
@@ -20,14 +21,16 @@ import MainCache from "../Cache/Cache.cache";
 export async function PluginHandler(server: Application)
 {
     // get plugins from package.json
-    Logger.info("Loading plugins...");
+    Logger.plugin(GetText().plugins.txt_Plugin_Loading);
+    // Logger.plugin("Loading plugins...");
     const plugins = getPlugins();
     for await(const plugin of plugins)
     {
         if(!(await isPluginInstalled(plugin)))
         {
             await installPlugin(plugin);
-            Logger.plugin(`Installed plugin ${plugin}`)
+            Logger.plugin(GetText().plugins.txt_Plugin_Installed(plugin));
+            // Logger.plugin(`Installed plugin ${plugin}`)
         }
 
         // @ts-ignore
@@ -70,7 +73,8 @@ export async function PluginHandler(server: Application)
             ConfigurableOptionsModel: ConfigurableOptionsModel,           
         }, Logger, MainCache);
 
-        Logger.plugin(`Loaded plugin ${plugin}`)
+        Logger.plugin(GetText().plugins.txt_Plugin_Loaded(plugin));
+        // Logger.plugin(`Loaded plugin ${plugin}`);
     }
 }
 
