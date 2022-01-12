@@ -26,7 +26,7 @@ export = <IGetText>{
         txt_Schemas_Adding: (schema: string) => `Adding schema ${schema}`,
         txt_Resolver_Checking_Admin: (resolver: string) => `Checking if user is admin on resolver ${resolver}`,
         txt_Resolver_Checking_User: (resolver: string) => `Checking if user is user on resolver ${resolver}`,
-        txt_Apollo_Starting: "Starting Apollo server..",
+        txt_Apollo_Starting: "Started GraphQL Server on",
     },
     plugins: {
         txt_Plugin_Loading: "Loading plugin..",
