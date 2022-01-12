@@ -26,7 +26,7 @@ export = <IGetText>{
         txt_Schemas_Adding: (schema: string) => `Lägger till schema/query ${schema}`,
         txt_Resolver_Checking_Admin: (resolver: string) => `Kollar om användare är admin på resolver ${resolver}`,
         txt_Resolver_Checking_User: (resolver: string) => `Kollar om användare är användare på resolver ${resolver}`,
-        txt_Apollo_Starting: "Starting Apollo server..",
+        txt_Apollo_Starting: "Startar GraphQL servern på",
     },
     plugins: {
         txt_Plugin_Loading: "Laddar plugins..",
