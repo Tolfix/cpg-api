@@ -41,18 +41,78 @@ export const Paypal_Client_Secret = process.env.PAYPAL_CLIENT_SECRET ?? "";
 
 // Company
 // Later change this to a databse etc..
-export const Company_Name = process.env.COMPANY_NAME ?? "";
-export const Company_Address = process.env.COMPANY_ADDRESS ?? "";
-export const Company_Zip = process.env.COMPANY_ZIP ?? "";
-export const Company_City = process.env.COMPANY_CITY ?? "";
-export const Company_Country = process.env.COMPANY_COUNTRY ?? "";
-export const Company_Phone = process.env.COMPANY_PHONE ?? "";
-export const Company_Email = process.env.COMPANY_EMAIL ?? "";
-export const Company_Vat = process.env.COMPANY_VAT ?? "";
-export const Company_Currency = process.env.COMPANY_CURRENCY ?? "sek";
-export const Company_Tax_Registered = process.env.COMPANY_TAX_REGISTERED === "true" ? true : false;
-export const Company_Logo_Url = process.env.COMPANY_LOGO_URL ?? "";
-export const Company_Website = process.env.COMPANY_WEBSITE ?? "";
+export const Company_Name = async (): Promise<IConfigs["company"]["name"]> =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.name ?? process.env.COMPANY_NAME ?? "";
+};
+export const Company_Address = async (): Promise<IConfigs["company"]["address"]> =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.address ?? process.env.COMPANY_ADDRESS ?? "";
+}
+export const Company_Zip = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.zip ?? process.env.COMPANY_ZIP ?? "";
+}
+export const Company_City = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.city ?? process.env.COMPANY_CITY ?? "";
+}
+export const Company_Country = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.country ?? process.env.COMPANY_COUNTRY ?? "";
+}
+export const Company_Phone = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.phone ?? process.env.COMPANY_PHONE ?? "";
+}
+export const Company_Email = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.email ?? process.env.COMPANY_EMAIL ?? "";
+}
+export const Company_Vat = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.vat ?? process.env.COMPANY_VAT ?? "";
+}
+export const Company_Currency = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.currency ?? process.env.COMPANY_CURRENCY ?? "";
+}
+export const Company_Tax_Registered = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.tax_registered ?? process.env.COMPANY_TAX_REGISTERED ?? "";
+}
+export const Company_Logo_Url = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.logo_url ?? process.env.COMPANY_LOGO_URL ?? "";
+}
+export const Company_Website = async () =>
+{
+    const configs = await ConfigModel.findOne();
+    if(!configs) throw new Error("No configs found");
+    return configs.company?.website ?? process.env.COMPANY_WEBSITE ?? "";
+}
 
 export const Default_Language: keyof IAllLanguages = (
     process.env.DEFAULT_LANGUAGE ? process.env.DEFAULT_LANGUAGE as keyof IAllLanguages : "en"
