@@ -44,6 +44,9 @@ export default class AdminHandler
                         add_webhook
                         delete_webhook
                         show_webhooks
+
+                    Company:
+                        update_company
                 `);
 
             if(result.action === "create_admin")
@@ -78,6 +81,9 @@ export default class AdminHandler
 
             if(result.action === "show_webhooks")
                 await this.show_webhooks();
+
+            if(result.action === "update_company")
+                await this.update_company();
 
             this.action();
         });
@@ -346,5 +352,117 @@ export default class AdminHandler
             Logger.info(`Webhooks:`, config.webhooks_urls);
             resolve(true);
         });
+    }
+
+    private async update_company()
+    {
+        return new Promise(async (resolve) =>
+        {
+            // Get our config from database
+            const config = (await ConfigModel.find())[0];
+            Logger.info(`Current company:`, config.company);
+            if(!config.company)
+                // @ts-ignore
+                config.company = {};
+            
+            prompt.get([
+                {
+                    name: "name",
+                    description: "Company name",
+                    default: config.company?.name ?? "",
+                    required: false
+                },
+                {
+                    name: "address",
+                    description: "Company address",
+                    default: config.company?.address ?? "",
+                    required: false
+                },
+                {
+                    name: "city",
+                    description: "Company city",
+                    default: config.company?.city ?? "",
+                    required: false
+                },
+                {
+                    name: "country",
+                    description: "Company country",
+                    default: config.company?.country ?? "",
+                    required: false
+                },
+                {
+                    name: "zip",
+                    description: "Company zip",
+                    default: config.company?.zip ?? "",
+                    required: false
+                },
+                {
+                    name: "phone",
+                    description: "Company phone",
+                    default: config.company?.phone ?? "",
+                    required: false
+                },
+                {
+                    name: "vat",
+                    description: "Company vat",
+                    default: config.company?.vat ?? "",
+                    required: false
+                },
+                {
+                    name: "email",
+                    description: "Company email",
+                    default: config.company?.email ?? "",
+                    required: false
+                },
+                {
+                    name: "website",
+                    description: "Company website",
+                    default: config.company?.website ?? "",
+                    required: false
+                },
+                {
+                    name: "logo_url",
+                    description: "Company logo url",
+                    default: config.company?.logo_url ?? "",
+                    required: false
+                },
+                {
+                    name: "tax_registered",
+                    description: "Company tax registered",
+                    default: config.company?.tax_registered ?? "",
+                    required: false,
+                    enum: ["true", "false"],
+                    type: "boolean"
+                },
+                {
+                    name: "currency",
+                    description: "Company currency",
+                    default: config.company?.currency ?? "",
+                    required: false,
+                },
+            ], async (err, result) =>
+            {
+                Logger.info(`Updating company..`);
+                config.company = {
+                    name: result.name as string,
+                    address: result.address as string,
+                    city: result.city as string,
+                    country: result.country as string,
+                    zip: result.zip as string,
+                    phone: result.phone as string,
+                    vat: result.vat as string,
+                    email: result.email as string,
+                    logo_url: result.logo_url as string,
+                    tax_registered: result.tax_registered as boolean,
+                    currency: result.currency as string,
+                    website: result.website as string
+                };
+
+                // Save our config
+                await config.save();
+                return resolve(true)
+            });
+        });
+
     }
 }
