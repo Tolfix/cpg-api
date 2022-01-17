@@ -42,7 +42,7 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             },
             "taxNotation": "vat",
             "settings": {
-                "currency": Company_Currency.toUpperCase(),
+                "currency": (await Company_Currency()).toUpperCase(),
                 "margin-top": 25,
                 "margin-right": 25,
                 "margin-left": 25,
@@ -81,7 +81,7 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             Customer.billing.country.toLowerCase() === "sweden" ||
             Customer.billing.country.toLowerCase() === "sverige"
         )
-            data["client"]["custom1"] = `<br/><strong>Innehar ${Company_Tax_Registered ? "" : "inte"} F-Skattsedel</strong>`;
+            data["client"]["custom1"] = `<br/><strong>Innehar ${await Company_Tax_Registered() ? "" : "inte"} F-Skattsedel</strong>`;
 
 
         if(Company_Logo_Url && PDF_Template_Url === "")

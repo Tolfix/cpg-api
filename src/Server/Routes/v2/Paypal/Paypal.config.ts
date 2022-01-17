@@ -41,7 +41,7 @@ export = class PaypalRouter
             const paymentId = req.query.paymentId as string;
 
             if(!payerId || !paymentId)
-                return res.redirect(Company_Website);
+                return res.redirect(await Company_Website());
 
             retrievePaypalTransaction(payerId, paymentId);
 

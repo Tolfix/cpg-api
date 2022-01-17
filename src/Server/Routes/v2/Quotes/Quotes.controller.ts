@@ -30,7 +30,7 @@ function insert(req: Request, res: Response)
                 if(Customer)
                 {
                     // Send email to customer.
-                    SendEmail(Customer.personal.email, `Quote from ${Company_Name === "" ? "CPG" : Company_Name}`, {
+                    SendEmail(Customer.personal.email, `Quote from ${await Company_Name() === "" ? "CPG" : await Company_Name()}`, {
                         isHTML: true,
                         body: `
                             <h1>Quote</h1>

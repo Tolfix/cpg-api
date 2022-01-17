@@ -17,7 +17,7 @@ if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
 
 export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypal.Link[] | undefined>
 {
-    return new Promise((resolve) =>
+    return new Promise(async (resolve) =>
     {
 
         function removeTags(str: string)
@@ -49,18 +49,18 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
             transactions: [
                 {
                     item_list: {
-                        items: invoice.items.map((item) =>
+                        items: await Promise.all(invoice.items.map(async (item) =>
                         {
                             return {
                                 name: removeTags(item.notes),
                                 price: (item.amount+(item.amount*invoice.tax_rate/100)).toString(),
-                                currency: Company_Currency.toUpperCase(),
+                                currency: (await Company_Currency()).toUpperCase(),
                                 quantity: item.quantity
                             }
-                        })
+                        }))
                     },
                     amount: {
-                        currency: Company_Currency.toUpperCase(),
+                        currency: (await Company_Currency()).toUpperCase(),
                         total: (invoice.amount+(invoice.amount*invoice.tax_rate/100)).toString(),
                         details: {
                             subtotal: (invoice.amount+(invoice.amount*invoice.tax_rate/100)).toString(),
