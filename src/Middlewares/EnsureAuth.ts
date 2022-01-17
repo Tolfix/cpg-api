@@ -33,13 +33,14 @@ export default function EnsureAuth()
             {
                 if (err) 
                     return APIError(`Unauthorized user.`, 403)(res);
-    
+                
+                // @ts-ignore
                 if(!payload?.data?.id)
                     return APIError(`Wrong payload.`, 403)(res);
     
                 //@ts-ignore
                 req.customer = payload.data;
-    
+                // @ts-ignore
                 Logger.api(`Authorizing`, payload.data);
     
                 return next();
