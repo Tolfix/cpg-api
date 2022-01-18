@@ -47,7 +47,7 @@ export async function SendEmail(
         html?: string;
         attachments?: any;
     } = {
-        from: `"${Company_Name}" <${SMTPConfig.username}>`,
+        from: `"${await Company_Name()}" <${SMTPConfig.username}>`,
         to: `${reciever}`,
         subject: subject,
     }
