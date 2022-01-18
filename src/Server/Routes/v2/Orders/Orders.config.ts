@@ -62,13 +62,13 @@ async function createOrder(customer: ICustomer, products: Array<{
 
     mainEvent.emit("order_created", order);
 
-    SendEmail(customer.personal.email, `New order from ${Company_Name !== "" ? Company_Name : "CPG"} #${order.id}`, {
+    SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${order.id}`, {
         isHTML: true,
         body: NewOrderCreated(order, customer), 
     });
 }
 
-export default class OrderRoute
+export = class OrderRoute
 {
     private server: Application;
     private router = Router();

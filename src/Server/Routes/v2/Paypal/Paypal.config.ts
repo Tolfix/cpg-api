@@ -4,7 +4,7 @@ import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import { IInvoice } from "../../../../Interfaces/Invoice.interface";
 import { createPaypalPaymentFromInvoice, retrievePaypalTransaction } from "../../../../Payments/Paypal";
 
-export default class PaypalRouter
+export = class PaypalRouter
 {
     private server: Application;
     private router = Router();
@@ -41,7 +41,7 @@ export default class PaypalRouter
             const paymentId = req.query.paymentId as string;
 
             if(!payerId || !paymentId)
-                return res.redirect(Company_Website);
+                return res.redirect(await Company_Website());
 
             retrievePaypalTransaction(payerId, paymentId);
 

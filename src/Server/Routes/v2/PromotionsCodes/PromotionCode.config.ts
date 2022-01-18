@@ -6,7 +6,7 @@ import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import PromotionCodeController from "./PromotionCode.controller";
 
-export default class PromotionCodeRoute
+export = class PromotionCodeRoute
 {
     private server: Application;
     private router = Router();

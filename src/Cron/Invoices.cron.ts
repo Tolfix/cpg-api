@@ -3,16 +3,17 @@ import InvoiceModel from "../Database/Models/Invoices.model";
 import Logger from "../Lib/Logger";
 import dateFormat from "date-and-time";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
-import { d_Days } from "../Config";
+import { Default_Language, d_Days } from "../Config";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../Lib/Invoices/SendEmail";
 import { InvoiceNotifiedReport } from "../Email/Reports/InvoiceReport";
+import GetText from "../Translation/GetText";
 
-export default function Cron_Invoices()
+export = function Cron_Invoices()
 {
     // Every hour
     new CronJob("0 */12 * * *", () =>
     {
-        Logger.info(`Checking invoices..`);
+        Logger.info(GetText(Default_Language).cron.txt_Invoice_Checking);
 
         // Trigger if a invoice is dued in the next 2 weeks.
         // Send email and notify,
@@ -43,15 +44,17 @@ export default function Cron_Invoices()
             }
         }).then(async (invoices) =>
         {
-            Logger.info(`Found ${invoices.length} invoices to notify.`);
+            Logger.info(GetText(Default_Language).cron.txt_Invoice_Found_Notify(invoices.length));
+            // Logger.info(`Found ${invoices.length} invoices to notify.`);
             for await(const invoice of invoices)
             {
                 // Get customer
                 const Customer = await CustomerModel.findOne({ id: invoice.customer_uid});
                 if(!Customer)
                     continue;
-                    
-                Logger.info(`Sending email to ${Customer.personal.email}`);
+                
+                Logger.info(GetText(Default_Language).cron.txt_Invoice_Found_Sending_Email(Customer));
+                // Logger.info(`Sending email to ${Customer.personal.email}`);
 
                 await sendInvoiceEmail(invoice, Customer);
 

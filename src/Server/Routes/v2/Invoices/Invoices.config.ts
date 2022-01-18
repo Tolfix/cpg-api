@@ -5,7 +5,7 @@ import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import InvoiceController from "./Invoices.controller";
 
 
-export default class InvoiceRouter
+export = class InvoiceRouter
 {
     private server: Application;
     private router = Router();

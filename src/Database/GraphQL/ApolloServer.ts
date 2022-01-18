@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { CacheAdmin, getAdminByUsername } from '../../Cache/Admin.cache';
 import Logger from '../../Lib/Logger';
 import { Application } from "express";
+import GetText from '../../Translation/GetText';
 
 export default async (server: Application) =>
 {
@@ -93,7 +94,7 @@ export default async (server: Application) =>
     });
     
     await apolloServer.start();
-    Logger.graphql(`Started GraphQL Server on ${Full_Domain}/graphql`);
+    Logger.graphql(`${GetText().graphql.txt_Apollo_Starting} ${Full_Domain}/graphql`);
 
     apolloServer.applyMiddleware({
         app: server,

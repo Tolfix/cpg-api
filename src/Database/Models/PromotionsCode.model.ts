@@ -1,8 +1,9 @@
 import mongoose,{ Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
-import { MongoDB_URI } from "../../Config";
+import { Default_Language, MongoDB_URI } from "../../Config";
 import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes.interface";
 import Logger from "../../Lib/Logger";
+import GetText from "../../Translation/GetText";
 
 const PromotionCodeSchema = new Schema
 (
@@ -46,7 +47,8 @@ const PromotionCodeSchema = new Schema
 // Log when creation
 PromotionCodeSchema.post('save', function(doc: IPromotionsCodes & Document)
 {
-    Logger.db(`Created promotion code ${doc.name}`);
+    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    // Logger.db(`Created promotion code ${doc.name}`);
 });
 
 const connection = mongoose.createConnection(MongoDB_URI);

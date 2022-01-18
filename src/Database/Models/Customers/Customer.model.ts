@@ -1,6 +1,6 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
-import { MongoDB_URI } from "../../../Config";
+import { Default_Language, MongoDB_URI } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer.interface";
 import Logger from "../../../Lib/Logger";
 import GetText from "../../../Translation/GetText";
@@ -12,7 +12,7 @@ const CustomerSchema = new Schema
         uid: {
             type: String,
             required: false,
-            description: GetText().txt_Uid_Description,
+            description: GetText(Default_Language).txt_Uid_Description,
         },
 
         personal: {
@@ -96,7 +96,8 @@ const CustomerSchema = new Schema
 // Log when creation
 CustomerSchema.post('save', function(doc: ICustomer & Document)
 {
-    Logger.db(`Created customer ${doc.id}`);
+    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    // Logger.db(`Created customer ${doc.id}`);
 });
 
 const connection = mongoose.createConnection(MongoDB_URI);

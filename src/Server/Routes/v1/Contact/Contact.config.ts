@@ -3,7 +3,7 @@ import { Application, Router } from "express";
 import { OSTicket } from 'ac-osticket'
 import { osticket_api_key, osticket_url } from "../../../../Config";
 
-export default class ContactRouter
+export = class ContactRouter
 {
     private server: Application;
     private router = Router();

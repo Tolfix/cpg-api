@@ -43,7 +43,7 @@ async function insert(req: Request, res: Response)
             const customer = await CustomerModel.findOne({ id: result.customer_uid });
 
             if(customer)
-                SendEmail(customer.personal.email, `New order from ${Company_Name !== "" ? Company_Name : "CPG"} #${result.id}`, {
+                SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${result.id}`, {
                     isHTML: true,
                     body: NewOrderCreated(result, customer), 
                 });

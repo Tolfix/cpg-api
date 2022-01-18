@@ -2,7 +2,7 @@ import { Application, Router } from "express";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import CategoryController from "./Categories.controller";
 
-export default class CategoryRouter
+export = class CategoryRouter
 {
     private server: Application;
     private router = Router();

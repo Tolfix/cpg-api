@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 
-export default class AdminRouter
+export = class AdminRouter
 {
     private server: Application;
     private router = Router();

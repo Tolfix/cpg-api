@@ -1,6 +1,6 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
-import { MongoDB_URI } from "../../Config";
+import { Default_Language, MongoDB_URI } from "../../Config";
 import { IQuotes } from "../../Interfaces/Quotes.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
@@ -15,7 +15,7 @@ const QuotesSchema = new Schema
         uid: {
             type: String,
             required: false,
-            description: GetText().txt_Uid_Description,
+            description: GetText(Default_Language).txt_Uid_Description,
         },
 
         customer_uid: {
@@ -62,7 +62,8 @@ const QuotesSchema = new Schema
 // Log when creation
 QuotesSchema.post('save', function(doc: IQuotes & Document)
 {
-    Logger.db(`Created Quotes ${doc.id}`);
+    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.uid));
+    // Logger.db(`Created Quotes ${doc.id}`);
 });
 
 const connection = mongoose.createConnection(MongoDB_URI);

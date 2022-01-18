@@ -6,7 +6,7 @@ export const A_CC_Payments = [
     "none",
     "manual",
     "bank"
-]
+] as const;
 
 export type TRecurringMethod = "monthly" | "yearly" | "quarterly" | "semi_annually" | "biennially" | "triennially";
 export const A_RecurringMethod = [
@@ -16,4 +16,4 @@ export const A_RecurringMethod = [
     "semi_annually",
     "biennially",
     "triennially"
-]
+] as const;

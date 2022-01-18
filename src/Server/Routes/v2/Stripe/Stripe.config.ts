@@ -13,7 +13,7 @@ const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
 
-export default class StripeRouter
+export = class StripeRouter
 {
     private server: Application;
     private router = Router();
@@ -80,12 +80,12 @@ export default class StripeRouter
                                 <th>Item</th>
                                 <th>Price</th>
                             </tr>
-                            ${invoice.items.map(item => `
+                            ${await (await Promise.all(invoice.items.map(async (item) => `
                                 <tr>
                                     <td>${item.notes}</td>
-                                    <td>${item.amount} ${Company_Currency.toUpperCase()}</td>
+                                    <td>${item.amount} ${(await Company_Currency()).toUpperCase()}</td>
                                 </tr>
-                            `).join("")}
+                            `))).join("")}
 
                             <tr>
                                 <td>Tax</td>
@@ -93,7 +93,7 @@ export default class StripeRouter
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td>${invoice.amount+invoice.amount*invoice.tax_rate/100} ${Company_Currency.toUpperCase()}</td>
+                                <td>${invoice.amount+invoice.amount*invoice.tax_rate/100} ${(await Company_Currency()).toUpperCase()}</td>
                             </tr>
                         </table>
 
@@ -209,13 +209,13 @@ export default class StripeRouter
             {
                 case 'succeeded':
                     message = 'Success! Payment received.';
-                    href = Company_Website;
+                    href = await Company_Website();
                     status = intent.status;
                     break;
             
                 case 'processing':
                     message = "Payment processing. We'll update you when payment is received.";
-                    href = Company_Website;
+                    href = await Company_Website();
                     status = intent.status;
                     break;
             
@@ -229,7 +229,7 @@ export default class StripeRouter
             
                 default:
                     message = 'Something went wrong.';
-                    href = Company_Website;
+                    href = await Company_Website();
                     break;
             }
 

@@ -6,9 +6,11 @@ const routeDir = HomeDir+"/build/Cron";
 const command = readdirSync(`${routeDir}`).filter((f) => f.endsWith('cron.js'));
 for (const file of command)
 {
-    Logger.info(`Adding new cron job`);
-    const pull = require(`${routeDir}/${file}`).default;
+    const pull = require(`${routeDir}/${file}`);
     if(pull)
+    {
+        Logger.info(`Adding new cron job`);
         pull();
+    }
     continue;
 }
