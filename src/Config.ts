@@ -99,7 +99,7 @@ export const Company_Tax_Registered = async () =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.tax_registered ?? process.env.COMPANY_TAX_REGISTERED ?? "";
+    return configs.company?.tax_registered ?? (process.env.COMPANY_TAX_REGISTERED === "true" ? true : false);
 }
 export const Company_Logo_Url = async () =>
 {
