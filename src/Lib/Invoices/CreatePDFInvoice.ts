@@ -59,11 +59,11 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "margin-bottom": 25,
             },
             "sender": {
-                "company": Company_Name,
-                "address": Company_Address,
-                "zip": Company_Zip,
-                "city": Company_City,
-                "country": Company_Country,
+                "company": await Company_Name(),
+                "address": await Company_Address(),
+                "zip": await Company_Zip(),
+                "city": await Company_City(),
+                "country": await Company_Country(),
             },
             "client": {
                 "company": Customer.billing.company ?? `${Customer.personal.first_name} ${Customer.personal.last_name}`,
@@ -147,7 +147,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 
         if(Company_Logo_Url && PDF_Template_Url === "")
             // @ts-ignore
-            data["images"]["logo"] = Company_Logo_Url;
+            data["images"]["logo"] = await Company_Logo_Url();
 
         if(PDF_Template_Url !== "")
             // @ts-ignore
