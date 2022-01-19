@@ -52,7 +52,7 @@ export interface IInvoice
     items: Array<IInvoices_Items>;
     transactions: Array<ITransactions["uid"]>;
     payment_method: keyof IPayments;
-    status: TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
+    status: extendedOrderStatus;
     tax_rate: number;
     notes: string;
     paid: boolean;
