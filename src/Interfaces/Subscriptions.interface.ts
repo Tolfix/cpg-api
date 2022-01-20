@@ -1,7 +1,6 @@
 import { TPayments, TRecurringMethod } from "../Types/PaymentMethod";
 import { ICustomer } from "./Customer.interface";
 import { extendedOrderStatus } from "./Invoice.interface";
-import { IProduct } from "./Products.interface";
 import { IPromotionsCodes } from "./PromotionsCodes.interface";
 
 export interface ISubscription
