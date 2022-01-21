@@ -16,6 +16,7 @@ import { IInvoice } from "../Interfaces/Invoice.interface";
 import { IOrder } from "../Interfaces/Orders.interface";
 import { IProduct } from "../Interfaces/Products.interface";
 import { IQuotes } from "../Interfaces/Quotes.interface";
+import { ISubscription } from "../Interfaces/Subscriptions.interface";
 import { ITransactions } from "../Interfaces/Transactions.interface";
 
 export function idCustomer(): ICustomer["uid"]
@@ -91,5 +92,11 @@ export function idConfigurableOptions(): IConfigurableOptions["uid"]
 export function idQuotes(): IQuotes["uid"]
 {
     const uid: IQuotes["uid"] = `QUO_${crypto.randomBytes(20).toString("hex")}`;
+    return uid;
+}
+
+export function idSubscription(): ISubscription["uid"]
+{
+    const uid: ISubscription["uid"] = `SUB_${crypto.randomBytes(20).toString("hex")}`;
     return uid;
 }
