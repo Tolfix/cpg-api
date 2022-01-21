@@ -32,6 +32,7 @@ export = class SubscriptionRouter
 
         this.router.post("/place-order", EnsureAuth(), async (req, res, next) =>
         {
+            return APIError("Not implemented")(res);
             // @ts-ignore
             const customer_id = req.customer.id;
             const products = req.body.products as Array<{
@@ -88,7 +89,7 @@ export = class SubscriptionRouter
             // Create subscription
             const subscription = await(new SubscriptionModel(
                 {
-                    customer_id: customer.id,
+                    customer_id: customer?.id,
                     products: products_with_recurring.map(product =>
                     {
                         let configurable_option: any = undefined
@@ -104,7 +105,7 @@ export = class SubscriptionRouter
                     start_date: dateFormat.format(new Date(), "yyyy-mm-dd"),
                     renewing_method: products_with_recurring[0].recurring_method,
                     payment_method: payment_method,
-                    promotion_codes: promotion_code ? [promotion_code.id] : [],
+                    promotion_codes: promotion_code ? [promotion_code?.id] : [],
                     status: "active",
                     transactions: [],
                 }
