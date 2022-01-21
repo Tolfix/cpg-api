@@ -63,7 +63,7 @@ function patch(req: Request, res: Response)
 function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.uid)
-        .then((result)=>
+        .then(()=>
         {
             // @ts-ignore
             // mainEvent.emit("", result);
