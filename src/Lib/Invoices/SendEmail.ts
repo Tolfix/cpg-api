@@ -46,6 +46,14 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
             <a href="${Full_Domain}/v2/stripe/pay/${invoice.uid}" target="_blank">
                 Click me to pay.
             </a>
+            <p>
+                <strong>
+                    To pay automatic invoice, you need to setup your payment method. It will automatic pay when a invoice is 14 days ahead. <br />
+                    <a href="${Full_Domain}/v2/stripe/setup/${Customer.id}" target="_blank">
+                        Click here to setup your payment method.
+                    </a>
+                </strong>
+            </p>
             ` : ''}
             <br />
             <strong>Invoice items</strong> <br />
