@@ -88,6 +88,7 @@ const CustomerSchema = new Schema
         extra: {
             type: Object,
             required: false,
+            default: {},
         }
 
     }
