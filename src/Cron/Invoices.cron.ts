@@ -49,7 +49,7 @@ export = function Cron_Invoices()
             },
             notified: false,
             status: {
-                $not: /fraud|cancelled/g
+                $not: /fraud|cancelled|draft|refunded/g
             }
         }).then(async (invoices) =>
         {
@@ -78,7 +78,7 @@ export = function Cron_Invoices()
                 $in: [...(getDatesAhead(14))]
             },
             status: {
-                $not: /fraud|cancelled/g
+                $not: /fraud|cancelled|draft|refunded/g
             },
             paid: false,
             extra: {
@@ -130,7 +130,7 @@ export = function Cron_Invoices()
             },
             paid: false,
             status: {
-                $not: /fraud|cancelled/g
+                $not: /fraud|cancelled|draft|refunded/g
             }
         }).then(async (invoices) =>
         {
