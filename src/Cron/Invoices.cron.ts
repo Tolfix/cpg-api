@@ -80,6 +80,7 @@ export = function Cron_Invoices()
             status: {
                 $not: /fraud|cancelled/g
             },
+            paid: false,
             extra: {
                 stripe_setup_intent: {
                     $exists: true
