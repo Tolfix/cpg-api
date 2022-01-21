@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
-import mainEvent from "../../../../Events/Main.event";
+// import mainEvent from "../../../../Events/Main.event";
 import { IPromotionsCodes } from "../../../../Interfaces/PromotionsCodes.interface";
 import { idCategory } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
@@ -55,7 +55,7 @@ function patch(req: Request, res: Response)
     API.findAndPatch((req.params.uid), req.body).then((result) =>
     {
         // @ts-ignore
-        mainEvent.emit("categories_updated", result);
+        // mainEvent.emit("categories_updated", result);
         APISuccess(result)(res);
     });
 }
@@ -66,7 +66,7 @@ function removeById(req: Request, res: Response)
         .then((result)=>
         {
             // @ts-ignore
-            mainEvent.emit("categories_deleted", result);
+            // mainEvent.emit("", result);
             APISuccess({}, 204)(res)
         });
 }
