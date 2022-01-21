@@ -25,12 +25,19 @@ const SubscriptionSchema = new Schema
             required: true,
         },
 
-        items: {
+        products: {
             type: [
                 {
-                    name: String,
-                    tax_rate: Number,
-                    price: Number,
+                    product_id: Number,
+                    configurable_options_ids: {
+                        type: [
+                            {
+                                id: Number,
+                                option_index: Number,
+                            },
+                        ],
+                        required: false
+                    },
                     quantity: Number,
                 }
             ],
@@ -66,6 +73,11 @@ const SubscriptionSchema = new Schema
         start_date: {
             type: String,
             required: true,
+        },
+
+        transactions: {
+            type: [Number],
+            default: [],
         }
 
     }
