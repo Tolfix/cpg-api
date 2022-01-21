@@ -7,12 +7,13 @@ import { IConfigurableOptions } from "../../../../Interfaces/ConfigurableOptions
 import { IPayments } from "../../../../Interfaces/Payments.interface";
 import { IProduct } from "../../../../Interfaces/Products.interface";
 import { idSubscription } from "../../../../Lib/Generator";
-import { APIError } from "../../../../Lib/Response";
+import { APIError, APISuccess } from "../../../../Lib/Response";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import EnsureAuth from "../../../../Middlewares/EnsureAuth";
 import SubscriptionController from "./Subscription.controller";
 import dateFormat from "date-and-time";
+import { ce_subscription } from "../../../../Lib/Subscriptions/PlaceSubscription";
 
 export = class SubscriptionRouter
 {
@@ -29,7 +30,7 @@ export = class SubscriptionRouter
             SubscriptionController.list
         ]);
 
-        this.router.post("/place-order", EnsureAuth(), async (req, res) =>
+        this.router.post("/place-order", EnsureAuth(), async (req, res, next) =>
         {
             // @ts-ignore
             const customer_id = req.customer.id;
@@ -109,7 +110,13 @@ export = class SubscriptionRouter
                 }
             )).save();
 
-            
+            if(!subscription)
+                return APIError("Unable to create subscription")(res);
+
+            if(ce_subscription.get(payment_method))
+                return ce_subscription.get(payment_method)?.(subscription, req, res, next);
+
+            return APISuccess("Invoice sent")(res);
         });
 
         this.router.get("/:uid", [

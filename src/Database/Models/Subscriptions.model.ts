@@ -57,10 +57,7 @@ const SubscriptionSchema = new Schema
 
         payment_method: {
             type: String,
-            enum: [...A_CC_Payments.map(() =>
-            {
-                return ["credit_card", "paypal"]
-            })],
+            enum: ["credit_card", "paypal"],
             default: "credit_card",
         },
 
