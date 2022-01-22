@@ -47,7 +47,7 @@ export async function createInvoiceFromOrder(order: IOrder)
     for await(let product of Products)
     {
         if(Promotion_Code)
-        // @ts-ignore
+            // @ts-ignore
             product = await getNewPriceOfPromotionCode(Promotion_Code, product);
         const category = await getCategoryByProduct(product);
         items.push({

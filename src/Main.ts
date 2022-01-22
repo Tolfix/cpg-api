@@ -8,6 +8,7 @@ Logger.info("Adding .env variables");
 
 import "./Mods/Map.mod";
 import "./Mods/Number.mod";
+import "./Mods/String.mod";
 
 Logger.info(`Loading ./Events/Node.events`);
 import "./Events/Node.events";

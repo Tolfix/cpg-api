@@ -16,4 +16,4 @@ border-collapse: collapse;
         padding: 7px 5px;
         border-top: 1px solid #E6E6E6;
     }
-`
+` as const;
