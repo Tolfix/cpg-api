@@ -22,6 +22,7 @@ import {
 } from "../../Config";
 import qrcode from "qrcode";
 import GetText from "../../Translation/GetText";
+import GetOCRNumber from "./GetOCRNumber";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {
@@ -72,7 +73,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "city": Customer.billing.city,
                 "country": Customer.billing.country,
                 "custom1": `<br/><strong>Customer ID:</strong> ${Customer.id}`,
-                "custom2": `<br/><strong>OCR Number:</strong> ${(invoice.dates.invoice_date as string).replaceAll("-", "")}${invoice.id}`,
+                "custom2": `<br/><strong>OCR Number:</strong> ${GetOCRNumber(invoice)}`,
                 "custom3": `
                 <br/>
                 <div style="
@@ -88,7 +89,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                         Swish
                         <div>
                             <img 
-                            src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}" 
+                            src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `OCR ${GetOCRNumber(invoice)}`)}" 
                             width="64">
                         </div>
                         ` : ''}
