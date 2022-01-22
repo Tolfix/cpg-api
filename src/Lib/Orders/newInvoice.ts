@@ -174,13 +174,6 @@ export async function getProductsByOrder(order: IOrder)
     } });
 }
 
-export async function getConfigurableOptionsByOrder(order: IOrder)
-{
-    return await ConfigurableOptionsModel.find({ id: {
-        $in: [...order.products.map(product => product.configurable_options_ids ?? undefined)]
-    } });
-}
-
 export function createMapProductsFromOrder(order: IOrder)
 {
     const a = new Map<IProduct["id"], {

@@ -23,7 +23,9 @@ export interface ICustomer
     billing: Billing;
     password: string;
     createdAt: Date;
-    extra?: any;
+    extra: {
+        [key: string]: any;
+    };
 }
 
 export interface Personal

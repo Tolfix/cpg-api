@@ -51,21 +51,25 @@ server.use((req, res, next) =>
     { 
         // Check if content type is application/json
         // And method is POST|PUT|PATCH, since we don't care to look at GET requests
-        //if(req.headers["content-type"] === "application/json" && req.method?.match(/POST|PATCH|PUT/g))
-        //{
+        if(
+            req.headers["content-type"] === "application/json" &&
+            req.method?.match(/POST|PATCH|PUT/g) &&
+            buf.toString() !== ""
+        )
+        {
             // Fix to issue #29
             // https://github.com/Tolfix/cpg-api/issues/29
             // Not good "method" to return node errors to user.
-            // try
-            // {
-                // JSON.parse(buf.toString());
-            // }
-            // catch (e)
-            // {
+            try
+            {
+                JSON.parse(buf.toString());
+            }
+            catch (e)
+            {
                 // @ts-ignore
-             //   APIError(`Invalid JSON, ${(e.toString())}`)(res);
-            //}
-        //}
+                APIError(`Invalid JSON, ${(e.toString())}`)(res);
+            }
+        }
         
         // @ts-ignore
         req.rawBody = buf;

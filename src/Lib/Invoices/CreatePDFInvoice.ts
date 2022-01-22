@@ -72,7 +72,8 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                 "city": Customer.billing.city,
                 "country": Customer.billing.country,
                 "custom1": `<br/><strong>Customer ID:</strong> ${Customer.id}`,
-                "custom2": `
+                "custom2": `<br/><strong>OCR Number:</strong> ${(invoice.dates.invoice_date as string).replaceAll("-", "")}${invoice.id}`,
+                "custom3": `
                 <br/>
                 <div style="
                     text-align:start;"

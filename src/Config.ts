@@ -53,61 +53,61 @@ export const Company_Address = async (): Promise<IConfigs["company"]["address"]>
     if(!configs) throw new Error("No configs found");
     return configs.company?.address ?? process.env.COMPANY_ADDRESS ?? "";
 }
-export const Company_Zip = async () =>
+export const Company_Zip = async (): Promise<IConfigs["company"]["zip"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.zip ?? process.env.COMPANY_ZIP ?? "";
 }
-export const Company_City = async () =>
+export const Company_City = async (): Promise<IConfigs["company"]["city"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.city ?? process.env.COMPANY_CITY ?? "";
 }
-export const Company_Country = async () =>
+export const Company_Country = async (): Promise<IConfigs["company"]["country"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.country ?? process.env.COMPANY_COUNTRY ?? "";
 }
-export const Company_Phone = async () =>
+export const Company_Phone = async (): Promise<IConfigs["company"]["phone"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.phone ?? process.env.COMPANY_PHONE ?? "";
 }
-export const Company_Email = async () =>
+export const Company_Email = async (): Promise<IConfigs["company"]["email"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.email ?? process.env.COMPANY_EMAIL ?? "";
 }
-export const Company_Vat = async () =>
+export const Company_Vat = async (): Promise<IConfigs["company"]["vat"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.vat ?? process.env.COMPANY_VAT ?? "";
 }
-export const Company_Currency = async () =>
+export const Company_Currency = async (): Promise<IConfigs["company"]["currency"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.currency ?? process.env.COMPANY_CURRENCY ?? "";
 }
-export const Company_Tax_Registered = async () =>
+export const Company_Tax_Registered = async (): Promise<IConfigs["company"]["tax_registered"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.tax_registered ?? (process.env.COMPANY_TAX_REGISTERED === "true" ? true : false);
 }
-export const Company_Logo_Url = async () =>
+export const Company_Logo_Url = async (): Promise<IConfigs["company"]["logo_url"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
     return configs.company?.logo_url ?? process.env.COMPANY_LOGO_URL ?? "";
 }
-export const Company_Website = async () =>
+export const Company_Website = async (): Promise<IConfigs["company"]["website"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");

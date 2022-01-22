@@ -1,13 +1,11 @@
 import { Request, Response } from "express";
-import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
-// import mainEvent from "../../../../Events/Main.event";
-import { IPromotionsCodes } from "../../../../Interfaces/PromotionsCodes.interface";
-import { idCategory } from "../../../../Lib/Generator";
+import SubscriptionModel from "../../../../Database/Models/Subscriptions.model";
+import { ISubscription } from "../../../../Interfaces/Subscriptions.interface";
+import { idSubscription } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
 
-// @ts-ignore
-const API = new BaseModelAPI<IPromotionsCodes>(idCategory, PromotionCodeModel);
+const API = new BaseModelAPI<ISubscription>(idSubscription, SubscriptionModel);
 
 function insert(req: Request, res: Response)
 {
@@ -23,7 +21,7 @@ function insert(req: Request, res: Response)
 
 function getByUid(req: Request, res: Response)
 {
-    API.findByUid((req.params.uid)).then((result) =>
+    API.findByUid((req.params.uid as ISubscription["uid"])).then((result) =>
     {
         APISuccess(result)(res);
     });
@@ -52,21 +50,17 @@ function list(req: Request, res: Response)
 
 function patch(req: Request, res: Response)
 {
-    API.findAndPatch((req.params.uid), req.body).then((result) =>
+    API.findAndPatch((req.params.uid as ISubscription["uid"]), req.body).then((result) =>
     {
-        // @ts-ignore
-        // mainEvent.emit("categories_updated", result);
         APISuccess(result)(res);
     });
 }
 
 function removeById(req: Request, res: Response)
 {
-    API.removeByUid(req.params.uid)
+    API.removeByUid(req.params.uid as ISubscription["uid"])
         .then(()=>
         {
-            // @ts-ignore
-            // mainEvent.emit("", result);
             APISuccess({}, 204)(res)
         });
 }

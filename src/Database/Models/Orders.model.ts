@@ -38,7 +38,7 @@ const OrderSchema = new Schema
             type: [
                 {
                     product_id: Number,
-                    configurable_options_ids: {
+                    configurable_options: {
                         type: [
                             {
                                 id: Number,
