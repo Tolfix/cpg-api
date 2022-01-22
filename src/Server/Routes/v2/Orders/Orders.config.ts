@@ -64,7 +64,7 @@ async function createOrder(customer: ICustomer, products: Array<{
 
     SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${order.id}`, {
         isHTML: true,
-        body: NewOrderCreated(order, customer), 
+        body: await NewOrderCreated(order, customer), 
     });
 }
 
