@@ -57,9 +57,9 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                     {
                         result += stripIndents`
                         <tr>
-                            <td>+ ${c?.name}</td>
-                            <td>+ 1</td>
-                            <td>+ ${c?.price} ${await Company_Currency()}</td>
+                            <td>+ ${p?.name} - ${c?.name}</td>
+                            <td>1</td>
+                            <td>${c?.price} ${await Company_Currency()}</td>
                         </tr>`
                     }
                 }
