@@ -19,7 +19,7 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
         OCR number: ${(invoice.dates.invoice_date as string).replaceAll("-", "")}${invoice.id}
     </p>
     <p>
-        Your payment method is: ${invoice.payment_method}
+        Your payment method is: ${(invoice.payment_method).firstLetterUpperCase().replaceAll("_", " ")}
     </p>
     <p>
         Tax due: ${invoice.tax_rate}%
@@ -36,20 +36,20 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
             Click me to pay.
         </a>
         ` : ''}
-        ${invoice.payment_method === "credit_card" ? `<br />
+        ${invoice.payment_method === "credit_card" ? `
         <a href="${Full_Domain}/v2/stripe/pay/${invoice.uid}" target="_blank">
             Click me to pay.
         </a>
+        <p>
+            <strong>
+                To pay automatic invoice, you need to setup your payment method. It will automatic pay when a invoice is 14 days ahead. <br />
+                <a href="${Full_Domain}/v2/stripe/setup/${customer.uid}" target="_blank">
+                    Click here to setup your payment method.
+                </a>
+            </strong>
+        </p>
+        ` : ''}
     </p>
-    <p>
-        <strong>
-            To pay automatic invoice, you need to setup your payment method. It will automatic pay when a invoice is 14 days ahead. <br />
-            <a href="${Full_Domain}/v2/stripe/setup/${customer.id}" target="_blank">
-                Click here to setup your payment method.
-            </a>
-        </strong>
-    </p>
-    ` : ''}
 
     <table style="${GetTableStyle}">
         <thead>
