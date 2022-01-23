@@ -90,7 +90,7 @@ server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listin
 
 (async () =>
     {
-        ApolloServer(server);
+        await ApolloServer(server);
         server.use("*", (req, res) =>
         {
             return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
