@@ -5,6 +5,7 @@ import mainEvent from "../../../../Events/Main.event";
 import { ITransactions } from "../../../../Interfaces/Transactions.interface";
 import { idTransicitons } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
+import sendEmailOnTransactionCreation from "../../../../Lib/Transaction/SendEmailOnCreation";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
 
 const API = new BaseModelAPI<ITransactions>(idTransicitons, TransactionsModel);
@@ -45,8 +46,10 @@ function insert(req: Request, res: Response)
                     await invoice.save();
                 } 
             }
-            mainEvent.emit("transaction_created", result);
 
+            mainEvent.emit("transaction_created", result);
+            await sendEmailOnTransactionCreation(result);
+            
             return APISuccess({
                 uid: result.uid
             })(res);
