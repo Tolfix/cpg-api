@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
+import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
 import mainEvent from "../../../../Events/Main.event";
 import { ITransactions } from "../../../../Interfaces/Transactions.interface";
 import { idTransicitons } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
+import sendEmailOnTransactionCreation from "../../../../Lib/Transaction/SendEmailOnCreation";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
 
 const API = new BaseModelAPI<ITransactions>(idTransicitons, TransactionsModel);
@@ -11,12 +13,44 @@ const API = new BaseModelAPI<ITransactions>(idTransicitons, TransactionsModel);
 function insert(req: Request, res: Response)
 {
     API.create(req.body)
-        .then((result) =>
+        .then(async (result) =>
         {
-            
-            mainEvent.emit("transaction_created", result);
+            // check if we got a invoice id
+            if(req.body.invoice_uid)
+            {
+                // Get invoice
+                const invoice = await InvoiceModel.findOne({
+                    $or: [
+                        {
+                            "uid": req.body.invoice_uid
+                        },
+                        {
+                            "id": req.body.invoice_uid
+                        }
+                    ]
+                });
 
-            APISuccess({
+                if(invoice)
+                {
+                    // Update invoice
+                    invoice.transactions.push(result.uid);
+                    invoice.markModified("transactions");
+                    // Check if they wanted to mark it as paid as well
+                    if(req.body.markInvoiceAsPaid)
+                    {
+                        invoice.status = "collections";
+                        invoice.markModified("status");
+                        invoice.paid = true;
+                        invoice.markModified("paid");
+                    }
+                    await invoice.save();
+                } 
+            }
+
+            mainEvent.emit("transaction_created", result);
+            await sendEmailOnTransactionCreation(result);
+            
+            return APISuccess({
                 uid: result.uid
             })(res);
         });

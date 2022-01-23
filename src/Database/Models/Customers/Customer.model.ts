@@ -80,6 +80,13 @@ const CustomerSchema = new Schema
             default: Date.now,
         },
 
+        profile_picture: {
+            type: Number,
+            ref: "images",
+            required: false,
+            default: null,
+        },
+
         password: {
             type: String,
             required: true,

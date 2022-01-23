@@ -6,6 +6,7 @@ import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import Logger from "../Lib/Logger";
 import { getDate } from "../Lib/Time";
+import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreation";
 import GetText from "../Translation/GetText";
 
 if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
@@ -118,6 +119,8 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
                 date: getDate(),
                 uid: idTransicitons(),
             }).save());
+
+            await sendEmailOnTransactionCreation(newTrans);
 
             Logger.warning(GetText().paypal.txt_Paypal_Created_Transaction_From_Invoice(newTrans, invoice));
             // Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.uid}`);

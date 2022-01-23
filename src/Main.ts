@@ -1,8 +1,8 @@
 /* Copyright (C) 2021-2022 Tolfix - All Rights Reserved */
 require("dotenv").config();
 import Logger from "./Lib/Logger";
-
 import { GetVersion } from "./Config";
+
 Logger.info(`Starting CPG-API with version ${GetVersion()}`);
 Logger.info("Adding .env variables");
 

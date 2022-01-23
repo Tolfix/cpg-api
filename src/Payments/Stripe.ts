@@ -10,6 +10,7 @@ import { idTransicitons } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import Logger from "../Lib/Logger";
 import { getDate } from "../Lib/Time";
+import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreation";
 const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
@@ -178,6 +179,8 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
             uid: idTransicitons(),
         }).save());
 
+        await sendEmailOnTransactionCreation(newTrans);
+
         Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.id}`);
 
         invoice?.transactions.push(newTrans.id);
@@ -206,6 +209,8 @@ export const markInvoicePaid = async (intent: stripe.Response<stripe.PaymentInte
         date: getDate(),
         uid: idTransicitons(),
     }).save());
+
+    await sendEmailOnTransactionCreation(newTrans);
 
     invoice?.transactions.push(newTrans.id);
 

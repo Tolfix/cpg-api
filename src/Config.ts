@@ -45,55 +45,55 @@ export const Company_Name = async (): Promise<IConfigs["company"]["name"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.name ?? process.env.COMPANY_NAME ?? "";
+    return (configs.company?.name === "" ? undefined : configs.company?.name) ?? process.env.COMPANY_NAME ?? "";
 };
 export const Company_Address = async (): Promise<IConfigs["company"]["address"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.address ?? process.env.COMPANY_ADDRESS ?? "";
+    return (configs.company?.address === "" ? undefined : configs.company?.address) ?? process.env.COMPANY_ADDRESS ?? "";
 }
 export const Company_Zip = async (): Promise<IConfigs["company"]["zip"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.zip ?? process.env.COMPANY_ZIP ?? "";
+    return (configs.company?.zip === "" ? undefined : configs.company?.zip) ?? process.env.COMPANY_ZIP ?? "";
 }
 export const Company_City = async (): Promise<IConfigs["company"]["city"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.city ?? process.env.COMPANY_CITY ?? "";
+    return (configs.company?.city === "" ? undefined : configs.company?.city) ?? process.env.COMPANY_CITY ?? "";
 }
 export const Company_Country = async (): Promise<IConfigs["company"]["country"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.country ?? process.env.COMPANY_COUNTRY ?? "";
+    return (configs.company?.country === "" ? undefined : configs.company?.country) ?? process.env.COMPANY_COUNTRY ?? "";
 }
 export const Company_Phone = async (): Promise<IConfigs["company"]["phone"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.phone ?? process.env.COMPANY_PHONE ?? "";
+    return (configs.company?.phone === "" ? undefined : configs.company?.phone) ?? process.env.COMPANY_PHONE ?? "";
 }
 export const Company_Email = async (): Promise<IConfigs["company"]["email"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.email ?? process.env.COMPANY_EMAIL ?? "";
+    return (configs.company?.email === "" ? undefined : configs.company?.email) ?? process.env.COMPANY_EMAIL ?? "";
 }
 export const Company_Vat = async (): Promise<IConfigs["company"]["vat"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.vat ?? process.env.COMPANY_VAT ?? "";
+    return (configs.company?.vat === "" ? undefined : configs.company?.vat) ?? process.env.COMPANY_VAT ?? "";
 }
 export const Company_Currency = async (): Promise<IConfigs["company"]["currency"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.currency ?? process.env.COMPANY_CURRENCY ?? "";
+    return (configs.company?.currency === "" ? undefined : configs.company?.currency) ?? process.env.COMPANY_CURRENCY ?? "";
 }
 export const Company_Tax_Registered = async (): Promise<IConfigs["company"]["tax_registered"]> =>
 {
@@ -105,13 +105,13 @@ export const Company_Logo_Url = async (): Promise<IConfigs["company"]["logo_url"
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.logo_url ?? process.env.COMPANY_LOGO_URL ?? "";
+    return (configs.company?.logo_url === "" ? undefined : configs.company?.logo_url) ?? process.env.COMPANY_LOGO_URL ?? "";
 }
 export const Company_Website = async (): Promise<IConfigs["company"]["website"]> =>
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.website ?? process.env.COMPANY_WEBSITE ?? "";
+    return (configs.company?.website === "" ? undefined : configs.company?.website) ?? process.env.COMPANY_WEBSITE ?? "";
 }
 
 export const Default_Language: keyof IAllLanguages = (

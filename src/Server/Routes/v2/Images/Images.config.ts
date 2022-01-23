@@ -51,8 +51,8 @@ export = class ImagesRouter
         {
             const id = req.params.id as IImage["id"];
 
-            const data = CacheImages.get(id);
-
+            const data = CacheImages.get(parseInt(id));
+            
             if(!data)
                 return APIError(`Unable to find image by id ${id}`)(res);
 
@@ -60,10 +60,15 @@ export = class ImagesRouter
             {
                 return String.fromCharCode(ch);
             }).join('');
-            
+
             const d = btoa(binstr);
 
-            return APISuccess(d)(res);
+            return APISuccess({
+                data: d,
+                type: data.type,
+                name: data.name,
+                size: data.size
+            })(res);
         });
 
         /**

@@ -8,10 +8,9 @@ import BaseModelAPI from "../../../../Models/BaseModelAPI";
 import Logger from "../../../../Lib/Logger";
 import { SendEmail } from "../../../../Email/Send";
 import { Company_Name } from "../../../../Config";
-import Footer from "../../../../Email/Templates/General/Footer";
-import getFullName from "../../../../Lib/Customers/getFullName";
 import mainEvent from "../../../../Events/Main.event";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
+import WelcomeTemplate from "../../../../Email/Templates/Customer/Welcome.template";
 
 const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
@@ -35,22 +34,15 @@ function insert(req: Request, res: Response)
                 return APIError(`Email ${email} already exists`, 409)(res);
 
             API.create(req.body)
-                .then((result) =>
+                .then(async (result) =>
                 {
                     
                     mainEvent.emit("customer_created", result);
 
                     // Send email to customer
-                    SendEmail(result.personal.email, `Welcome to ${Company_Name}`, {
+                    SendEmail(result.personal.email, `Welcome to ${await Company_Name()}`, {
                         isHTML: true,
-                        body: `
-                        Welcome ${getFullName(result)} to ${Company_Name}! <br>
-                        <br>
-                        Your account has been created. <br>
-                        With email: ${result.personal.email} <br>
-                        <br>
-                        <br />
-                        ${Footer}`
+                        body: await WelcomeTemplate(result),
                     });
 
                     APISuccess({

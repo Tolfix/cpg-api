@@ -1,6 +1,6 @@
 {
   "name": "cpg-api",
-  "version": "v2.0",
+  "version": "v2.1",
   "description": "Central Payment Gateway",
   "main": "./build/Main.js",
   "dependencies": {
@@ -19,7 +19,7 @@
     "apollo-server-express": "^3.6.1",
     "aws-sdk": "^2.1018.0",
     "bcryptjs": "^2.4.3",
-    "colors": "^1.4.0",
+    "colors": "github:Tolfix/colors.js",
     "common-tags": "^1.8.0",
     "cors": "^2.8.5",
     "cron": "^1.8.2",
