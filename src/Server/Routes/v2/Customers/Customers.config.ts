@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import CustomerController from "./Customers.controller";
-import { Full_Domain, GetSMTPEmails, JWT_Access_Token } from "../../../../Config";
+import { GetSMTPEmails, JWT_Access_Token } from "../../../../Config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APIError, APISuccess } from "../../../../Lib/Response";
@@ -17,6 +17,10 @@ import OrderModel from "../../../../Database/Models/Orders.model";
 import { ICustomer } from "../../../../Interfaces/Customer.interface";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
+import LoginAttemptTemplate from "../../../../Email/Templates/Customer/LoginAttempt.template";
+import ResetPasswordTemplate from "../../../../Email/Templates/Customer/ResetPassword.template";
+import OrderCancelTemplate from "../../../../Email/Templates/Customer/OrderCancel.template";
+import Header from "../../../../Email/Templates/General/Header";
 
 export = class CustomerRouter
 {
@@ -179,6 +183,11 @@ export = class CustomerRouter
             order.order_status = "cancelled";
             await order.save();
 
+            SendEmail(customer.personal.email, "Order Cancelled Confirmation", {
+                isHTML: true,
+                body: await OrderCancelTemplate(customer, order),
+            });
+
             GetSMTPEmails().then(emails =>
             {
                 for(const email of emails)
@@ -267,10 +276,7 @@ export = class CustomerRouter
 
             SendEmail(customer.personal.email, "Reset Password", {
                 isHTML: true,
-                body: `
-                Hello ${customer.personal.first_name} <br />
-                Here is your reset password link: <a href="${Full_Domain}/${version}/customers/my/reset-password/${token}">Reset password</a>
-                `
+                body: await ResetPasswordTemplate(customer, version, token)
             });
 
             return APISuccess(`Succesfully created a reset password email`)(res);
@@ -327,6 +333,7 @@ export = class CustomerRouter
             </style>
             <html>
                 <body>
+                    ${await Header()}
                     <form class="container form-container" action="/${version}/customers/my/new-password?token=${token}" method="POST">
                         <input type="password" name="password" placeholder="New Password" />
                         <input type="password" name="password_confirmation" placeholder="Confirm Password" />
@@ -381,6 +388,7 @@ export = class CustomerRouter
             </style>
             <html>
                 <body class="container">
+                    ${await Header()}
                     <h1>Password reset successful</h1>
                     <div>
                         <p>You can now login with your new password</p>
@@ -445,11 +453,7 @@ export = class CustomerRouter
                         {
                             SendEmail(customer.personal.email, "Account login attempts", {
                                 isHTML: true,
-                                body: `
-                                Hello ${customer.personal.first_name} <br />
-                                Someone has been trying to login to your account. <br />
-                                If this was not you, please contact us immediately.
-                                `
+                                body: await LoginAttemptTemplate(customer),
                             });
                             this.attemptedLogins.delete(customer.id);
                         }
