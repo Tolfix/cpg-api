@@ -34,9 +34,9 @@ export default function EnsureAdmin(req: Request, res: Response, next: NextFunct
             password = login.split(":")[1];
             login = login.split(":")[0];
         }
-
         
         Logger.warning(`Authoring admin with username: ${login}`);
+
         return bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"]) ?? "", (err, match) =>
         {
             if(!match)
@@ -45,8 +45,6 @@ export default function EnsureAdmin(req: Request, res: Response, next: NextFunct
                 return APIError("Unauthorized admin", 403)(res);
             }
     
-            Logger.warning(`Authorized admin with username: ${login}`);
-
             return next();
         });
     }
