@@ -82,9 +82,7 @@ export = function Cron_Invoices()
             },
             paid: false,
             extra: {
-                stripe_setup_intent: {
-                    $exists: true
-                }
+                stripe_setup_intent: true
             }
         }).then(async (invoices) =>
         {

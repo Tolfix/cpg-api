@@ -6,7 +6,7 @@ import { IQuotes } from "../../Interfaces/Quotes.interface";
 import { ISubscription } from "../../Interfaces/Subscriptions.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
-import { A_CC_Payments, A_RecurringMethod } from "../../Types/PaymentMethod";
+import { A_RecurringMethod } from "../../Types/PaymentMethod";
 
 const SubscriptionSchema = new Schema
 (
