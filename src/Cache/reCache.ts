@@ -205,12 +205,12 @@ export async function reCache_Images()
 export async function reCache()
 {
     await reCache_Configs();
-    await reCache_Categories();
+    // await reCache_Categories();
     await reCache_Admin();
-    await reCache_Customers();
-    await reCache_Product();
-    await reCache_Transactions();
-    await reCache_Orders();
-    await reCache_Images();
-    await reCache_Invoices();
+    // await reCache_Customers();
+    // await reCache_Product();
+    // await reCache_Transactions();
+    // await reCache_Orders();
+    // await reCache_Images();
+    // await reCache_Invoices();
 }
