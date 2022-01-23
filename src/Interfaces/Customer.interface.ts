@@ -1,3 +1,5 @@
+import { IImage } from "./Images.interface";
+
 /**
  * @typedef Customer
  * @property {string} first_name - First name of customer
@@ -23,6 +25,7 @@ export interface ICustomer
     billing: Billing;
     password: string;
     createdAt: Date;
+    profile_picture: IImage["id"];
     extra: {
         [key: string]: any;
     };
