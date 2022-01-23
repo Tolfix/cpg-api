@@ -162,9 +162,6 @@ export async function reCache_Configs()
     });
 }
 
-/**
- * @deprecated
- */
 export async function reCache_Images()
 {
     Logger.info(`Starting caching on images..`);
@@ -173,8 +170,8 @@ export async function reCache_Images()
         const image = await ImageModel.find();
         for (const o of image)
         {
-            Logger.cache(`Caching image ${o.uid}`);
-            CacheImages.set(o.uid, o);
+            Logger.cache(`Caching image ${o.id}`);
+            CacheImages.set(o.id, o);
         }
         return resolve(true);
     });
@@ -211,6 +208,6 @@ export async function reCache()
     // await reCache_Product();
     // await reCache_Transactions();
     // await reCache_Orders();
-    // await reCache_Images();
+    await reCache_Images();
     // await reCache_Invoices();
 }
