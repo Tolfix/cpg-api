@@ -25,7 +25,7 @@ export interface ICustomer
     billing: Billing;
     password: string;
     createdAt: Date;
-    profile_picture: IImage["id"];
+    profile_picture: IImage["id"] | null;
     extra: {
         [key: string]: any;
     };
