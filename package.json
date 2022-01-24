@@ -1,6 +1,6 @@
 {
   "name": "cpg-api",
-  "version": "v2.1",
+  "version": "v2.2",
   "description": "Central Payment Gateway",
   "main": "./build/Main.js",
   "dependencies": {
@@ -57,15 +57,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tolfix/CGP-API.git"
+    "url": "git+https://github.com/Tolfix/cpg-api.git"
   },
   "keywords": [],
   "author": "Tolfix",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tolfix/CGP-API/issues"
+    "url": "https://github.com/Tolfix/cpg-api/issues"
   },
-  "homepage": "https://github.com/Tolfix/CGP-API#readme",
+  "homepage": "https://github.com/Tolfix/cpg-api#readme",
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/cron": "^1.7.3",
