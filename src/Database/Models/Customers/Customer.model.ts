@@ -1,7 +1,7 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer.interface";
+import { ICustomer, ICustomerMethods } from "../../../Interfaces/Customer.interface";
 import Logger from "../../../Lib/Logger";
 import GetText from "../../../Translation/GetText";
 
@@ -101,6 +101,11 @@ const CustomerSchema = new Schema
     }
 );
 
+CustomerSchema.methods.fullName = function(sC = false)
+{
+    return `${this.personal.first_name} ${this.personal.last_name} ${sC ? (this.billing.company ? ` (${this.billing.company})` : "") : ""}`;
+}
+
 // Log when creation
 CustomerSchema.post('save', function(doc: ICustomer & Document)
 {
@@ -118,6 +123,6 @@ CustomerSchema.plugin(increment.plugin, {
     incrementBy: 1
 });
 
-const CustomerModel = model<ICustomer & Document>("customer", CustomerSchema);
+const CustomerModel = model<ICustomer & Document & ICustomerMethods>("customer", CustomerSchema);
 
 export default CustomerModel;
