@@ -174,7 +174,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const order = await MongoFind(OrderModel, req.query,{
+            const [order] = await MongoFind(OrderModel, req.query,{
                 $or: [
                     {
                         customer_uid: customer.uid,
@@ -282,7 +282,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const transactions = await MongoFind(TransactionsModel, req.query,{
+            const [transactions] = await MongoFind(TransactionsModel, req.query,{
                 $or: [
                     {
                         customer_uid: customer.uid,
