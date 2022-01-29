@@ -21,6 +21,8 @@ import LoginAttemptTemplate from "../../../../Email/Templates/Customer/LoginAtte
 import ResetPasswordTemplate from "../../../../Email/Templates/Customer/ResetPassword.template";
 import OrderCancelTemplate from "../../../../Email/Templates/Customer/OrderCancel.template";
 import Header from "../../../../Email/Templates/General/Header";
+import MongoFind from "../../../../Lib/MongoFind";
+import createPDFInvoice from "../../../../Lib/Invoices/CreatePDFInvoice";
 
 export = class CustomerRouter
 {
@@ -53,10 +55,10 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const invoices = await InvoiceModel.find({
+            const invoices = await MongoFind(InvoiceModel, req.query, {
                 $or: [
-                    { customer_uid: customer.uid},
-                    { customer_uid: customer.id}
+                    { customer_uid: customer.uid },
+                    { customer_uid: customer.id }
                 ]
             });
 
@@ -78,7 +80,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const invoice = await InvoiceModel.findOne({
+            const [invoice] = await MongoFind(InvoiceModel, req.query, {
                 // lol almost forgot to add customer_uid kek
                 $or: [
                     {
@@ -97,6 +99,46 @@ export = class CustomerRouter
             return APISuccess(invoice)(res);
         });
 
+        this.router.get("/my/invoices/:id/preview", EnsureAuth(), async (req, res) =>
+        {
+            const invoiceId = req.params.id;
+
+            if(!invoiceId)
+                return APIError(`Invalid invoice id`)(res);
+            
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const [invoice] = await MongoFind(InvoiceModel, req.query, {
+                // lol almost forgot to add customer_uid kek
+                $or: [
+                    {
+                        customer_uid: customer.uid,
+                    },
+                    {
+                        customer_uid: customer.id,
+                    },
+                ],
+                id: invoiceId,
+            });
+
+            if(!invoice)
+                return APIError(`Unable to find invoice`)(res);
+
+            const result = await createPDFInvoice(invoice);
+
+            res.writeHead(200, {
+                'Content-Type': "application/pdf",
+            });
+
+            return res.end(result, "base64");
+        });
+
         this.router.get("/my/orders", EnsureAuth(), async (req, res) =>
         {
             const customer = await CustomerModel.findOne({
@@ -107,10 +149,10 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const orders = await OrderModel.find({
+            const orders = await MongoFind(OrderModel, req.query,{
                 $or: [
-                    { customer_uid: customer.uid},
-                    { customer_uid: customer.id}
+                    { customer_uid: customer.uid },
+                    { customer_uid: customer.id }
                 ]
             });
 
@@ -132,7 +174,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const order = await OrderModel.findOne({
+            const [order] = await MongoFind(OrderModel, req.query,{
                 $or: [
                     {
                         customer_uid: customer.uid,
@@ -215,7 +257,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const transactions = await TransactionsModel.find({
+            const transactions = await MongoFind(TransactionsModel, req.query,{
                 $or: [
                     { customer_uid: customer.uid},
                     { customer_uid: customer.id}
@@ -240,7 +282,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const transactions = await TransactionsModel.find({
+            const [transactions] = await MongoFind(TransactionsModel, req.query,{
                 $or: [
                     {
                         customer_uid: customer.uid,

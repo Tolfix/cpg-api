@@ -1,3 +1,6 @@
+import { Request } from "express";
+import MongoFind from "../Lib/MongoFind";
+
 export default class BaseModelAPI<IModel extends { uid: string }>
 {
     private idFunction;
@@ -39,26 +42,21 @@ export default class BaseModelAPI<IModel extends { uid: string }>
         });
     }
 
-    public findAll(limit: number, skip: number, sort: string, order: string): Promise<Array<IModel>>
+    public findAll(query: Request["query"]): Promise<Array<IModel>>
     {
         return new Promise((resolve, reject) =>
         {
-            this.iModel.find()
-                .select("-_id -__v")
-                .limit(limit)
-                .skip(skip)
-                .sort({ sort: order })
-                .exec(function (err: any, users: any)
+            MongoFind(this.iModel, query).then((result: any) =>
+            {
+                const r = result.map((i: any) =>
                 {
-                    if (err)
-                    {
-                        reject(err);
-                    }
-                    else
-                    {
-                        resolve(users);
-                    }
-                })
+                    const r = i.toJSON();
+                    //@ts-ignore
+                    delete r.__v;
+                    return r;
+                });
+                resolve(r);
+            }).catch(reject);
         });
     }
 

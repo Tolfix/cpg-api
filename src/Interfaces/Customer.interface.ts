@@ -31,6 +31,11 @@ export interface ICustomer
     };
 }
 
+export interface ICustomerMethods
+{
+    fullName<incCo extends boolean | undefined = undefined>(sC?: incCo): incCo extends undefined ? `${string} ${string}` : `${string} ${string} ${string}`;
+}
+
 export interface Personal
 {
     first_name: string;

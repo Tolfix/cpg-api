@@ -31,20 +31,7 @@ function getByUid(req: Request, res: Response)
 
 function list(req: Request, res: Response)
 {
-    const limit = parseInt(req.query._end as string)
-    && parseInt(req.query._end as string) <= 100 ? 
-                                                parseInt(req.query._end as string) 
-                                                :
-                                                25;
-    let start = 0;
-    if(req.query)
-        if(req.query._start)
-            start = Number.isInteger(parseInt(req.query._start as string)) ? parseInt(req.query._start as string) : 0;
-
-    const sort = req.query._sort as string ?? "id";
-    const order = req.query._order as string ?? "asc";
-        
-    API.findAll(limit, start, sort, order).then((result: any) =>
+    API.findAll(req.query).then((result: any) =>
     {
         APISuccess(result)(res)
     })
