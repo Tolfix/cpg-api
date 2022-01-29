@@ -28,6 +28,7 @@
     "easyinvoice": "^2.0.8",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
+    "express-rate-limit": "^6.2.0",
     "express-session": "^1.17.2",
     "express-swagger-generator": "github:Tolfix/express-swagger-generator",
     "graphql-compose": "^9.0.6",

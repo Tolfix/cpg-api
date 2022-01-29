@@ -25,22 +25,22 @@ export = class CategoryRouter
         ])
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CategoryController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CategoryController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CategoryController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CategoryController.removeById
         ]);
     }

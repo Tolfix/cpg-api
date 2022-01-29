@@ -26,7 +26,7 @@ export = class SubscriptionRouter
         this.server.use(`/${version}/subscriptions`, this.router);
 
         this.router.get("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             SubscriptionController.list
         ]);
 
@@ -121,27 +121,27 @@ export = class SubscriptionRouter
         });
 
         this.router.get("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             SubscriptionController.getByUid
         ]);
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             SubscriptionController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             SubscriptionController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             SubscriptionController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             SubscriptionController.removeById
         ]);
     }

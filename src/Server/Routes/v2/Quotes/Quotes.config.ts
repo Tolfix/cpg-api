@@ -18,12 +18,12 @@ export = class QuotesRouter
         this.server.use(`/${version}/quotes`, this.router);
 
         this.router.get("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             QuotesController.list
         ]);
 
         this.router.get("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             QuotesController.getByUid
         ]);
 
@@ -54,22 +54,22 @@ export = class QuotesRouter
         });
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             QuotesController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             QuotesController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             QuotesController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             QuotesController.removeById
         ]);
     }

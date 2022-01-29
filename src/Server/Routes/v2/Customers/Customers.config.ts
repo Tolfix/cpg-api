@@ -36,7 +36,7 @@ export = class CustomerRouter
         this.server.use(`/${version}/customers`, this.router);
 
         this.router.get("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CustomerController.list
         ]);
 
@@ -442,27 +442,27 @@ export = class CustomerRouter
         });
         
         this.router.get("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CustomerController.getByUid
         ]);
 
         this.router.post("/", [
-            // EnsureAdmin,
+            // EnsureAdmin(),
             CustomerController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CustomerController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CustomerController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             CustomerController.removeById
         ]);
 

@@ -16,36 +16,36 @@ export = class InvoiceRouter
         this.server.use(`/${version}/invoices`, this.router);
 
         this.router.get("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             InvoiceController.list
         ]);
 
         this.router.get("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             InvoiceController.getByUid
         ]);
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             InvoiceController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             InvoiceController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             InvoiceController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             InvoiceController.removeById
         ]);
 
-        this.router.get("/:uid/pdf", EnsureAdmin, async (req, res) =>
+        this.router.get("/:uid/pdf", EnsureAdmin(), async (req, res) =>
         {
             
             const invoice = await InvoiceModel.findOne({ id: req.params.uid });
