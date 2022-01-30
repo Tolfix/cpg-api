@@ -17,7 +17,7 @@ const TransactionsSchema = new Schema
         },
 
         customer_uid: {
-            type: Number,
+            type: Number || String,
             required: true
         },
 

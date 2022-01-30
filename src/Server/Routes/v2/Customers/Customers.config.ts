@@ -62,7 +62,10 @@ export = class CustomerRouter
                 ]
             });
 
-            return APISuccess(invoices)(res);
+            res.setHeader("X-Total-Pages", invoices.totalPages);
+            res.setHeader("X-Total", invoices.totalCount);
+
+            return APISuccess(invoices.data)(res);
         });
 
         this.router.get("/my/invoices/:id", EnsureAuth(), async (req, res) =>
@@ -80,7 +83,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const [invoice] = await MongoFind(InvoiceModel, req.query, {
+            const data = await MongoFind(InvoiceModel, req.query, {
                 // lol almost forgot to add customer_uid kek
                 $or: [
                     {
@@ -93,10 +96,10 @@ export = class CustomerRouter
                 id: invoiceId,
             });
 
-            if(!invoice)
+            if(!data.data)
                 return APIError(`Unable to find invoice`)(res);
 
-            return APISuccess(invoice)(res);
+            return APISuccess(data.data[0])(res);
         });
 
         this.router.get("/my/invoices/:id/preview", EnsureAuth(), async (req, res) =>
@@ -114,7 +117,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const [invoice] = await MongoFind(InvoiceModel, req.query, {
+            const {data: [invoice]} = await MongoFind(InvoiceModel, req.query, {
                 // lol almost forgot to add customer_uid kek
                 $or: [
                     {
@@ -149,14 +152,17 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const orders = await MongoFind(OrderModel, req.query,{
+            const data = await MongoFind(OrderModel, req.query,{
                 $or: [
                     { customer_uid: customer.uid },
                     { customer_uid: customer.id }
                 ]
             });
 
-            return APISuccess(orders)(res);
+            res.setHeader("X-Total-Pages", data.totalPages);
+            res.setHeader("X-Total", data.totalCount);
+
+            return APISuccess(data.data)(res);
         });
 
         this.router.get("/my/orders/:id", EnsureAuth(), async (req, res) =>
@@ -174,7 +180,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const [order] = await MongoFind(OrderModel, req.query,{
+            const {data: [order]} = await MongoFind(OrderModel, req.query,{
                 $or: [
                     {
                         customer_uid: customer.uid,
@@ -257,12 +263,15 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const transactions = await MongoFind(TransactionsModel, req.query,{
+            const {data: transactions, totalCount, totalPages} = await MongoFind(TransactionsModel, req.query,{
                 $or: [
-                    { customer_uid: customer.uid},
-                    { customer_uid: customer.id}
+                    // { customer_uid: customer.uid },
+                    { customer_uid: customer.id }
                 ]
             });
+
+            res.setHeader("X-Total-Pages", totalPages);
+            res.setHeader("X-Total", totalCount);
 
             return APISuccess(transactions)(res);
         });
@@ -282,7 +291,7 @@ export = class CustomerRouter
             if(!customer)
                 return APIError(`Unable to find customer`)(res);
 
-            const [transactions] = await MongoFind(TransactionsModel, req.query,{
+            const {data: [transactions]} = await MongoFind(TransactionsModel, req.query,{
                 $or: [
                     {
                         customer_uid: customer.uid,
