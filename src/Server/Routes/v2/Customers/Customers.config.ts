@@ -223,6 +223,10 @@ export = class CustomerRouter
                     },
                 ],
                 id: orderId,
+                // remove cancelled orders
+                order_status: {
+                    $ne: "cancelled"
+                }
             });
 
             if(!order)
