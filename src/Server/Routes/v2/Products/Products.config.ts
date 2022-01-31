@@ -48,22 +48,22 @@ export = class ProductsRouter
         });
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             ProductController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             ProductController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             ProductController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             ProductController.removeById
         ]);
 

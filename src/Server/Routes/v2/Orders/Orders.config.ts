@@ -79,7 +79,7 @@ export = class OrderRoute
         this.server.use(`/${version}/orders`, this.router);
 
         this.router.get("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             OrderController.list
         ]);
 
@@ -279,27 +279,27 @@ export = class OrderRoute
         });
 
         this.router.get("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             OrderController.getByUid
         ]);
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             OrderController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             OrderController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             OrderController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             OrderController.removeById
         ]);
 

@@ -17,12 +17,12 @@ export = class PromotionCodeRoute
         this.server.use(`/${version}/promotion_codes`, this.router);
 
         this.router.get("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             PromotionCodeController.list
         ]);
 
         this.router.get("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             PromotionCodeController.getByUid
         ]);
 
@@ -119,22 +119,22 @@ export = class PromotionCodeRoute
         });
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             PromotionCodeController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             PromotionCodeController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             PromotionCodeController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             PromotionCodeController.removeById
         ]);
     }

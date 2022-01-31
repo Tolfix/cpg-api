@@ -4,14 +4,14 @@ import { JWT_Access_Token } from "../Config";
 import Logger from "../Lib/Logger";
 import { APIError } from "../Lib/Response";
 
-export default function EnsureAuth()
+export default function EnsureAuth(eR = false)
 {
-    return (req: Request, res: Response, next: NextFunction) =>
+    return (req: Request, res: Response, next?: NextFunction) =>
     {
         const authHeader = req.headers['authorization'];
         const tokenQuery = req.query.access_token;
         if(!authHeader && !tokenQuery)
-            return APIError({
+            return eR ? Promise.resolve(false) : APIError({
                 text: "Missing 'authorization' in header"
             })(res);
     
@@ -24,13 +24,13 @@ export default function EnsureAuth()
 
         // @ts-ignore
         if(!b64auth[0].toLocaleLowerCase().match(/query|bearer/g))
-            return APIError({
+            return eR ? Promise.resolve(false) : APIError({
                 text: "Missing 'basic' or 'bearer' in authorization"
             })(res);
 
         // @ts-ignore
         if(!b64auth[1])
-            return APIError({
+            return eR ? Promise.resolve(false) : APIError({
                 text: "Missing 'buffer' in authorization"
             })(res);
             
@@ -39,22 +39,21 @@ export default function EnsureAuth()
         {
             // @ts-ignore
             const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
-            jwt.verify(token, JWT_Access_Token, (err, payload) =>
-            {
-                if (err) 
-                    return APIError(`Unauthorized user.`, 403)(res);
 
-                // @ts-ignore
-                if(!payload?.data?.id)
-                    return APIError(`Wrong payload.`, 403)(res);
-    
-                //@ts-ignore
-                req.customer = payload.data;
-                // @ts-ignore
-                Logger.api(`Authorizing`, payload.data);
-    
-                return next();
-            });
+            const payload = jwt.verify(token, JWT_Access_Token);
+            if (!payload) 
+                return eR ? Promise.resolve(false) : APIError(`Unauthorized user.`, 403)(res);
+
+            // @ts-ignore
+            if(!payload?.data?.id)
+                return eR ? Promise.resolve(false) : APIError(`Wrong payload.`, 403)(res);
+
+            //@ts-ignore
+            req.customer = payload.data;
+            // @ts-ignore
+            eR ? null : Logger.api(`Authorizing`, payload.data);
+
+            return eR ? Promise.resolve(true) : next?.();
         }
         
 

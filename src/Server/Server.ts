@@ -11,6 +11,9 @@ import { APIError } from "../Lib/Response";
 import { PluginHandler } from "../Plugins/PluginHandler";
 import ApolloServer from "../Database/GraphQL/ApolloServer";
 import GetText from "../Translation/GetText";
+import rateLimiter from "express-rate-limit"
+import EnsureAdmin from "../Middlewares/EnsureAdmin";
+import EnsureAuth from "../Middlewares/EnsureAuth";
 
 declare module "express-session"
 {
@@ -81,6 +84,23 @@ server.use((req, res, next) =>
     res.setHeader('X-Powered-By', 'CPG-API');
     next();
 });
+
+//Limiter, to reduce spam if it would happen.
+const limiter = rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: async (request, response) =>
+    {
+		if(await EnsureAdmin(true)(request,response))
+            return 5000;
+        if(await EnsureAuth(true)(request,response))
+            return 1000;
+        return 500;
+	},
+    standardHeaders: true,
+    message: "Too many requests, please try again later."
+});
+
+server.use(limiter);
 
 reCache();
 RouteHandler(server);

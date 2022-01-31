@@ -13,32 +13,32 @@ export = class TransactionsRouter
         this.server.use(`/${version}/transactions`, this.router);
 
         this.router.get("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             TransactionsController.list
         ]);
 
         this.router.get("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             TransactionsController.getByUid
         ]);
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             TransactionsController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             TransactionsController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             TransactionsController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             TransactionsController.removeById
         ]);
     }

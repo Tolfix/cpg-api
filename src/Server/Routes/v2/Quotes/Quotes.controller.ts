@@ -68,7 +68,7 @@ function getByUid(req: Request, res: Response)
 
 function list(req: Request, res: Response)
 {
-    API.findAll(req.query).then((result: any) =>
+    API.findAll(req.query, res).then((result: any) =>
     {
         APISuccess(result)(res)
     });

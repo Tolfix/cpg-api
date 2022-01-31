@@ -78,7 +78,7 @@ export = class ImagesRouter
          * @param {file} image.formData.required Image data as formdata
          * @security Basic
          */
-        this.router.post("/", EnsureAdmin, async (req, res) =>
+        this.router.post("/", EnsureAdmin(), async (req, res) =>
         {
             if(req.files)
             {
@@ -114,7 +114,7 @@ export = class ImagesRouter
          * @param {string} uid.path.required - uid for image
          * @security Basic
          */
-         this.router.delete("/:id", EnsureAdmin, async (req, res) =>
+         this.router.delete("/:id", EnsureAdmin(), async (req, res) =>
          {
             const id = req.params.id as IImage["id"];
             const data = CacheImages.get(id);

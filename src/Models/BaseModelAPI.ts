@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import MongoFind from "../Lib/MongoFind";
 
 export default class BaseModelAPI<IModel extends { uid: string }>
@@ -42,19 +42,23 @@ export default class BaseModelAPI<IModel extends { uid: string }>
         });
     }
 
-    public findAll(query: Request["query"]): Promise<Array<IModel>>
+    public findAll(query: Request["query"], res: Response): Promise<Array<IModel>>
     {
         return new Promise((resolve, reject) =>
         {
-            MongoFind(this.iModel, query).then((result: any) =>
+            MongoFind(this.iModel, query).then((result) =>
             {
-                const r = result.map((i: any) =>
+                const r = result.data.map((i: any) =>
                 {
                     const r = i.toJSON();
                     //@ts-ignore
                     delete r.__v;
                     return r;
                 });
+
+                res.setHeader("X-Total-Pages", result.totalPages);
+                res.setHeader("X-Total", result.totalCount);
+
                 resolve(r);
             }).catch(reject);
         });

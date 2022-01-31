@@ -21,22 +21,22 @@ export = class ProductsRouter
         ]);
 
         this.router.post("/", [
-            EnsureAdmin,
+            EnsureAdmin(),
             ConfigurableOptionsController.insert
         ]);
 
         this.router.patch("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             ConfigurableOptionsController.patch
         ]);
 
         this.router.put("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             ConfigurableOptionsController.patch
         ]);
 
         this.router.delete("/:uid", [
-            EnsureAdmin,
+            EnsureAdmin(),
             ConfigurableOptionsController.removeById
         ]);
 
