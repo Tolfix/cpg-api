@@ -1,9 +1,9 @@
-import { Model } from "mongoose";
+import { Model, Document } from "mongoose";
 import { Request } from "express"
 import { MongooseQueryParser } from "mongoose-query-parser";
 const p = new MongooseQueryParser();
 
-export default async function MongoFind<T>(model: Model<T>, query: Request["query"], eQuery?: any)
+export default async function MongoFind<T extends Document<any, any, any>>(model: Model<T>, query: Request["query"], eQuery?: any)
 {
     const data = p.parse(query);
     
