@@ -13,6 +13,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@types/react-chartjs-2": "^2.5.7",
     "prettier": "^2.5.1",
     "turbo": "^1.1.2"
   },
@@ -31,5 +32,10 @@
   "bugs": {
     "url": "https://github.com/Tolfix/cpg/issues"
   },
-  "homepage": "https://github.com/Tolfix/cpg#readme"
+  "homepage": "https://github.com/Tolfix/cpg#readme",
+  "dependencies": {
+    "@types/react": "^17.0.38",
+    "chart.js": "^3.7.0",
+    "react": "^17.0.2"
+  }
 }
