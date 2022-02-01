@@ -24,7 +24,7 @@ RUN ls -la
 # ls in ./apps/api
 RUN ls -la ./apps/api
 
-COPY ./apps/api/build ./usr/src
+COPY ./apps/api/build/. /usr/src
 
 # Copy modules
 COPY ./node_modules ./usr/src/node_modules
