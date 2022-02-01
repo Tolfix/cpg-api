@@ -17,7 +17,7 @@ COPY package*.json ./
 
 RUN npm install --force
 
-COPY . ./
+COPY ./apps/api ./
 
 # Check what we got in directory
 RUN ls -al
