@@ -1,0 +1,664 @@
+2022-02-01 14:29:15 | Starting CPG-API with version v2.3
+2022-02-01 14:29:15 | Adding .env variables
+2022-02-01 14:29:15 | Loading ./Events/Node.events
+2022-02-01 14:29:15 | Loading ./Server
+2022-02-01 14:29:17 | An error
+Error: Cannot find module './en/Lang_en.js'
+Require stack:
+- E:\Programming\Typescript\CPG\apps\api\Translation\GetText.ts
+- E:\Programming\Typescript\CPG\apps\api\Database\Models\Administrators.model.ts
+- E:\Programming\Typescript\CPG\apps\api\Cache\reCache.ts
+- E:\Programming\Typescript\CPG\apps\api\Server\Server.ts
+- E:\Programming\Typescript\CPG\apps\api\Main.ts
+at 
+uncaughtException
+2022-02-01 14:29:17 | About to exit with code
+1
+2022-02-01 14:29:41 | Starting CPG-API with version v2.3
+2022-02-01 14:29:41 | Adding .env variables
+2022-02-01 14:29:41 | Loading ./Events/Node.events
+2022-02-01 14:29:41 | Loading ./Server
+2022-02-01 14:29:46 | Loading schemas..
+2022-02-01 14:29:46 | An error
+Error: ENOENT: no such file or directory, scandir 'E:\Programming\Typescript\CPG\apps\api/build/Database/GraphQL/Schemas'
+at 
+uncaughtException
+2022-02-01 14:29:46 | About to exit with code
+1
+2022-02-01 14:30:43 | Starting CPG-API with version v2.3
+2022-02-01 14:30:43 | Adding .env variables
+2022-02-01 14:30:43 | Loading ./Events/Node.events
+2022-02-01 14:30:43 | Loading ./Server
+2022-02-01 14:30:50 | Starting CPG-API with version v2.3
+2022-02-01 14:30:50 | Adding .env variables
+2022-02-01 14:30:50 | Loading ./Events/Node.events
+2022-02-01 14:30:50 | Loading ./Server
+2022-02-01 14:30:54 | Loading schemas..
+2022-02-01 14:30:55 | Starting caching on configs..
+2022-02-01 14:30:55 | Loading routes...
+2022-02-01 14:30:55 | Loading plugin..
+2022-02-01 14:30:55 | Loading ./Database/Mongo
+2022-02-01 14:30:55 | Loading ./Handlers/CronHandler
+2022-02-01 14:30:55 | An error
+Error: ENOENT: no such file or directory, scandir 'E:\Programming\Typescript\CPG\apps\api/build/Cron'
+at 
+uncaughtException
+2022-02-01 14:30:55 | About to exit with code
+1
+2022-02-01 14:31:13 | Starting CPG-API with version v2.3
+2022-02-01 14:31:13 | Adding .env variables
+2022-02-01 14:31:13 | Loading ./Events/Node.events
+2022-02-01 14:31:13 | Loading ./Server
+2022-02-01 14:31:17 | Loading schemas..
+2022-02-01 14:31:17 | Starting caching on configs..
+2022-02-01 14:31:17 | Loading routes...
+2022-02-01 14:31:17 | Loading plugin..
+2022-02-01 14:31:17 | Loading ./Database/Mongo
+2022-02-01 14:31:17 | Loading ./Handlers/CronHandler
+2022-02-01 14:31:18 | Loading ./Admin/AdminHandler
+2022-02-01 14:31:18 | Server listing on port 8080 | http://localhost:8080
+2022-02-01 14:31:18 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+Error: Query root type must be provided.
+2022-02-01 14:31:26 | Starting CPG-API with version v2.3
+2022-02-01 14:31:26 | Adding .env variables
+2022-02-01 14:31:26 | Loading ./Events/Node.events
+2022-02-01 14:31:26 | Loading ./Server
+2022-02-01 14:31:30 | Loading schemas..
+2022-02-01 14:31:30 | Starting caching on configs..
+2022-02-01 14:31:30 | Loading routes...
+2022-02-01 14:31:30 | Loading plugin..
+2022-02-01 14:31:30 | Loading ./Database/Mongo
+2022-02-01 14:31:30 | Loading ./Handlers/CronHandler
+2022-02-01 14:31:31 | Loading ./Admin/AdminHandler
+2022-02-01 14:31:31 | Server listing on port 8080 | http://localhost:8080
+2022-02-01 14:31:31 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+Error: Query root type must be provided.
+2022-02-01 14:31:39 | Starting CPG-API with version v2.3
+2022-02-01 14:31:39 | Adding .env variables
+2022-02-01 14:31:39 | Loading ./Events/Node.events
+2022-02-01 14:31:39 | Loading ./Server
+2022-02-01 14:31:43 | Loading schemas..
+2022-02-01 14:31:43 | Starting caching on configs..
+2022-02-01 14:31:43 | Loading routes...
+2022-02-01 14:31:43 | Loading plugin..
+2022-02-01 14:31:44 | Loading ./Database/Mongo
+2022-02-01 14:31:44 | Loading ./Handlers/CronHandler
+2022-02-01 14:31:44 | Loading ./Admin/AdminHandler
+2022-02-01 14:31:44 | Server listing on port 8080 | http://localhost:8080
+2022-02-01 14:31:44 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+Error: Query root type must be provided.
+2022-02-01 14:32:11 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:12 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:12 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:12 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:12 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:13 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:13 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:13 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:13 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:14 | Lost connection to database, shutting down.
+2022-02-01 14:32:14 | About to exit with code
+1
+2022-02-01 14:32:22 | Starting CPG-API with version v2.3
+2022-02-01 14:32:22 | Adding .env variables
+2022-02-01 14:32:22 | Loading ./Events/Node.events
+2022-02-01 14:32:22 | Loading ./Server
+2022-02-01 14:32:26 | Loading schemas..
+2022-02-01 14:32:28 | Adding schema Categories
+2022-02-01 14:32:30 | Adding schema ConfigurableOptions
+2022-02-01 14:32:32 | Adding schema Customers
+2022-02-01 14:32:32 | Adding schema Invoices
+2022-02-01 14:32:32 | Adding schema Order
+2022-02-01 14:32:33 | Adding schema Products
+2022-02-01 14:32:35 | Adding schema PromotionCode
+2022-02-01 14:32:37 | Adding schema Quotes
+2022-02-01 14:32:39 | Adding schema Subscription
+2022-02-01 14:32:39 | Adding schema Transaction
+2022-02-01 14:32:39 | Starting caching on configs..
+2022-02-01 14:32:39 | Loading routes...
+2022-02-01 14:32:39 | Loading plugin..
+2022-02-01 14:32:39 | Loading ./Database/Mongo
+2022-02-01 14:32:39 | Loading ./Handlers/CronHandler
+2022-02-01 14:32:39 | Loading ./Admin/AdminHandler
+2022-02-01 14:32:39 | Server listing on port 8080 | http://localhost:8080
+2022-02-01 14:32:39 | Started GraphQL Server on http://localhost:8080/graphql
+2022-02-01 14:32:53 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:55 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:55 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:55 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:55 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:55 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:55 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:55 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:32:55 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+2022-02-01 14:33:29 | Starting CPG-API with version v2.3
+2022-02-01 14:33:29 | Adding .env variables
+2022-02-01 14:33:29 | Loading ./Events/Node.events
+2022-02-01 14:33:29 | Loading ./Server
+2022-02-01 14:33:33 | Laddar schemas..
+2022-02-01 14:33:35 | Lägger till schema/query Categories
+2022-02-01 14:33:37 | Lägger till schema/query ConfigurableOptions
+2022-02-01 14:33:39 | Lägger till schema/query Customers
+2022-02-01 14:33:39 | Lägger till schema/query Invoices
+2022-02-01 14:33:39 | Lägger till schema/query Order
+2022-02-01 14:33:40 | Lägger till schema/query Products
+2022-02-01 14:33:42 | Lägger till schema/query PromotionCode
+2022-02-01 14:33:44 | Lägger till schema/query Quotes
+2022-02-01 14:33:46 | Lägger till schema/query Subscription
+2022-02-01 14:33:46 | Lägger till schema/query Transaction
+2022-02-01 14:33:46 | Starting caching on configs..
+2022-02-01 14:33:46 | Loading routes...
+2022-02-01 14:33:46 | Laddar plugins..
+2022-02-01 14:33:46 | Loading ./Database/Mongo
+2022-02-01 14:33:46 | Loading ./Handlers/CronHandler
+2022-02-01 14:33:46 | Loading ./Admin/AdminHandler
+2022-02-01 14:33:46 | Servern lyssnar på port 8080 | http://localhost:8080
+2022-02-01 14:33:46 | Startar GraphQL servern på http://localhost:8080/graphql
+2022-02-01 14:33:46 | Databas öppen.
+2022-02-01 14:33:47 | Caching config
+2022-02-01 14:33:47 | Starting caching on admins..
+2022-02-01 14:33:47 | Caching admin 1
+2022-02-01 14:33:47 | Caching admin ADM_173a2db002f98692709856eae6eafa4ff1b55c15
+2022-02-01 14:33:47 | Caching admin ADM_851a94126f58cfd065ee55581b6dbbdff0765fd4
+2022-02-01 14:33:47 | Starting caching on images..
+2022-02-01 14:33:47 | Caching image 3
+2022-02-01 14:33:47 | Caching image 4
+2022-02-01 14:34:16 | Starting CPG-API with version v2.3
+2022-02-01 14:34:16 | Adding .env variables
+2022-02-01 14:34:16 | Loading ./Events/Node.events
+2022-02-01 14:34:16 | Loading ./Server
+2022-02-01 14:34:19 | Laddar schemas..
+2022-02-01 14:34:21 | Lägger till schema/query Categories
+2022-02-01 14:34:23 | Lägger till schema/query ConfigurableOptions
+2022-02-01 14:34:25 | Lägger till schema/query Customers
+2022-02-01 14:34:25 | Lägger till schema/query Invoices
+2022-02-01 14:34:25 | Lägger till schema/query Order
+2022-02-01 14:34:27 | Lägger till schema/query Products
+2022-02-01 14:34:29 | Lägger till schema/query PromotionCode
+2022-02-01 14:34:31 | Lägger till schema/query Quotes
+2022-02-01 14:34:32 | Lägger till schema/query Subscription
+2022-02-01 14:34:32 | Lägger till schema/query Transaction
+2022-02-01 14:34:32 | Starting caching on configs..
+2022-02-01 14:34:32 | Loading routes...
+2022-02-01 14:34:33 | Adding new router in version v1, name AdminRouter
+2022-02-01 14:34:34 | Adding new router in version v1, name ContactRouter
+2022-02-01 14:34:35 | Adding new router in version v2, name CategoryRouter
+2022-02-01 14:34:37 | Adding new router in version v2, name ProductsRouter
+2022-02-01 14:34:40 | Adding new router in version v2, name CustomerRouter
+2022-02-01 14:34:42 | Adding new router in version v2, name ImagesRouter
+2022-02-01 14:34:43 | Adding new router in version v2, name InvoiceRouter
+2022-02-01 14:34:45 | Adding new router in version v2, name OrderRoute
+2022-02-01 14:34:47 | Adding new router in version v2, name PaypalRouter
+2022-02-01 14:34:49 | Adding new router in version v2, name ProductsRouter
+2022-02-01 14:34:50 | Adding new router in version v2, name PromotionCodeRoute
+2022-02-01 14:34:52 | Adding new router in version v2, name QuotesRouter
+2022-02-01 14:34:54 | Adding new router in version v2, name StripeRouter
+2022-02-01 14:34:56 | Adding new router in version v2, name SubscriptionRouter
+2022-02-01 14:34:58 | An error
+TSError: ⨯ Unable to compile TypeScript:
+Server/Routes/v2/Transactions/Transactions.controller.ts(5,31): error TS2307: Cannot find module '@interface/Transactions.interface' or its corresponding type declarations.
+
+at 
+uncaughtException
+2022-02-01 14:34:58 | About to exit with code
+1
+2022-02-01 14:35:35 | Starting CPG-API with version v2.3
+2022-02-01 14:35:35 | Adding .env variables
+2022-02-01 14:35:35 | Loading ./Events/Node.events
+2022-02-01 14:35:35 | Loading ./Server
+2022-02-01 14:35:39 | Laddar schemas..
+2022-02-01 14:35:41 | Lägger till schema/query Categories
+2022-02-01 14:35:42 | Lägger till schema/query ConfigurableOptions
+2022-02-01 14:35:44 | Lägger till schema/query Customers
+2022-02-01 14:35:44 | Lägger till schema/query Invoices
+2022-02-01 14:35:44 | Lägger till schema/query Order
+2022-02-01 14:35:46 | Lägger till schema/query Products
+2022-02-01 14:35:48 | Lägger till schema/query PromotionCode
+2022-02-01 14:35:56 | Starting CPG-API with version v2.3
+2022-02-01 14:35:56 | Adding .env variables
+2022-02-01 14:35:56 | Loading ./Events/Node.events
+2022-02-01 14:35:56 | Loading ./Server
+2022-02-01 14:35:59 | Laddar schemas..
+2022-02-01 14:35:59 | Starting caching on configs..
+2022-02-01 14:35:59 | Loading routes...
+2022-02-01 14:35:59 | Laddar plugins..
+2022-02-01 14:36:00 | Loading ./Database/Mongo
+2022-02-01 14:36:00 | Loading ./Handlers/CronHandler
+2022-02-01 14:36:00 | Loading ./Admin/AdminHandler
+2022-02-01 14:36:00 | Servern lyssnar på port 8080 | http://localhost:8080
+2022-02-01 14:36:00 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+Error: Query root type must be provided.
+2022-02-01 14:36:00 | Databas öppen.
+2022-02-01 14:36:00 | Caching config
+2022-02-01 14:36:00 | Starting caching on admins..
+2022-02-01 14:36:00 | Caching admin 1
+2022-02-01 14:36:00 | Caching admin ADM_173a2db002f98692709856eae6eafa4ff1b55c15
+2022-02-01 14:36:00 | Caching admin ADM_851a94126f58cfd065ee55581b6dbbdff0765fd4
+2022-02-01 14:36:00 | Starting caching on images..
+2022-02-01 14:36:00 | Caching image 3
+2022-02-01 14:36:00 | Caching image 4
+2022-02-01 14:36:32 | Starting CPG-API with version v2.3
+2022-02-01 14:36:32 | Adding .env variables
+2022-02-01 14:36:32 | Loading ./Events/Node.events
+2022-02-01 14:36:32 | Loading ./Server
+2022-02-01 14:36:35 | Laddar schemas..
+2022-02-01 14:36:36 | Starting caching on configs..
+2022-02-01 14:36:36 | Loading routes...
+2022-02-01 14:36:36 | Laddar plugins..
+2022-02-01 14:36:36 | Loading ./Database/Mongo
+2022-02-01 14:36:36 | Loading ./Handlers/CronHandler
+2022-02-01 14:36:36 | Loading ./Admin/AdminHandler
+2022-02-01 14:36:36 | Servern lyssnar på port 8080 | http://localhost:8080
+2022-02-01 14:36:36 | Unhandled Rejection at: 
+[object Promise]
+ reason: 
+Error: Query root type must be provided.
+2022-02-01 14:36:36 | Databas öppen.
+2022-02-01 14:36:36 | Caching config
+2022-02-01 14:36:36 | Starting caching on admins..
+2022-02-01 14:36:36 | Caching admin 1
+2022-02-01 14:36:36 | Caching admin ADM_173a2db002f98692709856eae6eafa4ff1b55c15
+2022-02-01 14:36:36 | Caching admin ADM_851a94126f58cfd065ee55581b6dbbdff0765fd4
+2022-02-01 14:36:36 | Starting caching on images..
+2022-02-01 14:36:36 | Caching image 3
+2022-02-01 14:36:36 | Caching image 4
+2022-02-01 14:37:41 | Starting CPG-API with version v2.3
+2022-02-01 14:37:41 | Adding .env variables
+2022-02-01 14:37:41 | Loading ./Events/Node.events
+2022-02-01 14:37:41 | Loading ./Server
+2022-02-01 14:37:45 | Laddar schemas..
+2022-02-01 14:37:45 | Starting caching on configs..
+2022-02-01 14:37:45 | Loading routes...
+2022-02-01 14:37:46 | Adding new router in version v1, name AdminRouter
+2022-02-01 14:37:46 | Adding new router in version v1, name ContactRouter
+2022-02-01 14:37:48 | Adding new router in version v2, name CategoryRouter
+2022-02-01 14:37:55 | Starting CPG-API with version v2.3
+2022-02-01 14:37:55 | Adding .env variables
+2022-02-01 14:37:55 | Loading ./Events/Node.events
+2022-02-01 14:37:55 | Loading ./Server
+2022-02-01 14:37:59 | Laddar schemas..
+2022-02-01 14:37:59 | Starting caching on configs..
+2022-02-01 14:37:59 | Loading routes...
+2022-02-01 14:38:06 | Starting CPG-API with version v2.3
+2022-02-01 14:38:06 | Adding .env variables
+2022-02-01 14:38:06 | Loading ./Events/Node.events
+2022-02-01 14:38:06 | Loading ./Server
+2022-02-01 14:38:10 | Laddar schemas..
+2022-02-01 14:38:11 | Lägger till schema/query Categories
+2022-02-01 14:38:13 | Lägger till schema/query ConfigurableOptions
+2022-02-01 14:38:15 | Lägger till schema/query Customers
+2022-02-01 14:38:15 | Lägger till schema/query Invoices
+2022-02-01 14:38:15 | Lägger till schema/query Order
+2022-02-01 14:38:17 | Lägger till schema/query Products
+2022-02-01 14:38:19 | Lägger till schema/query PromotionCode
+2022-02-01 14:38:21 | Lägger till schema/query Quotes
+2022-02-01 14:38:22 | Lägger till schema/query Subscription
+2022-02-01 14:38:22 | Lägger till schema/query Transaction
+2022-02-01 14:38:23 | Starting caching on configs..
+2022-02-01 14:38:23 | Loading routes...
+2022-02-01 14:38:23 | Adding new router in version v1, name AdminRouter
+2022-02-01 14:38:23 | Adding new router in version v1, name ContactRouter
+2022-02-01 14:38:25 | Adding new router in version v2, name CategoryRouter
+2022-02-01 14:38:26 | Adding new router in version v2, name ProductsRouter
+2022-02-01 14:38:29 | Adding new router in version v2, name CustomerRouter
+2022-02-01 14:38:31 | Adding new router in version v2, name ImagesRouter
+2022-02-01 14:38:32 | Adding new router in version v2, name InvoiceRouter
+2022-02-01 14:38:34 | Adding new router in version v2, name OrderRoute
+2022-02-01 14:38:36 | Adding new router in version v2, name PaypalRouter
+2022-02-01 14:38:38 | Adding new router in version v2, name ProductsRouter
+2022-02-01 14:38:39 | Adding new router in version v2, name PromotionCodeRoute
+2022-02-01 14:38:41 | Adding new router in version v2, name QuotesRouter
+2022-02-01 14:38:43 | Adding new router in version v2, name StripeRouter
+2022-02-01 14:39:00 | Starting CPG-API with version v2.3
+2022-02-01 14:39:00 | Adding .env variables
+2022-02-01 14:39:00 | Loading ./Events/Node.events
+2022-02-01 14:39:00 | Loading ./Server
+2022-02-01 14:39:04 | Laddar schemas..
+2022-02-01 14:39:06 | Lägger till schema/query Categories
+2022-02-01 14:51:06 | Starting CPG-API with version v2.3
+2022-02-01 14:51:06 | Adding .env variables
+2022-02-01 14:51:06 | Loading ./Events/Node.events
+2022-02-01 14:51:06 | Loading ./Server
+2022-02-01 14:51:06 | An error
+Error: Cannot find module './sv/Lang_sv.ts'
+Require stack:
+- E:\Programming\Typescript\CPG\apps\api\build\Translation\GetText.js
+- E:\Programming\Typescript\CPG\apps\api\build\Database\Models\Administrators.model.js
+- E:\Programming\Typescript\CPG\apps\api\build\Cache\reCache.js
+- E:\Programming\Typescript\CPG\apps\api\build\Server\Server.js
+- E:\Programming\Typescript\CPG\apps\api\build\Main.js
+at 
+uncaughtException
+2022-02-01 14:51:06 | About to exit with code
+1
+2022-02-01 14:51:40 | Starting CPG-API with version v2.3
+2022-02-01 14:51:40 | Adding .env variables
+2022-02-01 14:51:40 | Loading ./Events/Node.events
+2022-02-01 14:51:40 | Loading ./Server
+2022-02-01 14:51:40 | An error
+Error: Cannot find module './sv/Lang_sv.ts'
+Require stack:
+- E:\Programming\Typescript\CPG\apps\api\build\Translation\GetText.js
+- E:\Programming\Typescript\CPG\apps\api\build\Database\Models\Administrators.model.js
+- E:\Programming\Typescript\CPG\apps\api\build\Cache\reCache.js
+- E:\Programming\Typescript\CPG\apps\api\build\Server\Server.js
+- E:\Programming\Typescript\CPG\apps\api\build\Main.js
+at 
+uncaughtException
+2022-02-01 14:51:40 | About to exit with code
+1
+2022-02-01 14:52:12 | Starting CPG-API with version v2.3
+2022-02-01 14:52:12 | Adding .env variables
+2022-02-01 14:52:12 | Loading ./Events/Node.events
+2022-02-01 14:52:12 | Loading ./Server
+2022-02-01 14:52:12 | Laddar schemas..
+2022-02-01 14:52:13 | Lägger till schema/query Categories
+2022-02-01 14:52:13 | Lägger till schema/query ConfigurableOptions
+2022-02-01 14:52:13 | Lägger till schema/query Customers
+2022-02-01 14:52:13 | Lägger till schema/query Invoices
+2022-02-01 14:52:13 | Lägger till schema/query Order
+2022-02-01 14:52:13 | Lägger till schema/query Products
+2022-02-01 14:52:13 | Lägger till schema/query PromotionCode
+2022-02-01 14:52:13 | Lägger till schema/query Quotes
+2022-02-01 14:52:13 | Lägger till schema/query Subscription
+2022-02-01 14:52:13 | Lägger till schema/query Transaction
+2022-02-01 14:52:13 | Starting caching on configs..
+2022-02-01 14:52:13 | Loading routes...
+2022-02-01 14:52:13 | Adding new router in version v1, name AdminRouter
+2022-02-01 14:52:13 | Adding new router in version v1, name ContactRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name CategoryRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name ProductsRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name CustomerRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name ImagesRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name InvoiceRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name OrderRoute
+2022-02-01 14:52:13 | Adding new router in version v2, name PaypalRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name ProductsRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name PromotionCodeRoute
+2022-02-01 14:52:13 | Adding new router in version v2, name QuotesRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name StripeRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name SubscriptionRouter
+2022-02-01 14:52:13 | Adding new router in version v2, name TransactionsRouter
+2022-02-01 14:52:13 | Laddar plugins..
+2022-02-01 14:52:14 | Loading ./Database/Mongo
+2022-02-01 14:52:14 | Loading ./Handlers/CronHandler
+2022-02-01 14:52:14 | Adding new cron job
+2022-02-01 14:52:14 | Adding new cron job
+2022-02-01 14:52:14 | Loading ./Admin/AdminHandler
+2022-02-01 14:52:14 | Servern lyssnar på port 8080 | http://localhost:8080
+2022-02-01 14:52:14 | Startar GraphQL servern på http://localhost:8080/graphql
+2022-02-01 14:52:14 | Databas öppen.
+2022-02-01 14:52:14 | Caching config
+2022-02-01 14:52:14 | Starting caching on admins..
+2022-02-01 14:52:14 | Caching admin 1
+2022-02-01 14:52:14 | Caching admin ADM_173a2db002f98692709856eae6eafa4ff1b55c15
+2022-02-01 14:52:14 | Caching admin ADM_851a94126f58cfd065ee55581b6dbbdff0765fd4
+2022-02-01 14:52:14 | Starting caching on images..
+2022-02-01 14:52:14 | Caching image 3
+2022-02-01 14:52:14 | Caching image 4
+2022-02-01 19:37:59 | Starting CPG-API with version v2.3
+2022-02-01 19:37:59 | Adding .env variables
+2022-02-01 19:37:59 | Loading ./Events/Node.events
+2022-02-01 19:37:59 | Loading ./Server
+2022-02-01 19:37:59 | An error
+Error: Cannot find module 'E:\Programming\Typescript\CPG\node_modules\@ts\interfaces\index.js'. Please verify that the package.json has a valid "main" entry
+at 
+uncaughtException
+2022-02-01 19:37:59 | About to exit with code
+1
+2022-02-01 19:39:16 | Starting CPG-API with version v2.3
+2022-02-01 19:39:16 | Adding .env variables
+2022-02-01 19:39:16 | Loading ./Events/Node.events
+2022-02-01 19:39:16 | Loading ./Server
+2022-02-01 19:39:17 | An error
+SyntaxError: Unexpected token 'export'
+at 
+uncaughtException
+2022-02-01 19:39:17 | About to exit with code
+1
+2022-02-01 19:40:24 | Starting CPG-API with version v2.3
+2022-02-01 19:40:24 | Adding .env variables
+2022-02-01 19:40:24 | Loading ./Events/Node.events
+2022-02-01 19:40:24 | Loading ./Server
+2022-02-01 19:40:25 | An error
+Error: Cannot find module './Types/PaymentMethod'
+Require stack:
+- E:\Programming\Typescript\CPG\packages\interfaces\index.js
+- E:\Programming\Typescript\CPG\apps\api\build\Database\Models\Orders.model.js
+- E:\Programming\Typescript\CPG\apps\api\build\Cache\reCache.js
+- E:\Programming\Typescript\CPG\apps\api\build\Server\Server.js
+- E:\Programming\Typescript\CPG\apps\api\build\Main.js
+at 
+uncaughtException
+2022-02-01 19:40:25 | About to exit with code
+1
+2022-02-01 19:42:17 | Starting CPG-API with version v2.3
+2022-02-01 19:42:17 | Adding .env variables
+2022-02-01 19:42:17 | Loading ./Events/Node.events
+2022-02-01 19:42:17 | Loading ./Server
+2022-02-01 19:42:17 | An error
+Error: Cannot find module './Types/PaymentMethod'
+Require stack:
+- E:\Programming\Typescript\CPG\packages\interfaces\index.js
+- E:\Programming\Typescript\CPG\apps\api\build\Database\Models\Orders.model.js
+- E:\Programming\Typescript\CPG\apps\api\build\Cache\reCache.js
+- E:\Programming\Typescript\CPG\apps\api\build\Server\Server.js
+- E:\Programming\Typescript\CPG\apps\api\build\Main.js
+at 
+uncaughtException
+2022-02-01 19:42:17 | About to exit with code
+1
+2022-02-01 19:43:04 | Starting CPG-API with version v2.3
+2022-02-01 19:43:04 | Adding .env variables
+2022-02-01 19:43:04 | Loading ./Events/Node.events
+2022-02-01 19:43:04 | Loading ./Server
+2022-02-01 19:43:04 | An error
+TypeError: interfaces_1.A_CC_Payments is not iterable
+at 
+uncaughtException
+2022-02-01 19:43:04 | About to exit with code
+1
+2022-02-01 19:44:33 | Starting CPG-API with version v2.3
+2022-02-01 19:44:33 | Adding .env variables
+2022-02-01 19:44:34 | Loading ./Events/Node.events
+2022-02-01 19:44:34 | Loading ./Server
+2022-02-01 19:44:34 | An error
+TypeError: interfaces_1.A_CC_Payments is not iterable
+at 
+uncaughtException
+2022-02-01 19:44:34 | About to exit with code
+1
+2022-02-01 19:45:17 | Starting CPG-API with version v2.3
+2022-02-01 19:45:17 | Adding .env variables
+2022-02-01 19:45:17 | Loading ./Events/Node.events
+2022-02-01 19:45:17 | Loading ./Server
+2022-02-01 19:45:17 | An error
+TypeError: interfaces_1.A_CC_Payments is not iterable
+at 
+uncaughtException
+2022-02-01 19:45:17 | About to exit with code
+1
+2022-02-01 19:46:10 | Starting CPG-API with version v2.3
+2022-02-01 19:46:10 | Adding .env variables
+2022-02-01 19:46:10 | Loading ./Events/Node.events
+2022-02-01 19:46:10 | Loading ./Server
+2022-02-01 19:46:10 | An error
+TypeError: interfaces_1.A_OrderStatus is not iterable
+at 
+uncaughtException
+2022-02-01 19:46:10 | About to exit with code
+1
+2022-02-01 19:46:48 | Starting CPG-API with version v2.3
+2022-02-01 19:46:48 | Adding .env variables
+2022-02-01 19:46:48 | Loading ./Events/Node.events
+2022-02-01 19:46:48 | Loading ./Server
+2022-02-01 19:46:48 | An error
+TypeError: interfaces_1.A_OrderStatus is not iterable
+at 
+uncaughtException
+2022-02-01 19:46:48 | About to exit with code
+1
+2022-02-01 19:47:10 | Starting CPG-API with version v2.3
+2022-02-01 19:47:10 | Adding .env variables
+2022-02-01 19:47:10 | Loading ./Events/Node.events
+2022-02-01 19:47:10 | Loading ./Server
+2022-02-01 19:47:10 | An error
+TypeError: interfaces_1.A_OrderStatus is not iterable
+at 
+uncaughtException
+2022-02-01 19:47:10 | About to exit with code
+1
+2022-02-01 19:47:57 | Starting CPG-API with version v2.3
+2022-02-01 19:47:57 | Adding .env variables
+2022-02-01 19:47:57 | Loading ./Events/Node.events
+2022-02-01 19:47:57 | Loading ./Server
+2022-02-01 19:47:57 | An error
+TypeError: interfaces_1.A_OrderStatus is not iterable
+at 
+uncaughtException
+2022-02-01 19:47:57 | About to exit with code
+1
+2022-02-01 19:48:20 | Starting CPG-API with version v2.3
+2022-02-01 19:48:20 | Adding .env variables
+2022-02-01 19:48:20 | Loading ./Events/Node.events
+2022-02-01 19:48:20 | Loading ./Server
+2022-02-01 19:48:20 | An error
+TypeError: interfaces_1.A_InvoiceStatus is not iterable
+at 
+uncaughtException
+2022-02-01 19:48:20 | About to exit with code
+1
+2022-02-01 19:48:54 | Starting CPG-API with version v2.3
+2022-02-01 19:48:54 | Adding .env variables
+2022-02-01 19:48:54 | Loading ./Events/Node.events
+2022-02-01 19:48:54 | Loading ./Server
+2022-02-01 19:48:55 | Laddar schemas..
+2022-02-01 19:48:55 | Lägger till schema/query Categories
+2022-02-01 19:48:55 | Lägger till schema/query ConfigurableOptions
+2022-02-01 19:48:55 | Lägger till schema/query Customers
+2022-02-01 19:48:55 | Lägger till schema/query Invoices
+2022-02-01 19:48:55 | Lägger till schema/query Order
+2022-02-01 19:48:55 | Lägger till schema/query Products
+2022-02-01 19:48:55 | Lägger till schema/query PromotionCode
+2022-02-01 19:48:55 | Lägger till schema/query Quotes
+2022-02-01 19:48:55 | An error
+TypeError: interfaces_1.A_InvoiceStatus is not iterable
+at 
+uncaughtException
+2022-02-01 19:48:55 | About to exit with code
+1
+2022-02-01 19:49:38 | Starting CPG-API with version v2.3
+2022-02-01 19:49:38 | Adding .env variables
+2022-02-01 19:49:38 | Loading ./Events/Node.events
+2022-02-01 19:49:38 | Loading ./Server
+2022-02-01 19:50:16 | Starting CPG-API with version v2.3
+2022-02-01 19:50:16 | Adding .env variables
+2022-02-01 19:50:16 | Loading ./Events/Node.events
+2022-02-01 19:50:16 | Loading ./Server
+2022-02-01 19:50:17 | Laddar schemas..
+2022-02-01 19:50:17 | Lägger till schema/query Categories
+2022-02-01 19:50:17 | Lägger till schema/query ConfigurableOptions
+2022-02-01 19:50:17 | Lägger till schema/query Customers
+2022-02-01 19:50:17 | Lägger till schema/query Invoices
+2022-02-01 19:50:17 | Lägger till schema/query Order
+2022-02-01 19:50:17 | Lägger till schema/query Products
+2022-02-01 19:50:17 | Lägger till schema/query PromotionCode
+2022-02-01 19:50:17 | Lägger till schema/query Quotes
+2022-02-01 19:50:17 | Lägger till schema/query Subscription
+2022-02-01 19:50:17 | Lägger till schema/query Transaction
+2022-02-01 19:50:17 | Starting caching on configs..
+2022-02-01 19:50:17 | Loading routes...
+2022-02-01 19:50:17 | Adding new router in version v1, name AdminRouter
+2022-02-01 19:50:18 | Adding new router in version v1, name ContactRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name CategoryRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name ProductsRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name CustomerRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name ImagesRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name InvoiceRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name OrderRoute
+2022-02-01 19:50:18 | Adding new router in version v2, name PaypalRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name ProductsRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name PromotionCodeRoute
+2022-02-01 19:50:18 | Adding new router in version v2, name QuotesRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name StripeRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name SubscriptionRouter
+2022-02-01 19:50:18 | Adding new router in version v2, name TransactionsRouter
+2022-02-01 19:50:18 | Laddar plugins..
+2022-02-01 19:50:18 | Loading ./Database/Mongo
+2022-02-01 19:50:18 | Loading ./Handlers/CronHandler
+2022-02-01 19:50:18 | Adding new cron job
+2022-02-01 19:50:19 | Adding new cron job
+2022-02-01 19:50:19 | Loading ./Admin/AdminHandler
+2022-02-01 19:50:19 | Servern lyssnar på port 8080 | http://localhost:8080
+2022-02-01 19:50:19 | Startar GraphQL servern på http://localhost:8080/graphql
+2022-02-01 19:50:19 | Databas öppen.
+2022-02-01 19:50:19 | Caching config
+2022-02-01 19:50:19 | Starting caching on admins..
+2022-02-01 19:50:19 | Caching admin 1
+2022-02-01 19:50:19 | Caching admin ADM_173a2db002f98692709856eae6eafa4ff1b55c15
+2022-02-01 19:50:19 | Caching admin ADM_851a94126f58cfd065ee55581b6dbbdff0765fd4
+2022-02-01 19:50:19 | Starting caching on images..
+2022-02-01 19:50:19 | Caching image 3
+2022-02-01 19:50:19 | Caching image 4
