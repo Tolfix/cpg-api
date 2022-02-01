@@ -13,11 +13,9 @@ RUN npm install -g @types/node \
 
 WORKDIR /usr/build
 
-COPY package*.json ./
+COPY . ./
 
 RUN npm install --force
-
-COPY . ./
 
 RUN yarn turbo run build --scope=*cpg-api*
 
