@@ -9,7 +9,8 @@ RUN apk update && \
     apk add git
 
 RUN npm install -g @types/node \
-    && npm install -g typescript@4.3.5
+    && npm install -g typescript@4.3.5 \
+    && npm install -g yarn
 
 WORKDIR /usr/build
 
@@ -19,7 +20,7 @@ RUN npm install --force
 
 COPY . ./
 
-RUN npm run build
+RUN yanr turbo run build --scope=*cpg-api*
 
 COPY ./apps/api/build ./usr/src
 
