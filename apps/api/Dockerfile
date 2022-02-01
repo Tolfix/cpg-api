@@ -11,19 +11,22 @@ RUN apk update && \
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5
 
-WORKDIR /usr/src
+WORKDIR /usr/build
 
 COPY package*.json ./
 
 RUN npm install --force
 
-COPY ./apps/api ./
+COPY . ./
 
-# Check what we got in directory
-RUN ls -al
+RUN npm run build
 
-RUN tsc -b
+COPY ./apps/api/build ./usr/src
 
+# Remove /usr/build
+RUN rm -rf /usr/build
+
+WORKDIR /usr/src
 # Remove unused files
 #RUN rm -r ./src && \
 #    rm -r ./test
