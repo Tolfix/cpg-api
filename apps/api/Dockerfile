@@ -10,7 +10,7 @@ RUN apk update && \
 
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5
-    
+
 WORKDIR /usr/build
 
 COPY package*.json ./
@@ -19,7 +19,7 @@ RUN npm install --force
 
 COPY . ./
 
-RUN yanr turbo run build --scope=*cpg-api*
+RUN yarn turbo run build --scope=*cpg-api*
 
 COPY ./apps/api/build ./usr/src
 
