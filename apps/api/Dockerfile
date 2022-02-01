@@ -19,6 +19,11 @@ RUN npm install --force
 
 RUN yarn turbo run build --scope=*cpg-api*
 
+# ls in ./
+RUN ls -la
+# ls in ./apps/api
+RUN ls -la ./apps/api
+
 COPY ./apps/api/build ./usr/src
 
 # Copy modules
