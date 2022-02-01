@@ -54,7 +54,7 @@
   "scripts": {
     "start": "node ./build/Main.js",
     "compile": "tsc && node ./build/Main.js",
-    "dev": "nodemon -e ts  --exec \"npm run compile\"",
+    "dev": "nodemon -e ts --exec \"npm run compile\"",
     "build": "tsc -b",
     "lint": "eslint --ext .ts"
   },

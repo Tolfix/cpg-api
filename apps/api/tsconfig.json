@@ -5,6 +5,9 @@
   },
   "exclude": [
     "./build"
+  ],
+  "include": [
+    "./src"
   ]
 }
   
