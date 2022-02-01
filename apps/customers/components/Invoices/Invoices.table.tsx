@@ -1,4 +1,4 @@
-import {IInvoice} from '@cpg/Interfaces/Invoice.interface';
+import {IInvoice} from '@ts/interfaces';
 import { useSession } from 'next-auth/react';
 import React, {useState} from 'react';
 import useSortableData from '../Tables/Sortable';

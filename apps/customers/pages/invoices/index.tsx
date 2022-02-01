@@ -1,4 +1,4 @@
-import { IInvoice } from "@cpg/Interfaces/Invoice.interface";
+import { IInvoice } from "@ts/interfaces";
 import { getSession, useSession } from "next-auth/react";
 import { useState } from "react";
 import InvoiceModal, { popupCenter } from "../../components/Invoices/Invoice.modal";

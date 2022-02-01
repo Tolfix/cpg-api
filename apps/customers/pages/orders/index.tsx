@@ -1,4 +1,4 @@
-import { IOrder } from "@cpg/Interfaces/Orders.interface"
+import { IOrder } from "@ts/interfaces"
 import { getSession } from "next-auth/react";
 import { useState } from "react";
 import { Modal } from "../../components/Modal";

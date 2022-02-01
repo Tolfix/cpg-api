@@ -1,4 +1,4 @@
-import { ITransactions } from "@cpg/Interfaces/Transactions.interface"
+import { ITransactions } from "@ts/interfaces"
 import { getSession } from "next-auth/react";
 
 export default ({

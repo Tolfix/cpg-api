@@ -1,4 +1,4 @@
-import { IInvoice } from "@cpg/Interfaces/Invoice.interface";
+import { IInvoice } from "@ts/interfaces";
 import { useState } from "react";
 import InvoiceModal from "./Invoice.modal";
 

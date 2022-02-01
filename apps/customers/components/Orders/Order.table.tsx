@@ -1,4 +1,4 @@
-import { IOrder } from "@cpg/Interfaces/Orders.interface";
+import { IOrder } from "@ts/interfaces";
 import { IRowData } from "../../interfaces/RowData";
 import DynamicTable from "../Tables/DynamicTable";
 
