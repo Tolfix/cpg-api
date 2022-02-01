@@ -1,6 +1,6 @@
 {
   "name": "cpg-api",
-  "version": "v2.3",
+  "version": "v2.4",
   "description": "Central Payment Gateway API",
   "main": "Main.ts",
   "dependencies": {

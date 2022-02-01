@@ -3,8 +3,8 @@ name: Docker Image
 on:
   push:
     paths:
-      - './apps/api/src/**'
-      - './apps/api/package.json'
+      - 'apps/api/src/**'
+      - 'apps/api/package.json'
     branches:
       - master
 
