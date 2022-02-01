@@ -21,6 +21,7 @@ export default async function MongoFind<T extends Document<any, any, any>>(model
     const c = await b.exec();
 
     // Total count
+    // @ts-ignore
     const count = await model.countDocuments({
         ...data.filter,
         ...eQuery ?? {},
