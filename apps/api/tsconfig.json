@@ -1,0 +1,13 @@
+{
+  "extends": "tsconfig/api.json",
+  "compilerOptions": {
+    "outDir": "./build"
+  },
+  "exclude": [
+    "./build"
+  ],
+  "include": [
+    "./src"
+  ]
+}
+  

@@ -1,17 +1,28 @@
 <p align="center">
   <a href="https://tolfix.com/" target="_blank"><img width="260" src="https://cdn.tolfix.com/images/TX-Small.png"></a>
   <br/>
-  <strong>C</strong>entral <strong>P</strong>ayment <strong>G</strong>ateway
+  cpg-customer
 </p>
 
-
-# ⭐ | CPG
-CPG is being used to create products, invoices, orders, transactions and payments for customers, to grow your business. It offers various of methods for developers to customize `cpg`.
+# ⭐ | cpg-customer
+cpg-customer for cpg-api.
 
 # 📢 | Contribute
 Want to contribute? Great! You can contribute by `forking` this repository, then make changes and make a `PR`!
 
 Or simple ask on our [`discord server`](https://discord.tolfix.com).
+
+## Testing
+When testing the panel requires four things to function.
+
+In `env.local` the following is required
+```txt
+NEXT_PUBLIC_CPG_DOMAIN=https://cpg.tolfx.dev
+CPG_DOMAIN=https://cpg.tolfx.dev
+SECRET=asecret
+```
+
+And when logging in you use email as `test@tolfix.com` with password `123`
 
 # 🔮 | Discord
 [![Discord](https://discord.com/api/guilds/833438897484595230/widget.png?style=banner4)](https://discord.tolfix.com)
