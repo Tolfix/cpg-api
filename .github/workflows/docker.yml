@@ -5,6 +5,7 @@ on:
     paths:
       - 'apps/api/src/**'
       - 'apps/api/package.json'
+      - 'apps/api/Dockerfile'
     branches:
       - master
 

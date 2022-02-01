@@ -19,6 +19,9 @@ RUN npm install --force
 
 COPY . ./
 
+# Check what we got in directory
+RUN ls -al
+
 RUN tsc -b
 
 # Remove unused files
