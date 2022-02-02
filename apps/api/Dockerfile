@@ -26,6 +26,8 @@ WORKDIR /usr/src
 
 ADD ./apps/api ./
 
+WORKDIR /usr/build/apps/api
+
 # RUN ls -la ./apps/api
 # RUN ls -la .
 
