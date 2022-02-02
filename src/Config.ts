@@ -20,6 +20,12 @@ export const Express_Session_Secret = process.env.SESSION_SECRET ?? require("cry
 
 // Database
 export const MongoDB_URI = process.env.MONGO_URI ?? "mongodb://localhost/cpg";
+//  // Postgres
+export const Postgres_User = process.env.POSTGRES_USER ?? "";
+export const Postgres_Password = process.env.POSTGRES_PASSWORD ?? "";
+export const Postgres_Database = process.env.POSTGRES_DATABASE ?? "";
+export const Postgres_Port = parseInt(process.env.POSTGRES_PORT ?? "5432");
+export const Postgres_Host = process.env.POSTGRES_HOST ?? "localhost";
 
 // osTicket configs
 export const osticket_url = process.env.OSTICKET_URL ?? "";
