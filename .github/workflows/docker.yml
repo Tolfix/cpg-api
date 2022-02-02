@@ -5,7 +5,7 @@ on:
     paths:
       - 'apps/api/src/**'
       - 'apps/api/package.json'
-      - 'apps/api/Dockerfile'
+      - 'Dockerfile'
     branches:
       - master
 
@@ -24,6 +24,6 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
-        run: docker build . --file ./apps/api/Dockerfile --tag tolfixorg/cpg:latest
+        run: docker build . --file Dockerfile --tag tolfixorg/cpg:latest
       - name: Docker push
         run: docker push tolfixorg/cpg:latest
