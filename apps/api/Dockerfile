@@ -1,4 +1,5 @@
-FROM node:16-alpine AS base
+FROM node:16-alpine
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL author="Tolfix" maintainer="support@tolfix.com"
@@ -8,22 +9,24 @@ RUN apk update && \
     apk add git
 
 RUN npm install -g @types/node \
-    && npm install -g typescript@4.3.5 \
-    && npm install turbo -g
+    && npm install -g typescript@4.3.5
+    
+#add turborepo
+RUN yarn global add turbo
 
+#add strapi
+RUN yarn global add @strapi/strapi@${STRAPI_VERSION}
+
+# Set working directory
 WORKDIR /app
-ENV YARN_CACHE_FOLDER=.yarn-cache
-COPY . .
 
-FROM base AS builder
-RUN yarn global add turbo@1.1.2
-COPY . .
-RUN yarn turbo run build --scope=*cpg-api* --include-dependencies --no-deps
-RUN find . -name node_modules | xargs rm -rf
+COPY  ["yarn.lock", "package.json", "./"] 
 
-FROM base AS runner
-# COPY --from=prod-deps /app/ .
-COPY --from=builder /app/ .
+RUN npm install --force
+
+RUN yarn turbo run build
+
+COPY . .
 
 ENV JWT_ACCESS_TOKEN ""
 ENV DEBUG "false"
@@ -52,6 +55,6 @@ ENV PLUGINS "[]"
 
 ENV WEBHOOK_SECRET ""
 
-EXPOSE 3001
+EXPOSE 3000 3001
 
-CMD yarn workspace cpg-api start
+CMD ["npm", "run", "start"]
