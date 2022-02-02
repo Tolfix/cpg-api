@@ -11,14 +11,12 @@ RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5
 
 WORKDIR /app
-ARG SCOPE
-ENV SCOPE=cpg-api
 ENV YARN_CACHE_FOLDER=.yarn-cache
 
 FROM base AS pruner
 RUN yarn global add turbo@1.1.2
 COPY . .
-RUN turbo prune --scope=${SCOPE} --docker
+RUN turbo prune --scope=*cpg-api* --docker
 
 FROM base AS dev-deps
 COPY --from=pruner /app/out/json/ .
@@ -35,7 +33,7 @@ RUN rm -rf /app/${YARN_CACHE_FOLDER}
 FROM base AS builder
 COPY --from=dev-deps /app/ .
 COPY --from=pruner /app/out/full/ .
-RUN yarn turbo run build --scope=${SCOPE} --include-dependencies --no-deps
+RUN yarn turbo run build --scope=*cpg-api* --include-dependencies --no-deps
 RUN find . -name node_modules | xargs rm -rf
 
 FROM base AS runner
@@ -71,4 +69,4 @@ ENV WEBHOOK_SECRET ""
 
 EXPOSE 3001
 
-CMD yarn workspace ${SCOPE} start
+CMD yarn workspace cpg-api start
