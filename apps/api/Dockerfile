@@ -25,6 +25,9 @@ COPY . ./
 
 ADD ./apps/api /usr/src
 
+RUN ls -la ./apps/api
+RUN ls -la .
+
 # Copy modules
 COPY ./node_modules /usr/src/node_modules
 
