@@ -23,7 +23,7 @@ RUN mkdir -p /usr/src
 
 COPY . ./
 
-ADD ./apps/api/build /usr/src
+ADD ./apps/api /usr/src
 
 # Copy modules
 COPY ./node_modules /usr/src/node_modules
