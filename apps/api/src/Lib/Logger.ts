@@ -7,16 +7,17 @@ import { getDate, getTime } from "./Time";
 // A method which takes a ...string[] and stores in a .txt file locally in ./logs/
 export function SaveLog(date: string, ...args: string[])
 {
-    const file = `${HomeDir}/logs/${getDate(true)}.txt`;
-    let data = date + " | " + args.join("\n");
+    // const file = `${HomeDir}/logs/${getDate(true)}.txt`;
+    // let data = date + " | " + args.join("\n");
     // Check if /logs/ exists
-    if(!fs.existsSync(`${HomeDir}/logs/`))
-        fs.mkdirSync(`${HomeDir}/logs/`);
+    // if(!fs.existsSync(`${HomeDir}/logs/`))
+    //     fs.mkdirSync(`${HomeDir}/logs/`);
 
-    if(fs.existsSync(file))
+    // if(fs.existsSync(file))
         // Get file and add to data
-        data = fs.readFileSync(file, "utf8") + "\n" + data;
-    fs.writeFileSync(file, data);
+    //     data = fs.readFileSync(file, "utf8") + "\n" + data;
+    // fs.writeFileSync(file, data);
+    return true;
 }
 
 
