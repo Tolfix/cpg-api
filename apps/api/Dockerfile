@@ -19,17 +19,12 @@ RUN npm install --force
 
 RUN yarn turbo run build --scope=*cpg-api*
 
-# ls in ./
-RUN ls -la
-# ls in ./apps/api
-RUN ls -la ./apps/api
-
 RUN mkdir -p /usr/src
 
 ADD ./apps/api /usr/src
 
 # Copy modules
-ADD ./node_modules /usr/src/node_modules
+RUN cp -r ./node_modules /usr/src/node_modules
 
 # Remove /usr/build
 RUN rm -rf /usr/build
