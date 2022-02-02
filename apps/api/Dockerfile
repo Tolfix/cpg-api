@@ -12,6 +12,7 @@ RUN npm install -g @types/node \
 
 WORKDIR /app
 ENV YARN_CACHE_FOLDER=.yarn-cache
+COPY . .
 
 FROM base AS builder
 RUN yarn turbo run build --scope=*cpg-api* --include-dependencies --no-deps
