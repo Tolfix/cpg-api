@@ -10,18 +10,13 @@ RUN apk update && \
 
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5
-    
-#add turborepo
-RUN yarn global add turbo
 
 # Set working directory
 WORKDIR /app
 
-COPY ["package.json", "./"] 
+COPY . .
 
 RUN npm install --force
-
-COPY . .
 
 RUN npm run build
 
