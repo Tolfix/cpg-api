@@ -17,7 +17,7 @@ RUN yarn global add turbo
 # Set working directory
 WORKDIR /app
 
-COPY  ["yarn.lock", "package.json", "./"] 
+COPY  ["package.json", "./"] 
 
 RUN npm install --force
 
