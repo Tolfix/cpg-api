@@ -25,14 +25,14 @@ COPY . ./
 
 ADD ./apps/api /usr/src
 
-RUN ls -la ./apps/api
-RUN ls -la .
+# RUN ls -la ./apps/api
+# RUN ls -la .
 
 # Copy modules
-COPY ./node_modules /usr/src/node_modules
+# COPY ./node_modules /usr/src/node_modules
 
 # Remove /usr/build
-RUN rm -rf /usr/build
+# RUN rm -rf /usr/build
 
 WORKDIR /usr/src
 # Remove unused files
