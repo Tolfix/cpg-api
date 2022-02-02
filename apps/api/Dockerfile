@@ -14,9 +14,6 @@ RUN npm install -g @types/node \
 #add turborepo
 RUN yarn global add turbo
 
-#add strapi
-RUN yarn global add @strapi/strapi@${STRAPI_VERSION}
-
 # Set working directory
 WORKDIR /app
 
