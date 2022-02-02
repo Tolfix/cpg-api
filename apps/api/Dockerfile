@@ -16,6 +16,8 @@ ENV YARN_CACHE_FOLDER=.yarn-cache
 COPY . .
 
 FROM base AS builder
+RUN yarn global add turbo@1.1.2
+COPY . .
 RUN yarn turbo run build --scope=*cpg-api* --include-dependencies --no-deps
 RUN find . -name node_modules | xargs rm -rf
 
