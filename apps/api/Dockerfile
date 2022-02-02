@@ -26,7 +26,7 @@ RUN ls -la ./apps/api
 
 RUN mkdir -p /usr/src
 
-ADD ./apps/api/build /usr/src
+ADD ./apps/api /usr/src
 
 # Copy modules
 ADD ./node_modules /usr/src/node_modules
