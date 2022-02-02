@@ -8,7 +8,8 @@ RUN apk update && \
     apk add git
 
 RUN npm install -g @types/node \
-    && npm install -g typescript@4.3.5
+    && npm install -g typescript@4.3.5 \
+    && npm install turbo -g
 
 WORKDIR /app
 ENV YARN_CACHE_FOLDER=.yarn-cache
