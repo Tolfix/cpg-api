@@ -9,7 +9,8 @@ RUN apk update && \
     apk add git
 
 RUN npm install -g @types/node \
-    && npm install -g typescript@4.3.5
+    && npm install -g typescript@4.3.5 \
+    && npm install -g nodemon
 
 # Set working directory
 WORKDIR /app
@@ -49,4 +50,4 @@ ENV WEBHOOK_SECRET ""
 
 EXPOSE 3000 3001
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
