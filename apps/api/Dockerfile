@@ -24,6 +24,8 @@ RUN ls -la
 # ls in ./apps/api
 RUN ls -la ./apps/api
 
+RUN mkdir -p /usr/src
+
 ADD ./apps/api/build /usr/src
 
 # Copy modules
