@@ -24,10 +24,10 @@ RUN ls -la
 # ls in ./apps/api
 RUN ls -la ./apps/api
 
-COPY /apps/api/build /usr/src
+ADD ./apps/api/build /usr/src
 
 # Copy modules
-COPY ./node_modules ./usr/src/node_modules
+ADD ./node_modules /usr/src/node_modules
 
 # Remove /usr/build
 RUN rm -rf /usr/build
