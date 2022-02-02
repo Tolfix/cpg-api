@@ -21,10 +21,12 @@ RUN yarn turbo run build --scope=*cpg-api*
 
 RUN mkdir -p /usr/src
 
-ADD ./apps/api /usr/src
+COPY . ./
+
+ADD ./apps/api/build /usr/src
 
 # Copy modules
-RUN cp -r ./node_modules /usr/src/node_modules
+COPY ./node_modules /usr/src/node_modules
 
 # Remove /usr/build
 RUN rm -rf /usr/build
