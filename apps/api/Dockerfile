@@ -17,13 +17,13 @@ RUN yarn global add turbo
 # Set working directory
 WORKDIR /app
 
-COPY  ["package.json", "./"] 
+COPY ["package.json", "./"] 
 
 RUN npm install --force
 
-RUN yarn turbo run build
-
 COPY . .
+
+RUN npm run build
 
 ENV JWT_ACCESS_TOKEN ""
 ENV DEBUG "false"
