@@ -1,12 +1,80 @@
 <p align="center">
   <a href="https://tolfix.com/" target="_blank"><img width="260" src="https://cdn.tolfix.com/images/TX-Small.png"></a>
   <br/>
-  <strong>C</strong>entral <strong>P</strong>ayment <strong>G</strong>ateway
+  <strong>C</strong>entral <strong>P</strong>ayment <strong>G</strong>ateway - API
 </p>
 
+#
+[![Typescript Typings](https://github.com/Tolfix/cpg-api/actions/workflows/type-testing.yml/badge.svg?branch=master&event=push)](https://github.com/Tolfix/cpg-api/actions/workflows/type-testing.yml)
+[![Docker Image](https://github.com/Tolfix/cpg-api/actions/workflows/docker.yml/badge.svg?branch=master&event=push)](https://github.com/Tolfix/cpg-api/actions/workflows/docker.yml)
+[![CodeQL](https://github.com/Tolfix/cpg-api/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/Tolfix/cpg-api/actions/workflows/codeql-analysis.yml)
+![Build Version](https://img.shields.io/github/v/release/Tolfix/cpg-api)
 
-# ⭐ | CPG
-CPG is being used to create products, invoices, orders, transactions and payments for customers, to grow your business. It offers various of methods for developers to customize `cpg`.
+
+# ⭐ | CPG-API
+CPG-API is being used to create products, invoices, orders, transactions and payments for customers, to grow your business. It offers various of methods for developers to customize `cpg`.
+
+# 📝| Table of content
+* [Documentations](#--documentations)
+* [Setup](#--setup)
+  * [Installing](#installing)
+  * [Building](#building)
+  * [Running](#running)
+* [Plugins](#--plugins)
+  * [Installing](#installing-1)
+  * [Deleting](#deleting)
+* [Contribute](#--contribute)
+* [Discord](#--discord)
+
+# 📋 | Documentations
+You can read our documentations in our [`Wiki`](https://github.com/Tolfix/CPG-API/wiki)
+
+# 🧰 | Setup
+Setting up `CPG` can be done in various of ways, but by the far easiet is by using `Docker`.
+You can pull the latest `docker` image from `tolfixorg/cpg:latest` from `DockerHub`.
+
+`CPG` also needs `env` vars added, which you can find some documents from [`.env.example`](), those added with `(optional)` can be ignored if you don't feel the need of them, but the others are required to make `CPG` functional.
+
+## Installing
+`CPG` requires the following
+* Node.js v14 or v16
+* Typescript - 4.3.5
+* MongoDB
+* Git
+
+1. Clone repository 
+```txt
+git clone https://github.com/Tolfix/CPG-API
+```
+2. Install dependencies
+```txt
+npm install
+```
+3. Install `TypeScript`
+```txt
+npm install -g typescript@4.3.5
+```
+## Building
+`CPG` is built from `TypeScript`, thus simple run it by using the compiler.
+```txt
+tsc -b
+npm run build
+```
+
+## Running
+You can run `CPG` by using `npm run start` or `node ./build/Main.js`.
+Would recommend to use `pm2`.
+
+# 🎨 | Plugins
+Plugins allows you to install others features to CPG. Be aware it can be `dangerous` due to plugins get accessed to alot, you can trust `Tolfix` owns plugins, or plugins you created yourself, otherwise there is no guarantee.
+
+## Installing
+You can install new plugins by modifying ENV PLUGIN as a array
+`PLUGINS=["cpg-plugin-discord-webhook", "cpg-plugin-"]`
+This will install the plugin by `npm`.
+
+## Deleting
+Simply remove the plugin as you added the plugin reverse.
 
 # 📢 | Contribute
 Want to contribute? Great! You can contribute by `forking` this repository, then make changes and make a `PR`!

@@ -1,4 +1,4 @@
-name: Lint Testing
+name: Typescript Typings
 
 on:
   push:
@@ -17,7 +17,7 @@ on:
 
 jobs:
 
-  ts-lint-test:
+  ts-type-test:
 
     runs-on: ubuntu-latest
     
@@ -31,8 +31,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --force
-      # - name: Install packages
-      #   run: npm install --force
-      - name: lint test
-        run: npm run lint
+      - run: npm install -g typescript@4.3.5
+      - name: Install packages
+        run: npm install --force
+      - name: testing typing
+        run: tsc --noEmit

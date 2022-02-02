@@ -11,14 +11,19 @@ RUN apk update && \
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5
 
-# Set working directory
-WORKDIR /app
+WORKDIR /usr/src
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install --force
 
-RUN npm run build
+COPY . ./
+
+RUN tsc -b
+
+# Remove unused files
+#RUN rm -r ./src && \
+#    rm -r ./test
 
 ENV JWT_ACCESS_TOKEN ""
 ENV DEBUG "false"
@@ -27,7 +32,7 @@ ENV DOMAIN ""
 ENV HTTP_SCHEMA ""
 
 ENV SESSION_SECRET ""
-ENV PORT "3001"
+ENV PORT "8080"
 
 ENV OSTICKET_URL ""
 ENV OSTICKET_API_KEY ""
@@ -47,6 +52,6 @@ ENV PLUGINS "[]"
 
 ENV WEBHOOK_SECRET ""
 
-EXPOSE 3000 3001
+EXPOSE 8080
 
-CMD ["npm", "run", "start"]
+CMD [ "node", "./build/Main.js" ]
