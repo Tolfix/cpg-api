@@ -33,7 +33,7 @@ const ProductSchema = new Schema
         },
 
         category_uid: {
-            type: Number,
+            type: String,
             required: true,
         },
 
