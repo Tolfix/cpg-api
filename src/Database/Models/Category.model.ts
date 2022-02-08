@@ -1,7 +1,7 @@
+import { ICategory } from "@interface/Categories.interface";
 import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { IDCategory } from "../../Interfaces/Categories.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 
@@ -39,9 +39,9 @@ const CategorySchema = new Schema
 );
 
 // Log when creation
-CategorySchema.post('save', function(doc: IDCategory & Document)
+CategorySchema.post('save', function(doc: ICategory & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.nodeName, doc.id));
     // Logger.db(`Created category ${doc.id}`);
 });
 
@@ -55,6 +55,6 @@ CategorySchema.plugin(increment.plugin, {
     incrementBy: 1
 });
 
-const CategoryModel = model<IDCategory>("category", CategorySchema);
+const CategoryModel = model<ICategory & Document>("category", CategorySchema);
 
 export default CategoryModel;

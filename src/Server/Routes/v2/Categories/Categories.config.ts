@@ -22,7 +22,7 @@ export = class CategoryRouter
 
         this.router.get("/:uid/products", [
             CategoryController.getProductsByUid
-        ])
+        ]);
 
         this.router.post("/", [
             EnsureAdmin(),
