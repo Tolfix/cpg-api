@@ -66,8 +66,8 @@ function getProductsByUid(req: Request, res: Response)
         category_uid: req.params.uid as ICategory["uid"]
     }).then((result) =>
     {
-      APISuccess(result)(res);  
-    })
+        APISuccess(result)(res);  
+    });
 }
 
 const CategoryController = {
