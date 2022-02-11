@@ -6,7 +6,7 @@ import createPDFInvoice from "./CreatePDFInvoice";
 import {SendEmail} from "../../Email/Send"
 import mainEvent from "../../Events/Main.event";
 import InvoiceTemplate from "../../Email/Templates/Invoices/Invoice.template";
-import LateinvoiceTemplate from "../../Email/Templates/Invoices/Lateinvoice.Template";
+import LateinvoiceTemplate from "../../Email/Templates/Invoices/LateInvoice.Template";
 
 export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: ICustomer): Promise<boolean>
 {
