@@ -34,44 +34,7 @@ export async function PluginHandler(server: Application)
         }
 
         // @ts-ignore
-        const pluginInstance = require(plugin);
-        // @ts-ignore
-        /**
-         * 
-         * @param {Events} mainEvent 
-         * @param {Application} server 
-         * @param {{
-         *  CategoryModel: CategoryModel,
-         *  CustomerModel: CustomerModel,
-         *  ImageModel: ImageModel,
-         *  InvoiceModel: InvoiceModel,
-         *  OrderModel: OrderModel,
-         *  ProductModel: ProductModel,
-         *  TransactionsModel: TransactionsModel,
-         *  ConfigurableOptionsModel: ConfigurableOptionsModel
-         * }} models 
-         * @param {Object} Logger
-         * @param {{
-         *  Admin: CacheAdmin,
-         *  Customer: CacheCustomer,
-         *  Product: CacheProduct,
-         *  Transaction: CacheTransactions,
-         *  Order: CacheOrder,
-         *  Invoice: CacheInvoice,
-         *  f_orders: ce_orders
-         * }} MainCache
-         */
-        new pluginInstance(mainEvent, server, {
-            // All database models
-            CategoryModel: CategoryModel,
-            CustomerModel: CustomerModel,
-            ImageModel: ImageModel,
-            InvoiceModel: InvoiceModel,
-            OrderModel: OrderModel,
-            ProductModel: ProductModel,
-            TransactionsModel: TransactionsModel,
-            ConfigurableOptionsModel: ConfigurableOptionsModel,           
-        }, Logger, MainCache);
+        require(plugin)();
 
         Logger.plugin(GetText().plugins.txt_Plugin_Loaded(plugin));
         // Logger.plugin(`Loaded plugin ${plugin}`);
