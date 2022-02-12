@@ -1,24 +1,12 @@
-import { Application } from "express";
-import CategoryModel from "../Database/Models/Category.model";
-import CustomerModel from "../Database/Models/Customers/Customer.model";
-import ImageModel from "../Database/Models/Images.model";
-import InvoiceModel from "../Database/Models/Invoices.model";
-import OrderModel from "../Database/Models/Orders.model";
-import ProductModel from "../Database/Models/Products.model";
-import TransactionsModel from "../Database/Models/Transactions.model";
-import ConfigurableOptionsModel from "../Database/Models/ConfigurableOptions.model";
-import mainEvent from "../Events/Main.event";
 import Logger from "../Lib/Logger";
 import { Plugins } from "../Config";
 import npm from "npm";
 import fs from "fs";
-import MainCache from "../Cache/Cache.cache";
 import GetText from "../Translation/GetText";
 
 // find installed npm packages in package.json and get plugins starting with cpg_plugin
 // then require it and call the new 
-
-export async function PluginHandler(server: Application)
+(async () =>
 {
     // get plugins from package.json
     Logger.plugin(GetText().plugins.txt_Plugin_Loading);
@@ -32,14 +20,14 @@ export async function PluginHandler(server: Application)
             Logger.plugin(GetText().plugins.txt_Plugin_Installed(plugin));
             // Logger.plugin(`Installed plugin ${plugin}`)
         }
-
+    
         // @ts-ignore
         require(plugin)();
-
+    
         Logger.plugin(GetText().plugins.txt_Plugin_Loaded(plugin));
         // Logger.plugin(`Loaded plugin ${plugin}`);
     }
-}
+})();
 
 export function installPlugin(plugin: string)
 {
