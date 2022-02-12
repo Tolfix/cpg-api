@@ -25,6 +25,9 @@ DebugMode ? import("./Database/Postgres") : null;
 Logger.info(`Loading ./Handlers/CronHandler`);
 import "./Handlers/Cron.handler";
 
-import AdminHandler from "./Admin/AdminHandler";
 Logger.info(`Loading ./Admin/AdminHandler`);
+import AdminHandler from "./Admin/AdminHandler";
 new AdminHandler();
+
+Logger.info(`Loading ./Plugins/PluginHandler`);
+import "./Plugins/PluginHandler";
