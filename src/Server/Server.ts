@@ -8,7 +8,6 @@ import RouteHandler from "../Handlers/Route.handler";
 import { reCache } from "../Cache/reCache";
 import { ICustomer } from "../Interfaces/Customer.interface";
 import { APIError } from "../Lib/Response";
-import { PluginHandler } from "../Plugins/PluginHandler";
 import ApolloServer from "../Database/GraphQL/ApolloServer";
 import GetText from "../Translation/GetText";
 import rateLimiter from "express-rate-limit"
@@ -104,7 +103,6 @@ server.use(limiter);
 
 reCache();
 RouteHandler(server);
-PluginHandler(server);
 
 server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listing} ${PORT} | ${Full_Domain}`));
 
