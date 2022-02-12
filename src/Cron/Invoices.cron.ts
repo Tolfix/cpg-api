@@ -81,9 +81,7 @@ export = function Cron_Invoices()
                 $not: /fraud|cancelled|draft|refunded/g
             },
             paid: false,
-            extra: {
-                stripe_setup_intent: true
-            }
+            "extra.stripe_setup_intent": true
         }).then(async (invoices) =>
         {
             Logger.info(`Found ${invoices.length} invoices to charge.`);

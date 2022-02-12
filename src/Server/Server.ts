@@ -80,7 +80,7 @@ server.use((req, res, next) =>
 
 server.use((req, res, next) =>
 {
-    res.setHeader('X-Powered-By', 'CPG-API');
+    res.setHeader('X-Powered-By', 'cpg-api');
     next();
 });
 
