@@ -74,3 +74,56 @@ export async function SendEmail(
         callback ? callback?.(e, false) : Promise.resolve(false);
     });
 }
+
+export async function sendEmail(options: {
+    reciever: string;
+    subject: string;
+    body: {
+        body: any;
+        attachments?: any;
+    };
+})
+{
+    const [SMTPConfig, SMTP_Error] = await AW<IConfigs["smtp"]>(await GetSMTPConfig());
+    if(!SMTPConfig || SMTP_Error)
+        throw new Error(`No SMTP config.`);
+
+    const config = {
+        host: SMTPConfig.host,
+        port: SMTPConfig.port,
+        secure: SMTPConfig.secure,
+        secureConnection: false,
+        ignoreTLS: false,
+        requireTLS: true,
+        auth: {
+            user: SMTPConfig.username,
+            pass: SMTPConfig.password
+        },
+        tls: {
+            rejectUnauthorized: false
+        },
+    }
+
+    const email: {
+        from: string;
+        to: string;
+        subject: string;
+        html: string;
+        attachments?: any;
+    } = {
+        from: `"${await Company_Name()}" <${SMTPConfig.username}>`,
+        to: `${options.reciever}`,
+        html: options.body.body,
+        subject: options.subject,
+    }
+
+    if(options.body.attachments)
+        email.attachments = options.body.attachments;
+
+    //@ts-ignore
+    const transport = mail.createTransport(config);
+
+    Logger.info(`Sending email to ${options.reciever}`);
+
+    return transport.sendMail(email);
+}
