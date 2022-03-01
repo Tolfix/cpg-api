@@ -36,7 +36,8 @@ export = class AdminRouter
         {
             const token = jwt.sign({
                 data: 'admin',
-                exp: Math.floor(Date.now() / 1000) + (((60 * 60)*24)*7)
+                // 7 days exp
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7)
             }, JWT_Access_Token);
             return APISuccess({
                 text: "Succesfully created admin token",
