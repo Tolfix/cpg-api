@@ -3,6 +3,7 @@ import { Request } from "express"
 import { MongooseQueryParser } from "mongoose-query-parser";
 const p = new MongooseQueryParser();
 
+// @ts-ignore
 export default async function MongoFind<T>(model: Model<T>, query: Request["query"], eQuery?: any)
 {
     const data = p.parse(query);
@@ -21,6 +22,7 @@ export default async function MongoFind<T>(model: Model<T>, query: Request["quer
     const c = await b.exec();
 
     // Total count
+    // @ts-ignore
     const count = await model.countDocuments({
         ...data.filter,
         ...eQuery ?? {},

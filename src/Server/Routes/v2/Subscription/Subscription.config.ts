@@ -104,6 +104,7 @@ export = class SubscriptionRouter
                     uid: idSubscription(),
                     start_date: dateFormat.format(new Date(), "yyyy-mm-dd"),
                     renewing_method: products_with_recurring[0].recurring_method,
+                    // @ts-ignore
                     payment_method: payment_method,
                     promotion_codes: promotion_code ? [promotion_code?.id] : [],
                     status: "active",

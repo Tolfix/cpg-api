@@ -38,6 +38,7 @@ async function createOrder(customer: ICustomer, products: Array<{
 {
     const order = await (new OrderModel({
         customer_uid: customer.id,
+        // @ts-ignore
         products: products.map(product =>
         {
             return {

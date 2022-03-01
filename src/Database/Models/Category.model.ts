@@ -39,6 +39,7 @@ const CategorySchema = new Schema
 );
 
 // Log when creation
+// @ts-ignore
 CategorySchema.post('save', function(doc: ICategory & Document)
 {
     Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.nodeName, doc.id));
