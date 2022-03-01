@@ -8,7 +8,7 @@ import Logger from "../Lib/Logger";
 
 export default function EnsureAdmin(eR = false)
 {
-    return (req: Request, res: Response, next?: NextFunction) =>
+    return async (req: Request, res: Response, next?: NextFunction) =>
     {
 
         const authHeader = req.headers['authorization'];
@@ -54,16 +54,25 @@ export default function EnsureAdmin(eR = false)
         {
             const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
             eR ? null : Logger.warning(`Authoring admin with token: ${token}`);
-            const payload = jwt.verify(token, JWT_Access_Token);
-            if(!payload)
+
+            try
             {
-                eR ? null : Logger.warning(`Authorization failed for admin with token: ${token}`);
-                return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
+                const payload = jwt.verify(token, JWT_Access_Token);
+                
+                if(!payload)
+                {
+                    eR ? null : Logger.warning(`Authorization failed for admin with token: ${token}`);
+                    return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
+                }
+    
+                eR ? null : Logger.warning(`Authorized admin with token: ${token}`);
+    
+                return eR ? Promise.resolve(true) : next?.();
             }
-
-            eR ? null : Logger.warning(`Authorized admin with token: ${token}`);
-
-            return eR ? Promise.resolve(true) : next?.();
+            catch(e)
+            {
+                return eR ? Promise.resolve(false) : APIError("JWT token expired or bad", 403)(res);
+            }
         }
 
         return Promise.resolve(false);

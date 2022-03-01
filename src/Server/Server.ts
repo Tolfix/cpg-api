@@ -89,10 +89,10 @@ const limiter = rateLimiter({
     windowMs: 15 * 60 * 1000,
     max: async (request, response) =>
     {
-		if(await EnsureAdmin(true)(request,response))
-            return 5000;
         if(await EnsureAuth(true)(request,response))
             return 1000;
+		if(await EnsureAdmin(true)(request,response))
+            return 5000;
         return 500;
 	},
     standardHeaders: true,
