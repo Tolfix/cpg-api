@@ -479,6 +479,11 @@ export = class CustomerRouter
             CustomerController.removeById
         ]);
 
+        this.router.post("/validate", EnsureAuth(), async (req, res) =>
+        {
+            return APISuccess(`Valid`)(res);
+        });
+
         this.router.post("/authenticate", async (req, res) =>
         {
             
@@ -526,11 +531,12 @@ export = class CustomerRouter
                     id: customer.id,
                     email: customer.personal.email,
                 },
-                exp: Math.floor(Date.now() / 1000) + (((60 * 60)*24))
+                // 1 day
+                exp: ((Math.floor(Date.now() / 1000) + (60 * 60))*24)
             }, JWT_Access_Token);
             return APISuccess({
                 text: "Succesfully created customer token",
-                expires: "7 days",
+                expires: "1 day",
                 token: token,
             })(res);
         });
