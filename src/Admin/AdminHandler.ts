@@ -4,6 +4,7 @@ import { CacheAdmin } from "../Cache/Admin.cache";
 import AdminModel from "../Database/Models/Administrators.model";
 import ConfigModel from "../Database/Models/Configs.model";
 import Logger from "../Lib/Logger";
+import { getPlugins, installPlugin } from "../Plugins/PluginHandler";
 import createAdmin from "./CreateAdmin";
 import updateSMTP from "./updateSMTP";
 
@@ -47,6 +48,10 @@ export default class AdminHandler
 
                     Company:
                         update_company
+
+                    Plugins:
+                        show_plugins
+                        update_plugin
                 `);
 
             if(result.action === "create_admin")
@@ -84,6 +89,12 @@ export default class AdminHandler
 
             if(result.action === "update_company")
                 await this.update_company();
+
+            if(result.action === "show_plugins")
+                await this.show_plugins();
+
+            if(result.action === "update_plugin")
+                await this.update_plugin();
 
             this.action();
         });
@@ -463,6 +474,40 @@ export default class AdminHandler
                 return resolve(true)
             });
         });
+        
+        
+    }
 
+    private async show_plugins()
+    {
+        return new Promise(async (resolve) =>
+        {
+            // Get our config from database
+            const plugins = getPlugins()
+            Logger.info(`Plugins:`, ...plugins);
+            resolve(true);
+        });
+    }
+
+    private async update_plugin()
+    {
+        return new Promise(async (resolve) =>
+        {
+            prompt.get([
+                {
+                    name: "plugin",
+                    description: "Plugin",
+                    required: false,
+                    type: "string",
+                },
+            ], async (err, result) =>
+            {
+                Logger.info(`Updating plugins..`);
+                const plugin = result.plugin as string;
+                if(plugin)
+                    await installPlugin(`${plugin}@latest`);
+                return resolve(true)
+            });
+        });
     }
 }
