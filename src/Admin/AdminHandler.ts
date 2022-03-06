@@ -1,6 +1,7 @@
 import { stripIndent } from "common-tags";
 import prompt from "prompt";
 import { CacheAdmin } from "../Cache/Admin.cache";
+import { cron_chargeStripePayment, cron_notifyInvoices, cron_notifyLateInvoicePaid } from "../Cron/Methods/Invoices.cron.methods";
 import AdminModel from "../Database/Models/Administrators.model";
 import ConfigModel from "../Database/Models/Configs.model";
 import Logger from "../Lib/Logger";
@@ -52,6 +53,11 @@ export default class AdminHandler
                     Plugins:
                         show_plugins
                         update_plugin
+
+                    Cron:
+                        run_invoices_notify
+                        run_charge_payment
+                        run_late_invoice_notify
                 `);
 
             if(result.action === "create_admin")
@@ -95,6 +101,15 @@ export default class AdminHandler
 
             if(result.action === "update_plugin")
                 await this.update_plugin();
+
+            if(result.action === "run_invoices_notify")
+                await this.run_invoices_notify();
+
+            if(result.action === "run_charge_payment")
+                await this.run_charge_payment();
+        
+            if(result.action === "run_late_invoice_notify")
+                await this.run_late_invoice_notify();
 
             this.action();
         });
@@ -508,6 +523,36 @@ export default class AdminHandler
                     await installPlugin(`${plugin}@latest`);
                 return resolve(true)
             });
+        });
+    }
+
+    private async run_invoices_notify()
+    {
+        return new Promise(async (resolve) =>
+        {
+            Logger.info(`Running invoices notify..`);
+            cron_notifyInvoices();
+            return resolve(true)
+        });
+    }
+
+    private async run_charge_payment()
+    {
+        return new Promise(async (resolve) =>
+        {
+            Logger.info(`Running invoices charge..`);
+            cron_chargeStripePayment();
+            return resolve(true)
+        });
+    }
+
+    private async run_late_invoice_notify()
+    {
+        return new Promise(async (resolve) =>
+        {
+            Logger.info(`Running invoices late notify..`);
+            cron_notifyLateInvoicePaid();
+            return resolve(true)
         });
     }
 }
