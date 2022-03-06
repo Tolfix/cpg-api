@@ -12,7 +12,7 @@ export = <IGetText>{
         txt_Invoice_Checking: "Checking invoices..",
         txt_Invoice_Found_Notify: (amount: number) => `Found ${amount} invoices to notify`,
         txt_Invoice_Found_Sending_Email: (customer: ICustomer) => `Sending email to ${customer.personal.email}`,
-        txt_Order_Checking: (order: IOrder) => `Checking order ${order.uid}`,
+        txt_Order_Checking: (id: IOrder["id"]) => `Checking order id ${id}`,
         txt_Orders_Checking: "Checking orders..",
     },
     database: {

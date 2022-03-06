@@ -12,7 +12,7 @@ export = <IGetText>{
         txt_Invoice_Checking: "Kollar invoices..",
         txt_Invoice_Found_Notify: (amount: number) => `Hittade ${amount} fakturor att notifiera`,
         txt_Invoice_Found_Sending_Email: (customer: ICustomer) => `Skickar email till ${customer.personal.email}`,
-        txt_Order_Checking: (order: IOrder) => `Kollar in order ${order.uid}`,
+        txt_Order_Checking: (id: IOrder["id"]) => `Kollar in order id ${id}`,
         txt_Orders_Checking: "Kollar orders..",
     },
     database: {
