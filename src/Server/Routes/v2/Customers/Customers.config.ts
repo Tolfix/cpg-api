@@ -23,6 +23,10 @@ import OrderCancelTemplate from "../../../../Email/Templates/Customer/OrderCance
 import Header from "../../../../Email/Templates/General/Header";
 import MongoFind from "../../../../Lib/MongoFind";
 import createPDFInvoice from "../../../../Lib/Invoices/CreatePDFInvoice";
+import { idImages } from "../../../../Lib/Generator";
+import { CacheImages } from "../../../../Cache/Image.cache";
+import ImageModel from "../../../../Database/Models/Images.model";
+import Jimp from 'jimp';
 
 export = class CustomerRouter
 {
@@ -44,6 +48,64 @@ export = class CustomerRouter
             EnsureAuth(),
             CustomerController.getMyProfile
         ]);
+
+        this.router.put("/my/profile", EnsureAuth(), async (req, res) =>
+        {
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const data = req.body;
+
+            // Go through each key from "data"
+            for(const key in data)
+            {
+                // If the key is in the customer object
+                // We also check if key is not "password"
+                // Because we don't want to update the password
+                if(key === "password")
+                    continue;
+
+                // Now an issues could be that the key is not in the customer object
+                // And instead is a string that assuming is a object,
+                // Which can look like this: personal.first_name
+                // But it could be: personal: { first_name: "John" }
+                // So we need to check if the key is a string
+                if(typeof key === "string")
+                {
+                    // If the key is a string, we need to split it
+                    // And check if the first part is in the customer object
+                    const parts = key.split(".");
+
+                    // If the first part is in the customer object
+                    // @ts-ignore
+                    if(customer[parts[0]])
+                        // If the second part is in the customer object
+                        // @ts-ignore
+                        if(customer[parts[0]][parts[1]])
+                            // Set the value of the key to the value of the second part
+                            // @ts-ignore
+                            customer[parts[0]][parts[1]] = data[key];
+                }
+                // If the key is not a string
+                // We can just set the value of the key to the value of the key
+                else
+                    // @ts-ignore
+                    customer[key] = data[key];
+
+            } 
+
+            console.log(customer)
+
+            await customer.save();
+
+            return APISuccess(customer)(res);
+
+        })
 
         this.router.get("/my/invoices", EnsureAuth(), async (req, res) =>
         {
@@ -540,6 +602,59 @@ export = class CustomerRouter
                 text: "Succesfully created customer token",
                 expires: "1 day",
                 token: token,
+            })(res);
+        });
+
+        this.router.post("/my/profile_picture", EnsureAuth(), async (req, res) =>
+        {
+            if(req.files)
+            {
+                const customer = await CustomerModel.findOne({
+                    // @ts-ignore
+                    id: req.customer.id
+                });
+
+                if(!customer)
+                    return APIError(`Unable to find customer`)(res);
+                
+                // @ts-ignore
+                const image = (req.files.image as UploadedFile);
+
+                // Check if type is valid image (only jpg, png, jpeg)
+                if(!image.mimetype.match(/image\/(jpeg|png|jpg)/))
+                    return APIError("Invalid image type.")(res);
+
+                // Image can't be over 5000 MB
+                // TODO: Make dynamic later
+                if(image.size > 5000000)
+                    return APIError("Image is too large.")(res);
+
+                Logger.info(`Customer uploading new profile picture`);
+
+                // Crop image to 512x512
+                const imageData = await Jimp.read(image.data);
+                imageData.resize(512, 512);
+
+                const dataImage = {
+                    uid: idImages(),
+                    data: await imageData.getBufferAsync(image.mimetype),
+                    type: image.mimetype,
+                    size: image.size,
+                    name: image.name
+                };
+
+                const db_Image = await new ImageModel(dataImage).save();
+                
+                CacheImages.set(db_Image.id, db_Image);
+
+                customer.profile_picture = db_Image.id;
+                await customer.save();
+
+                return APISuccess(db_Image)(res);
+            }
+
+            return APIError({
+                text: `Failed to create image`,
             })(res);
         });
 
