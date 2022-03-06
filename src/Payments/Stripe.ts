@@ -3,6 +3,8 @@ import { Company_Currency, DebugMode, Stripe_SK_Live, Stripe_SK_Test } from "../
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import InvoiceModel from "../Database/Models/Invoices.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
+import { sendEmail } from "../Email/Send";
+import NewTransactionTemplate from "../Email/Templates/Transaction/NewTransaction.template";
 import { ICustomer } from "../Interfaces/Customer.interface";
 import { IInvoice } from "../Interfaces/Invoice.interface";
 import getFullName from "../Lib/Customers/getFullName";
@@ -179,7 +181,18 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
             uid: idTransicitons(),
         }).save());
 
-        await sendEmailOnTransactionCreation(newTrans);
+        // await sendEmail(customer.personal.email, "Transaction Statement", {
+        //     isHTML: true,
+        //     body: await NewTransactionTemplate(t, customer),
+        // });
+
+        await sendEmail({
+            reciever: customer.personal.email,
+            subject: "Transaction Statement",
+            body: {
+                body: await NewTransactionTemplate(newTrans, customer, true)
+            },
+        })
 
         Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.id}`);
 
