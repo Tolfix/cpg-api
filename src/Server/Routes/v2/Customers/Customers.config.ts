@@ -532,7 +532,9 @@ export = class CustomerRouter
                     email: customer.personal.email,
                 },
                 // 1 day
-                exp: ((Math.floor(Date.now() / 1000) + (60 * 60))*24)
+                // Math.floor(Date.now() / 1000) + (((60 * 60)*24))
+                // ((Math.floor(Date.now() / 1000) + (60 * 60))*24)
+                exp: Math.floor(Date.now() / 1000) + (((60 * 60)*24))
             }, JWT_Access_Token);
             return APISuccess({
                 text: "Succesfully created customer token",
