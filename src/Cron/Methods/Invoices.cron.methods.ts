@@ -1,4 +1,4 @@
-import { Default_Language, d_Days } from "../../Config";
+import { DebugMode, Default_Language, d_Days } from "../../Config";
 import InvoiceModel from "../../Database/Models/Invoices.model";
 import dateFormat from "date-and-time";
 import Logger from "../../Lib/Logger";
@@ -20,7 +20,7 @@ export const getDatesAhead = (n: number = d_Days) =>
 {
     const dates = [];
     for (let i = 0; i < n; i++)
-        dates.push(dateFormat.format(dateFormat.addDays(new Date(), -i-1), "YYYY-MM-DD"))
+        dates.push(dateFormat.format(dateFormat.addDays(new Date(), i+1), "YYYY-MM-DD"))
     return dates;
 }
 
@@ -62,25 +62,35 @@ export function cron_chargeStripePayment()
     // Trigger if a invoice has stripe_setup_intent enabled and is due in the next 2 weeks.
     InvoiceModel.find({
         "dates.due_date": {
-            $in: [...(getDatesAhead(14))]
+            $in: [...(getDatesAhead(DebugMode ? 60 : 14))]
         },
         status: {
             $not: /fraud|cancelled|draft|refunded/g
         },
         paid: false,
-        "extra.stripe_setup_intent": true
+        // Idk why I thought of doing this, this is customer only...
+        // // Ensure "stripe_setup_intent" is not undefined/null
+        // "stripe_setup_intent": {
+        //     $exists: true,
+        //     $type: "boolean",
+        //     $eq: true,
+        //     $ne: null
+        // }
     }).then(async (invoices) =>
     {
-        Logger.info(`Found ${invoices.length} invoices to charge.`);
+        // Logger.info(`Found ${invoices.length} invoices to charge.`);
         for await(const invoice of invoices)
         {
             // Get customer
-            const Customer = await CustomerModel.findOne({ id: invoice.customer_uid});
+            const Customer = await CustomerModel.findOne({ $or: [
+                { id: invoice.customer_uid },
+                { uid: invoice.customer_uid }
+            ] });
+
             if(!Customer)
                 continue;
             
-            Logger.info(`Charging ${Customer.personal.email}`);
-    
+            Logger.info(`Checking ${Customer.personal.email} for stripe payment.`, Logger.trace());
             // Check if credit card
             if(invoice.payment_method !== "credit_card")
                 continue;
@@ -89,11 +99,14 @@ export function cron_chargeStripePayment()
             if(!(Customer?.extra?.stripe_setup_intent))
                 continue;
     
+            Logger.info(`Invoice ${invoice.id} is due in the next 2 weeks and has a setup_intent enabled.`);
+
             // Assuming they have a card
             // Try to create a payment intent and pay
             try
             {
                 await ChargeCustomer(invoice.id);
+                Logger.info(`Charging ${Customer.personal.email}`);
                 // assuming it worked, we can mark it as paid
                 invoice.status = "collections";
                 invoice.paid = true;
