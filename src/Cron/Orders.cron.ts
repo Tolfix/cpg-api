@@ -26,7 +26,7 @@ export = function Cron_Orders()
         {
             const newInvoices = [];
             // orders.forEach(async order => {
-            for await(let order of orders)
+            for await(const order of orders)
             {
                 Logger.info(GetText(Default_Language).cron.txt_Order_Checking(order.id));
                 // Logger.info(`Checking order ${order.id}`);
