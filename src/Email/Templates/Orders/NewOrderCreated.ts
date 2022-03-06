@@ -10,7 +10,7 @@ import UseStyles from "../General/UseStyles";
 
 export default async (order: IOrder, customer: ICustomer) => await UseStyles(stripIndents`
 <div>
-    <h1>Hello ${getFullName(customer)}</h1>
+    <h1>Hello ${getFullName(customer)}.</h1>
     <p>
         Your order has been created.
     </p>

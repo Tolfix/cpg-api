@@ -8,7 +8,7 @@ import UseStyles from "../General/UseStyles";
 
 export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles(stripIndents`
 <div>
-    <h1>Hello ${getFullName(customer)}${customer.billing.company ? ` (${customer.billing.company})` : ''}.</h1>
+    <h1>Hello ${getFullName(customer)}.</h1>
     <p>
         This is a notice that an invoice has been generated on ${invoice.dates.invoice_date}.
     </p>
@@ -41,12 +41,24 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
             Click me to pay.
         </a>
         <p>
-            <strong>
-                To pay automatic invoice, you need to setup your payment method. It will automatic pay when a invoice is 14 days ahead. <br />
-                <a href="${Full_Domain}/v2/stripe/setup/${customer.uid}" target="_blank">
-                    Click here to setup your payment method.
-                </a>
-            </strong>
+            ${customer?.extra?.stripe_setup_intent ? 
+            `
+                <strong>
+                    You already have a payment method setup. <br />
+                    You'll be automatically pay when a invoice is 14 days ahead. <br />
+                </strong>
+            ` 
+            : 
+            
+            `
+                <strong>
+                    To pay automatic invoice, you need to setup your payment method. It will automatic pay when a invoice is 14 days ahead. <br />
+                    <a href="${Full_Domain}/v2/stripe/setup/${customer.uid}" target="_blank">
+                        Click here to setup your payment method.
+                    </a>
+                </strong>
+            `}
+
         </p>
         ` : ''}
     </p>

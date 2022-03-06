@@ -8,7 +8,7 @@ import UseStyles from "../General/UseStyles";
 
 export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles(stripIndents`
 <div>
-    <h1>Hello ${getFullName(customer)}${customer.billing.company ? ` (${customer.billing.company})` : ''}.</h1>
+    <h1>Hello ${getFullName(customer)}.</h1>
     <p>
         This is a notice that invoice ${invoice.id} is late.
     </p>
