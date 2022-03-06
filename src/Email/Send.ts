@@ -64,7 +64,8 @@ export async function SendEmail(
     //@ts-ignore
     const transport = mail.createTransport(config);
 
-    Logger.info(`Sending email to ${reciever}`);
+    Logger.info("Email:", `Sending email to ${reciever}`);
+
 
     transport.sendMail(email).then(() =>
     {
@@ -123,7 +124,7 @@ export async function sendEmail(options: {
     //@ts-ignore
     const transport = mail.createTransport(config);
 
-    Logger.info(`Sending email to ${options.reciever}`);
+    Logger.info("Email:", `Sending email to ${options.reciever}`);
 
     return transport.sendMail(email);
 }

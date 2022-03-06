@@ -3,10 +3,11 @@ import { Company_Address, Company_City, Company_Country, Company_Name, Company_Z
 
 export = async () => stripIndents`
 <div>
+    <p>
     <strong>
         ${await Company_Name()}
-        <br />
     </strong>
+    <br/>
     ${await Company_Address()}
     <br/>
     ${await Company_Zip()}, ${await Company_City()}
