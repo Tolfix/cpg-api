@@ -458,7 +458,6 @@ export default class AdminHandler
                     default: config.company?.tax_registered ?? "",
                     required: false,
                     enum: ["true", "false"],
-                    type: "boolean"
                 },
                 {
                     name: "currency",
@@ -479,7 +478,7 @@ export default class AdminHandler
                     vat: result.vat as string,
                     email: result.email as string,
                     logo_url: result.logo_url as string,
-                    tax_registered: result.tax_registered as boolean,
+                    tax_registered: result.tax_registered === "true",
                     currency: result.currency as string,
                     website: result.website as string
                 };
