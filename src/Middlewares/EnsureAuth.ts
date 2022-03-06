@@ -42,7 +42,9 @@ export default function EnsureAuth(eR = false)
 
             try
             {
-                const payload = jwt.verify(token, JWT_Access_Token);
+                const payload = jwt.verify(token, JWT_Access_Token, {
+                    algorithms: ["HS256"],
+                });
     
                 if (!payload) 
                     return eR ? Promise.resolve(false) : APIError(`Unauthorized user.`, 403)(res);
@@ -60,6 +62,7 @@ export default function EnsureAuth(eR = false)
             }
             catch(e)
             {
+                Logger.error(`${e}`, Logger.trace());
                 return eR ? Promise.resolve(false) : APIError(`JWT token expired or bad`, 403)(res);
             }
 
