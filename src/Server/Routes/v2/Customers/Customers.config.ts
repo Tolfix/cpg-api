@@ -375,13 +375,21 @@ export = class CustomerRouter
         this.router.post("/my/reset-password", async (req, res) =>
         {
             const email = req.body.email;
-
+            Logger.api(`Email reset password request for ${email}`);
             if(!email)
+            {
+                Logger.error(`API: Email reset password request failed. No email provided`);
                 return APIError(`Invalid email`)(res);
-
+            }
+            
             const customer = await CustomerModel.findOne({ "personal.email": sanitizeMongoose(email) });
             if(!customer)
+            {
+                Logger.error(`API: Email reset password request failed. No customer found`);
                 return APIError(`Unable to find user with email ${email}`)(res);
+            }
+
+            Logger.warning(`Reset password request for ${email}`);
 
             const randomToken = crypto.randomBytes(20).toString("hex");
             const token = crypto.createHash("sha256").update(randomToken).digest("hex");
