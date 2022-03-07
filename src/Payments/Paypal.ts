@@ -1,5 +1,5 @@
 import paypal from "paypal-rest-sdk";
-import { Company_Currency, DebugMode, Domain, Full_Domain, Http_Schema, Paypal_Client_Id, Paypal_Client_Secret, PORT } from "../Config";
+import { Company_Currency, DebugMode, Full_Domain, Paypal_Client_Id, Paypal_Client_Secret } from "../Config";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
 import { IInvoice } from "../Interfaces/Invoice.interface";
