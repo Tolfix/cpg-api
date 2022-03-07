@@ -53,7 +53,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             },
             "taxNotation": "vat",
             "settings": {
-                "currency": (await Company_Currency()).toUpperCase(),
+                "currency": (!Customer.currency ? await Company_Currency() : Customer.currency).toUpperCase(),
                 "margin-top": 25,
                 "margin-right": 25,
                 "margin-left": 25,

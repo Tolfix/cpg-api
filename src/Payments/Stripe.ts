@@ -57,7 +57,7 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
     const intent = (await Stripe.paymentIntents.create({
         customer: s_customer?.id,
         amount: (invoice.amount+invoice.amount*invoice.tax_rate/100) * 100,
-        currency: await Company_Currency() ?? "sek",
+        currency: (!customer.currency ? await Company_Currency() : customer.currency) ?? "sek",
         payment_method_types: ["card"],
         receipt_email: customer?.personal.email,
         // @ts-ignore
@@ -154,7 +154,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
     {
         const paymentIntent = await Stripe.paymentIntents.create({
             amount: (invoice.amount+invoice.amount*invoice.tax_rate/100) * 100,
-            currency: await Company_Currency() ?? "sek",
+            currency: (!customer.currency ? await Company_Currency() : customer.currency) ?? "sek",
             payment_method_types: ["card"],
             receipt_email: customer?.personal.email,
             // @ts-ignore
