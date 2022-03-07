@@ -4,6 +4,7 @@ import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { ITransactions } from "../../../Interfaces/Transactions.interface";
 import PrintCompanyInformation from "../../../Lib/Company/PrintCompanyInformation";
 import getFullName from "../../../Lib/Customers/getFullName";
+import { GetCurrencySymbol, TPaymentCurrency } from "../../../Types/PaymentTypes";
 import UseStyles from "../General/UseStyles";
 
 export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(stripIndents`
@@ -25,7 +26,7 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
         ${await PrintCompanyInformation()}
     </p>
     <p>
-        Amount: ${t.amount} ${!c.currency ? await Company_Currency() : c.currency}
+        Amount: ${t.amount} ${GetCurrencySymbol(t.currency)}
     </p>
 </div>
 `);

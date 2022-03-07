@@ -1,6 +1,8 @@
+// noinspection JSValidateJSDoc
+
 import { Default_Language } from "../Config";
-import { IAllLanguages } from "../Interfaces/Lang/AllLang.interface";
-import { IGetText } from "../Interfaces/Lang/GetText.interface";
+import { IAllLanguages } from "@interface/Lang/AllLang.interface";
+import { IGetText } from "@interface/Lang/GetText.interface";
 
 export default (lang: keyof IAllLanguages = Default_Language): IGetText =>
 {

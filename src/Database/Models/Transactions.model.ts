@@ -5,6 +5,7 @@ import { IDTransactions } from "../../Interfaces/Transactions.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "../../Types/PaymentMethod";
+import { currencyCodes } from "../../Types/PaymentTypes";
 
 const TransactionsSchema = new Schema
 (
@@ -45,6 +46,12 @@ const TransactionsSchema = new Schema
         fees: {
             type: Number,
             default: 0,
+        },
+
+        currency: {
+            type: String,
+            enum: currencyCodes,
+            default: 'USD',
         },
 
     }

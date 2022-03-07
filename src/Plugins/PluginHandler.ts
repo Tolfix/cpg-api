@@ -1,5 +1,5 @@
 import Logger from "../Lib/Logger";
-import { Plugins } from "../Config";
+import {Plugins} from "../Config";
 import npm from "npm";
 import fs from "fs";
 import GetText from "../Translation/GetText";
@@ -68,8 +68,6 @@ export function isPluginInstalled(plugin: string)
 export function getPlugins()
 {
     // get all installed npm packages
-    const packages = Plugins;
     // get plugins starting with cpg-plugin
-    const plugins = packages.filter(p => p.startsWith("cpg-plugin"));
-    return plugins;
+    return Plugins.filter(p => p.startsWith("cpg-plugin"));
 }

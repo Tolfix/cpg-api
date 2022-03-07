@@ -56,7 +56,7 @@ export default function EnsureAuth(eR = false)
                 //@ts-ignore
                 req.customer = payload.data;
                 // @ts-ignore
-                eR ? null : Logger.api(`Authorizing`, payload.data);
+                !eR ? Logger.api(`Authorizing`, payload.data) : null;
     
                 return eR ? Promise.resolve(true) : next?.();
             }
