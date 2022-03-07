@@ -136,6 +136,7 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
                 fees: 0,
                 invoice_uid: invoice.id,
                 customer_uid: invoice.customer_uid,
+                currency: invoice.currency ?? await Company_Currency(),
                 date: getDate(),
                 uid: idTransicitons(),
             }).save());
