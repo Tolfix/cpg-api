@@ -1,11 +1,10 @@
 import { stripIndents } from "common-tags";
-import { Company_Currency } from "../../../Config";
 import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions.model";
 import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { IOrder } from "../../../Interfaces/Orders.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
 import getProductById from "../../../Lib/Products/getProductById";
-import { GetCurrencySymbol, TPaymentCurrency } from "../../../Types/PaymentTypes";
+import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
 import GetTableStyle from "../CSS/GetTableStyle";
 import UseStyles from "../General/UseStyles";
 
@@ -49,7 +48,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                 <tr>
                     <td>${p?.name}</td>
                     <td>${product.quantity}</td>
-                    <td>${p?.price} ${GetCurrencySymbol((!customer.currency ? await Company_Currency() : customer.currency) as TPaymentCurrency)}</td>
+                    <td>${p?.price} ${GetCurrencySymbol(order.currency)}</td>
                 </tr>`;
 
                 if(p_c.length > 0)
@@ -60,7 +59,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                         <tr>
                             <td>+ ${p?.name} - ${c?.name}</td>
                             <td>1</td>
-                            <td>${c?.price} ${GetCurrencySymbol((!customer.currency ? await Company_Currency() : customer.currency) as TPaymentCurrency)}</td>
+                            <td>${c?.price} ${GetCurrencySymbol(order.currency)}</td>
                         </tr>`
                     }
                 }
@@ -96,7 +95,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                         total += p_c.reduce((a, b) => a + b);
 
                     return total;
-                }))).reduce((acc, cur) => acc + cur, 0)} ${(!customer.currency ? await Company_Currency() : customer.currency).toLocaleUpperCase()}
+                }))).reduce((acc, cur) => acc + cur, 0)} ${(order.currency).toLocaleUpperCase()}
     </p>
 </div>
 `);

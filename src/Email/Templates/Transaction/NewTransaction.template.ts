@@ -26,7 +26,7 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
         ${await PrintCompanyInformation()}
     </p>
     <p>
-        Amount: ${t.amount} ${GetCurrencySymbol((!c.currency ? await Company_Currency() : c.currency) as TPaymentCurrency)}
+        Amount: ${t.amount} ${GetCurrencySymbol(t.currency)}
     </p>
 </div>
 `);
