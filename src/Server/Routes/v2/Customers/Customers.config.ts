@@ -75,7 +75,7 @@ export = class CustomerRouter
                 // Which can look like this: personal.first_name
                 // But it could be: personal: { first_name: "John" }
                 // So we need to check if the key is a string
-                if(typeof key === "string")
+                if(typeof key === "string" && key.includes("."))
                 {
                     // If the key is a string, we need to split it
                     // And check if the first part is in the customer object
