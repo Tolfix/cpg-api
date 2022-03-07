@@ -5,6 +5,7 @@ import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { IOrder } from "../../../Interfaces/Orders.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
 import getProductById from "../../../Lib/Products/getProductById";
+import { GetCurrencySymbol, TPaymentCurrency } from "../../../Types/PaymentTypes";
 import GetTableStyle from "../CSS/GetTableStyle";
 import UseStyles from "../General/UseStyles";
 
@@ -48,7 +49,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                 <tr>
                     <td>${p?.name}</td>
                     <td>${product.quantity}</td>
-                    <td>${p?.price} ${!customer.currency ? await Company_Currency() : customer.currency}</td>
+                    <td>${p?.price} ${GetCurrencySymbol((!customer.currency ? await Company_Currency() : customer.currency) as TPaymentCurrency)}</td>
                 </tr>`;
 
                 if(p_c.length > 0)
@@ -59,7 +60,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                         <tr>
                             <td>+ ${p?.name} - ${c?.name}</td>
                             <td>1</td>
-                            <td>${c?.price} ${!customer.currency ? await Company_Currency() : customer.currency}</td>
+                            <td>${c?.price} ${GetCurrencySymbol((!customer.currency ? await Company_Currency() : customer.currency) as TPaymentCurrency)}</td>
                         </tr>`
                     }
                 }

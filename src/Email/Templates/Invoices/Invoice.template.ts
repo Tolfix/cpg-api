@@ -3,6 +3,7 @@ import { Company_Currency, Full_Domain } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { IInvoice } from "../../../Interfaces/Invoice.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
+import { GetCurrencySymbol, TPaymentCurrency } from "../../../Types/PaymentTypes";
 import GetTableStyle from "../CSS/GetTableStyle";
 import UseStyles from "../General/UseStyles";
 
@@ -76,7 +77,7 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
                 <tr>
                     <td>${item.notes}</td>
                     <td>${item.quantity}</td>
-                    <td>${item.amount} ${!customer.currency ? await Company_Currency() : customer.currency}</td>
+                    <td>${item.amount} ${GetCurrencySymbol((!customer.currency ? await Company_Currency() : customer.currency) as TPaymentCurrency)}</td>
                 </tr>
             `))).join('')}
         </tbody>
@@ -85,7 +86,7 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
         <strong>
             Total:
         </strong>
-        ${invoice.amount+invoice.amount*invoice.tax_rate/100} ${!customer.currency ? await Company_Currency() : customer.currency} (${invoice.tax_rate}%)
+        ${invoice.amount+invoice.amount*invoice.tax_rate/100} ${GetCurrencySymbol((!customer.currency ? await Company_Currency() : customer.currency) as TPaymentCurrency)} (${invoice.tax_rate}%)
     </p>
     <p>
         <strong>
