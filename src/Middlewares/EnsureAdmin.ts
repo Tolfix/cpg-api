@@ -37,13 +37,13 @@ export default function EnsureAdmin(eR = false)
                 password = login.split(":")[1];
                 login = login.split(":")[0];
             }
-            
-            eR ? null : Logger.warning(`Authoring admin with username: ${login}`);
+
+            !eR ? Logger.warning(`Authoring admin with username: ${login}`) : null;
     
             const match = bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"]) ?? "")
             if(!match)
             {
-                eR ? null : Logger.warning(`Authorization failed for admin with username: ${login}`);
+                !eR ? Logger.warning(`Authorization failed for admin with username: ${login}`) : null;
                 return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
             }
     
@@ -53,7 +53,7 @@ export default function EnsureAdmin(eR = false)
         if(b64auth[0].toLocaleLowerCase() === "bearer")
         {
             const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
-            eR ? null : Logger.warning(`Authoring admin with token: ${token}`);
+            !eR ? Logger.warning(`Authoring admin with token: ${token}`) : null;
 
             try
             {
@@ -61,11 +61,11 @@ export default function EnsureAdmin(eR = false)
                 
                 if(!payload)
                 {
-                    eR ? null : Logger.warning(`Authorization failed for admin with token: ${token}`);
+                    !eR ? Logger.warning(`Authorization failed for admin with token: ${token}`) : null;
                     return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
                 }
     
-                eR ? null : Logger.warning(`Authorized admin with token: ${token}`);
+                eR ? Logger.warning(`Authorized admin with token: ${token}`) : null;
     
                 return eR ? Promise.resolve(true) : next?.();
             }
