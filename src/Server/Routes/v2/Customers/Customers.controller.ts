@@ -7,7 +7,7 @@ import { APIError, APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
 import Logger from "../../../../Lib/Logger";
 import { SendEmail } from "../../../../Email/Send";
-import { Company_Name } from "../../../../Config";
+import { Company_Currency, Company_Name } from "../../../../Config";
 import mainEvent from "../../../../Events/Main.event";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import WelcomeTemplate from "../../../../Email/Templates/Customer/Welcome.template";
@@ -32,6 +32,12 @@ function insert(req: Request, res: Response)
 
             if(doesExist)
                 return APIError(`Email ${email} already exists`, 409)(res);
+
+            if(!req.body.currency)
+            {
+                const currency = await Company_Currency();
+                req.body.currency = currency;
+            }
 
             API.create(req.body)
                 .then(async (result) =>

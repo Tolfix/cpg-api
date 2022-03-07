@@ -36,6 +36,11 @@ export = class StripeRouter
 
             const intent = await CreatePaymentIntent(invoice);
 
+            const customer = await CustomerModel.findOne({ $or: [
+                { id: invoice.customer_uid },
+                { uid: invoice.customer_uid }
+            ] });
+
             res.send(`
             <head>
                 <title>Checkout | ${invoice.id}</title>
@@ -84,7 +89,7 @@ export = class StripeRouter
                             ${await (await Promise.all(invoice.items.map(async (item) => `
                                 <tr>
                                     <td>${item.notes}</td>
-                                    <td>${item.amount} ${(await Company_Currency()).toUpperCase()}</td>
+                                    <td>${item.amount} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
                                 </tr>
                             `))).join("")}
 
@@ -94,7 +99,7 @@ export = class StripeRouter
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td>${invoice.amount+invoice.amount*invoice.tax_rate/100} ${(await Company_Currency()).toUpperCase()}</td>
+                                <td>${invoice.amount+invoice.amount*invoice.tax_rate/100} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
                             </tr>
                         </table>
 

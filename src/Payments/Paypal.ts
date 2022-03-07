@@ -1,5 +1,6 @@
 import paypal from "paypal-rest-sdk";
-import { Company_Currency, DebugMode, Domain, Http_Schema, Paypal_Client_Id, Paypal_Client_Secret, PORT } from "../Config";
+import { Company_Currency, DebugMode, Domain, Full_Domain, Http_Schema, Paypal_Client_Id, Paypal_Client_Secret, PORT } from "../Config";
+import CustomerModel from "../Database/Models/Customers/Customer.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
 import { IInvoice } from "../Interfaces/Invoice.interface";
 import { idTransicitons } from "../Lib/Generator";
@@ -8,6 +9,7 @@ import Logger from "../Lib/Logger";
 import { getDate } from "../Lib/Time";
 import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreation";
 import GetText from "../Translation/GetText";
+import { validCurrencyPaypal } from "./Currencies/Paypal.currencies";
 
 if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
     paypal.configure({
@@ -37,6 +39,24 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
         Logger.warning(GetText().paypal.txt_Paypal_Creating_Payment_For_Invoice(invoice))
         // Logger.warning(`Creating payment paypal for invoice ${invoice.uid}`);
 
+        const customer = await CustomerModel.findOne({ $or: [
+            {
+                id: invoice.customer_uid
+            },
+            {
+                uid: invoice.customer_uid
+            }
+        ] });
+
+        // Check if our currency is acctable, otherwise.. go to USD
+        const c = (customer?.currency ?
+                                    customer.currency 
+                                    : 
+                                    await Company_Currency());
+
+        // @ts-ignore
+        const currency = validCurrencyPaypal(c) ? c : "USD";
+
         const create_payment_json =
         {
             "intent": "sale",
@@ -44,8 +64,8 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": `${Http_Schema}://${Domain === "localhost" ? `localhost:${PORT}` : Domain}/v2/paypal/success`,
-                "cancel_url": `${Http_Schema}://${Domain === "localhost" ? `localhost:${PORT}` : Domain}/v2/paypal/cancel`
+                "return_url": `${Full_Domain}/v2/paypal/success`,
+                "cancel_url": `${Full_Domain}/v2/paypal/cancel`
             },
             transactions: [
                 {
@@ -55,13 +75,13 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
                             return {
                                 name: removeTags(item.notes),
                                 price: (item.amount+(item.amount*invoice.tax_rate/100)).toString(),
-                                currency: (await Company_Currency()).toUpperCase(),
+                                currency: (currency).toUpperCase(),
                                 quantity: item.quantity
                             }
                         }))
                     },
                     amount: {
-                        currency: (await Company_Currency()).toUpperCase(),
+                        currency: (currency).toUpperCase(),
                         total: (invoice.amount+(invoice.amount*invoice.tax_rate/100)).toString(),
                         details: {
                             subtotal: (invoice.amount+(invoice.amount*invoice.tax_rate/100)).toString(),

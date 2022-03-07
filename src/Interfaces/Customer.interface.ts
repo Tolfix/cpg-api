@@ -1,3 +1,4 @@
+import { ICompanyConfig } from "./Admin/Configs.interface";
 import { IImage } from "./Images.interface";
 
 /**
@@ -26,6 +27,7 @@ export interface ICustomer
     password: string;
     createdAt: Date;
     profile_picture: IImage["id"] | null;
+    currency: string | ICompanyConfig["currency"];
     extra: {
         [key: string]: any;
     };

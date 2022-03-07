@@ -64,7 +64,7 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
                 <tr>
                     <td>${item.notes}</td>
                     <td>${item.quantity}</td>
-                    <td>${item.amount} ${await Company_Currency()}</td>
+                    <td>${item.amount} ${!customer.currency ? await Company_Currency() : customer.currency}</td>
                 </tr>
             `))).join('')}
         </tbody>
@@ -73,7 +73,7 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
         <strong>
             Total:
         </strong>
-        ${invoice.amount+invoice.amount*invoice.tax_rate/100} ${await Company_Currency()} (${invoice.tax_rate}%)
+        ${invoice.amount+invoice.amount*invoice.tax_rate/100} ${!customer.currency ? await Company_Currency() : customer.currency} (${invoice.tax_rate}%)
     </p>
     <p>
         <strong>

@@ -4,6 +4,7 @@ import { Default_Language, MongoDB_URI } from "../../../Config";
 import { ICustomer, ICustomerMethods } from "../../../Interfaces/Customer.interface";
 import Logger from "../../../Lib/Logger";
 import GetText from "../../../Translation/GetText";
+import { A_PaymentCurrency } from "../../../Types/PaymentTypes";
 
 const CustomerSchema = new Schema
 (
@@ -96,7 +97,13 @@ const CustomerSchema = new Schema
             type: Object,
             required: false,
             default: {},
-        }
+        },
+
+        currency: {
+            type: String,
+            enum: A_PaymentCurrency,
+            required: true,
+        },
 
     }
 );

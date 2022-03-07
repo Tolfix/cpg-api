@@ -27,6 +27,7 @@ export class CustomerModel extends Model<ICustomer, Optional<ICustomer, "id">> i
     };
     declare password: string;
     declare profile_picture: IImage["id"] | null;
+    declare currency: string | ICustomer["currency"];
     declare extra: {
         [key: string]: any;
     };

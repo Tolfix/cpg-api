@@ -48,7 +48,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                 <tr>
                     <td>${p?.name}</td>
                     <td>${product.quantity}</td>
-                    <td>${p?.price} ${await Company_Currency()}</td>
+                    <td>${p?.price} ${!customer.currency ? await Company_Currency() : customer.currency}</td>
                 </tr>`;
 
                 if(p_c.length > 0)
@@ -59,7 +59,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                         <tr>
                             <td>+ ${p?.name} - ${c?.name}</td>
                             <td>1</td>
-                            <td>${c?.price} ${await Company_Currency()}</td>
+                            <td>${c?.price} ${!customer.currency ? await Company_Currency() : customer.currency}</td>
                         </tr>`
                     }
                 }
@@ -95,7 +95,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                         total += p_c.reduce((a, b) => a + b);
 
                     return total;
-                }))).reduce((acc, cur) => acc + cur, 0)} ${(await Company_Currency()).toLocaleUpperCase()}
+                }))).reduce((acc, cur) => acc + cur, 0)} ${(!customer.currency ? await Company_Currency() : customer.currency).toLocaleUpperCase()}
     </p>
 </div>
 `);
