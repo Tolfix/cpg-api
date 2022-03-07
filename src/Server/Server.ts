@@ -1,3 +1,5 @@
+// noinspection JSUnusedLocalSymbols
+
 import express from "express";
 import cors from "cors";
 import session from "express-session";
@@ -6,7 +8,7 @@ import { Default_Language, Express_Session_Secret, Full_Domain, PORT } from "../
 import Logger from "../Lib/Logger";
 import RouteHandler from "../Handlers/Route.handler";
 import { reCache } from "../Cache/reCache";
-import { ICustomer } from "../Interfaces/Customer.interface";
+import { ICustomer } from "@interface/Customer.interface";
 import { APIError } from "../Lib/Response";
 import ApolloServer from "../Database/GraphQL/ApolloServer";
 import GetText from "../Translation/GetText";
