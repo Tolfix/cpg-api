@@ -5,7 +5,7 @@ import { A_OrderStatus, IOrder } from "../../Interfaces/Orders.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments, A_RecurringMethod } from "../../Types/PaymentMethod";
-import { A_PaymentTypes } from "../../Types/PaymentTypes";
+import { A_PaymentTypes, currencyCodes } from "../../Types/PaymentTypes";
 
 const OrderSchema = new Schema
 (
@@ -93,6 +93,12 @@ const OrderSchema = new Schema
         promotion_code: {
             type: Number,
             require: false
+        },
+
+        currency: {
+            type: String,
+            enum: currencyCodes,
+            default: 'USD',
         },
 
     }
