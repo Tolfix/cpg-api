@@ -45,6 +45,11 @@ export const Swish_Payee_Number = process.env.SWISH_PAYEE_NUMBER ?? "";
 export const Paypal_Client_Id = process.env.PAYPAL_CLIENT_ID ?? "";
 export const Paypal_Client_Secret = process.env.PAYPAL_CLIENT_SECRET ?? "";
 
+// CPG stuff..
+export const CPG_Customer_Panel_Domain = process.env.CPG_CUSTOMER_PANEL_DOMAIN;
+export const CPG_Shop_Domain = process.env.CPG_SHOP_DOMAIN;
+export const CPG_Admin_Panel_Domain = process.env.CPG_ADMIN_PANEL_DOMAIN;
+
 // Company
 // Later change this to a databse etc..
 export const Company_Name = async (): Promise<IConfigs["company"]["name"]> =>
