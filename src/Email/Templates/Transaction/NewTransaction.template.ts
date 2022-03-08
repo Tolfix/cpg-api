@@ -1,10 +1,10 @@
 import { stripIndents } from "common-tags";
-import { Company_Currency, Company_Email } from "../../../Config";
+import { Company_Email } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { ITransactions } from "../../../Interfaces/Transactions.interface";
 import PrintCompanyInformation from "../../../Lib/Company/PrintCompanyInformation";
 import getFullName from "../../../Lib/Customers/getFullName";
-import { GetCurrencySymbol, TPaymentCurrency } from "../../../Types/PaymentTypes";
+import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
 import UseStyles from "../General/UseStyles";
 
 export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(stripIndents`
