@@ -1,4 +1,5 @@
 import { stripIndents } from "common-tags";
+import { CPG_Customer_Panel_Domain } from "../../../Config";
 import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions.model";
 import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { IOrder } from "../../../Interfaces/Orders.interface";
@@ -97,5 +98,12 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
                     return total;
                 }))).reduce((acc, cur) => acc + cur, 0)} ${(order.currency).toLocaleUpperCase()}
     </p>
+
+    ${CPG_Customer_Panel_Domain ? `
+    <p>
+        <a href="${CPG_Customer_Panel_Domain}/orders/${order.id}">View Order</a>
+    </p>
+    ` : ''}
+
 </div>
 `);

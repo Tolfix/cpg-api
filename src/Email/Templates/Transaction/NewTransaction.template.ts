@@ -1,5 +1,5 @@
 import { stripIndents } from "common-tags";
-import { Company_Email } from "../../../Config";
+import { Company_Email, CPG_Customer_Panel_Domain } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { ITransactions } from "../../../Interfaces/Transactions.interface";
 import PrintCompanyInformation from "../../../Lib/Company/PrintCompanyInformation";
@@ -22,11 +22,17 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
         Customer: ${getFullName(c)}
     </p>
     <p>
-        Company:
         ${await PrintCompanyInformation()}
     </p>
     <p>
         Amount: ${t.amount} ${GetCurrencySymbol(t.currency)}
     </p>
+    ${CPG_Customer_Panel_Domain ? `
+    
+    <p>
+        <a href="${CPG_Customer_Panel_Domain}/transactions/${t.uid}">View Transaction</a>
+    </p>
+
+    ` : ''}
 </div>
 `);

@@ -1,5 +1,5 @@
 import { stripIndents } from "common-tags";
-import { Full_Domain } from "../../../Config";
+import { CPG_Customer_Panel_Domain, Full_Domain } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { IInvoice } from "../../../Interfaces/Invoice.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
@@ -93,5 +93,10 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
             Thank you for your business.
         </strong>
     </p>
+    ${CPG_Customer_Panel_Domain ? `
+    <p>
+        <a href="${CPG_Customer_Panel_Domain}/invoices/${invoice.id}">View Invoice</a>
+    </p>
+    ` : ''}
 </div>
 `);
