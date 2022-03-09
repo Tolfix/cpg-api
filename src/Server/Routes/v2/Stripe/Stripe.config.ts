@@ -10,6 +10,7 @@ import { APIError } from "../../../../Lib/Response";
 import stripe from "stripe";
 import { CreatePaymentIntent, createSetupIntent, markInvoicePaid, RetrivePaymentIntent, RetriveSetupIntent } from "../../../../Payments/Stripe";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
+import stripeWebhookEvent from "../../../../Events/Stripe.event";
 const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
@@ -524,16 +525,8 @@ export = class StripeRouter
                 return res.status(400).send(`Webhook Error: ${err.message}`);
             }
 
-            switch (event.type)
-            {
-                case 'payment_intent.succeeded': {
-                    const payment_intent = event.data.object as any;
-                    const intent = await RetrivePaymentIntent(payment_intent.id);
-                    markInvoicePaid(intent);
-                    break;
-                }
-
-            }
+            stripeWebhookEvent(event);
+            
             return res.sendStatus(200);
         });
 
