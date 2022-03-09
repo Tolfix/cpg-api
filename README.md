@@ -1,4 +1,4 @@
-<div class="margin: 0 auto;">
+<div class="margin: 0 auto;" align="center">
   <a href="https://tolfix.com/" target="_blank"><img width="260" src="https://cdn.tolfix.com/images/TX-Small.png" alt="Tolfix"></a>
   <br/>
   <strong>C</strong>entral <strong>P</strong>ayment <strong>G</strong>ateway - API
@@ -36,7 +36,7 @@ You can pull the latest **Docker Image** from `tolfixorg/cpg:latest` from **Dock
 
 **CPG** also needs environment variables added, which you can find in [`.env.example`](), those that have (optional) in the comment can be ignored if you don't feel the need for them, but the others are required to make CPG functional.
 
-# 🔧# | Installing
+# 🔧 | Installing
 **CPG** requires the following
 * Node.js v14 or v16
 * Typescript - 4.3.5
@@ -63,7 +63,7 @@ tsc -b
 npm run build
 ```
 
-# | Running
+# 👟 | Running
 You can run *CPG* by executing `npm run start` or `node ./build/Main.js`.
 I Would recommend you use `pm2`.
 
