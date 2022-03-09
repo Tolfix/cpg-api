@@ -8,20 +8,20 @@ const db = mongoose.connection;
 
 db.on('error', (error: any) =>
 {
-    Logger.error(GetText(Default_Language).database.txt_Database_Error_default, error)
+    Logger.error(GetText(Default_Language).database.txt_Database_Error_default, error);
     // Logger.error(`A error accured for the database`, error);
 });
 
 db.on('disconnected', () =>
 {
-    Logger.error(GetText(Default_Language).database.txt_Database_Error_Lost_Connection)
+    Logger.error(GetText(Default_Language).database.txt_Database_Error_Lost_Connection);
     // Logger.error(`Lost connection to the database, shutting down.`);
     if(!DebugMode)
         process.exit(1);
-})
+});
 
 db.once('open', () =>
 {
-    Logger.db(GetText(Default_Language).database.txt_Database_Opened)
+    Logger.db(GetText(Default_Language).database.txt_Database_Opened);
     // Logger.db(`Database opened`);
 });
