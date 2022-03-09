@@ -13,26 +13,24 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
         Transaction Statement
     </h1>
     ${charged ? `<p>
-        This was automatically paid for you. If you have any questions, please contact us at ${await Company_Email()}
+        <strong>This was automatically paid for you. If you have any questions, please contact us at ${await Company_Email()}</strong>
     </p>` : ``}
     <p>
-        Date: ${t.date}
+        <strong>Date:</strong> ${t.date}
     </p>
     <p>
-        Customer: ${getFullName(c)}
+        <strong>Customer:</strong> ${getFullName(c)}
     </p>
     <p>
         ${await PrintCompanyInformation()}
     </p>
     <p>
-        Amount: ${t.amount} ${GetCurrencySymbol(t.currency)}
+        <strong>Amount:<strong> ${t.amount} ${GetCurrencySymbol(t.currency)}
     </p>
     ${CPG_Customer_Panel_Domain ? `
-    
-    <p>
-        <a href="${CPG_Customer_Panel_Domain}/transactions/${t.uid}">View Transaction</a>
-    </p>
-
+        <p>
+            <a href="${CPG_Customer_Panel_Domain}/transactions/${t.uid}">View Transaction</a>
+        </p>
     ` : ''}
 </div>
 `);

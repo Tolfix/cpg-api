@@ -1,4 +1,4 @@
-<div class="margin: 0 auto;">
+<div class="margin: 0 auto;" align="center">
   <a href="https://tolfix.com/" target="_blank"><img width="260" src="https://cdn.tolfix.com/images/TX-Small.png" alt="Tolfix"></a>
   <br/>
   <strong>C</strong>entral <strong>P</strong>ayment <strong>G</strong>ateway - API
@@ -26,17 +26,17 @@ CPG-API is being used to generate items, create invoices, handle orders, view tr
 * [Contribute](#--contribute)
 * [Discord](#--discord)
 
-#📋 | Documentation
+# 📋 | Documentation
 You can read our documentation on our [`wiki.`](https://github.com/Tolfix/CPG-API/wiki)
 
-#📦 | Setup
+# 📦 | Setup
 Setting up **CPG** can be done in various ways, but by far the simplest is by using **Docker**.
 
 You can pull the latest **Docker Image** from `tolfixorg/cpg:latest` from **DockerHub**.
 
 **CPG** also needs environment variables added, which you can find in [`.env.example`](), those that have (optional) in the comment can be ignored if you don't feel the need for them, but the others are required to make CPG functional.
 
-#🔧# | Installing
+# 🔧 | Installing
 **CPG** requires the following
 * Node.js v14 or v16
 * Typescript - 4.3.5
@@ -56,14 +56,14 @@ npm install
 npm install -g typescript@4.3.5
 ```
 
-##👷 | Building
+## 👷 | Building
 **CPG** is built from **TypeScript**, so you can run it by using the compiler.
 ```bash
 tsc -b
 npm run build
 ```
 
-# | Running
+# 👟 | Running
 You can run *CPG* by executing `npm run start` or `node ./build/Main.js`.
 I Would recommend you use `pm2`.
 

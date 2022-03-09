@@ -61,6 +61,21 @@ export interface IInvoice
     notified: boolean;
 }
 
+export interface IInvoiceMethods
+{
+    getTotalAmount: <C extends boolean = false>({ 
+        tax,
+        currency,
+        symbol
+    }:
+    {
+        tax?: boolean;
+        currency?: C;
+        symbol?: boolean;
+    }) => C extends false ? number : string;
+
+}
+
 export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
 export const A_InvoiceStatus: extendedOrderStatus[] = [
     "active",

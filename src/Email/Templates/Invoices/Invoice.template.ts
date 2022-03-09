@@ -3,33 +3,32 @@ import { CPG_Customer_Panel_Domain, Full_Domain } from "../../../Config";
 import { ICustomer } from "@interface/Customer.interface";
 import { IInvoice } from "@interface/Invoice.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
-import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
-import GetTableStyle from "../CSS/GetTableStyle";
 import UseStyles from "../General/UseStyles";
+import printInvoiceItemsTable from "../Methods/InvoiceItems.print";
 
-export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles(stripIndents`
+export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) => await UseStyles(stripIndents`
 <div>
     <h1>Hello ${getFullName(customer)}.</h1>
     <p>
-        This is a notice that an invoice has been generated on ${invoice.dates.invoice_date}.
+        This is a notice that an invoice has been generated on <strong>${invoice.dates.invoice_date}</strong>.
     </p>
     <p>
-        Invoice number: ${invoice.id}
+        <strong>Invoice number:</strong> ${invoice.id}
     </p>
     <p>
-        OCR number: ${(invoice.dates.invoice_date as string).replaceAll("-", "")}${invoice.id}
+        <strong>OCR number:</strong> ${(invoice.dates.invoice_date as string).replaceAll("-", "")}${invoice.id}
     </p>
     <p>
-        Your payment method is: ${(invoice.payment_method).firstLetterUpperCase().replaceAll("_", " ")}
+        <strong>Your payment method is:</strong> ${(invoice.payment_method).firstLetterUpperCase().replaceAll("_", " ")}
     </p>
     <p>
-        Tax due: ${invoice.tax_rate}%
+        <strong>Tax due:</strong> ${invoice.tax_rate}%
     </p>
     <p>
-        Amount due: ${invoice.amount+invoice.amount*invoice.tax_rate/100}
+        <strong>Amount due:</strong> ${invoice.getTotalAmount({ tax: false, currency: true, symbol: true })}
     </p>
     <p>
-        Due date: ${invoice.dates.due_date}
+        <strong>Due date:</strong> ${invoice.dates.due_date}
     </p>
     <p>
         ${invoice.payment_method === "paypal" ? `<br />
@@ -64,29 +63,13 @@ export default async (invoice: IInvoice, customer: ICustomer) => await UseStyles
         ` : ''}
     </p>
 
-    <table style="${GetTableStyle}">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${(await Promise.all(invoice.items.map(async item => `
-                <tr>
-                    <td>${item.notes}</td>
-                    <td>${item.quantity}</td>
-                    <td>${item.amount} ${GetCurrencySymbol(invoice.currency)}</td>
-                </tr>
-            `))).join('')}
-        </tbody>
-    </table>
+    ${await printInvoiceItemsTable(invoice)}
+
     <p>
         <strong>
             Total:
         </strong>
-        ${invoice.amount+invoice.amount*invoice.tax_rate/100} ${GetCurrencySymbol(invoice.currency)} (${invoice.tax_rate}%)
+        ${invoice.getTotalAmount({ tax: true, currency: true, symbol: true })} (${invoice.tax_rate}%)
     </p>
     <p>
         <strong>
