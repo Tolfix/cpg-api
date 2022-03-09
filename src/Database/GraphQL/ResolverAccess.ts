@@ -3,7 +3,7 @@ import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 
 export function resolverAdminAccess(resolvers: {
-    [key: string]: Resolver<any, any, any, any>;
+    [key: string]: Resolver;
 })
 {
     Object.keys(resolvers).forEach((k) =>
@@ -26,7 +26,7 @@ export function resolverAdminAccess(resolvers: {
 }
 
 export function resolverUserAccess(resolvers: {
-    [key: string]: Resolver<any, any, any, any>;
+    [key: string]: Resolver;
 })
 {
     Object.keys(resolvers).forEach((k) =>

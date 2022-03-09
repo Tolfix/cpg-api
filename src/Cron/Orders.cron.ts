@@ -16,7 +16,7 @@ export = function Cron_Orders()
         Logger.info(GetText(Default_Language).cron.txt_Orders_Checking);
         // Logger.info(`Checking orders..`);
 
-        // Check if the order needs to create a new invoice if order.dates.next_recylce is withing 14 days
+        // Check if the order needs to create a new invoice if order.dates.next_recycle is withing 14 days
         OrderModel.find({
             order_status: "active",
             // order_status: {
@@ -30,7 +30,7 @@ export = function Cron_Orders()
             {
                 Logger.info(GetText(Default_Language).cron.txt_Order_Checking(order.id));
                 // Logger.info(`Checking order ${order.id}`);
-                // Check if order.order_status is not "cancelled" or "fruad"
+                // Check if order.order_status is not "cancelled" or "fraud"
                 if(order.dates.next_recycle)
                     if(dateFormat.parse(order.dates.next_recycle, "YYYY-MM-DD").getTime() - new Date().getTime() <= d_Days * 24 * 60 * 60 * 1000)
                     {
@@ -54,7 +54,7 @@ export = function Cron_Orders()
                         await order.save();
                     }
                 if(newInvoices.length > 0)
-                    InvoiceCreatedReport(newInvoices);
+                    await InvoiceCreatedReport(newInvoices);
             }
         });
 

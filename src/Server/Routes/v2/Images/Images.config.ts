@@ -3,7 +3,7 @@ import Logger from "../../../../Lib/Logger";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import { CacheImages } from "../../../../Cache/Image.cache";
-import { IImage } from "../../../../Interfaces/Images.interface";
+import { IImage } from "@interface/Images.interface";
 import { UploadedFile } from "express-fileupload";
 import { idImages } from "../../../../Lib/Generator";
 import ImageModel from "../../../../Database/Models/Images.model";
@@ -56,12 +56,14 @@ export = class ImagesRouter
             if(!data)
                 return APIError(`Unable to find image by id ${id}`)(res);
 
-            const binstr = Array.prototype.map.call(data.data, function (ch)
+            const binaryString = Array.prototype.map.call(data.data, function (ch)
             {
                 return String.fromCharCode(ch);
             }).join('');
 
-            const d = btoa(binstr);
+            //const d = btoa(binaryString);
+            const d = Buffer.from(binaryString, "binary").toString("base64");
+
 
             return APISuccess({
                 data: d,
@@ -129,7 +131,7 @@ export = class ImagesRouter
             
             CacheImages.delete(id);
             
-            APISuccess(`Succesfully delete image`)(res);
+            APISuccess(`Successfully deleted image`)(res);
         });
     }
 } 

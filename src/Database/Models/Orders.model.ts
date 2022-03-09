@@ -1,11 +1,18 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { A_OrderStatus, IOrder } from "../../Interfaces/Orders.interface";
+import { IOrder } from "@interface/Orders.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments, A_RecurringMethod } from "../../Types/PaymentMethod";
 import { A_PaymentTypes, currencyCodes } from "../../Types/PaymentTypes";
+
+export const A_OrderStatus = [
+    "active",
+    "pending",
+    "fraud",
+    "cancelled"
+] as const;
 
 const OrderSchema = new Schema
 (
@@ -67,7 +74,7 @@ const OrderSchema = new Schema
         
         price_override: {
             type: Number,
-            defualt: 0,
+            default: 0,
         },
 
         dates: {

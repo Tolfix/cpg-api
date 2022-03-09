@@ -1,16 +1,16 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import dateFormat from "date-and-time";
 import OrderModel from "../../../../Database/Models/Orders.model";
-import { IOrder } from "../../../../Interfaces/Orders.interface";
+import {IOrder} from "@interface/Orders.interface";
 import nextRycleDate from "../../../../Lib/Dates/DateCycle";
-import { idOrder } from "../../../../Lib/Generator";
-import { APISuccess } from "../../../../Lib/Response";
+import {idOrder} from "../../../../Lib/Generator";
+import {APISuccess} from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
-import { createInvoiceFromOrder } from "../../../../Lib/Orders/newInvoice";
-import { SendEmail } from "../../../../Email/Send";
+import {createInvoiceFromOrder} from "../../../../Lib/Orders/newInvoice";
+import {SendEmail} from "../../../../Email/Send";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import NewOrderCreated from "../../../../Email/Templates/Orders/NewOrderCreated";
-import { Company_Name } from "../../../../Config";
+import {Company_Name} from "../../../../Config";
 import mainEvent from "../../../../Events/Main.event";
 
 const API = new BaseModelAPI<IOrder>(idOrder, OrderModel);
@@ -22,13 +22,11 @@ async function insert(req: Request, res: Response)
     const b_recurring = billing_type === "recurring";
     const billing_cycle = req.body.billing_cycle as IOrder["billing_cycle"] ?? "monthly";
 
-    const dates = {
+    req.body.dates = {
         createdAt: new Date(),
         last_recycle: b_recurring ? dateFormat.format(new Date(), "YYYY-MM-DD") : undefined,
         next_recycle: b_recurring ? dateFormat.format(nextRycleDate(new Date(), billing_cycle), "YYYY-MM-DD") : undefined,
-    }
-
-    req.body.dates = dates;
+    };
 
     const newInvoice = await createInvoiceFromOrder(req.body as IOrder);
 
@@ -43,9 +41,9 @@ async function insert(req: Request, res: Response)
             const customer = await CustomerModel.findOne({ id: result.customer_uid });
 
             if(customer)
-                SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${result.id}`, {
+                await SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${result.id}`, {
                     isHTML: true,
-                    body: NewOrderCreated(result, customer), 
+                    body: NewOrderCreated(result, customer),
                 });
 
             APISuccess({

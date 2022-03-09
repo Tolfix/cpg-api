@@ -95,8 +95,8 @@ export async function reCache_Transactions()
     Logger.info(`Starting caching on transactions..`);
     return new Promise(async (resolve) =>
     {
-        const transa = await TransactionsModel.find();
-        for (const t of transa)
+        const transactions = await TransactionsModel.find();
+        for (const t of transactions)
         {
             Logger.cache(`Caching transaction ${t.uid}`);
             CacheTransactions.set(t.uid, t);
@@ -142,7 +142,7 @@ export async function reCache_Configs()
                 },
                 smtp_emails: [],
             }
-            new ConfigModel(smtpData).save();
+            await new ConfigModel(smtpData).save();
 
             Logger.cache(`Caching config`);
 

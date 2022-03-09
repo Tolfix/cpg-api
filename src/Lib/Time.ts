@@ -4,8 +4,7 @@ export function getTime()
 {
     const D_CurrentDate = new Date();
 
-    const S_FixedDate = dateFormat.format(D_CurrentDate, "YYYY-MM-DD HH:mm:ss");
-    return S_FixedDate;
+    return dateFormat.format(D_CurrentDate, "YYYY-MM-DD HH:mm:ss");
 }
 
 export function getDate(removeDays = false)

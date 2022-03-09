@@ -1,8 +1,8 @@
 import { stripIndents } from "common-tags";
 import { CPG_Customer_Panel_Domain } from "../../../Config";
 import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions.model";
-import { ICustomer } from "../../../Interfaces/Customer.interface";
-import { IOrder } from "../../../Interfaces/Orders.interface";
+import { ICustomer } from "@interface/Customer.interface";
+import { IOrder } from "@interface/Orders.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
 import getProductById from "../../../Lib/Products/getProductById";
 import UseStyles from "../General/UseStyles";

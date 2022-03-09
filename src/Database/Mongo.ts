@@ -8,8 +8,8 @@ const db = mongoose.connection;
 
 db.on('error', (error: any) =>
 {
-    Logger.error(GetText(Default_Language).database.txt_Database_Error_default, error);
-    // Logger.error(`A error accured for the database`, error);
+    Logger.error(GetText(Default_Language).database.txt_Database_Error_default, error)
+    // Logger.error(`A error occurred, in the database`, error);
 });
 
 db.on('disconnected', () =>

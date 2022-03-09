@@ -17,7 +17,7 @@ export = <IGetText>{
     },
     database: {
         txt_Database_Error_Lost_Connection: "Lost connection to database, shutting down.",
-        txt_Database_Error_default: "An error occured while processing your request.",
+        txt_Database_Error_default: "An error occurred while processing your request.",
         txt_Database_Opened: "Database opened",
         txt_Model_Created: (model: string, id: any) => `Created ${model} with id/uid ${id}`,
     },

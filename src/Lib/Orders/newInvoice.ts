@@ -1,15 +1,15 @@
 import InvoiceModel from "../../Database/Models/Invoices.model";
 import ProductModel from "../../Database/Models/Products.model";
-import { IInvoice_Dates } from "../../Interfaces/Invoice.interface";
-import { IOrder } from "../../Interfaces/Orders.interface";
+import { IInvoice_Dates } from "@interface/Invoice.interface";
+import { IOrder } from "@interface/Orders.interface";
 import { idInvoice } from "../Generator";
 import dateFormat from "date-and-time";
 import getCategoryByProduct from "../Products/getCategoryByProduct";
-import { IProduct } from "../../Interfaces/Products.interface";
+import { IProduct } from "@interface/Products.interface";
 import ConfigurableOptionsModel from "../../Database/Models/ConfigurableOptions.model";
-import { IConfigurableOptions } from "../../Interfaces/ConfigurableOptions.interface";
+import { IConfigurableOptions } from "@interface/ConfigurableOptions.interface";
 import mainEvent from "../../Events/Main.event";
-import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes.interface";
+import { IPromotionsCodes } from "@interface/PromotionsCodes.interface";
 import { Document } from "mongoose";
 import Logger from "../Logger";
 import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
@@ -113,20 +113,19 @@ export async function createInvoiceFromOrder(order: IOrder)
 
 export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Document, product: IProduct)
 {
-    if(code.valid_to !== "permament")
+    if(code.valid_to !== "permanent")
         // Convert string to date
         if(new Date(code.valid_to) < new Date())
         {
             Logger.debug(`Promotion code ${code.name} got invalid valid date`);
             return product;
         }
-    
-    if(typeof code.valid_to === "string")
-        if(code.uses <= 0)
-        {
-            Logger.warning(`Promotion code ${code.name} has no uses left`);
-            return product;
-        }
+
+    if (code.uses <= 0)
+    {
+        Logger.warning(`Promotion code ${code.name} has no uses left`);
+        return product;
+    }
 
     Logger.info(`Promotion code ${code.name} (${code.id}) is valid`);
 
@@ -137,7 +136,7 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
     {
         Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
         const o_price = product.price;
-        if(code.procentage)
+        if(code.percentage)
             product.price = product.price+(product.price*code.discount);
         else
             product.price = product.price-code.discount;
@@ -169,9 +168,11 @@ export async function getPriceFromOrder(order: IOrder, product?: IProduct[])
 
 export async function getProductsByOrder(order: IOrder)
 {
-    return await ProductModel.find({ id: {
-        $in: [...order.products.map(product => product.product_id)]
-    } });
+    return ProductModel.find({
+        id: {
+            $in: [...order.products.map(product => product.product_id)]
+        }
+    });
 }
 
 export function createMapProductsFromOrder(order: IOrder)

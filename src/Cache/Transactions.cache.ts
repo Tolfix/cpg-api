@@ -1,4 +1,4 @@
-import { ITransactions } from "../Interfaces/Transactions.interface";
+import { ITransactions } from "@interface/Transactions.interface";
 
 /**
  * @deprecated

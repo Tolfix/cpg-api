@@ -1,23 +1,23 @@
 import crypto from "crypto";
-import { CacheAdmin } from "../Cache/Admin.cache";
-import { CacheCategories } from "../Cache/Categories.cache";
-import { CacheCustomer } from "../Cache/Customer.cache";
-import { CacheImages } from "../Cache/Image.cache";
-import { CacheInvoice } from "../Cache/Invoices.cache";
-import { CacheOrder } from "../Cache/Order.cache";
-import { CacheProduct } from "../Cache/Product.cache";
-import { CacheTransactions } from "../Cache/Transactions.cache";
-import { IAdministrator } from "../Interfaces/Admin/Administrators.interface";
-import { ICategory } from "../Interfaces/Categories.interface";
-import { IConfigurableOptions } from "../Interfaces/ConfigurableOptions.interface";
-import { ICustomer } from "../Interfaces/Customer.interface";
-import { IImage } from "../Interfaces/Images.interface";
-import { IInvoice } from "../Interfaces/Invoice.interface";
-import { IOrder } from "../Interfaces/Orders.interface";
-import { IProduct } from "../Interfaces/Products.interface";
-import { IQuotes } from "../Interfaces/Quotes.interface";
-import { ISubscription } from "../Interfaces/Subscriptions.interface";
-import { ITransactions } from "../Interfaces/Transactions.interface";
+import {CacheAdmin} from "../Cache/Admin.cache";
+import {CacheCategories} from "../Cache/Categories.cache";
+import {CacheCustomer} from "../Cache/Customer.cache";
+import {CacheImages} from "../Cache/Image.cache";
+import {CacheInvoice} from "../Cache/Invoices.cache";
+import {CacheOrder} from "../Cache/Order.cache";
+import {CacheProduct} from "../Cache/Product.cache";
+import {CacheTransactions} from "../Cache/Transactions.cache";
+import {IAdministrator} from "@interface/Admin/Administrators.interface";
+import {ICategory} from "@interface/Categories.interface";
+import {IConfigurableOptions} from "@interface/ConfigurableOptions.interface";
+import {ICustomer} from "@interface/Customer.interface";
+import {IImage} from "@interface/Images.interface";
+import {IInvoice} from "@interface/Invoice.interface";
+import {IOrder} from "@interface/Orders.interface";
+import {IProduct} from "@interface/Products.interface";
+import {IQuotes} from "@interface/Quotes.interface";
+import {ISubscription} from "@interface/Subscriptions.interface";
+import {ITransactions} from "@interface/Transactions.interface";
 
 export function idCustomer(): ICustomer["uid"]
 {
@@ -67,7 +67,7 @@ export function idInvoice(): IInvoice["uid"]
     return uid;
 }
 
-export function idTransicitons(): ITransactions["uid"]
+export function idTransactions(): ITransactions["uid"]
 {
     let uid: ITransactions["uid"] = `TRAN_${crypto.randomBytes(20).toString("hex")}`;
     while(CacheTransactions.get(uid))
@@ -85,18 +85,15 @@ export function idImages(): IImage["uid"]
 
 export function idConfigurableOptions(): IConfigurableOptions["uid"]
 {
-    const uid: IConfigurableOptions["uid"] = `CO_${crypto.randomBytes(20).toString("hex")}`;
-    return uid;
+    return `CO_${crypto.randomBytes(20).toString("hex")}`;
 }
 
 export function idQuotes(): IQuotes["uid"]
 {
-    const uid: IQuotes["uid"] = `QUO_${crypto.randomBytes(20).toString("hex")}`;
-    return uid;
+    return `QUO_${crypto.randomBytes(20).toString("hex")}`;
 }
 
 export function idSubscription(): ISubscription["uid"]
 {
-    const uid: ISubscription["uid"] = `SUB_${crypto.randomBytes(20).toString("hex")}`;
-    return uid;
+    return `SUB_${crypto.randomBytes(20).toString("hex")}`;
 }

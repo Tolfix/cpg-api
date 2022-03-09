@@ -11,7 +11,7 @@ import {
     Company_Tax_Registered,
     Company_Currency
 } from "../../Config";
-import { IQuotes } from "../../Interfaces/Quotes.interface";
+import { IQuotes } from "@interface/Quotes.interface";
 import GetText from "../../Translation/GetText";
 
 export default function createQuotePdf(quote: IQuotes): Promise<string>
@@ -93,7 +93,7 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             data["images"]["background"] = PDF_Template_Url;
         
         //@ts-ignore
-        easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
+        await easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
         {
             return resolve(result.pdf);
         });

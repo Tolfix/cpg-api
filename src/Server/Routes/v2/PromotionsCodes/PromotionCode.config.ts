@@ -45,7 +45,7 @@ export = class PromotionCodeRoute
                 return APIError(`Promotion code ${name} not found`, 404)(res);
 
             // Check if code is valid
-            if(code.valid_to !== "permament")
+            if(code.valid_to !== "permanent")
             // Convert string to date
             if(new Date(code.valid_to) < new Date())
             {
@@ -86,10 +86,10 @@ export = class PromotionCodeRoute
                 {
                     Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
                     const o_price = product.price;
-                    if(code.procentage)
+                    if(code.discount > 0)
                         product.price = product.price+(product.price*code.discount);
                     else
-                        product.price = product.price-code.discount;
+                        product.price = product.price - code.discount;
             
                     Logger.info(`New price of product ${product.id} is ${product.price}, old price was ${o_price}`);
                     // Check if we are - on price

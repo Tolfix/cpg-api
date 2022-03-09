@@ -12,5 +12,4 @@ for (const file of command)
         Logger.info(`Adding new cron job`);
         pull();
     }
-    continue;
 }

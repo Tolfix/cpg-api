@@ -1,7 +1,7 @@
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import { SendEmail } from "../../Email/Send";
 import NewTransactionTemplate from "../../Email/Templates/Transaction/NewTransaction.template";
-import { ITransactions } from "../../Interfaces/Transactions.interface";
+import { ITransactions } from "@interface/Transactions.interface";
 
 export default async function sendEmailOnTransactionCreation(t: ITransactions)
 {
@@ -19,10 +19,10 @@ export default async function sendEmailOnTransactionCreation(t: ITransactions)
     if(!customer)
         return Promise.resolve(false);
 
-    SendEmail(customer.personal.email, "Transaction Statement", {
+    await SendEmail(customer.personal.email, "Transaction Statement", {
         isHTML: true,
         body: await NewTransactionTemplate(t, customer),
     });
 
-    Promise.resolve(true);
-} 
+    return true;
+}

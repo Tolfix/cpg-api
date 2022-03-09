@@ -1,5 +1,5 @@
 import InvoiceModel from "../../Database/Models/Invoices.model";
-import { IInvoice } from "../../Interfaces/Invoice.interface";
+import { IInvoice } from "@interface/Invoice.interface";
 import { Document } from "mongoose";
 import mainEvent from "../../Events/Main.event";
 

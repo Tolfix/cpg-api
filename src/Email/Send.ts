@@ -1,6 +1,6 @@
 import mail from "nodemailer";
 import { Company_Name, GetSMTPConfig } from "../Config";
-import { IConfigs } from "../Interfaces/Admin/Configs.interface";
+import { IConfigs } from "@interface/Admin/Configs.interface";
 import AW from "../Lib/AW";
 import Logger from "../Lib/Logger";
 
@@ -9,7 +9,7 @@ import Logger from "../Lib/Logger";
  * Send a email
  */
 export async function SendEmail(
-    reciever: string, 
+    receiver: string,
     subject: string, 
     body: {
         isHTML: boolean;
@@ -48,7 +48,7 @@ export async function SendEmail(
         attachments?: any;
     } = {
         from: `"${await Company_Name()}" <${SMTPConfig.username}>`,
-        to: `${reciever}`,
+        to: `${receiver}`,
         subject: subject,
     }
 
@@ -64,7 +64,7 @@ export async function SendEmail(
     //@ts-ignore
     const transport = mail.createTransport(config);
 
-    Logger.info("Email:", `Sending email to ${reciever}`);
+    Logger.info("Email:", `Sending email to ${receiver}`);
 
 
     transport.sendMail(email).then(() =>
@@ -77,7 +77,7 @@ export async function SendEmail(
 }
 
 export async function sendEmail(options: {
-    reciever: string;
+    receiver: string;
     subject: string;
     body: {
         body: any;
@@ -113,7 +113,7 @@ export async function sendEmail(options: {
         attachments?: any;
     } = {
         from: `"${await Company_Name()}" <${SMTPConfig.username}>`,
-        to: `${options.reciever}`,
+        to: `${options.receiver}`,
         html: options.body.body,
         subject: options.subject,
     }
@@ -124,7 +124,7 @@ export async function sendEmail(options: {
     //@ts-ignore
     const transport = mail.createTransport(config);
 
-    Logger.info("Email:", `Sending email to ${options.reciever}`);
+    Logger.info("Email:", `Sending email to ${options.receiver}`);
 
     return transport.sendMail(email);
 }

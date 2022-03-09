@@ -1,7 +1,7 @@
 import mongoose,{ Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { IPromotionsCodes } from "../../Interfaces/PromotionsCodes.interface";
+import { IPromotionsCodes } from "@interface/PromotionsCodes.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 
@@ -21,8 +21,8 @@ const PromotionCodeSchema = new Schema
 
         valid_to: {
             type: String,
-            enum: [String, "permament"],
-            default: "permament"
+            enum: [String, "permanent"],
+            default: "permanent"
         },
 
         uses: {
@@ -31,7 +31,7 @@ const PromotionCodeSchema = new Schema
             default: "unlimited"
         },
 
-        procentage: {
+        percentage: {
             type: Boolean,
             default: false
         },

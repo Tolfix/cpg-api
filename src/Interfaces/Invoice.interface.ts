@@ -37,7 +37,7 @@ import { ITransactions } from "./Transactions.interface";
  * @property {string} active
  * @property {string} pending
  * @property {string} draft
- * @property {string} fruad
+ * @property {string} fraud
  * @property {string} cancelled
  * @property {string} refunded
  * @property {string} collections
@@ -77,16 +77,6 @@ export interface IInvoiceMethods
 }
 
 export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
-export const A_InvoiceStatus: extendedOrderStatus[] = [
-    "active",
-    "pending",
-    "draft",
-    "fraud",
-    "cancelled",
-    "refunded",
-    "collections",
-    "payment_pending",
-];
 
 
 export interface IInvoice_Dates

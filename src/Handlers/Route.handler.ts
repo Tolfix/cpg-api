@@ -27,7 +27,7 @@ export default function RouteHandler(server: Application): void
                     Logger.api(`Adding new router in version ${version}, name ${pull.name ?? ""}`)
                     new pull(server, version);
                 }
-                continue;
+
             }
         })
     })

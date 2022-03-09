@@ -53,7 +53,7 @@ export function cron_notifyInvoices()
     
         }
         if(invoices.length > 0)
-            InvoiceNotifiedReport(invoices);
+            await InvoiceNotifiedReport(invoices);
     });
 }
 

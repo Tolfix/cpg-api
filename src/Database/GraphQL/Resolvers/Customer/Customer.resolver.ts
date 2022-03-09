@@ -1,5 +1,5 @@
-import { ObjectTypeComposer, ResolverResolveParams, Resolver, schemaComposer } from "graphql-compose";
-import { ICustomer } from "../../../../Interfaces/Customer.interface";
+import {ObjectTypeComposer, Resolver, ResolverResolveParams, schemaComposer} from "graphql-compose";
+import {ICustomer} from "@interface/Customer.interface";
 import CustomerModel from "../../../Models/Customers/Customer.model";
 import InvoiceModel from "../../../Models/Invoices.model";
 import OrderModel from "../../../Models/Orders.model";
@@ -7,7 +7,7 @@ import TransactionsModel from "../../../Models/Transactions.model";
 
 export function myProfileResolver(
     object: ObjectTypeComposer
-): Resolver<any, any, any, any>
+): Resolver
 {
     return schemaComposer.createResolver({
         name: "myProfile",
@@ -27,18 +27,16 @@ export function myProfileResolver(
             if(context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
-            const data = await CustomerModel.findOne({
+            return CustomerModel.findOne({
                 id: context.userData.id,
             });
-
-            return data;
         }
     })
 }
 
 export function myInvoicesResolver(
     object: ObjectTypeComposer
-): Resolver<any, any, any, any>
+): Resolver
 {
     return schemaComposer.createResolver({
         name: "myInvoices",
@@ -65,21 +63,19 @@ export function myInvoicesResolver(
             if(!customer)
                 throw new Error(`Customer not found`);
 
-            const invoices = await InvoiceModel.find({
+            return InvoiceModel.find({
                 $or: [
-                    { customer_uid: customer.uid},
-                    { customer_uid: customer.id}
+                    {customer_uid: customer.uid},
+                    {customer_uid: customer.id}
                 ]
             });
-
-            return invoices;
         }
     })
 }
 
 export function myInvoiceResolver(
     object: ObjectTypeComposer
-): Resolver<any, any, any, any>
+): Resolver
 {
     return schemaComposer.createResolver({
         name: "myInvoice",
@@ -114,7 +110,7 @@ export function myInvoiceResolver(
             if(!customer)
                 throw new Error(`Customer not found`);
 
-            const invoice = await InvoiceModel.findOne({
+            return InvoiceModel.findOne({
                 $or: [
                     {
                         customer_uid: customer.uid,
@@ -146,15 +142,13 @@ export function myInvoiceResolver(
                     },
                 ],
             });
-
-            return invoice;
         }
     })
 }
 
 export function myOrdersResolver(
     object: ObjectTypeComposer
-): Resolver<any, any, any, any>
+): Resolver
 {
     return schemaComposer.createResolver({
         name: "myOrders",
@@ -181,21 +175,19 @@ export function myOrdersResolver(
             if(!customer)
                 throw new Error(`Customer not found`);
 
-            const orders = await OrderModel.find({
+            return OrderModel.find({
                 $or: [
-                    { customer_uid: customer.uid},
-                    { customer_uid: customer.id}
+                    {customer_uid: customer.uid},
+                    {customer_uid: customer.id}
                 ]
             });
-
-            return orders;
         }
     })
 }
 
 export function myOrderResolver(
     object: ObjectTypeComposer
-): Resolver<any, any, any, any>
+): Resolver
 {
     return schemaComposer.createResolver({
         name: "myInvoice",
@@ -230,7 +222,7 @@ export function myOrderResolver(
             if(!customer)
                 throw new Error(`Customer not found`);
 
-            const order = await OrderModel.findOne({
+            return OrderModel.findOne({
                 $or: [
                     {
                         customer_uid: customer.uid,
@@ -262,15 +254,13 @@ export function myOrderResolver(
                     },
                 ],
             });
-
-            return order;
         }
     })
 }
 
 export function myTransactionsResolver(
     object: ObjectTypeComposer
-): Resolver<any, any, any, any>
+): Resolver
 {
     return schemaComposer.createResolver({
         name: "myOrders",
@@ -297,21 +287,19 @@ export function myTransactionsResolver(
             if(!customer)
                 throw new Error(`Customer not found`);
 
-            const transactions = await TransactionsModel.find({
+            return TransactionsModel.find({
                 $or: [
-                    { customer_uid: customer.uid},
-                    { customer_uid: customer.id}
+                    {customer_uid: customer.uid},
+                    {customer_uid: customer.id}
                 ]
             });
-
-            return transactions;
         }
     })
 }
 
 export function myTransactionResolver(
     object: ObjectTypeComposer
-): Resolver<any, any, any, any>
+): Resolver
 {
     return schemaComposer.createResolver({
         name: "myInvoice",
@@ -346,7 +334,7 @@ export function myTransactionResolver(
             if(!customer)
                 throw new Error(`Customer not found`);
 
-            const transaction = await TransactionsModel.findOne({
+            return TransactionsModel.findOne({
                 $or: [
                     {
                         customer_uid: customer.uid,
@@ -378,8 +366,6 @@ export function myTransactionResolver(
                     },
                 ],
             });
-
-            return transaction;
         }
     })
 }

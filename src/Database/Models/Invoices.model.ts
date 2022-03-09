@@ -1,10 +1,21 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { A_InvoiceStatus, IInvoice, IInvoiceMethods } from "../../Interfaces/Invoice.interface";
+import { extendedOrderStatus, IInvoice, IInvoiceMethods } from "@interface/Invoice.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { currencyCodes, GetCurrencySymbol } from "../../Types/PaymentTypes";
+
+export const A_InvoiceStatus: extendedOrderStatus[] = [
+    "active",
+    "pending",
+    "draft",
+    "fraud",
+    "cancelled",
+    "refunded",
+    "collections",
+    "payment_pending",
+];
 
 const InvoiceSchema = new Schema
 (
