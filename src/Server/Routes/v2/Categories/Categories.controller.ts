@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import CategoryModel from "../../../../Database/Models/Category.model";
 import ProductModel from "../../../../Database/Models/Products.model";
 import mainEvent from "../../../../Events/Main.event";
-import { ICategory } from "../../../../Interfaces/Categories.interface";
+import { ICategory } from "@interface/Categories.interface";
 import { idCategory } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";

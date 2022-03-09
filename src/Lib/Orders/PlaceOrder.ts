@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { Full_Domain, Paypal_Client_Id, Paypal_Client_Secret, Swish_Payee_Number } from "../../Config";
-import { IInvoice } from "../../Interfaces/Invoice.interface";
-import { IOrder } from "../../Interfaces/Orders.interface";
-import { IPayments } from "../../Interfaces/Payments.interface";
+import { IInvoice } from "@interface/Invoice.interface";
+import { IOrder } from "@interface/Orders.interface";
+import { IPayments } from "@interface/Payments.interface";
 import { createSwishQRCode } from "../../Payments/Swish";
 import { APISuccess } from "../Response";
 

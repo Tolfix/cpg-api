@@ -1,7 +1,7 @@
 import { stripIndents } from "common-tags";
 import { Company_Email, CPG_Customer_Panel_Domain } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer.interface";
-import { IOrder } from "../../../Interfaces/Orders.interface";
+import { ICustomer } from "@interface/Customer.interface";
+import { IOrder } from "@interface/Orders.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
 import UseStyles from "../General/UseStyles";
 

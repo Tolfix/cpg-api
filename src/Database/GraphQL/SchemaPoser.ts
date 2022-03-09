@@ -21,7 +21,7 @@ for(const f of files)
     if(!name)
         continue;
 
-    // Now get schame[`${name}Query`] and schema[`${name}Mutation`]
+    // Now get scheme[`${name}Query`] and schema[`${name}Mutation`]
     const query = schema[`${name}Query`];
     const mutation = schema[`${name}Mutation`];
 
@@ -34,8 +34,8 @@ for(const f of files)
     if(mutation)
         schemaComposer.Mutation.addFields(mutation);
 
-    continue;
+
 }
 
-// Lets create the schema
+// Let's create the schema
 export default schemaComposer.buildSchema();

@@ -37,7 +37,7 @@ import { ITransactions } from "./Transactions.interface";
  * @property {string} active
  * @property {string} pending
  * @property {string} draft
- * @property {string} fruad
+ * @property {string} fraud
  * @property {string} cancelled
  * @property {string} refunded
  * @property {string} collections

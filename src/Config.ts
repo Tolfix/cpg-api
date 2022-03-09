@@ -1,12 +1,12 @@
 import ConfigModel from "./Database/Models/Configs.model";
-import { IConfigs } from "./Interfaces/Admin/Configs.interface";
-import { IAllLanguages } from "./Interfaces/Lang/AllLang.interface";
+import { IConfigs } from "@interface/Admin/Configs.interface";
+import { IAllLanguages } from "@interface/Lang/AllLang.interface";
 
 /**
  * @description
  * Used if this service is running in debug mode.
  */
-export const DebugMode = process.env.DEBUG === "true" ? true : false;
+export const DebugMode = process.env.DEBUG === "true";
 export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
 export const JWT_Access_Token = process.env.JWT_ACCESS_TOKEN ?? "";
 export const d_Days = parseInt(process.env.D_DAYS ?? "30");
@@ -110,7 +110,7 @@ export const Company_Tax_Registered = async (): Promise<IConfigs["company"]["tax
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.tax_registered ?? (process.env.COMPANY_TAX_REGISTERED === "true" ? true : false);
+    return configs.company?.tax_registered ?? (process.env.COMPANY_TAX_REGISTERED === "true");
 }
 export const Company_Logo_Url = async (): Promise<IConfigs["company"]["logo_url"]> =>
 {

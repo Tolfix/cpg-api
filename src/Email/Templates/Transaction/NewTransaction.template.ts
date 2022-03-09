@@ -1,7 +1,7 @@
 import { stripIndents } from "common-tags";
 import { Company_Email, CPG_Customer_Panel_Domain } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer.interface";
-import { ITransactions } from "../../../Interfaces/Transactions.interface";
+import { ICustomer } from "@interface/Customer.interface";
+import { ITransactions } from "@interface/Transactions.interface";
 import PrintCompanyInformation from "../../../Lib/Company/PrintCompanyInformation";
 import getFullName from "../../../Lib/Customers/getFullName";
 import { GetCurrencySymbol } from "../../../Types/PaymentTypes";

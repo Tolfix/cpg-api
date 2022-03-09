@@ -7,6 +7,6 @@ Authorization: Basic 123:123
     "discount": 100,
     "valid_to": "2021-12-13",
     "uses": 100,
-    "procentage": false,
+    "percentage": false,
     "products_ids": [3, 4]
 }

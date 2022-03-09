@@ -14,7 +14,7 @@ import { SendEmail } from "../../../../Email/Send";
 import Footer from "../../../../Email/Templates/General/Footer";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import OrderModel from "../../../../Database/Models/Orders.model";
-import { ICustomer } from "../../../../Interfaces/Customer.interface";
+import { ICustomer } from "@interface/Customer.interface";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import LoginAttemptTemplate from "../../../../Email/Templates/Customer/LoginAttempt.template";
@@ -75,7 +75,7 @@ export = class CustomerRouter
                 // Which can look like this: personal.first_name
                 // But it could be: personal: { first_name: "John" }
                 // So we need to check if the key is a string
-                if(typeof key === "string" && key.includes("."))
+                if(key.includes("."))
                 {
                     // If the key is a string, we need to split it
                     // And check if the first part is in the customer object
@@ -297,7 +297,7 @@ export = class CustomerRouter
             order.order_status = "cancelled";
             await order.save();
 
-            SendEmail(customer.personal.email, "Order Cancelled Confirmation", {
+            await SendEmail(customer.personal.email, "Order Cancelled Confirmation", {
                 isHTML: true,
                 body: await OrderCancelTemplate(customer, order),
             });
@@ -394,12 +394,12 @@ export = class CustomerRouter
             const randomToken = crypto.randomBytes(20).toString("hex");
             const token = crypto.createHash("sha256").update(randomToken).digest("hex");
 
-            new PasswordResetModel({
+            await new PasswordResetModel({
                 email: customer.personal.email,
                 token: token
             }).save();
 
-            SendEmail(customer.personal.email, "Reset Password", {
+            await SendEmail(customer.personal.email, "Reset Password", {
                 isHTML: true,
                 body: await ResetPasswordTemplate(customer, version, token)
             });
@@ -581,7 +581,7 @@ export = class CustomerRouter
                     {
                         if(attempts >= 3)
                         {
-                            SendEmail(customer.personal.email, "Account login attempts", {
+                            await SendEmail(customer.personal.email, "Account login attempts", {
                                 isHTML: true,
                                 body: await LoginAttemptTemplate(customer),
                             });

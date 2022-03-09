@@ -12,7 +12,7 @@ export interface IQuotes
     due_date: string;
     memo: string;
     payment_method: keyof IPayments;
-    notifed: boolean;
+    notified: boolean;
     created_invoice: boolean;
     invoice_uid?: IInvoice["uid"] | IInvoice["id"];
 }

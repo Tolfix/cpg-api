@@ -1,7 +1,7 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { A_OrderStatus, IOrder } from "../../Interfaces/Orders.interface";
+import { A_OrderStatus, IOrder } from "@interface/Orders.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments, A_RecurringMethod } from "../../Types/PaymentMethod";
@@ -67,7 +67,7 @@ const OrderSchema = new Schema
         
         price_override: {
             type: Number,
-            defualt: 0,
+            default: 0,
         },
 
         dates: {

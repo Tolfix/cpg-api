@@ -1,11 +1,13 @@
+// noinspection UnreachableCodeJS
+
 import { Application, Router } from "express";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import ProductModel from "../../../../Database/Models/Products.model";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
 import SubscriptionModel from "../../../../Database/Models/Subscriptions.model";
-import { IConfigurableOptions } from "../../../../Interfaces/ConfigurableOptions.interface";
-import { IPayments } from "../../../../Interfaces/Payments.interface";
-import { IProduct } from "../../../../Interfaces/Products.interface";
+import { IConfigurableOptions } from "@interface/ConfigurableOptions.interface";
+import { IPayments } from "@interface/Payments.interface";
+import { IProduct } from "@interface/Products.interface";
 import { idSubscription } from "../../../../Lib/Generator";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";

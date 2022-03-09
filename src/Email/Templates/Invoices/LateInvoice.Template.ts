@@ -1,7 +1,7 @@
 import { stripIndents } from "common-tags";
 import { CPG_Customer_Panel_Domain, Full_Domain } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer.interface";
-import { IInvoice } from "../../../Interfaces/Invoice.interface";
+import { ICustomer } from "@interface/Customer.interface";
+import { IInvoice } from "@interface/Invoice.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
 import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
 import GetTableStyle from "../CSS/GetTableStyle";

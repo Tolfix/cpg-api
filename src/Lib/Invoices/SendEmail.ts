@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 import { Company_Name } from "../../Config";
-import { ICustomer } from "../../Interfaces/Customer.interface";
-import { IInvoice } from "../../Interfaces/Invoice.interface";
+import { ICustomer } from "@interface/Customer.interface";
+import { IInvoice } from "@interface/Invoice.interface";
 import createPDFInvoice from "./CreatePDFInvoice";
 import {SendEmail} from "../../Email/Send"
 import mainEvent from "../../Events/Main.event";
@@ -17,7 +17,7 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document, Customer: I
             return;
         
         //@ts-ignore
-        SendEmail(Customer.personal.email, `Invoice from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${invoice.id}`, {
+        await SendEmail(Customer.personal.email, `Invoice from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${invoice.id}`, {
             isHTML: true,
             attachments: [
                 {
@@ -52,7 +52,7 @@ export async function sendLateInvoiceEmail(invoice: IInvoice & Document, Custome
             return;
         
         //@ts-ignore
-        SendEmail(Customer.personal.email, `Invoice reminder | ${await Company_Name() ?? "CPG"} #${invoice.id}`, {
+        await SendEmail(Customer.personal.email, `Invoice reminder | ${await Company_Name() ?? "CPG"} #${invoice.id}`, {
             isHTML: true,
             attachments: [
                 {
@@ -64,7 +64,7 @@ export async function sendLateInvoiceEmail(invoice: IInvoice & Document, Custome
             body: await LateinvoiceTemplate(invoice, Customer)
         }, (err: any, sent: any) =>
         {
-            if(!err && sent)
+            if (!err && sent)
             {
                 invoice.notified = true;
                 invoice.status = "payment_pending";

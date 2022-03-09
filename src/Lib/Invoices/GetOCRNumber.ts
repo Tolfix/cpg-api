@@ -1,4 +1,4 @@
-import { IInvoice } from "../../Interfaces/Invoice.interface";
+import { IInvoice } from "@interface/Invoice.interface";
 
 /**
  * @description

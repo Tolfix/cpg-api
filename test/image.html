@@ -11,10 +11,10 @@
     <button id="submit">Send</button>
 
     <script>
-        var form = document.getElementById('submit');
+        const form = document.getElementById('submit');
         form.addEventListener('click', function(e) {
             e.preventDefault();
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('image', document.getElementById('image').files[0]);
             fetch('http://localhost:8080/v2/images',
             {

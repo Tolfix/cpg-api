@@ -2,8 +2,8 @@ import { Application, Router } from "express";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import OrderModel from "../../../../Database/Models/Orders.model";
 import ProductModel from "../../../../Database/Models/Products.model";
-import { IPayments } from "../../../../Interfaces/Payments.interface";
-import { IProduct } from "../../../../Interfaces/Products.interface";
+import { IPayments } from "@interface/Payments.interface";
+import { IProduct } from "@interface/Products.interface";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import OrderController from "./Orders.controller";
@@ -14,11 +14,11 @@ import { idOrder } from "../../../../Lib/Generator";
 import { Company_Currency, Company_Name } from "../../../../Config";
 import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
 import EnsureAuth from "../../../../Middlewares/EnsureAuth";
-import { IOrder } from "../../../../Interfaces/Orders.interface";
-import { ICustomer } from "../../../../Interfaces/Customer.interface";
+import { IOrder } from "@interface/Orders.interface";
+import { ICustomer } from "@interface/Customer.interface";
 import { SendEmail } from "../../../../Email/Send";
 import NewOrderCreated from "../../../../Email/Templates/Orders/NewOrderCreated";
-import { IConfigurableOptions } from "../../../../Interfaces/ConfigurableOptions.interface";
+import { IConfigurableOptions } from "@interface/ConfigurableOptions.interface";
 import mainEvent from "../../../../Events/Main.event";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
 import Logger from "../../../../Lib/Logger";
@@ -64,9 +64,9 @@ async function createOrder(customer: ICustomer, products: Array<{
 
     mainEvent.emit("order_created", order);
 
-    SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${order.id}`, {
+    await SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${order.id}`, {
         isHTML: true,
-        body: await NewOrderCreated(order, customer), 
+        body: await NewOrderCreated(order, customer),
     });
 }
 
@@ -206,7 +206,7 @@ export = class OrderRoute
 
             // Create new orders
             if(recurring_monthly.length > 0)
-                createOrder(customer, recurring_monthly.map(p =>
+                await createOrder(customer, recurring_monthly.map(p =>
                 {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
@@ -215,7 +215,7 @@ export = class OrderRoute
                 }), recurring_monthly, payment_method, "recurring", _order_.currency, "monthly");
 
             if(recurring_quarterly.length > 0)
-                createOrder(customer, recurring_quarterly.map(p =>
+                await createOrder(customer, recurring_quarterly.map(p =>
                 {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
@@ -224,7 +224,7 @@ export = class OrderRoute
                 }), recurring_quarterly, payment_method, "recurring", _order_.currency, "quarterly");
 
             if(recurring_semi_annually.length > 0)
-                createOrder(customer, recurring_semi_annually.map(p =>
+                await createOrder(customer, recurring_semi_annually.map(p =>
                 {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
@@ -233,7 +233,7 @@ export = class OrderRoute
                 }), recurring_semi_annually, payment_method, "recurring", _order_.currency, "semi_annually");
 
             if(recurring_biennially.length > 0)
-                createOrder(customer, recurring_biennially.map(p =>
+                await createOrder(customer, recurring_biennially.map(p =>
                 {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
@@ -242,7 +242,7 @@ export = class OrderRoute
                 }), recurring_biennially, payment_method, "recurring", _order_.currency, "biennially");
 
             if(recurring_triennially.length > 0)
-                createOrder(customer, recurring_triennially.map(p =>
+                await createOrder(customer, recurring_triennially.map(p =>
                 {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
@@ -251,7 +251,7 @@ export = class OrderRoute
                 }), recurring_triennially, payment_method, "recurring", _order_.currency, "triennially");
 
             if(one_timers.length > 0)
-                createOrder(customer, one_timers.map(p =>
+                await createOrder(customer, one_timers.map(p =>
                 {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,
@@ -260,7 +260,7 @@ export = class OrderRoute
                 }), one_timers, payment_method, "one_time", _order_.currency);
 
             if(recurring_yearly.length > 0)
-                createOrder(customer, recurring_yearly.map(p =>
+                await createOrder(customer, recurring_yearly.map(p =>
                 {
                     return products.find(p2 => p2.product_id == p.id) ?? {
                         product_id: p.id,

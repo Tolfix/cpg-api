@@ -12,7 +12,7 @@ import { IPromotionsCodes } from "./PromotionsCodes.interface";
  * @property {string} uid
  * @property {string} customer_uid
  * @property {string} payment_method
- * @property {string} order_status "active" | "pending" | "fruad" | "cancelled"
+ * @property {string} order_status "active" | "pending" | "fraud" | "cancelled"
  * @property {string} product_uid
  * @property {string} billing_type "free" | "one_time" | "recurring"
  * @property {string} billing_cycle "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"

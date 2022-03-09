@@ -5,10 +5,10 @@ import InvoiceModel from "../Database/Models/Invoices.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
 import { sendEmail } from "../Email/Send";
 import NewTransactionTemplate from "../Email/Templates/Transaction/NewTransaction.template";
-import { ICustomer } from "../Interfaces/Customer.interface";
-import { IInvoice } from "../Interfaces/Invoice.interface";
+import { ICustomer } from "@interface/Customer.interface";
+import { IInvoice } from "@interface/Invoice.interface";
 import getFullName from "../Lib/Customers/getFullName";
-import { idTransicitons } from "../Lib/Generator";
+import { idTransactions } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import Logger from "../Lib/Logger";
 import { getDate } from "../Lib/Time";
@@ -74,7 +74,7 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
     return intent;
 };
 
-export const RetrivePaymentIntent = async (payment_intent: string) => (await Stripe.paymentIntents.retrieve(payment_intent));
+export const RetrievePaymentIntent = async (payment_intent: string) => (await Stripe.paymentIntents.retrieve(payment_intent));
 
 export const createSetupIntent = async (id: ICustomer["id"]) =>
 {
@@ -128,7 +128,7 @@ export const createSetupIntent = async (id: ICustomer["id"]) =>
     return setupIntent;
 };
 
-export const RetriveSetupIntent = async (setup_intent: string) => (await Stripe.setupIntents.retrieve(setup_intent));
+export const RetrieveSetupIntent = async (setup_intent: string) => (await Stripe.setupIntents.retrieve(setup_intent));
 
 export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
 {
@@ -179,7 +179,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
             customer_uid: invoice.customer_uid,
             currency: invoice.currency ?? await Company_Currency(),
             date: getDate(),
-            uid: idTransicitons(),
+            uid: idTransactions(),
         }).save());
 
         // await sendEmail(customer.personal.email, "Transaction Statement", {
@@ -188,7 +188,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
         // });
 
         await sendEmail({
-            reciever: customer.personal.email,
+            receiver: customer.personal.email,
             subject: "Transaction Statement",
             body: {
                 body: await NewTransactionTemplate(newTrans, customer, true)
@@ -206,7 +206,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
     }
     catch(e)
     {
-        Promise.reject(e);
+        await Promise.reject(e);
     }
 }
 
@@ -222,7 +222,7 @@ export const markInvoicePaid = async (intent: stripe.Response<stripe.PaymentInte
         customer_uid: invoice.customer_uid,
         currency: invoice.currency ?? await Company_Currency(),
         date: getDate(),
-        uid: idTransicitons(),
+        uid: idTransactions(),
     }).save());
 
     await sendEmailOnTransactionCreation(newTrans);

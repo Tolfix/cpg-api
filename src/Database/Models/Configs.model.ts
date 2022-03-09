@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose"
-import { IDConfigs } from "../../Interfaces/Admin/Configs.interface";
+import { IDConfigs } from "@interface/Admin/Configs.interface";
 
 const ConfigsSchema = new Schema
 (

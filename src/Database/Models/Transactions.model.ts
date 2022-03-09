@@ -1,7 +1,7 @@
 import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { IDTransactions } from "../../Interfaces/Transactions.interface";
+import { IDTransactions } from "@interface/Transactions.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "../../Types/PaymentMethod";

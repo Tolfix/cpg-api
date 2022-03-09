@@ -105,16 +105,16 @@ const Logger = {
         console.log(time + " | " + colors.rainbow(`rainbow: `), ...body)
     },
 
-    verbos: <T extends any[]> (...body: T) =>
+    verbose: <T extends any[]> (...body: T) =>
     {
         const time = getTime();
         SaveLog(time, ...body);
         mainEvent.emit("logging", {
             message: body.join(" "),
-            type: "verbos",
+            type: "verbose",
             time: time,
         });
-        console.log(time + " | " + colors.magenta(`verbos: `), ...body)
+        console.log(time + " | " + colors.magenta(`verbose: `), ...body)
     },
 
     error: <T extends any[]> (...body: T) =>
