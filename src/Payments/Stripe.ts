@@ -1,5 +1,5 @@
 import stripe from "stripe";
-import { Company_Currency, DebugMode, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
+import { Company_Currency, DebugMode, Full_Domain, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import InvoiceModel from "../Database/Models/Invoices.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
@@ -16,6 +16,26 @@ import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreati
 const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
+
+// Check if stripe webhook is configured
+(async () => 
+{
+    if(!((await Stripe.webhookEndpoints.list()).data.length))
+        Stripe.webhookEndpoints.create({
+            url: `${Full_Domain}/v2/payments/stripe/webhook`,
+            enabled_events: [
+                "payment_intent.succeeded",
+                "payment_intent.payment_failed",
+                // "payment_method.attached",
+                "payment_method.updated",
+                "payment_method.detached",
+                "setup_intent.succeeded",
+                "setup_intent.canceled",
+            ],
+        });
+})();
+
+
 
 const cacheIntents = new Map<string, stripe.Response<stripe.PaymentIntent>>();
 const cacheSetupIntents = new Map<string, stripe.Response<stripe.SetupIntent>>();
