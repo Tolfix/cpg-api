@@ -86,7 +86,7 @@ export = class PromotionCodeRoute
                 {
                     Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
                     const o_price = product.price;
-                    if(code)
+                    if(code.discount > 0)
                         product.price = product.price+(product.price*code.discount);
                     else
                         product.price = product.price - code.discount;

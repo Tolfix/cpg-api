@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 import { Company_Name } from "../../Config";
 import { ICustomer } from "@interface/Customer.interface";
-import { IInvoice } from "@interface/Invoice.interface";
+import { IInvoice, IInvoiceMethods } from "@interface/Invoice.interface";
 import createPDFInvoice from "./CreatePDFInvoice";
 import {SendEmail} from "../../Email/Send"
 import mainEvent from "../../Events/Main.event";

@@ -8,10 +8,10 @@ import {
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import { APIError } from "../../../../Lib/Response";
 import Stripe from "stripe";
-import { CreatePaymentIntent, createSetupIntent, markInvoicePaid, RetrievePaymentIntent, RetrieveSetupIntent } from "../../../../Payments/Stripe";
+import { CreatePaymentIntent, createSetupIntent, RetrievePaymentIntent, RetrieveSetupIntent } from "../../../../Payments/Stripe";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import stripeWebhookEvent from "../../../../Events/Stripe.event";
-const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
+const stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
 
