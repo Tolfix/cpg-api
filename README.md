@@ -1,8 +1,8 @@
-<p>
+<div class="margin: 0 auto;">
   <a href="https://tolfix.com/" target="_blank"><img width="260" src="https://cdn.tolfix.com/images/TX-Small.png" alt="Tolfix"></a>
   <br/>
   <strong>C</strong>entral <strong>P</strong>ayment <strong>G</strong>ateway - API
-</p>
+</div>
 
 #
 [![Typescript Typings](https://github.com/Tolfix/cpg-api/actions/workflows/type-testing.yml/badge.svg?branch=master&event=push)](https://github.com/Tolfix/cpg-api/actions/workflows/type-testing.yml)
