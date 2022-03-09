@@ -87,10 +87,10 @@ export = class PaypalRouter
                 <body>
                     <div class="card">
                     <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
-                    <i class="checkmark">✓</i>
+                        <i class="checkmark">✓</i>
                     </div>
-                    <h1>Success</h1> 
-                    <p>Thanks for the payment!</p>
+                        <h1>Success</h1> 
+                        <p>Thanks for the payment!</p>
                     </div>
                 </body>
           </html>

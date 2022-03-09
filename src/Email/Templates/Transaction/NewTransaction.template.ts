@@ -1,9 +1,10 @@
 import { stripIndents } from "common-tags";
-import { Company_Currency, Company_Email } from "../../../Config";
+import { Company_Email, CPG_Customer_Panel_Domain } from "../../../Config";
 import { ICustomer } from "../../../Interfaces/Customer.interface";
 import { ITransactions } from "../../../Interfaces/Transactions.interface";
 import PrintCompanyInformation from "../../../Lib/Company/PrintCompanyInformation";
 import getFullName from "../../../Lib/Customers/getFullName";
+import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
 import UseStyles from "../General/UseStyles";
 
 export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(stripIndents`
@@ -21,11 +22,17 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
         Customer: ${getFullName(c)}
     </p>
     <p>
-        Company:
         ${await PrintCompanyInformation()}
     </p>
     <p>
-        Amount: ${t.amount} ${!c.currency ? await Company_Currency() : c.currency}
+        Amount: ${t.amount} ${GetCurrencySymbol(t.currency)}
     </p>
+    ${CPG_Customer_Panel_Domain ? `
+    
+    <p>
+        <a href="${CPG_Customer_Panel_Domain}/transactions/${t.uid}">View Transaction</a>
+    </p>
+
+    ` : ''}
 </div>
 `);

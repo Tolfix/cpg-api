@@ -11,6 +11,7 @@ import { Company_Currency, Company_Name } from "../../../../Config";
 import mainEvent from "../../../../Events/Main.event";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import WelcomeTemplate from "../../../../Email/Templates/Customer/Welcome.template";
+import { currencyCodes, TPaymentCurrency } from "../../../../Types/PaymentTypes";
 
 const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
@@ -38,6 +39,20 @@ function insert(req: Request, res: Response)
                 const currency = await Company_Currency();
                 req.body.currency = currency;
             }
+
+            // Check if our currency is valid
+            // req.body.currency = igh7183
+            const validCurrency = (currency: string) =>
+            {
+                currency = currency.toUpperCase();
+                if(currencyCodes.includes(currency as TPaymentCurrency))
+                    return true;
+
+                return false;
+            }
+
+            if(!validCurrency(req.body.currency))
+                req.body.currency = await Company_Currency();        
 
             API.create(req.body)
                 .then(async (result) =>

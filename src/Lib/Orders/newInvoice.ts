@@ -15,7 +15,6 @@ import Logger from "../Logger";
 import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
 import { sanitizeMongoose } from "../Sanitize";
 
-
 // Create a method that checks if the order next recycle is within 14 days
 export function isWithinNext14Days(date: Date | string): boolean
 {
@@ -103,6 +102,7 @@ export async function createInvoiceFromOrder(order: IOrder)
         tax_rate: Products?.reduce((acc, cur) => cur.tax_rate, 0),
         notes: "",
         paid: false,
+        currency: order.currency,
         notified: false,
     })).save();
 

@@ -1,3 +1,4 @@
+import { TPaymentCurrency } from "../Types/PaymentTypes";
 import { IConfigurableOptions } from "./ConfigurableOptions.interface";
 import { ICustomer } from "./Customer.interface";
 import { TOrderStatus } from "./Orders.interface";
@@ -56,6 +57,7 @@ export interface IInvoice
     tax_rate: number;
     notes: string;
     paid: boolean;
+    currency: TPaymentCurrency;
     notified: boolean;
 }
 

@@ -177,6 +177,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
             fees: 0,
             invoice_uid: invoice.id,
             customer_uid: invoice.customer_uid,
+            currency: invoice.currency ?? await Company_Currency(),
             date: getDate(),
             uid: idTransicitons(),
         }).save());
@@ -219,6 +220,7 @@ export const markInvoicePaid = async (intent: stripe.Response<stripe.PaymentInte
         fees: 0,
         invoice_uid: invoice.id,
         customer_uid: invoice.customer_uid,
+        currency: invoice.currency ?? await Company_Currency(),
         date: getDate(),
         uid: idTransicitons(),
     }).save());

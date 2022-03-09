@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { TPaymentCurrency } from "../Types/PaymentTypes";
 import { ICustomer } from "./Customer.interface";
 import { IInvoice } from "./Invoice.interface";
 
@@ -18,6 +19,7 @@ export interface ITransactions
     date: Date | string;
     payment_method: IInvoice["payment_method"];
     amount: IInvoice["amount"];
+    currency: TPaymentCurrency;
     fees: number;
 }
 

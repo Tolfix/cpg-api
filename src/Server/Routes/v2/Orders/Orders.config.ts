@@ -11,7 +11,7 @@ import dateFormat from "date-and-time";
 import nextRecycleDate from "../../../../Lib/Dates/DateCycle";
 import { createInvoiceFromOrder } from "../../../../Lib/Orders/newInvoice";
 import { idOrder } from "../../../../Lib/Generator";
-import { Company_Name } from "../../../../Config";
+import { Company_Currency, Company_Name } from "../../../../Config";
 import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
 import EnsureAuth from "../../../../Middlewares/EnsureAuth";
 import { IOrder } from "../../../../Interfaces/Orders.interface";
@@ -24,7 +24,7 @@ import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model
 import Logger from "../../../../Lib/Logger";
 import { ce_orders } from "../../../../Lib/Orders/PlaceOrder";
 import { TRecurringMethod } from "../../../../Types/PaymentMethod";
-import { TPaymentTypes } from "../../../../Types/PaymentTypes";
+import { TPaymentCurrency, TPaymentTypes } from "../../../../Types/PaymentTypes";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 
 async function createOrder(customer: ICustomer, products: Array<{
@@ -34,7 +34,7 @@ async function createOrder(customer: ICustomer, products: Array<{
         id: IConfigurableOptions["id"],
         option_index?: number,
     }>;
-}>, _products: IProduct[], payment_method: string, billing_type: string, billing_cycle?: TRecurringMethod)
+}>, _products: IProduct[], payment_method: string, billing_type: string, currency: TPaymentCurrency, billing_cycle?: TRecurringMethod)
 {
     const order = await (new OrderModel({
         customer_uid: customer.id,
@@ -58,6 +58,7 @@ async function createOrder(customer: ICustomer, products: Array<{
             , "YYYY-MM-DD"),
             last_recycle: dateFormat.format(new Date(), "YYYY-MM-DD")
         },
+        currency: currency,
         uid: idOrder(),
     }).save());
 
@@ -154,6 +155,7 @@ export = class OrderRoute
                 uid: idOrder(),
                 // @ts-ignore
                 invoices: [],
+                currency: !customer.currency ? await Company_Currency() : customer.currency,
                 promotion_code: promotion_code?.id,
             }
 
@@ -210,7 +212,7 @@ export = class OrderRoute
                         product_id: p.id,
                         quantity: 1
                     }
-                }), recurring_monthly, payment_method, "recurring", "monthly");
+                }), recurring_monthly, payment_method, "recurring", _order_.currency, "monthly");
 
             if(recurring_quarterly.length > 0)
                 createOrder(customer, recurring_quarterly.map(p =>
@@ -219,7 +221,7 @@ export = class OrderRoute
                         product_id: p.id,
                         quantity: 1
                     }
-                }), recurring_quarterly, payment_method, "recurring", "quarterly");
+                }), recurring_quarterly, payment_method, "recurring", _order_.currency, "quarterly");
 
             if(recurring_semi_annually.length > 0)
                 createOrder(customer, recurring_semi_annually.map(p =>
@@ -228,7 +230,7 @@ export = class OrderRoute
                         product_id: p.id,
                         quantity: 1
                     }
-                }), recurring_semi_annually, payment_method, "recurring", "semi_annually");
+                }), recurring_semi_annually, payment_method, "recurring", _order_.currency, "semi_annually");
 
             if(recurring_biennially.length > 0)
                 createOrder(customer, recurring_biennially.map(p =>
@@ -237,7 +239,7 @@ export = class OrderRoute
                         product_id: p.id,
                         quantity: 1
                     }
-                }), recurring_biennially, payment_method, "recurring", "biennially");
+                }), recurring_biennially, payment_method, "recurring", _order_.currency, "biennially");
 
             if(recurring_triennially.length > 0)
                 createOrder(customer, recurring_triennially.map(p =>
@@ -246,7 +248,7 @@ export = class OrderRoute
                         product_id: p.id,
                         quantity: 1
                     }
-                }), recurring_triennially, payment_method, "recurring", "triennially");
+                }), recurring_triennially, payment_method, "recurring", _order_.currency, "triennially");
 
             if(one_timers.length > 0)
                 createOrder(customer, one_timers.map(p =>
@@ -255,7 +257,7 @@ export = class OrderRoute
                         product_id: p.id,
                         quantity: 1
                     }
-                }), one_timers, payment_method, "one_time");
+                }), one_timers, payment_method, "one_time", _order_.currency);
 
             if(recurring_yearly.length > 0)
                 createOrder(customer, recurring_yearly.map(p =>
@@ -264,7 +266,7 @@ export = class OrderRoute
                         product_id: p.id,
                         quantity: 1
                     }
-                }), recurring_yearly, payment_method, "recurring", "yearly");
+                }), recurring_yearly, payment_method, "recurring", _order_.currency, "yearly");
 
             const invoice = await createInvoiceFromOrder(_order_);
 

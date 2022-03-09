@@ -4,6 +4,7 @@ import { Default_Language, MongoDB_URI } from "../../Config";
 import { A_InvoiceStatus, IInvoice } from "../../Interfaces/Invoice.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
+import { currencyCodes } from "../../Types/PaymentTypes";
 
 const InvoiceSchema = new Schema
 (
@@ -90,6 +91,12 @@ const InvoiceSchema = new Schema
         notified: {
             type: Boolean,
             default: false,
+        },
+
+        currency: {
+            type: String,
+            enum: currencyCodes,
+            default: 'USD',
         },
 
     }

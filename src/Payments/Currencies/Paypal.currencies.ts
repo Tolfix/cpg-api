@@ -33,7 +33,7 @@ const data = {
 
 export const PaypalCurrencies = data.currencies;
 
-export function validCurrencyPaypal(currency: typeof data["currencies"])
+export function validCurrencyPaypal(currency: typeof PaypalCurrencies)
 {
     // @ts-ignore
     return data.currencies.includes(currency);

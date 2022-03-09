@@ -1,5 +1,5 @@
 import { TRecurringMethod } from "../Types/PaymentMethod";
-import { TPaymentTypes } from "../Types/PaymentTypes";
+import { TPaymentCurrency, TPaymentTypes } from "../Types/PaymentTypes";
 import { IConfigurableOptions } from "./ConfigurableOptions.interface";
 import { ICustomer } from "./Customer.interface";
 import { IInvoice } from "./Invoice.interface";
@@ -45,6 +45,7 @@ export interface IOrder
     price_override?: number;
     dates: IOrderDates<IOrder["billing_type"]>;
     invoices: Array<IInvoice["uid"]>;
+    currency: TPaymentCurrency;
     promotion_code?: IPromotionsCodes["id"];
 }
 
