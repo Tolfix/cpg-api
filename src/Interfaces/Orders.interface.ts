@@ -51,12 +51,6 @@ export interface IOrder
 
 
 export type TOrderStatus = "active" | "pending" | "fraud" | "cancelled";
-export const A_OrderStatus = [
-    "active",
-    "pending",
-    "fraud",
-    "cancelled"
-]
 
 export interface IOrderDates<isRecurring extends string>
 {

@@ -77,16 +77,6 @@ export interface IInvoiceMethods
 }
 
 export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
-export const A_InvoiceStatus: extendedOrderStatus[] = [
-    "active",
-    "pending",
-    "draft",
-    "fraud",
-    "cancelled",
-    "refunded",
-    "collections",
-    "payment_pending",
-];
 
 
 export interface IInvoice_Dates
