@@ -53,7 +53,7 @@ mainEvent.on("invoice_notified", async (invoice) =>
 {
     // Send email to our admins from config
     const emails = await GetSMTPEmails();
-    for (const email of emails)
+    for await (const email of emails)
     {
 
         await SendEmail(email, "Invoice notified", {

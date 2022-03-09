@@ -31,7 +31,7 @@ const PromotionCodeSchema = new Schema
             default: "unlimited"
         },
 
-        Percentage: {
+        percentage: {
             type: Boolean,
             default: false
         },
