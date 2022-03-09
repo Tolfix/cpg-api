@@ -1,10 +1,10 @@
 import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { A_InvoiceStatus, IInvoice } from "../../Interfaces/Invoice.interface";
+import { A_InvoiceStatus, IInvoice, IInvoiceMethods } from "../../Interfaces/Invoice.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
-import { currencyCodes } from "../../Types/PaymentTypes";
+import { currencyCodes, GetCurrencySymbol } from "../../Types/PaymentTypes";
 
 const InvoiceSchema = new Schema
 (
@@ -102,6 +102,25 @@ const InvoiceSchema = new Schema
     }
 );
 
+// Add method to invoice
+InvoiceSchema.methods.getTotalAmount = function({
+    tax = false,
+    currency = false,
+    symbol = false
+}:
+{
+    tax: boolean;
+    currency: boolean;
+    symbol: boolean;
+})
+{
+    const _ = this as unknown as IInvoice;
+    const total = _.items.reduce((total, item) => total + item.amount, 0);
+    if(currency)
+        return `${tax ? total + total * _.tax_rate/100 : total} ${symbol ? GetCurrencySymbol(_.currency) : _.currency}`;
+    return tax ? total + total * _.tax_rate/100 : total;
+}
+
 // Log when creation
 InvoiceSchema.post('save', function(doc: IInvoice & Document)
 {
@@ -119,6 +138,6 @@ InvoiceSchema.plugin(increment.plugin, {
     incrementBy: 1
 });
 
-const InvoiceModel = model<IInvoice & Document>("invoices", InvoiceSchema);
+const InvoiceModel = model<IInvoice & IInvoiceMethods & Document>("invoices", InvoiceSchema);
 
 export default InvoiceModel;
