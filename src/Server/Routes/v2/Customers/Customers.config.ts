@@ -650,9 +650,20 @@ export = class CustomerRouter
                 const db_Image = await new ImageModel(dataImage).save();
                 
                 CacheImages.set(db_Image.id, db_Image);
-
+                const tempImageId = customer.profile_picture;
                 customer.profile_picture = db_Image.id;
                 await customer.save();
+
+                if(tempImageId)
+                {
+                    // Remove old image from cache and database
+                    const oldImage = CacheImages.get(tempImageId);
+                    if(oldImage)
+                    {
+                        CacheImages.delete(tempImageId);
+                        await ImageModel.deleteOne({ id: tempImageId });
+                    }
+                }
 
                 return APISuccess(db_Image)(res);
             }
