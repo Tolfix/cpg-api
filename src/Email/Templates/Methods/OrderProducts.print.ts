@@ -2,7 +2,7 @@ import { IOrder } from "@interface/Orders.interface";
 import { stripIndents } from "common-tags";
 import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions.model";
 import getProductById from "../../../Lib/Products/getProductById";
-import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
+import { GetCurrencySymbol } from "../../../Lib/Currencies";
 import GetTableStyle from "../CSS/GetTableStyle";
 
 export default async function printOrderProductTable(order: IOrder)

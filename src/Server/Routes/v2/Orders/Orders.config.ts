@@ -24,7 +24,8 @@ import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model
 import Logger from "../../../../Lib/Logger";
 import { ce_orders } from "../../../../Lib/Orders/PlaceOrder";
 import { TRecurringMethod } from "../../../../Types/PaymentMethod";
-import { TPaymentCurrency, TPaymentTypes } from "../../../../Types/PaymentTypes";
+import { TPaymentCurrency } from "../../../../Lib/Currencies";
+import { TPaymentTypes } from "../../../../Types/PaymentTypes";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 
 async function createOrder(customer: ICustomer, products: Array<{

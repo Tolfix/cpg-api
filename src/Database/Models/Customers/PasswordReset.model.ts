@@ -29,9 +29,13 @@ PasswordResetSchema.post('save', function(doc: any)
     Logger.db(`Created password reset for ${doc.email}`);
 });
 
-const PasswordResetModel = model<{
-    email: string,
-    token: string,
-} & Document>("password_reset", PasswordResetSchema);
+export interface IPasswordReset
+{
+    token: string;
+    email: string;
+    used: boolean;
+}
+
+const PasswordResetModel = model<IPasswordReset & Document>("password_reset", PasswordResetSchema);
 
 export default PasswordResetModel;

@@ -4,7 +4,7 @@ import { ICustomer } from "@interface/Customer.interface";
 import { ITransactions } from "@interface/Transactions.interface";
 import PrintCompanyInformation from "../../../Lib/Company/PrintCompanyInformation";
 import getFullName from "../../../Lib/Customers/getFullName";
-import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
+import { GetCurrencySymbol } from "../../../Lib/Currencies";
 import UseStyles from "../General/UseStyles";
 
 export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(stripIndents`

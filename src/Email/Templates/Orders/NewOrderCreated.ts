@@ -18,7 +18,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
         <strong>Order number:</strong> ${order.id}
     </p>
 
-    ${printOrderProductTable(order)}
+    ${await printOrderProductTable(order)}
 
     <p>
         <strong> 

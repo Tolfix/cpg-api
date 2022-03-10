@@ -4,7 +4,7 @@ import { Default_Language, MongoDB_URI } from "../../../Config";
 import { ICustomer, ICustomerMethods } from "@interface/Customer.interface";
 import Logger from "../../../Lib/Logger";
 import GetText from "../../../Translation/GetText";
-import { currencyCodes } from "../../../Types/PaymentTypes";
+import { currencyCodes } from "../../../Lib/Currencies";
 
 const CustomerSchema = new Schema
 (

@@ -11,7 +11,7 @@ import {Company_Currency, Company_Name} from "../../../../Config";
 import mainEvent from "../../../../Events/Main.event";
 import {sanitizeMongoose} from "../../../../Lib/Sanitize";
 import WelcomeTemplate from "../../../../Email/Templates/Customer/Welcome.template";
-import {currencyCodes, TPaymentCurrency} from "../../../../Types/PaymentTypes";
+import {currencyCodes, TPaymentCurrency} from "../../../../Lib/Currencies";
 
 const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 

@@ -4,7 +4,7 @@ import { Default_Language, MongoDB_URI } from "../../Config";
 import { extendedOrderStatus, IInvoice, IInvoiceMethods } from "@interface/Invoice.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
-import { currencyCodes, GetCurrencySymbol } from "../../Types/PaymentTypes";
+import { currencyCodes, GetCurrencySymbol } from "../../Lib/Currencies";
 
 export const A_InvoiceStatus: extendedOrderStatus[] = [
     "active",

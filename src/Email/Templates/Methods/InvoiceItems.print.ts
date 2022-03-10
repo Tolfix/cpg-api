@@ -1,5 +1,5 @@
 import { IInvoice } from "@interface/Invoice.interface";
-import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
+import { GetCurrencySymbol } from "../../../Lib/Currencies";
 import GetTableStyle from "../CSS/GetTableStyle";
 
 export default async function printInvoiceItemsTable(invoice: IInvoice)

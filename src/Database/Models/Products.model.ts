@@ -7,6 +7,7 @@ import GetText from "../../Translation/GetText";
 import { A_RecurringMethod } from "../../Types/PaymentMethod";
 import { A_PaymentTypes } from "../../Types/PaymentTypes";
 
+
 const ProductSchema = new Schema
 (
     {

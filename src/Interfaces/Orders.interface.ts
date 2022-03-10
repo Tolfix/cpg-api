@@ -1,5 +1,6 @@
 import { TRecurringMethod } from "../Types/PaymentMethod";
-import { TPaymentCurrency, TPaymentTypes } from "../Types/PaymentTypes";
+import { TPaymentCurrency } from "../Lib/Currencies";
+import { TPaymentTypes } from "../Types/PaymentTypes";
 import { IConfigurableOptions } from "./ConfigurableOptions.interface";
 import { ICustomer } from "./Customer.interface";
 import { IInvoice } from "./Invoice.interface";
