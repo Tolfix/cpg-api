@@ -35,6 +35,10 @@ FROM node:16-alpine as APP
 
 WORKDIR /app
 
+RUN apk update && \
+    apk upgrade && \
+    apk add git
+
 COPY --from=BUILDER /app/build ./build
 COPY --from=BUILDER /app/node_modules ./node_modules
 COPY --from=BUILDER /app/package.json ./package.json
