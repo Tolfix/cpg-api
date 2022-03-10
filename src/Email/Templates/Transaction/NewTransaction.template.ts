@@ -1,10 +1,10 @@
 import { stripIndents } from "common-tags";
-import { Company_Currency, Company_Email } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer.interface";
-import { ITransactions } from "../../../Interfaces/Transactions.interface";
+import { Company_Email, CPG_Customer_Panel_Domain } from "../../../Config";
+import { ICustomer } from "@interface/Customer.interface";
+import { ITransactions } from "@interface/Transactions.interface";
 import PrintCompanyInformation from "../../../Lib/Company/PrintCompanyInformation";
 import getFullName from "../../../Lib/Customers/getFullName";
-import { GetCurrencySymbol, TPaymentCurrency } from "../../../Types/PaymentTypes";
+import { GetCurrencySymbol } from "../../../Lib/Currencies";
 import UseStyles from "../General/UseStyles";
 
 export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(stripIndents`
@@ -13,20 +13,24 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
         Transaction Statement
     </h1>
     ${charged ? `<p>
-        This was automatically paid for you. If you have any questions, please contact us at ${await Company_Email()}
+        <strong>This was automatically paid for you. If you have any questions, please contact us at ${await Company_Email()}</strong>
     </p>` : ``}
     <p>
-        Date: ${t.date}
+        <strong>Date:</strong> ${t.date}
     </p>
     <p>
-        Customer: ${getFullName(c)}
+        <strong>Customer:</strong> ${getFullName(c)}
     </p>
     <p>
-        Company:
         ${await PrintCompanyInformation()}
     </p>
     <p>
-        Amount: ${t.amount} ${GetCurrencySymbol(t.currency)}
+        <strong>Amount:<strong> ${t.amount} ${GetCurrencySymbol(t.currency)}
     </p>
+    ${CPG_Customer_Panel_Domain ? `
+        <p>
+            <a href="${CPG_Customer_Panel_Domain}/transactions/${t.uid}">View Transaction</a>
+        </p>
+    ` : ''}
 </div>
 `);

@@ -1,4 +1,4 @@
-import { IOrder } from "../Interfaces/Orders.interface";
+import { IOrder } from "@interface/Orders.interface";
 
 /**
  * @deprecated

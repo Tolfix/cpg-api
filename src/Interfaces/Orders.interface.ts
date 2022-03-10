@@ -1,5 +1,6 @@
 import { TRecurringMethod } from "../Types/PaymentMethod";
-import { TPaymentCurrency, TPaymentTypes } from "../Types/PaymentTypes";
+import { TPaymentCurrency } from "../Lib/Currencies";
+import { TPaymentTypes } from "../Types/PaymentTypes";
 import { IConfigurableOptions } from "./ConfigurableOptions.interface";
 import { ICustomer } from "./Customer.interface";
 import { IInvoice } from "./Invoice.interface";
@@ -12,7 +13,7 @@ import { IPromotionsCodes } from "./PromotionsCodes.interface";
  * @property {string} uid
  * @property {string} customer_uid
  * @property {string} payment_method
- * @property {string} order_status "active" | "pending" | "fruad" | "cancelled"
+ * @property {string} order_status "active" | "pending" | "fraud" | "cancelled"
  * @property {string} product_uid
  * @property {string} billing_type "free" | "one_time" | "recurring"
  * @property {string} billing_cycle "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
@@ -51,12 +52,6 @@ export interface IOrder
 
 
 export type TOrderStatus = "active" | "pending" | "fraud" | "cancelled";
-export const A_OrderStatus = [
-    "active",
-    "pending",
-    "fraud",
-    "cancelled"
-]
 
 export interface IOrderDates<isRecurring extends string>
 {

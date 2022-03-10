@@ -1,4 +1,4 @@
-import { ICustomer } from "../Interfaces/Customer.interface";
+import { ICustomer } from "@interface/Customer.interface";
 
 /**
  * @deprecated

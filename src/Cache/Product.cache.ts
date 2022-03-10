@@ -1,4 +1,4 @@
-import { IProduct } from "../Interfaces/Products.interface";
+import { IProduct } from "@interface/Products.interface";
 
 /**
  * @deprecated

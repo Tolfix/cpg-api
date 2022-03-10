@@ -1,4 +1,4 @@
-import { ICategory } from "../Interfaces/Categories.interface";
+import { ICategory } from "@interface/Categories.interface";
 
 /**
  * @deprecated

@@ -1,4 +1,4 @@
-import { TPaymentCurrency } from "../Types/PaymentTypes";
+import { TPaymentCurrency } from "../Lib/Currencies";
 import { IConfigurableOptions } from "./ConfigurableOptions.interface";
 import { ICustomer } from "./Customer.interface";
 import { TOrderStatus } from "./Orders.interface";
@@ -37,7 +37,7 @@ import { ITransactions } from "./Transactions.interface";
  * @property {string} active
  * @property {string} pending
  * @property {string} draft
- * @property {string} fruad
+ * @property {string} fraud
  * @property {string} cancelled
  * @property {string} refunded
  * @property {string} collections
@@ -61,17 +61,22 @@ export interface IInvoice
     notified: boolean;
 }
 
+export interface IInvoiceMethods
+{
+    getTotalAmount: <C extends boolean = false>({ 
+        tax,
+        currency,
+        symbol
+    }:
+    {
+        tax?: boolean;
+        currency?: C;
+        symbol?: boolean;
+    }) => C extends false ? number : string;
+
+}
+
 export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
-export const A_InvoiceStatus: extendedOrderStatus[] = [
-    "active",
-    "pending",
-    "draft",
-    "fraud",
-    "cancelled",
-    "refunded",
-    "collections",
-    "payment_pending",
-];
 
 
 export interface IInvoice_Dates

@@ -1,17 +1,17 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import bcrypt from "bcryptjs";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
-import { ICustomer } from "../../../../Interfaces/Customer.interface";
-import { idCustomer } from "../../../../Lib/Generator";
-import { APIError, APISuccess } from "../../../../Lib/Response";
+import {ICustomer} from "@interface/Customer.interface";
+import {idCustomer} from "../../../../Lib/Generator";
+import {APIError, APISuccess} from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
 import Logger from "../../../../Lib/Logger";
-import { SendEmail } from "../../../../Email/Send";
-import { Company_Currency, Company_Name } from "../../../../Config";
+import {SendEmail} from "../../../../Email/Send";
+import {Company_Currency, Company_Name} from "../../../../Config";
 import mainEvent from "../../../../Events/Main.event";
-import { sanitizeMongoose } from "../../../../Lib/Sanitize";
+import {sanitizeMongoose} from "../../../../Lib/Sanitize";
 import WelcomeTemplate from "../../../../Email/Templates/Customer/Welcome.template";
-import { currencyCodes, TPaymentCurrency } from "../../../../Types/PaymentTypes";
+import {currencyCodes, TPaymentCurrency} from "../../../../Lib/Currencies";
 
 const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
@@ -36,8 +36,7 @@ function insert(req: Request, res: Response)
 
             if(!req.body.currency)
             {
-                const currency = await Company_Currency();
-                req.body.currency = currency;
+                req.body.currency = await Company_Currency();
             }
 
             // Check if our currency is valid
@@ -45,10 +44,9 @@ function insert(req: Request, res: Response)
             const validCurrency = (currency: string) =>
             {
                 currency = currency.toUpperCase();
-                if(currencyCodes.includes(currency as TPaymentCurrency))
-                    return true;
+                return currencyCodes.includes(currency as TPaymentCurrency);
 
-                return false;
+
             }
 
             if(!validCurrency(req.body.currency))
@@ -61,7 +59,7 @@ function insert(req: Request, res: Response)
                     mainEvent.emit("customer_created", result);
 
                     // Send email to customer
-                    SendEmail(result.personal.email, `Welcome to ${await Company_Name()}`, {
+                    await SendEmail(result.personal.email, `Welcome to ${await Company_Name()}`, {
                         isHTML: true,
                         body: await WelcomeTemplate(result),
                     });
@@ -99,8 +97,7 @@ async function patch(req: Request, res: Response)
         if(Customer?.password !== req.body.password)
         {
             const salt = await bcrypt.genSalt(10)
-            const hash = await bcrypt.hash(req.body.password ?? "123qwe123", salt);
-            req.body.password = hash;
+            req.body.password = await bcrypt.hash(req.body.password ?? "123qwe123", salt);
         }
     }
     API.findAndPatch((req.params.uid as ICustomer["uid"]), req.body).then((result) =>

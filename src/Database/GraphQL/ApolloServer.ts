@@ -40,7 +40,8 @@ export default async (server: Application) =>
                 let [login, password] = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString().split(':');
                 if(login.includes("==") || password.includes("=="))
                 {
-                    login = atob(login);
+                    //login = atob(login);
+                    login = Buffer.from(login, 'base64').toString();
                     password = login.split(":")[1];
                     login = login.split(":")[0];
                 }

@@ -5,8 +5,8 @@ export interface IPromotionsCodes
     id: number;
     name: string;
     discount: number;
-    valid_to: string | "permament";
+    valid_to: string | "permanent";
     uses: number | "unlimited";
-    procentage: boolean;
+    percentage: boolean;
     products_ids: Array<IProduct["id"]>;
 }

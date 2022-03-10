@@ -40,7 +40,7 @@ export = class AdminRouter
                 exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7)
             }, JWT_Access_Token);
             return APISuccess({
-                text: "Succesfully created admin token",
+                text: "Successfully created admin token",
                 expires: "7 days",
                 token: token,
             })(res);

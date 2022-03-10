@@ -1,4 +1,4 @@
-// A list of accaptable curenices for paypal
+// A list of acceptable currencies for PayPal
 const data = {
     /*
      Australian dollar	AUD

@@ -3,12 +3,12 @@ import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
 import mainEvent from "../../../../Events/Main.event";
 import { ITransactions } from "@interface/Transactions.interface";
-import { idTransicitons } from "../../../../Lib/Generator";
+import { idTransactions } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import sendEmailOnTransactionCreation from "../../../../Lib/Transaction/SendEmailOnCreation";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
 
-const API = new BaseModelAPI<ITransactions>(idTransicitons, TransactionsModel);
+const API = new BaseModelAPI<ITransactions>(idTransactions, TransactionsModel);
 
 function insert(req: Request, res: Response)
 {

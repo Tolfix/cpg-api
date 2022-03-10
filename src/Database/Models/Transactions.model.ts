@@ -1,11 +1,11 @@
 import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { IDTransactions } from "../../Interfaces/Transactions.interface";
+import { IDTransactions } from "@interface/Transactions.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "../../Types/PaymentMethod";
-import { currencyCodes } from "../../Types/PaymentTypes";
+import { currencyCodes } from "../../Lib/Currencies";
 
 const TransactionsSchema = new Schema
 (
@@ -70,7 +70,7 @@ increment.initialize(connection);
 TransactionsSchema.plugin(increment.plugin, {
     model: 'transactions',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

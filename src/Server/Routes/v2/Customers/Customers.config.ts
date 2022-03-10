@@ -1,4 +1,4 @@
-import { Application, Router } from "express";
+import { Application, Router, Response } from "express";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import CustomerController from "./Customers.controller";
 import { GetSMTPEmails, JWT_Access_Token } from "../../../../Config";
@@ -9,12 +9,12 @@ import CustomerModel from "../../../../Database/Models/Customers/Customer.model"
 import Logger from "../../../../Lib/Logger";
 import EnsureAuth from "../../../../Middlewares/EnsureAuth";
 import crypto from "crypto";
-import PasswordResetModel from "../../../../Database/Models/Customers/PasswordReset.model";
+import PasswordResetModel, { IPasswordReset } from "../../../../Database/Models/Customers/PasswordReset.model";
 import { SendEmail } from "../../../../Email/Send";
 import Footer from "../../../../Email/Templates/General/Footer";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import OrderModel from "../../../../Database/Models/Orders.model";
-import { ICustomer } from "../../../../Interfaces/Customer.interface";
+import { ICustomer } from "@interface/Customer.interface";
 import TransactionsModel from "../../../../Database/Models/Transactions.model";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import LoginAttemptTemplate from "../../../../Email/Templates/Customer/LoginAttempt.template";
@@ -75,7 +75,7 @@ export = class CustomerRouter
                 // Which can look like this: personal.first_name
                 // But it could be: personal: { first_name: "John" }
                 // So we need to check if the key is a string
-                if(typeof key === "string" && key.includes("."))
+                if(key.includes("."))
                 {
                     // If the key is a string, we need to split it
                     // And check if the first part is in the customer object
@@ -297,7 +297,7 @@ export = class CustomerRouter
             order.order_status = "cancelled";
             await order.save();
 
-            SendEmail(customer.personal.email, "Order Cancelled Confirmation", {
+            await SendEmail(customer.personal.email, "Order Cancelled Confirmation", {
                 isHTML: true,
                 body: await OrderCancelTemplate(customer, order),
             });
@@ -394,34 +394,32 @@ export = class CustomerRouter
             const randomToken = crypto.randomBytes(20).toString("hex");
             const token = crypto.createHash("sha256").update(randomToken).digest("hex");
 
-            new PasswordResetModel({
+            await new PasswordResetModel({
                 email: customer.personal.email,
                 token: token
             }).save();
 
-            SendEmail(customer.personal.email, "Reset Password", {
+            await SendEmail(customer.personal.email, "Reset Password", {
                 isHTML: true,
                 body: await ResetPasswordTemplate(customer, version, token)
             });
 
-            return APISuccess(`Succesfully created a reset password email`)(res);
+            return APISuccess(`Successfully created a reset password email`)(res);
         });
 
         this.router.get("/my/reset-password/:token", async (req, res) =>
         {
             const token = req.params.token;
-            const passwordReset = await PasswordResetModel.findOne({ token: token }) as any;
-            if(!passwordReset)
-                return APIError(`Unable to find password reset token`)(res);
-            
-            if(!passwordReset.token)
-                return APIError(`Unable to find password reset token`)(res);
+            const passwordReset = await PasswordResetModel.findOne({ token: token });
 
-            if(passwordReset.used)
-                return APIError(`This password reset token has already been used`)(res);
-            
-            const customer = await CustomerModel.findOne({ "personal.email": passwordReset.email });
-            if(!customer)
+            if(!passwordReset)
+                return APIError(`Invalid token`)(res);
+
+            if(await passwordResetChecks(passwordReset, res))
+                return;
+
+            const customer = await CustomerModel.findOne({"personal.email": passwordReset.email});
+            if (!customer)
                 return APIError(`Unable to find user with email ${passwordReset.email}`)(res);
 
             return res.send(`
@@ -481,18 +479,16 @@ export = class CustomerRouter
             if(!token)
                 return APIError(`Token is required`)(res);
 
-            const passwordReset = await PasswordResetModel.findOne({ token: sanitizeMongoose(token) }) as any;
-            if(!passwordReset)
-                return APIError(`Unable to find password reset token`)(res);
-            
-            if(!passwordReset.token)
-                return APIError(`Unable to find password reset token`)(res);
+            const passwordReset = await PasswordResetModel.findOne({ token: sanitizeMongoose(token) });
 
-            if(passwordReset.used)
-                return APIError(`This password reset token has already been used`)(res);
-            
-            const customer = await CustomerModel.findOne({ "personal.email": passwordReset.email });
-            if(!customer)
+            if(!passwordReset)
+                return APIError(`Invalid token`)(res);
+                
+            if (await passwordResetChecks(passwordReset, res))
+                return;
+
+            const customer = await CustomerModel.findOne({"personal.email": passwordReset.email});
+            if (!customer)
                 return APIError(`Unable to find user with email ${passwordReset.email}`)(res);
 
             const genSalt = await bcrypt.genSalt(10);
@@ -581,7 +577,7 @@ export = class CustomerRouter
                     {
                         if(attempts >= 3)
                         {
-                            SendEmail(customer.personal.email, "Account login attempts", {
+                            await SendEmail(customer.personal.email, "Account login attempts", {
                                 isHTML: true,
                                 body: await LoginAttemptTemplate(customer),
                             });
@@ -654,9 +650,20 @@ export = class CustomerRouter
                 const db_Image = await new ImageModel(dataImage).save();
                 
                 CacheImages.set(db_Image.id, db_Image);
-
+                const tempImageId = customer.profile_picture;
                 customer.profile_picture = db_Image.id;
                 await customer.save();
+
+                if(tempImageId)
+                {
+                    // Remove old image from cache and database
+                    const oldImage = CacheImages.get(tempImageId);
+                    if(oldImage)
+                    {
+                        CacheImages.delete(tempImageId);
+                        await ImageModel.deleteOne({ id: tempImageId });
+                    }
+                }
 
                 return APISuccess(db_Image)(res);
             }
@@ -668,4 +675,16 @@ export = class CustomerRouter
 
     }
 
+}
+
+async function passwordResetChecks(passwordReset: IPasswordReset, res: Response)
+{
+
+    if (!passwordReset.token)
+        return APIError(`Unable to find password reset token`)(res), true;
+
+    if (passwordReset.used)
+        return APIError(`This password reset token has already been used`)(res), true;
+
+    return false;
 }

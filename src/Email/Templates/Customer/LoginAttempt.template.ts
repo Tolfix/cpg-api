@@ -1,6 +1,6 @@
 import { stripIndents } from "common-tags";
-import { Company_Email } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer.interface";
+import { Company_Email, CPG_Customer_Panel_Domain } from "../../../Config";
+import { ICustomer } from "@interface/Customer.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
 import UseStyles from "../General/UseStyles";
 
@@ -16,5 +16,10 @@ export = async (c: ICustomer) => UseStyles(stripIndents`
         Someone has been trying to login to your account. <br />
         If this was not you, please contact us immediately${await Company_Email() === "" ? '' : ` at ${await Company_Email()}`}.
     </p>
+    ${CPG_Customer_Panel_Domain ? `
+    <p>
+        <a href="${CPG_Customer_Panel_Domain}/profile">Login to change credentials.</a>
+    </p>
+    ` : ''}
 </div>
 `);

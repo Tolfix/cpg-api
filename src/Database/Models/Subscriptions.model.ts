@@ -1,12 +1,12 @@
 import mongoose, { Document, model, Schema } from "mongoose";
 import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
-import { A_InvoiceStatus } from "../../Interfaces/Invoice.interface";
-import { IQuotes } from "../../Interfaces/Quotes.interface";
-import { ISubscription } from "../../Interfaces/Subscriptions.interface";
+import { IQuotes } from "@interface/Quotes.interface";
+import { ISubscription } from "@interface/Subscriptions.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_RecurringMethod } from "../../Types/PaymentMethod";
+import { A_InvoiceStatus } from "./Invoices.model";
 
 const SubscriptionSchema = new Schema
 (
@@ -93,7 +93,7 @@ increment.initialize(connection);
 SubscriptionSchema.plugin(increment.plugin, {
     model: 'subscription',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

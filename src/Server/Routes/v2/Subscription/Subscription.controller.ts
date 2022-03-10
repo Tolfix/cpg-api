@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import SubscriptionModel from "../../../../Database/Models/Subscriptions.model";
-import { ISubscription } from "../../../../Interfaces/Subscriptions.interface";
+import { ISubscription } from "@interface/Subscriptions.interface";
 import { idSubscription } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";

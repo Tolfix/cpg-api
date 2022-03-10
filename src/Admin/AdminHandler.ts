@@ -60,58 +60,60 @@ export default class AdminHandler
                         run_late_invoice_notify
                 `);
 
-            if(result.action === "create_admin")
-                await this.create();
-
-            if(result.action === "show_admins")
-                await this.show();
-
-            if(result.action === "update_smtp")
-                await this.update_smtp();
-
-            if(result.action === "show_smtp")
-                await this.show_smtp();
-
-            if(result.action === "delete_admin")
-                await this.delete_admin();
-
-            if(result.action === "add_email")
-                await this.add_email();
-
-            if(result.action === "delete_email")
-                await this.delete_email();
-
-            if(result.action === "show_emails")
-                await this.show_emails();
-
-            if(result.action === "add_webhook")
-                await this.add_webhook();
-
-            if(result.action === "delete_webhook")
-                await this.delete_webhook();
-
-            if(result.action === "show_webhooks")
-                await this.show_webhooks();
-
-            if(result.action === "update_company")
-                await this.update_company();
-
-            if(result.action === "show_plugins")
-                await this.show_plugins();
-
-            if(result.action === "update_plugin")
-                await this.update_plugin();
-
-            if(result.action === "run_invoices_notify")
-                await this.run_invoices_notify();
-
-            if(result.action === "run_charge_payment")
-                await this.run_charge_payment();
-        
-            if(result.action === "run_late_invoice_notify")
-                await this.run_late_invoice_notify();
-
-            this.action();
+            switch (result.action)
+            {
+                case "create_admin":
+                    await this.create();
+                    break;
+                case "delete_admin":
+                    await this.delete_admin();
+                    break;
+                case "show_admins":
+                    await AdminHandler.show();
+                    break;
+                case "update_smtp":
+                    await this.update_smtp();
+                    break;
+                case "show_smtp":
+                    await this.show_smtp();
+                    break;
+                case "add_email":
+                    await this.add_email();
+                    break;
+                case "delete_email":
+                    await this.delete_email();
+                    break;
+                case "show_emails":
+                    await this.show_emails();
+                    break;
+                case "add_webhook":
+                    await this.add_webhook();
+                    break;
+                case "delete_webhook":
+                    await this.delete_webhook();
+                    break;
+                case "show_webhooks":
+                    await this.show_webhooks();
+                    break;
+                case "update_company":
+                    await this.update_company();
+                    break;
+                case "show_plugins":
+                    await this.show_plugins();
+                    break;
+                case "update_plugin":
+                    await this.update_plugin();
+                    break;
+                case "run_invoices_notify":
+                    await this.run_invoices_notify()
+                    break;
+                case "run_charge_payment":
+                    await this.run_charge_payment();
+                    break;
+                case "run_late_invoice_notify":
+                    await this.run_late_invoice_notify()
+            }
+                        this.action();
         });
     }
 
@@ -162,7 +164,7 @@ export default class AdminHandler
                 const secure = result.secure === "true";
 
                 Logger.info(`Updating smtp config..`);
-                updateSMTP({
+                await updateSMTP({
                     host,
                     port,
                     username,
@@ -174,7 +176,7 @@ export default class AdminHandler
         });
     }
 
-    private async show()
+    private static async show()
     {
         Logger.info(CacheAdmin.array());
     }
@@ -270,7 +272,7 @@ export default class AdminHandler
                 Logger.info(`Adding email..`);
                 // Check if email is valid
                 // eslint-disable-next-line no-useless-escape
-                if(!email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
+                if(!email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
                 {
                     Logger.error(`Invalid email`);
                     return resolve(false);

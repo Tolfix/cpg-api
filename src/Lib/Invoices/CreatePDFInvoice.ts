@@ -1,5 +1,5 @@
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
-import { IInvoice } from "../../Interfaces/Invoice.interface";
+import { IInvoice } from "@interface/Invoice.interface";
 import easyinvoice from 'easyinvoice';
 import { createSwishQRCode } from "../../Payments/Swish";
 import { 
@@ -156,7 +156,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             data["images"]["background"] = PDF_Template_Url;
         
         //@ts-ignore
-        easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
+        await easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
         {
             return resolve(result.pdf);
         });

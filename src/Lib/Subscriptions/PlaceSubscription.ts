@@ -1,7 +1,7 @@
 import { NextFunction, Response, Request } from "express";
 import { Full_Domain, Paypal_Client_Id, Paypal_Client_Secret } from "../../Config";
-import { IPayments } from "../../Interfaces/Payments.interface";
-import { ISubscription } from "../../Interfaces/Subscriptions.interface";
+import { IPayments } from "@interface/Payments.interface";
+import { ISubscription } from "@interface/Subscriptions.interface";
 import { APISuccess } from "../Response";
 
 export const ce_subscription = new Map<keyof IPayments, (

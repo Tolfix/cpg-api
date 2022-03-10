@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import { Company_Website } from "../../../../Config";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
-import { IInvoice } from "../../../../Interfaces/Invoice.interface";
+import { IInvoice } from "@interface/Invoice.interface";
 import { createPaypalPaymentFromInvoice, retrievePaypalTransaction } from "../../../../Payments/Paypal";
 
 export = class PaypalRouter
@@ -43,7 +43,7 @@ export = class PaypalRouter
             if(!payerId || !paymentId)
                 return res.redirect(await Company_Website());
 
-            retrievePaypalTransaction(payerId, paymentId);
+            await retrievePaypalTransaction(payerId, paymentId);
 
             res.send(`
             <html>
@@ -87,10 +87,10 @@ export = class PaypalRouter
                 <body>
                     <div class="card">
                     <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
-                    <i class="checkmark">✓</i>
+                        <i class="checkmark">✓</i>
                     </div>
-                    <h1>Success</h1> 
-                    <p>Thanks for the payment!</p>
+                        <h1>Success</h1> 
+                        <p>Thanks for the payment!</p>
                     </div>
                 </body>
           </html>

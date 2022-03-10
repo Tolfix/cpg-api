@@ -1,7 +1,7 @@
 import mongoose,{ Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { IImage } from "../../Interfaces/Images.interface";
+import { IImage } from "@interface/Images.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 
@@ -51,7 +51,7 @@ increment.initialize(connection);
 ImageSchema.plugin(increment.plugin, {
     model: 'images',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

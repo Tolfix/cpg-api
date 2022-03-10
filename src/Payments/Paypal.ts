@@ -2,8 +2,8 @@ import paypal from "paypal-rest-sdk";
 import { Company_Currency, DebugMode, Full_Domain, Paypal_Client_Id, Paypal_Client_Secret } from "../Config";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
-import { IInvoice } from "../Interfaces/Invoice.interface";
-import { idTransicitons } from "../Lib/Generator";
+import { IInvoice } from "@interface/Invoice.interface";
+import { idTransactions } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import Logger from "../Lib/Logger";
 import { getDate } from "../Lib/Time";
@@ -48,7 +48,7 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
             }
         ] });
 
-        // Check if our currency is acctable, otherwise.. go to USD
+        // Check if our currency is acceptable, otherwise.. default to USD
         const c = (customer?.currency ?
                                     customer.currency 
                                     : 
@@ -138,7 +138,7 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
                 customer_uid: invoice.customer_uid,
                 currency: invoice.currency ?? await Company_Currency(),
                 date: getDate(),
-                uid: idTransicitons(),
+                uid: idTransactions(),
             }).save());
 
             await sendEmailOnTransactionCreation(newTrans);

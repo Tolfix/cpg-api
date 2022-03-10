@@ -52,7 +52,7 @@ increment.initialize(connection);
 CategorySchema.plugin(increment.plugin, {
     model: 'category',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

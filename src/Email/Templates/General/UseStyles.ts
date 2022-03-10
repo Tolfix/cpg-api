@@ -7,7 +7,7 @@ export default async (s: string) =>
     return `
     <html>
         <head>
-            <style type="text/css">
+            <style>
                 ${style}
             </style>
         </head>

@@ -7,10 +7,11 @@ import {
 } from "../../../../Config";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import { APIError } from "../../../../Lib/Response";
-import stripe from "stripe";
-import { CreatePaymentIntent, createSetupIntent, markInvoicePaid, RetrivePaymentIntent, RetriveSetupIntent } from "../../../../Payments/Stripe";
+import Stripe from "stripe";
+import { CreatePaymentIntent, createSetupIntent, RetrievePaymentIntent, RetrieveSetupIntent } from "../../../../Payments/Stripe";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
-const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
+import stripeWebhookEvent from "../../../../Events/Stripe.event";
+const stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
 
@@ -44,7 +45,7 @@ export = class StripeRouter
             res.send(`
             <head>
                 <title>Checkout | ${invoice.id}</title>
-                <script src="https://js.stripe.com/v3/"></script>
+                <script src="https://js.stripe.com/v3/"/>
                 <style>
                     * {
                         font-family: "Verdana";
@@ -86,12 +87,12 @@ export = class StripeRouter
                                 <th>Item</th>
                                 <th>Price</th>
                             </tr>
-                            ${await (await Promise.all(invoice.items.map(async (item) => `
+                            ${((await Promise.all(invoice.items.map(async (item) => `
                                 <tr>
                                     <td>${item.notes}</td>
                                     <td>${item.amount} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
                                 </tr>
-                            `))).join("")}
+                            `))).join(""))}
 
                             <tr>
                                 <td>Tax</td>
@@ -205,11 +206,11 @@ export = class StripeRouter
             if(!payment_intent)
                 return APIError("No payment_intent")(res);
 
-            const intent = await RetrivePaymentIntent(payment_intent);
+            const intent = await RetrievePaymentIntent(payment_intent);
 
-            let message = "";
-            let href = "";
-            let status = "";
+            let message: string;
+            let href: string;
+            let status: string;
 
             switch (intent.status)
             {
@@ -234,13 +235,14 @@ export = class StripeRouter
                     break;
             
                 default:
+                    status = "failed";
                     message = 'Something went wrong.';
                     href = await Company_Website();
                     break;
             }
 
             res.send(`
-            <html>
+            <html lang="en-us">
                 <head>
                     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
                 </head>
@@ -298,7 +300,7 @@ export = class StripeRouter
             res.send(`
             <head>
                 <title>Setup Method</title>
-                <script src="https://js.stripe.com/v3/"></script>
+                <script src="https://js.stripe.com/v3/"/>
                 <style>
                     * {
                         font-family: "Verdana";
@@ -424,14 +426,14 @@ export = class StripeRouter
             if(!payment_intent)
                 return APIError("No payment_intent")(res);
 
-            const intent = await RetriveSetupIntent(payment_intent);
+            const intent = await RetrieveSetupIntent(payment_intent);
             const customer = await CustomerModel.findOne( { uid: intent.metadata?.customer_uid } );
             if(!customer)
                 return APIError("Couldn't find customer")(res);
 
-            let message = "";
-            let href = "";
-            let status = "";
+            let message: string;
+            let href: string;
+            let status: string;
 
             switch (intent.status)
             {
@@ -457,13 +459,14 @@ export = class StripeRouter
                     break;
             
                 default:
+                    status = "failed";
                     message = 'Something went wrong.';
                     href = await Company_Website();
                     break;
             }
 
             res.send(`
-            <html>
+            <html lang="en-us">
                 <head>
                     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
                 </head>
@@ -516,7 +519,7 @@ export = class StripeRouter
             try
             {
                 // @ts-ignore
-                event = Stripe.webhooks.constructEvent(req.rawBody, sig, Stripe_Webhook_Secret);
+                event = stripe.webhooks.constructEvent(req.rawBody, sig, Stripe_Webhook_Secret);
             } 
             catch (err)
             {
@@ -524,16 +527,8 @@ export = class StripeRouter
                 return res.status(400).send(`Webhook Error: ${err.message}`);
             }
 
-            switch (event.type)
-            {
-                case 'payment_intent.succeeded': {
-                    const payment_intent = event.data.object as any;
-                    const intent = await RetrivePaymentIntent(payment_intent.id);
-                    markInvoicePaid(intent);
-                    break;
-                }
+            stripeWebhookEvent(event);
 
-            }
             return res.sendStatus(200);
         });
 

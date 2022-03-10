@@ -33,7 +33,8 @@ export default function EnsureAdmin(eR = false)
                 // Convert it to normal string
                 Logger.error(`Admin authorizing with base64 string`);
                 Logger.info(`Encoding admin credentials to normal string`);
-                login = atob(login);
+                //login = atob(login);
+                login = Buffer.from(login, 'base64').toString();
                 password = login.split(":")[1];
                 login = login.split(":")[0];
             }

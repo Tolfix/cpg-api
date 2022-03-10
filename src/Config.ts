@@ -1,12 +1,12 @@
 import ConfigModel from "./Database/Models/Configs.model";
-import { IConfigs } from "./Interfaces/Admin/Configs.interface";
-import { IAllLanguages } from "./Interfaces/Lang/AllLang.interface";
+import { IConfigs } from "@interface/Admin/Configs.interface";
+import { IAllLanguages } from "@interface/Lang/AllLang.interface";
 
 /**
  * @description
  * Used if this service is running in debug mode.
  */
-export const DebugMode = process.env.DEBUG === "true" ? true : false;
+export const DebugMode = process.env.DEBUG === "true";
 export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
 export const JWT_Access_Token = process.env.JWT_ACCESS_TOKEN ?? "";
 export const d_Days = parseInt(process.env.D_DAYS ?? "30");
@@ -44,6 +44,11 @@ export const Swish_Payee_Number = process.env.SWISH_PAYEE_NUMBER ?? "";
 // Paypal
 export const Paypal_Client_Id = process.env.PAYPAL_CLIENT_ID ?? "";
 export const Paypal_Client_Secret = process.env.PAYPAL_CLIENT_SECRET ?? "";
+
+// CPG stuff..
+export const CPG_Customer_Panel_Domain = process.env.CPG_CUSTOMER_PANEL_DOMAIN;
+export const CPG_Shop_Domain = process.env.CPG_SHOP_DOMAIN;
+export const CPG_Admin_Panel_Domain = process.env.CPG_ADMIN_PANEL_DOMAIN;
 
 // Company
 // Later change this to a databse etc..
@@ -105,7 +110,7 @@ export const Company_Tax_Registered = async (): Promise<IConfigs["company"]["tax
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
-    return configs.company?.tax_registered ?? (process.env.COMPANY_TAX_REGISTERED === "true" ? true : false);
+    return configs.company?.tax_registered ?? (process.env.COMPANY_TAX_REGISTERED === "true");
 }
 export const Company_Logo_Url = async (): Promise<IConfigs["company"]["logo_url"]> =>
 {
