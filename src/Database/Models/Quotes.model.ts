@@ -5,6 +5,7 @@ import { IQuotes } from "@interface/Quotes.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "../../Types/PaymentMethod";
+import { currencyCodes } from "../../Lib/Currencies";
 
 const QuotesSchema = new Schema
 (
@@ -27,7 +28,6 @@ const QuotesSchema = new Schema
             type: [
                 {
                     name: String,
-                    tax_rate: Number,
                     price: Number,
                     quantity: Number,
                 }
@@ -48,6 +48,28 @@ const QuotesSchema = new Schema
         memo: {
             type: String,
             default: "",
+        },
+
+        currency: {
+            type: String,
+            required: true,
+            enum: currencyCodes,
+            default: "EUR",
+        },
+
+        tax_rate: {
+            type: Number,
+            default: 0,
+        },
+
+        accepted: {
+            type: Boolean,
+            default: false
+        },
+
+        declined: {
+            type: Boolean,
+            default: false
         },
 
         payment_method: {
