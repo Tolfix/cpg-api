@@ -32,24 +32,37 @@ async function insert(req: Request, res: Response)
 
     req.body.invoices = [newInvoice.id];
 
-    API.create(req.body)
-        .then(async (result) =>
-        {
+    // API.create(req.body)
+    //     .then(async (result) =>
+    //     {
+    //
+    //         mainEvent.emit("order_created", result);
+    //
+    //         const customer = await CustomerModel.findOne({ id: result.customer_uid });
+    //
+    //         if(customer)
+    //             await SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${result.id}`, {
+    //                 isHTML: true,
+    //                 body: NewOrderCreated(result, customer),
+    //             });
+    //
+    //         APISuccess({
+    //             uid: result.uid
+    //         })(res);
+    //     });
 
-            mainEvent.emit("order_created", result);
+    // Trying optimizations
 
-            const customer = await CustomerModel.findOne({ id: result.customer_uid });
-
-            if(customer)
-                await SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${result.id}`, {
-                    isHTML: true,
-                    body: NewOrderCreated(result, customer),
-                });
-
-            APISuccess({
-                uid: result.uid
-            })(res);
-        });
+    API.create(req.body).then(async result =>
+    {
+        mainEvent.emit("order_created", result);
+        const customer = await CustomerModel.findOne({id: result.customer_uid});
+        // noinspection CommaExpressionJS
+        customer && await SendEmail(customer.personal.email, `New order from ${"" !== await Company_Name() ? await Company_Name() : "CPG"} #${result.id}`, {
+            isHTML: !0,
+            body: NewOrderCreated(result, customer)
+        }), APISuccess({uid: result.uid})(res)
+    });
 }
 
 function getByUid(req: Request, res: Response)
