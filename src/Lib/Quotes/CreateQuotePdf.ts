@@ -71,7 +71,7 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
                 return {
                     "quantity": item.quantity,
                     "description": item.name,
-                    "tax-rate": item.tax_rate,
+                    "tax-rate": quote.tax_rate,
                     "price": item.price
                 }
             }),
