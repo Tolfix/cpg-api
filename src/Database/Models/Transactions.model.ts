@@ -5,7 +5,7 @@ import { IDTransactions } from "@interface/Transactions.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "../../Types/PaymentMethod";
-import { currencyCodes } from "../../Types/PaymentTypes";
+import { currencyCodes } from "../../Lib/Currencies";
 
 const TransactionsSchema = new Schema
 (

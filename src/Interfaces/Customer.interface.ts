@@ -1,4 +1,4 @@
-import { TPaymentCurrency } from "../Types/PaymentTypes";
+import { TPaymentCurrency } from "../Lib/Currencies";
 import { ICompanyConfig } from "./Admin/Configs.interface";
 import { IImage } from "./Images.interface";
 

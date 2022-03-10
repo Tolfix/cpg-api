@@ -45,16 +45,16 @@ export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) 
             `
                 <strong>
                     You already have a payment method setup. <br />
-                    You'll be automatically pay when a invoice is 14 days ahead. <br />
+                    Money will be automatically removed from your account when an invoice is 14 days ahead. <br />
                 </strong>
             ` 
             : 
             
             `
                 <strong>
-                    To pay automatic invoice, you need to setup your payment method. It will automatic pay when a invoice is 14 days ahead. <br />
+                    To pay using the automatic invoice, you will need to set up your payment method. <br/> It will automatically pay when an invoice is 14 days ahead. <br />
                     <a href="${Full_Domain}/v2/stripe/setup/${customer.uid}" target="_blank">
-                        Click here to setup your payment method.
+                        Click here to set up your payment method.
                     </a>
                 </strong>
             `}

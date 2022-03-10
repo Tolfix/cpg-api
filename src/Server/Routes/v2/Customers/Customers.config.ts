@@ -404,25 +404,23 @@ export = class CustomerRouter
                 body: await ResetPasswordTemplate(customer, version, token)
             });
 
-            return APISuccess(`Succesfully created a reset password email`)(res);
+            return APISuccess(`Successfully created a reset password email`)(res);
         });
 
         this.router.get("/my/reset-password/:token", async (req, res) =>
         {
             const token = req.params.token;
             const passwordReset = await PasswordResetModel.findOne({ token: token }) as any;
-            if(!passwordReset)
-                return APIError(`Unable to find password reset token`)(res);
-            
-            if(!passwordReset.token)
-                return APIError(`Unable to find password reset token`)(res);
 
-            if(passwordReset.used)
-                return APIError(`This password reset token has already been used`)(res);
-            
-            const customer = await CustomerModel.findOne({ "personal.email": passwordReset.email });
-            if(!customer)
+            if(await passwordResetChecks(passwordReset, res))
+            {
+                return;
+            }
+
+            const customer = await CustomerModel.findOne({"personal.email": passwordReset.email});
+            if (!customer)
                 return APIError(`Unable to find user with email ${passwordReset.email}`)(res);
+
 
             return res.send(`
             <!-- Style it in the middle -->
@@ -482,17 +480,14 @@ export = class CustomerRouter
                 return APIError(`Token is required`)(res);
 
             const passwordReset = await PasswordResetModel.findOne({ token: sanitizeMongoose(token) }) as any;
-            if(!passwordReset)
-                return APIError(`Unable to find password reset token`)(res);
-            
-            if(!passwordReset.token)
-                return APIError(`Unable to find password reset token`)(res);
 
-            if(passwordReset.used)
-                return APIError(`This password reset token has already been used`)(res);
-            
-            const customer = await CustomerModel.findOne({ "personal.email": passwordReset.email });
-            if(!customer)
+            if (await passwordResetChecks(passwordReset, res))
+            {
+                return;
+            }
+
+            const customer = await CustomerModel.findOne({"personal.email": passwordReset.email});
+            if (!customer)
                 return APIError(`Unable to find user with email ${passwordReset.email}`)(res);
 
             const genSalt = await bcrypt.genSalt(10);
@@ -668,4 +663,18 @@ export = class CustomerRouter
 
     }
 
+}
+
+async function passwordResetChecks(passwordReset: any, res: any)
+{
+    if (!passwordReset)
+        return APIError(`Unable to find password reset token`)(res), true;
+
+    if (!passwordReset.token)
+        return APIError(`Unable to find password reset token`)(res), true;
+
+    if (passwordReset.used)
+        return APIError(`This password reset token has already been used`)(res), true;
+
+    return false;
 }

@@ -5,7 +5,9 @@ import { IOrder } from "@interface/Orders.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments, A_RecurringMethod } from "../../Types/PaymentMethod";
-import { A_PaymentTypes, currencyCodes } from "../../Types/PaymentTypes";
+import { currencyCodes } from "../../Lib/Currencies";
+import { A_PaymentTypes } from "../../Types/PaymentTypes";
+
 
 export const A_OrderStatus = [
     "active",

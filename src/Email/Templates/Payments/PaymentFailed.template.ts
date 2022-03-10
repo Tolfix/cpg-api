@@ -1,9 +1,9 @@
 import { IInvoice } from "@interface/Invoice.interface";
 import { stripIndents } from "common-tags";
 import { Company_Email, CPG_Customer_Panel_Domain } from "../../../Config";
-import { ICustomer } from "../../../Interfaces/Customer.interface";
+import { ICustomer } from "@interface/Customer.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
-import { GetCurrencySymbol } from "../../../Types/PaymentTypes";
+import { GetCurrencySymbol } from "../../../Lib/Currencies";
 import UseStyles from "../General/UseStyles";
 import printInvoiceItemsTable from "../Methods/InvoiceItems.print";
 
@@ -25,7 +25,7 @@ export = async (invoice: IInvoice, customer: ICustomer) => UseStyles(stripIndent
     </p>
     <p>
         Items: <br />
-        ${printInvoiceItemsTable(invoice)}
+        ${await printInvoiceItemsTable(invoice)}
     </p>
     <p>
         <strong>

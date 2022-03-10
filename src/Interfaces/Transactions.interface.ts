@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { TPaymentCurrency } from "../Types/PaymentTypes";
+import { TPaymentCurrency } from "../Lib/Currencies";
 import { ICustomer } from "./Customer.interface";
 import { IInvoice } from "./Invoice.interface";
 

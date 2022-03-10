@@ -1,4 +1,4 @@
-import { TPaymentCurrency } from "../Types/PaymentTypes";
+import { TPaymentCurrency } from "../Lib/Currencies";
 import { IConfigurableOptions } from "./ConfigurableOptions.interface";
 import { ICustomer } from "./Customer.interface";
 import { TOrderStatus } from "./Orders.interface";
