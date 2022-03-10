@@ -11,9 +11,9 @@ RUN apk update && \
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5
 
-COPY ./package*.json ./
+COPY ./package.json ./
 
-RUN npm ci
+RUN npm install
 ##########################
 
 # BUILDER
