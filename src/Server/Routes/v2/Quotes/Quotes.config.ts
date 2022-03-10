@@ -77,6 +77,9 @@ export = class QuotesRouter
             if(!customer)
                 return APIError(`Failed to fetch customer with uid ${quote.customer_uid}`)(res);
 
+            if(quote.accepted)
+                return APIError(`Quote already accepted`)(res);
+
             quote.accepted = true;
 
             await quote.save();
