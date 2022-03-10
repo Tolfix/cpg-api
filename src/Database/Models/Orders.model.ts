@@ -126,7 +126,7 @@ increment.initialize(connection);
 OrderSchema.plugin(increment.plugin, {
     model: 'orders',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

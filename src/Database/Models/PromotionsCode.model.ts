@@ -57,7 +57,7 @@ increment.initialize(connection);
 PromotionCodeSchema.plugin(increment.plugin, {
     model: 'promotions_codes',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

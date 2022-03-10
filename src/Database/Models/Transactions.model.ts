@@ -70,7 +70,7 @@ increment.initialize(connection);
 TransactionsSchema.plugin(increment.plugin, {
     model: 'transactions',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

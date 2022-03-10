@@ -93,7 +93,7 @@ increment.initialize(connection);
 SubscriptionSchema.plugin(increment.plugin, {
     model: 'subscription',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

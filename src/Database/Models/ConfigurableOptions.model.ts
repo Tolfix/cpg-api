@@ -45,7 +45,7 @@ increment.initialize(connection);
 ConfigurableOptionsSchema.plugin(increment.plugin, {
     model: 'configurable_options',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

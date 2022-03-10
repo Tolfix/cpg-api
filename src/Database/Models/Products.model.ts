@@ -114,7 +114,7 @@ increment.initialize(connection);
 ProductSchema.plugin(increment.plugin, {
     model: 'products',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

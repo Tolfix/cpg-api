@@ -126,7 +126,7 @@ increment.initialize(connection);
 CustomerSchema.plugin(increment.plugin, {
     model: 'customer',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

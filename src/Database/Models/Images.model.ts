@@ -51,7 +51,7 @@ increment.initialize(connection);
 ImageSchema.plugin(increment.plugin, {
     model: 'images',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

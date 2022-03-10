@@ -145,7 +145,7 @@ increment.initialize(connection);
 InvoiceSchema.plugin(increment.plugin, {
     model: 'invoices',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

@@ -72,7 +72,7 @@ increment.initialize(connection);
 QuotesSchema.plugin(increment.plugin, {
     model: 'quotes',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 

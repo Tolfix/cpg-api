@@ -38,7 +38,7 @@ increment.initialize(connection);
 AdminSchema.plugin(increment.plugin, {
     model: 'admin',
     field: 'id',
-    startAt: 0,
+    startAt: 1,
     incrementBy: 1
 });
 
