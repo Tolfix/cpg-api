@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { Company_Name, Full_Domain } from "../../../../Config";
+import { Company_Name } from "../../../../Config";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import QuotesModel from "../../../../Database/Models/Quotes.model";
 import { SendEmail } from "../../../../Email/Send";
 import mainEvent from "../../../../Events/Main.event";
 import { IQuotes } from "@interface/Quotes.interface";
-import getFullName from "../../../../Lib/Customers/getFullName";
 import { idQuotes } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
+import QuoteCreateTemplate from "../../../../Email/Templates/Quotes/Quote.create.template";
 
 const API = new BaseModelAPI<IQuotes>(idQuotes, QuotesModel);
 
@@ -32,20 +32,7 @@ function insert(req: Request, res: Response)
                     // Send email to customer.
                     await SendEmail(Customer.personal.email, `Quote from ${await Company_Name() === "" ? "CPG" : await Company_Name()}`, {
                         isHTML: true,
-                        body: `
-                            <h1>Quote</h1>
-                            <p>
-                                Hello ${getFullName(Customer)}!
-                            </p>
-                            <p>
-                                You have a new quote.
-                            </p>
-                            <p>
-                                <a href="${Full_Domain}/v2/quotes/${result.uid}/view">
-                                    Click here to view the quote.
-                                </a>
-                            </p>
-                        `
+                        body: await QuoteCreateTemplate(result, Customer)
                     });
                 }
             }
