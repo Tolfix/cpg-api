@@ -1,4 +1,4 @@
-POST https://cpg.tolfx.dev/v2/customers/authenticate
+POST http://localhost:8080/v2/customers/authenticate
 Content-Type: application/json
 
 {
