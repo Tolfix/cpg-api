@@ -29,7 +29,7 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
     </p>
     ${CPG_Customer_Panel_Domain ? `
         <p>
-            <a href="${CPG_Customer_Panel_Domain}/transactions/${t.uid}">View Transaction</a>
+            <a href="${CPG_Customer_Panel_Domain}/transactions?uid=${t.uid}">View Transaction</a>
         </p>
     ` : ''}
 </div>

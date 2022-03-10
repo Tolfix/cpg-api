@@ -32,7 +32,7 @@ export default async (quote: IQuotes, customer: ICustomer) => await UseStyles(st
     </p>
     ${CPG_Customer_Panel_Domain ? `
     <p>
-        <a href="${CPG_Customer_Panel_Domain}/quotes/${quote.id}">View quote</a> to accept or decline.
+        <a href="${CPG_Customer_Panel_Domain}/quotes?id=${quote.id}">View quote</a> to accept or decline.
     </p>
     ` : ''}
 </div>
