@@ -1,8 +1,8 @@
-FROM node:16-alpine
+FROM node:16-alpine as INSTALLER
 
-ENV DEBIAN_FRONTEND=noninteractive
+RUN apk add --no-cache libc6-compat
 
-LABEL author="Tolfix" maintainer="support@tolfix.com"
+WORKDIR /app
 
 RUN apk update && \
     apk upgrade && \
@@ -11,19 +11,35 @@ RUN apk update && \
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5
 
-WORKDIR /usr/src
+COPY ./package*.json ./
 
-COPY package*.json ./
+RUN npm ci
+##########################
 
-RUN npm install --force
+# BUILDER
+FROM node:16-alpine as BUILDER
 
-COPY . ./
+WORKDIR /app
 
-RUN tsc -b
+COPY . .
 
-# Remove unused files
-#RUN rm -r ./src && \
-#    rm -r ./test
+COPY --from=INSTALLER /app/node_modules ./node_modules
+
+RUN npm run build
+##########################
+
+# APP
+FROM node:16-alpine as APP
+
+WORKDIR /app
+
+COPY --from=BUILDER /app/build ./build
+COPY --from=BUILDER /app/node_modules ./node_modules
+COPY --from=BUILDER /app/package.json ./package.json
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+LABEL author="Tolfix" maintainer="support@tolfix.com"
 
 ENV JWT_ACCESS_TOKEN ""
 ENV DEBUG "false"
