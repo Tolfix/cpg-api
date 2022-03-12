@@ -1,7 +1,7 @@
-import mongoose, { model, Schema } from "mongoose"
+import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { IDTransactions } from "@interface/Transactions.interface";
+import { ITransactions } from "@interface/Transactions.interface";
 import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "../../Types/PaymentMethod";
@@ -58,7 +58,7 @@ const TransactionsSchema = new Schema
 );
 
 // Log when a transaction is created
-TransactionsSchema.post('save', function(doc: IDTransactions)
+TransactionsSchema.post('save', function(doc: ITransactions & Document)
 {
     Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.uid));
     // Logger.db(`Created transaction ${doc.uid}`);
@@ -74,6 +74,6 @@ TransactionsSchema.plugin(increment.plugin, {
     incrementBy: 1
 });
 
-const TransactionsModel = model<IDTransactions>("transactions", TransactionsSchema);
+const TransactionsModel = model<ITransactions & Document>("transactions", TransactionsSchema);
 
 export default TransactionsModel;
