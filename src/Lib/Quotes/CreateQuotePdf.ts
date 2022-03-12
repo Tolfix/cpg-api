@@ -29,7 +29,7 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
                 
             },
             "translate": {
-                "invoice": `Quote`,
+                "invoice": `Quote #${quote.id}`,
                 "number": GetText().invoice.txt_Number,
                 "date": GetText().invoice.txt_Date,
                 "due-date": GetText().invoice.txt_DueDate,
@@ -49,11 +49,11 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
                 "margin-bottom": 25,
             },
             "sender": {
-                "company": Company_Name,
-                "address": Company_Address,
-                "zip": Company_Zip,
-                "city": Company_City,
-                "country": Company_Country,
+                "company": (await Company_Name()),
+                "address": await Company_Address(),
+                "zip": await Company_Zip(),
+                "city": await Company_City(),
+                "country": await Company_Country(),
             },
             "client": {
                 "company": Customer.billing.company ?? `${Customer.personal.first_name} ${Customer.personal.last_name}`,
@@ -71,7 +71,7 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
                 return {
                     "quantity": item.quantity,
                     "description": item.name,
-                    "tax-rate": item.tax_rate,
+                    "tax-rate": quote.tax_rate,
                     "price": item.price
                 }
             }),
@@ -84,9 +84,9 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             data["client"]["custom1"] = `<br/><strong>Innehar ${await Company_Tax_Registered() ? "" : "inte"} F-Skattsedel</strong>`;
 
 
-        if(Company_Logo_Url && PDF_Template_Url === "")
+        if(await Company_Logo_Url() !== "" && PDF_Template_Url === "")
             // @ts-ignore
-            data["images"]["logo"] = Company_Logo_Url;
+            data["images"]["logo"] = await Company_Logo_Url();
 
         if(PDF_Template_Url !== "")
             // @ts-ignore

@@ -147,7 +147,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
         )
             data["client"]["custom1"] = `<br/><strong>Innehar ${(await Company_Tax_Registered()) ? "" : "inte"} F-Skattsedel</strong>`;
 
-        if(Company_Logo_Url && PDF_Template_Url === "")
+        if(await Company_Logo_Url() !== "" && PDF_Template_Url === "")
             // @ts-ignore
             data["images"]["logo"] = await Company_Logo_Url();
 

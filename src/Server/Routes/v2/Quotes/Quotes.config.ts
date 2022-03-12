@@ -3,9 +3,14 @@ import CustomerModel from "../../../../Database/Models/Customers/Customer.model"
 import QuotesModel from "../../../../Database/Models/Quotes.model";
 import AW from "../../../../Lib/AW";
 import createQuotePdf from "../../../../Lib/Quotes/CreateQuotePdf";
-import { APIError } from "../../../../Lib/Response";
+import QuoteToInvoice from "../../../../Lib/Quotes/QuoteToInvoice";
+import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
+import EnsureAuth from "../../../../Middlewares/EnsureAuth";
 import QuotesController from "./Quotes.controller";
+import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
+import { sendEmail } from "../../../../Email/Send";
+import QuoteAcceptedTemplate from "../../../../Email/Templates/Quotes/Quote.accepted.template";
 
 export = class QuotesRouter
 {
@@ -27,11 +32,13 @@ export = class QuotesRouter
             QuotesController.getByUid
         ]);
 
-        this.router.get("/:uid/view", async (req, res) =>
+        this.router.get("/:uid/view", EnsureAuth(), async (req, res) =>
         {
-            // 
             const uid = req.params.uid;
-            const [quote, e_quote] = await AW(await QuotesModel.findOne({ uid: uid }));
+            const [quote, e_quote] = await AW(await QuotesModel.findOne({ $or: [
+                { uid: uid },
+                { id: uid }
+            ] }));
 
             if(e_quote || !quote)
                 return APIError(`Failed to fetch quote with uid ${uid}`)(res);
@@ -51,6 +58,69 @@ export = class QuotesRouter
             });
 
             res.end(result, "base64");
+        });
+
+        this.router.post("/:uid/accept", EnsureAuth(), async (req, res) =>
+        {
+            const uid = req.params.uid;
+            const [quote, e_quote] = await AW(await QuotesModel.findOne({ $or: [
+                { uid: uid },
+                { id: uid }
+            ] }));
+
+            if(e_quote || !quote)
+                return APIError(`Failed to fetch quote with uid ${uid}`)(res);
+
+            const customer = await CustomerModel.findOne({ $or: [
+                { id: quote.customer_uid },
+                { uid: quote.customer_uid as any }
+            ] });
+
+            if(!customer)
+                return APIError(`Failed to fetch customer with uid ${quote.customer_uid}`)(res);
+
+            if(quote.accepted)
+                return APIError(`Quote already accepted`)(res);
+
+            quote.accepted = true;
+
+            await quote.save();
+
+            await sendEmail({
+                receiver: customer.personal.email,
+                subject: `Quote accepted | #${quote.id}`,
+                body: {
+                    body: QuoteAcceptedTemplate(quote, customer),
+                }
+            });
+
+            // Convert quote to invoice
+            const invoice = await QuoteToInvoice(quote);
+            if(!invoice)
+                return APIError("Failed to convert quote to invoice")(res);
+
+            // Send email to customer, no need to await since if it fails it will run cron either way
+            sendInvoiceEmail(invoice, customer);
+
+            return APISuccess(invoice)(res);
+        });
+
+        this.router.post("/:uid/decline", EnsureAuth(), async (req, res) =>
+        {
+            const uid = req.params.uid;
+            const [quote, e_quote] = await AW(await QuotesModel.findOne({ $or: [
+                { uid: uid },
+                { id: uid }
+            ] }));
+
+            if(e_quote || !quote)
+                return APIError(`Failed to fetch quote with uid ${uid}`)(res);
+
+            quote.declined = true;
+
+            await quote.save();
+
+            return APISuccess(`Declined quote offer.`)(res);
         });
 
         this.router.post("/", [

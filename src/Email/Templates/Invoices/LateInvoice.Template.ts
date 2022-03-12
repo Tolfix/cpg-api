@@ -78,7 +78,7 @@ export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) 
     </p>
     ${CPG_Customer_Panel_Domain ? `
     <p>
-        <a href="${CPG_Customer_Panel_Domain}/invoices/${invoice.id}">View Invoice</a>
+        <a href="${CPG_Customer_Panel_Domain}/invoices?id=${invoice.id}">View Invoice</a>
     </p>
     ` : ''}
 </div>

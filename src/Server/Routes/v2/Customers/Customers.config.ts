@@ -27,6 +27,7 @@ import { idImages } from "../../../../Lib/Generator";
 import { CacheImages } from "../../../../Cache/Image.cache";
 import ImageModel from "../../../../Database/Models/Images.model";
 import Jimp from 'jimp';
+import QuotesModel from "../../../../Database/Models/Quotes.model";
 
 export = class CustomerRouter
 {
@@ -317,6 +318,62 @@ export = class CustomerRouter
             });
 
             return APISuccess("Order cancelled.")(res);
+        });
+
+        this.router.get("/my/quotes", EnsureAuth(), async (req, res) =>
+        {
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const data = await MongoFind(QuotesModel, req.query,{
+                $or: [
+                    { customer_uid: customer.uid },
+                    { customer_uid: customer.id }
+                ]
+            });
+
+            res.setHeader("X-Total-Pages", data.totalPages);
+            res.setHeader("X-Total", data.totalCount);
+
+            return APISuccess(data.data)(res);
+        });
+
+        this.router.get("/my/quotes/:id", EnsureAuth(), async (req, res) =>
+        {
+            const quoteId = req.params.id;
+
+            if(!quoteId)
+                return APIError(`Invalid invoice id`)(res);
+            
+            const customer = await CustomerModel.findOne({
+                // @ts-ignore
+                id: req.customer.id
+            });
+
+            if(!customer)
+                return APIError(`Unable to find customer`)(res);
+
+            const {data: [order]} = await MongoFind(QuotesModel, req.query,{
+                $or: [
+                    {
+                        customer_uid: customer.uid,
+                    },
+                    {
+                        customer_uid: customer.id,
+                    },
+                ],
+                id: quoteId,
+            });
+
+            if(!order)
+                return APIError(`Unable to find quote`)(res);
+
+            return APISuccess(order)(res);
         });
 
         this.router.get("/my/transactions", EnsureAuth(), async (req, res) =>

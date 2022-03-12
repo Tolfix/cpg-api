@@ -52,7 +52,7 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
 
     ${CPG_Customer_Panel_Domain ? `
     <p>
-        <a href="${CPG_Customer_Panel_Domain}/orders/${order.id}">View Order</a>
+        <a href="${CPG_Customer_Panel_Domain}/orders?id=${order.id}">View Order</a>
     </p>
     ` : ''}
 

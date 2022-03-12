@@ -41,7 +41,7 @@ export = async (invoice: IInvoice, customer: ICustomer) => UseStyles(stripIndent
     ${CPG_Customer_Panel_Domain ? `
     
         <p>
-            <a href="${CPG_Customer_Panel_Domain}/invoices/${invoice.uid}">View invoice</a>
+            <a href="${CPG_Customer_Panel_Domain}/invoices?id=${invoice.id}">View invoice</a>
         </p>
 
     ` : ''}
