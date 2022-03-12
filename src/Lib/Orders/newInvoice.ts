@@ -90,7 +90,9 @@ export async function createInvoiceFromOrder(order: IOrder)
         customer_uid: Customer_Id,
         dates: <IInvoice_Dates>{
             due_date: order.dates.next_recycle,
-            invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
+            // Possible fix to issue #94
+            invoice_date: order.dates.last_recycle,
+            // invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
         },
         amount: items.reduce((acc, item) =>
         {
