@@ -9,6 +9,8 @@ import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import EnsureAuth from "../../../../Middlewares/EnsureAuth";
 import QuotesController from "./Quotes.controller";
 import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
+import { sendEmail } from "../../../../Email/Send";
+import QuoteAcceptedTemplate from "../../../../Email/Templates/Quotes/Quote.accepted.template";
 
 export = class QuotesRouter
 {
@@ -83,6 +85,14 @@ export = class QuotesRouter
             quote.accepted = true;
 
             await quote.save();
+
+            await sendEmail({
+                receiver: customer.personal.email,
+                subject: `Quote accepted | #${quote.id}`,
+                body: {
+                    body: QuoteAcceptedTemplate(quote, customer),
+                }
+            });
 
             // Convert quote to invoice
             const invoice = await QuoteToInvoice(quote);
