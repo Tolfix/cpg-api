@@ -73,10 +73,10 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
     customer.extra.stripe_id = s_customer?.id;
     customer.markModified("extra");
     await customer.save();
-
+    const fAmount = parseInt(invoice.amount.toFixed(2));
     const intent = (await Stripe.paymentIntents.create({
         customer: s_customer?.id,
-        amount: (invoice.amount+invoice.amount*invoice.tax_rate/100) * 100,
+        amount: (fAmount+fAmount*invoice.tax_rate/100) * 100,
         currency: (!customer.currency ? await Company_Currency() : customer.currency) ?? "sek",
         payment_method_types: ["card"],
         receipt_email: customer?.personal.email,

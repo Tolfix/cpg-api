@@ -56,7 +56,7 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
 
         // @ts-ignore
         const currency = validCurrencyPaypal(c) ? c : "USD";
-
+        const fAmount = parseInt(invoice.amount.toFixed(2))
         const create_payment_json =
         {
             "intent": "sale",
@@ -74,7 +74,7 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
                         {
                             return {
                                 name: removeTags(item.notes),
-                                price: (item.amount+(item.amount*invoice.tax_rate/100)).toString(),
+                                price: (parseInt(item.amount.toFixed(2))+(parseInt(item.amount.toFixed(2))*invoice.tax_rate/100)).toString(),
                                 currency: (currency).toUpperCase(),
                                 quantity: item.quantity
                             }
@@ -82,9 +82,9 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
                     },
                     amount: {
                         currency: (currency).toUpperCase(),
-                        total: (invoice.amount+(invoice.amount*invoice.tax_rate/100)).toString(),
+                        total: (fAmount+(fAmount*invoice.tax_rate/100)).toString(),
                         details: {
-                            subtotal: (invoice.amount+(invoice.amount*invoice.tax_rate/100)).toString(),
+                            subtotal: (fAmount+(fAmount*invoice.tax_rate/100)).toString(),
                             tax: "0",
                         }
                     },

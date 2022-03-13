@@ -14,6 +14,7 @@ import stripeWebhookEvent from "../../../../Events/Stripe.event";
 const stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
+
 export = StripeRouter; 
 class StripeRouter
 {
@@ -41,11 +42,11 @@ class StripeRouter
                 { id: invoice.customer_uid },
                 { uid: invoice.customer_uid }
             ] });
-
+            const fAmount = parseInt((invoice.amount).toFixed(2));
             res.send(`
             <head>
                 <title>Checkout | ${invoice.id}</title>
-                <script src="https://js.stripe.com/v3/"/>
+                <script src="https://js.stripe.com/v3/"></script>
                 <style>
                     * {
                         font-family: "Verdana";
@@ -90,7 +91,7 @@ class StripeRouter
                             ${((await Promise.all(invoice.items.map(async (item) => `
                                 <tr>
                                     <td>${item.notes}</td>
-                                    <td>${item.amount} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
+                                    <td>${item.amount.toFixed(2)} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
                                 </tr>
                             `))).join(""))}
 
@@ -100,7 +101,7 @@ class StripeRouter
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td>${invoice.amount+invoice.amount*invoice.tax_rate/100} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
+                                <td>${fAmount+fAmount*invoice.tax_rate/100} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
                             </tr>
                         </table>
 
@@ -173,21 +174,21 @@ class StripeRouter
                     const form = document.getElementById('payment-form');
 
                     form.addEventListener('submit', async (event) => {
-                    event.preventDefault();
-                    
-                    const {error} = await stripe.confirmPayment({
-                        elements,
-                        confirmParams: {
-                            return_url: '${Full_Domain}/v2/stripe/${invoice.id}/complete',
-                        },
-                    });
-                    
-                    if (error) {
-                        const messageContainer = document.querySelector('#error-message');
-                        messageContainer.textContent = error.message;
-                    } else {
+                        event.preventDefault();
+                        
+                        const {error} = await stripe.confirmPayment({
+                            elements,
+                            confirmParams: {
+                                return_url: '${Full_Domain}/v2/stripe/${invoice.id}/complete',
+                            },
+                        });
+                        
+                        if (error) {
+                            const messageContainer = document.querySelector('#error-message');
+                            messageContainer.textContent = error.message;
+                        } else {
 
-                    }
+                        }
                     });
                 </script>
 
