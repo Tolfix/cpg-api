@@ -1,3 +1,4 @@
+import { TPaymentCurrency } from "../Lib/Currencies";
 import { TRecurringMethod } from "../Types/PaymentMethod";
 import { TPaymentTypes } from "../Types/PaymentTypes";
 import { ICategory } from "./Categories.interface";
@@ -30,6 +31,7 @@ export interface IProduct
     special: boolean;
     payment_type: Partial<TPaymentTypes>;
     price: number;
+    currency: TPaymentCurrency;
     setup_fee: number;
     image?: IImage["id"][];
     tax_rate: number;
