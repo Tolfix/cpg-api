@@ -17,6 +17,8 @@ import ConfigModel from "../Database/Models/Configs.model";
 import { CacheConfig } from "./Configs.cache";
 import InvoiceModel from "../Database/Models/Invoices.model";
 import { CacheInvoice } from "./Invoices.cache";
+import { Company_Currency } from "../Config";
+import { TPaymentCurrency } from "../Lib/Currencies";
 
 /**
  * @deprecated
@@ -51,17 +53,21 @@ export async function reCache_Admin()
     });
 }
 
-/**
- * @deprecated
- */
 export async function reCache_Customers()
 {
     Logger.info(`Starting caching on customers..`);
     return new Promise(async (resolve) =>
     {
         const customer = await CustomerModel.find();
-        for (const c of customer)
+        for await(const c of customer)
         {
+            // Check if customer has currency
+            if(!c.currency)
+            {
+                const companyCurrency = await Company_Currency();
+                c.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
+                await c.save();
+            }
             Logger.cache(`Caching customer ${c.uid}`);
             CacheCustomer.set(c.uid, c);
         }
@@ -69,9 +75,6 @@ export async function reCache_Customers()
     });
 }
 
-/**
- * @deprecated
- */
 export async function reCache_Product()
 {
     Logger.info(`Starting caching on products..`);
@@ -80,6 +83,13 @@ export async function reCache_Product()
         const product = await ProductModel.find();
         for (const c of product)
         {
+            // Check if product has currency
+            if(!c.currency)
+            {
+                const companyCurrency = await Company_Currency();
+                c.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
+                await c.save();
+            }
             Logger.cache(`Caching product ${c.uid}`);
             CacheProduct.set(c.uid, c);
         }
@@ -201,8 +211,8 @@ export async function reCache()
     await reCache_Configs();
     // await reCache_Categories();
     await reCache_Admin();
-    // await reCache_Customers();
-    // await reCache_Product();
+    await reCache_Customers();
+    await reCache_Product();
     // await reCache_Transactions();
     // await reCache_Orders();
     await reCache_Images();
