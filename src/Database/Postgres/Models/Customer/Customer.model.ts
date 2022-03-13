@@ -4,6 +4,7 @@ import Sequelize, {
 import { Billing, ICustomer, Personal } from "@interface/Customer.interface";
 import { IImage } from "@interface/Images.interface";
 import { postgres } from "../../../Postgres";
+import { TPaymentCurrency } from "../../../../Lib/Currencies";
 
 export class CustomerModel extends Model<ICustomer, Optional<ICustomer, "id">> implements ICustomer
 {
@@ -27,7 +28,7 @@ export class CustomerModel extends Model<ICustomer, Optional<ICustomer, "id">> i
     };
     declare password: string;
     declare profile_picture: IImage["id"] | null;
-    declare currency: string | ICustomer["currency"];
+    declare currency: TPaymentCurrency;
     declare extra: {
         [key: string]: any;
     };
