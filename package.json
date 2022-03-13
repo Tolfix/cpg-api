@@ -26,6 +26,7 @@
     "date-and-time": "^1.0.1",
     "dotenv": "^10.0.0",
     "easyinvoice": "^2.0.8",
+    "exchange-rates-api": "^1.1.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "express-rate-limit": "^6.2.0",
@@ -75,6 +76,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/cron": "^1.7.3",
+    "@types/exchange-rates-api": "^1.0.0",
     "@types/express": "^4.17.13",
     "@types/express-fileupload": "^1.1.7",
     "@types/express-session": "^1.17.4",
