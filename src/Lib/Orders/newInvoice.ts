@@ -14,6 +14,8 @@ import { Document } from "mongoose";
 import Logger from "../Logger";
 import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
 import { sanitizeMongoose } from "../Sanitize";
+import CustomerModel from "../../Database/Models/Customers/Customer.model";
+import { convertCurrency } from "../Currencies";
 
 // Create a method that checks if the order next recycle is within 14 days
 export function isWithinNext14Days(date: Date | string): boolean
@@ -35,12 +37,28 @@ export async function createInvoiceFromOrder(order: IOrder)
 {
 
     // Get our products
-    const Products = await getProductsByOrder(order);
+    let Products = await getProductsByOrder(order);
     const LBProducts = createMapProductsFromOrder(order);
     const Promotion_Code = await PromotionCodeModel.findOne({ id: sanitizeMongoose(order.promotion_code) });
-
+    
     // Get customer id
     const Customer_Id = order.customer_uid;
+    const customer = await CustomerModel.findOne({ $or: [
+        { uid: Customer_Id },
+        { id: Customer_Id },
+    ] });
+    if(!customer)
+        throw new Error(`Customer ${Customer_Id} not found`);
+
+    // Change products price based on customers.currenc
+    Products = await Promise.all(Products.map(async product =>
+    {
+        // Check if same currency
+        if(product.currency.toUpperCase() !== customer.currency.toUpperCase())
+            // Convert to customer currency
+            product.price = await convertCurrency(product.price, product.currency, customer.currency);
+        return product;
+    }));
 
     const items = [];
     for await(let product of Products)
@@ -72,6 +90,10 @@ export async function createInvoiceFromOrder(order: IOrder)
                     const option = configurable_option.options[
                         option_index
                     ];
+                    // Fix option.price to customer currency
+                    if(product.currency.toUpperCase() !== customer.currency.toUpperCase())
+                        option.price = await convertCurrency(option.price, product.currency, customer.currency);
+
                     items.push({
                         amount: option.price ?? 0,
                         notes: `+ ${product?.name} - ${configurable_option.name} ${option.name}`,
@@ -103,8 +125,8 @@ export async function createInvoiceFromOrder(order: IOrder)
         status: order.order_status,
         tax_rate: Products?.reduce((acc, cur) => cur.tax_rate, 0),
         notes: "",
-        paid: false,
         currency: order.currency,
+        paid: false,
         notified: false,
     })).save();
 
