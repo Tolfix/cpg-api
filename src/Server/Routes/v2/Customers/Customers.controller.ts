@@ -35,9 +35,7 @@ function insert(req: Request, res: Response)
                 return APIError(`Email ${email} already exists`, 409)(res);
 
             if(!req.body.currency)
-            {
                 req.body.currency = await Company_Currency();
-            }
 
             // Check if our currency is valid
             // req.body.currency = igh7183
@@ -45,8 +43,6 @@ function insert(req: Request, res: Response)
             {
                 currency = currency.toUpperCase();
                 return currencyCodes.includes(currency as TPaymentCurrency);
-
-
             }
 
             if(!validCurrency(req.body.currency))
