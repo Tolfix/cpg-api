@@ -2,8 +2,8 @@ import { Application, Router } from "express";
 import { APISuccess } from "../../../../Lib/Response";
 import { A_CC_Payments, A_RecurringMethod } from "../../../../Types/PaymentMethod";
 import { A_PaymentTypes } from "../../../../Types/PaymentTypes";
-
-export = class PaymentsRouter
+export = PaymentsRouter;
+class PaymentsRouter
 {
     private server: Application;
     private router = Router();

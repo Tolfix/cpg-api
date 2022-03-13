@@ -70,8 +70,8 @@ async function createOrder(customer: ICustomer, products: Array<{
         body: await NewOrderCreated(order, customer),
     });
 }
-
-export = class OrderRoute
+export = OrderRoute; 
+class OrderRoute
 {
     private server: Application;
     private router = Router();

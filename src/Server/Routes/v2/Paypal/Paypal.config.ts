@@ -3,8 +3,8 @@ import { Company_Website } from "../../../../Config";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import { IInvoice } from "@interface/Invoice.interface";
 import { createPaypalPaymentFromInvoice, retrievePaypalTransaction } from "../../../../Payments/Paypal";
-
-export = class PaypalRouter
+export = PaypalRouter; 
+class PaypalRouter
 {
     private server: Application;
     private router = Router();

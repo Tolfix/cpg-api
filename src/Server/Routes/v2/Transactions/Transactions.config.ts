@@ -1,8 +1,8 @@
 import { Application, Router } from "express";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import TransactionsController from "./Transactions.controller";
-
-export = class TransactionsRouter
+export = TransactionsRouter; 
+class TransactionsRouter
 {
     private server: Application;
     private router = Router();

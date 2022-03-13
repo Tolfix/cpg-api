@@ -28,8 +28,8 @@ import { CacheImages } from "../../../../Cache/Image.cache";
 import ImageModel from "../../../../Database/Models/Images.model";
 import Jimp from 'jimp';
 import QuotesModel from "../../../../Database/Models/Quotes.model";
-
-export = class CustomerRouter
+export = CustomerRouter; 
+class CustomerRouter
 {
     private server: Application;
     private router = Router();

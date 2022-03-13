@@ -5,8 +5,8 @@ import Logger from "../../../../Lib/Logger";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import PromotionCodeController from "./PromotionCode.controller";
-
-export = class PromotionCodeRoute
+export = PromotionCodeRoute;
+class PromotionCodeRoute
 {
     private server: Application;
     private router = Router();

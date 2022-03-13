@@ -6,8 +6,8 @@ import AW from "../../../../Lib/AW";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import ProductController from "./Products.controller";
-
-export = class ProductsRouter
+export = ProductsRouter; 
+class ProductsRouter
 {
     private server: Application;
     private router = Router();

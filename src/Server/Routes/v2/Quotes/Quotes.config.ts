@@ -11,8 +11,8 @@ import QuotesController from "./Quotes.controller";
 import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
 import { sendEmail } from "../../../../Email/Send";
 import QuoteAcceptedTemplate from "../../../../Email/Templates/Quotes/Quote.accepted.template";
-
-export = class QuotesRouter
+export = QuotesRouter; 
+class QuotesRouter
 {
     private server: Application;
     private router = Router();
