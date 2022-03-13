@@ -1,5 +1,4 @@
 import { TPaymentCurrency } from "../Lib/Currencies";
-import { ICompanyConfig } from "./Admin/Configs.interface";
 import { IImage } from "./Images.interface";
 
 /**
@@ -28,7 +27,7 @@ export interface ICustomer
     password: string;
     createdAt: Date;
     profile_picture: IImage["id"] | null;
-    currency: TPaymentCurrency | ICompanyConfig["currency"];
+    currency: TPaymentCurrency;
     extra: {
         [key: string]: any;
     };

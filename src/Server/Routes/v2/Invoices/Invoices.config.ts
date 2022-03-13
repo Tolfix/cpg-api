@@ -4,8 +4,8 @@ import createPDFInvoice from "../../../../Lib/Invoices/CreatePDFInvoice";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import InvoiceController from "./Invoices.controller";
 
-
-export = class InvoiceRouter
+export = InvoiceRouter;
+class InvoiceRouter
 {
     private server: Application;
     private router = Router();

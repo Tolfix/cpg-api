@@ -8,8 +8,8 @@ import { UploadedFile } from "express-fileupload";
 import { idImages } from "../../../../Lib/Generator";
 import ImageModel from "../../../../Database/Models/Images.model";
 import AW from "../../../../Lib/AW";
-
-export = class ImagesRouter
+export = ImagesRouter; 
+class ImagesRouter
 {
     private server: Application;
     private router = Router();

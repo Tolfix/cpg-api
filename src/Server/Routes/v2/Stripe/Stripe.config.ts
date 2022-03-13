@@ -14,8 +14,8 @@ import stripeWebhookEvent from "../../../../Events/Stripe.event";
 const stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
-
-export = class StripeRouter
+export = StripeRouter; 
+class StripeRouter
 {
     private server: Application;
     private router = Router();

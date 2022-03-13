@@ -133,7 +133,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                     "quantity": item.quantity,
                     "description": item.notes,
                     "tax-rate": invoice.tax_rate,
-                    "price": item.amount
+                    "price": item.amount.toFixed(2)
                 }
             }),
             "bottomNotice": `

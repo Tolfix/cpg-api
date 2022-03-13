@@ -1,3 +1,4 @@
+import { exchangeRates  } from "exchange-rates-api";
 // Every currency's code is in ISO 4217
 export type TPaymentCurrency =
     "AED"
@@ -195,3 +196,28 @@ export function GetCurrencySymbol(code: TPaymentCurrency)
         }
     ).replace(/\d/g, '').trim()
 }
+
+export const convertCurrency = async (
+    amount: number, 
+    fromCurrency: TPaymentCurrency, 
+    toCurrency: TPaymentCurrency, 
+    date = 'latest'
+) =>
+{
+    const instance = exchangeRates();
+    // @ts-ignore
+    instance.setApiBaseUrl('https://api.exchangerate.host');
+
+    if (date === 'latest')
+        instance.latest();
+    else
+        // @ts-ignore
+        instance.at(date);
+
+    return instance
+        .base(fromCurrency)
+        .symbols(toCurrency)
+        .fetch()
+        // @ts-ignore
+        .then((rate) => rate * amount);
+};

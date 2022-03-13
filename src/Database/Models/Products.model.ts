@@ -6,6 +6,7 @@ import Logger from "../../Lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_RecurringMethod } from "../../Types/PaymentMethod";
 import { A_PaymentTypes } from "../../Types/PaymentTypes";
+import { currencyCodes } from "../../Lib/Currencies";
 
 
 const ProductSchema = new Schema
@@ -61,6 +62,12 @@ const ProductSchema = new Schema
 
         price: {
             type: Number,
+            required: true,
+        },
+
+        currency: {
+            type: String,
+            enum: currencyCodes,
             required: true,
         },
 

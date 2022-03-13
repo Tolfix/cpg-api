@@ -2,8 +2,8 @@ import { Application, Router } from "express";
 //@ts-ignore
 import { OSTicket } from 'ac-osticket'
 import { osticket_api_key, osticket_url } from "../../../../Config";
-
-export = class ContactRouter
+export = ContactRouter; 
+class ContactRouter
 {
     private server: Application;
     private router = Router();

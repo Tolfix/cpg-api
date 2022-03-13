@@ -25,7 +25,7 @@ export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) 
         <strong>Tax due:</strong> ${invoice.tax_rate}%
     </p>
     <p>
-        <strong>Amount due:</strong> ${invoice.getTotalAmount({ tax: false, currency: true, symbol: true })}
+        <strong>Amount due:</strong> ${invoice.getTotalAmount({ tax: false, currency: false, symbol: false }).toFixed(2)} ${(invoice.currency)}
     </p>
     <p>
         <strong>Due date:</strong> ${invoice.dates.due_date}
@@ -69,7 +69,7 @@ export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) 
         <strong>
             Total:
         </strong>
-        ${invoice.getTotalAmount({ tax: true, currency: true, symbol: true })} (${invoice.tax_rate}%)
+        ${invoice.getTotalAmount({ tax: true, currency: false, symbol: false }).toFixed(2)} ${invoice.currency} (${invoice.tax_rate}%)
     </p>
     <p>
         <strong>

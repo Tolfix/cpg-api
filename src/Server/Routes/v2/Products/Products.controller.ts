@@ -5,11 +5,28 @@ import { IProduct } from "@interface/Products.interface";
 import { idProduct } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
+import { currencyCodes, TPaymentCurrency } from "../../../../Lib/Currencies";
+import { Company_Currency } from "../../../../Config";
 
 const API = new BaseModelAPI<IProduct>(idProduct, ProductModel);
 
-function insert(req: Request, res: Response)
+async function insert(req: Request, res: Response)
 {
+
+    if(!req.body.currency)
+        req.body.currency = (await Company_Currency()).toUpperCase();
+
+    // Check if our currency is valid
+    // req.body.currency = igh7183
+    const validCurrency = (currency: string) =>
+    {
+        currency = currency.toUpperCase();
+        return currencyCodes.includes(currency as TPaymentCurrency);
+    }
+
+    if(!validCurrency(req.body.currency))
+        req.body.currency = (await Company_Currency()).toUpperCase();
+    
     API.create(req.body)
         .then((result) =>
         {

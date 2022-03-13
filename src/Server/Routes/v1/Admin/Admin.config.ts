@@ -3,8 +3,8 @@ import { JWT_Access_Token } from "../../../../Config";
 import jwt from "jsonwebtoken";
 import { APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
-
-export = class AdminRouter
+export = AdminRouter; 
+class AdminRouter
 {
     private server: Application;
     private router = Router();
