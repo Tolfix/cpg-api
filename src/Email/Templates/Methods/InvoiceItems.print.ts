@@ -18,7 +18,7 @@ export default async function printInvoiceItemsTable(invoice: IInvoice)
                 <tr>
                     <td>${item.notes}</td>
                     <td>${item.quantity}</td>
-                    <td>${item.amount} ${GetCurrencySymbol(invoice.currency)}</td>
+                    <td>${item.amount.toFixed(2)} ${GetCurrencySymbol(invoice.currency)}</td>
                 </tr>
             `))).join('')}
         </tbody>
