@@ -27,6 +27,3 @@ import "./Handlers/Cron.handler";
 Logger.info(`Loading ./Admin/AdminHandler`);
 import AdminHandler from "./Admin/AdminHandler";
 new AdminHandler();
-
-Logger.info(`Loading ./Plugins/PluginHandler`);
-import "./Plugins/PluginHandler";

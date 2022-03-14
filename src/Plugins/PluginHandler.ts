@@ -6,7 +6,7 @@ import GetText from "../Translation/GetText";
 
 // find installed npm packages in package.json and get plugins starting with cpg_plugin
 // then require it and call the new 
-(async () =>
+export default async function PlguinHandler()
 {
     // get plugins from package.json
     Logger.plugin(GetText().plugins.txt_Plugin_Loading);
@@ -22,12 +22,13 @@ import GetText from "../Translation/GetText";
         }
     
         // @ts-ignore
-        require(plugin)();
+        await require(plugin)();
     
         Logger.plugin(GetText().plugins.txt_Plugin_Loaded(plugin));
         // Logger.plugin(`Loaded plugin ${plugin}`);
     }
-})();
+}
+
 
 export function installPlugin(plugin: string)
 {

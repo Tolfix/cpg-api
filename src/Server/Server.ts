@@ -15,6 +15,7 @@ import GetText from "../Translation/GetText";
 import rateLimiter from "express-rate-limit"
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 import EnsureAuth from "../Middlewares/EnsureAuth";
+import PluginHandler from "../Plugins/PluginHandler";
 
 declare module "express-session"
 {
@@ -111,6 +112,7 @@ server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listin
 (async () =>
     {
         await ApolloServer(server);
+        await PluginHandler();
         server.use("*", (req, res) =>
         {
             return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
