@@ -172,8 +172,9 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
 
     try
     {
+        const tAmount = parseInt(invoice.amount.toFixed(2));
         const paymentIntent = await Stripe.paymentIntents.create({
-            amount: (invoice.amount+invoice.amount*invoice.tax_rate/100) * 100,
+            amount: (tAmount+tAmount*invoice.tax_rate/100) * 100,
             currency: (!customer.currency ? await Company_Currency() : customer.currency) ?? "sek",
             payment_method_types: ["card"],
             receipt_email: customer?.personal.email,
@@ -218,10 +219,8 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
         Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.id}`);
 
         invoice?.transactions.push(newTrans.id);
-
         invoice.markModified("transactions");
         await invoice.save();
-
         return Promise.resolve(paymentIntent);
     }
     catch(e)

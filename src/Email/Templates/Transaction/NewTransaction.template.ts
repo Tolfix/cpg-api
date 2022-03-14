@@ -25,7 +25,7 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
         ${await PrintCompanyInformation()}
     </p>
     <p>
-        <strong>Amount:<strong> ${t.amount} ${GetCurrencySymbol(t.currency)}
+        <strong>Amount:<strong> ${t.amount.toFixed(2)} ${GetCurrencySymbol(t.currency)}
     </p>
     ${CPG_Customer_Panel_Domain ? `
         <p>
