@@ -8,7 +8,7 @@ import {
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import { APIError } from "../../../../Lib/Response";
 import Stripe from "stripe";
-import { CreatePaymentIntent, createSetupIntent, RetrievePaymentIntent, RetrieveSetupIntent } from "../../../../Payments/Stripe";
+import { CreatePaymentIntent, createSetupIntent, markInvoicePaid, RetrievePaymentIntent, RetrieveSetupIntent } from "../../../../Payments/Stripe";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import stripeWebhookEvent from "../../../../Events/Stripe.event";
 const stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
@@ -219,6 +219,7 @@ class StripeRouter
                     message = 'Success! Payment received.';
                     href = await Company_Website();
                     status = intent.status;
+                    markInvoicePaid(intent);
                     break;
             
                 case 'processing':
