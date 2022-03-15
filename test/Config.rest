@@ -1,0 +1,21 @@
+GET http://localhost:8080/v3/config
+Content-Type: application/json
+Authorization: Basic 123:123
+
+###
+POST http://localhost:8080/v3/config/smtp
+Content-Type: application/json
+Authorization: Basic 123:123
+
+{
+    "secure": true
+}
+
+###
+POST http://localhost:8080/v3/config/payment_methods
+Content-Type: application/json
+Authorization: Basic 123:123
+
+{
+    "payment_methods": ["swish", "paypal"]
+}
