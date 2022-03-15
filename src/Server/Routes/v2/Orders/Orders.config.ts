@@ -23,10 +23,11 @@ import mainEvent from "../../../../Events/Main.event";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
 import Logger from "../../../../Lib/Logger";
 import { ce_orders } from "../../../../Lib/Orders/PlaceOrder";
-import { TRecurringMethod } from "../../../../Types/PaymentMethod";
+import { TPayments, TRecurringMethod } from "../../../../Types/PaymentMethod";
 import { TPaymentCurrency } from "../../../../Lib/Currencies";
 import { TPaymentTypes } from "../../../../Types/PaymentTypes";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
+import { getEnabledPaymentMethods } from "../../../../Cache/Configs.cache";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -98,7 +99,17 @@ class OrderRoute
                     option_index: number,
                 }>;
             }>;
-            const payment_method = req.body.payment_method as keyof IPayments;
+            const payment_method = req.body.payment_method as TPayments;
+
+            // Check if payment_method is valid
+            const validPaymentMethods = getEnabledPaymentMethods();
+            
+            if(!validPaymentMethods.includes(payment_method))
+            {
+                Logger.error(`Invalid payment method ${payment_method}`, `Please ensure you have enabled this payment method in the config (/v3/config/payment_methods)`);
+                return APIError("Invalid payment method", 400)(res);
+            }
+
             const __promotion_code = req.body.promotion_code;
             const promotion_code = await PromotionCodeModel.findOne({
                 name: sanitizeMongoose(__promotion_code),
