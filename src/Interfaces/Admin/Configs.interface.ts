@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { TPayments } from "../../Types/PaymentMethod";
 
 export interface IConfigs
 {
@@ -6,6 +7,7 @@ export interface IConfigs
     smtp_emails: Array<string>;
     webhooks_urls: Array<string>;
     company: ICompanyConfig;
+    payment_methods: Array<Partial<TPayments>>;
 }
 
 export interface ICompanyConfig

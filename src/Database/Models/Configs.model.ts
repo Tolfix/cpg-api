@@ -23,7 +23,12 @@ const ConfigsSchema = new Schema
         company: {
             type: Object,
             default: {},
-        }
+        },
+
+        payment_methods: {
+            type: Array,
+            default: [],
+        },
 
     }
 );
