@@ -47,6 +47,11 @@ class ConfigRouter
             return APISuccess(Object.fromEntries(CacheConfig))(res);
         });
 
+        this.router.get("/payment_methods", (req, res) =>
+        {
+            return APISuccess(A_CC_Payments)(res);
+        });
+
         this.router.post("/payment_methods", EnsureAdmin(), async (req, res) =>
         {
             const { payment_methods } = req.body;
@@ -73,7 +78,7 @@ class ConfigRouter
             await CacheConfig.save();
 
             return APISuccess(Object.fromEntries(CacheConfig))(res);
-        })
+        });
 
     }
 
