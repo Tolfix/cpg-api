@@ -9,14 +9,14 @@ import "./Mods/Map.mod";
 import "./Mods/Number.mod";
 import "./Mods/String.mod";
 
+Logger.info(`Loading ./Database/Mongo`);
+import "./Database/Mongo";
+
 Logger.info(`Loading ./Events/Node.events`);
 import "./Events/Node.events";
 
 Logger.info(`Loading ./Server`);
 import "./Server/Server";
-
-Logger.info(`Loading ./Database/Mongo`);
-import "./Database/Mongo";
 
 DebugMode ? Logger.info(`Loading ./Database/Postgres`) : null;
 DebugMode ? import("./Database/Postgres") : null;
