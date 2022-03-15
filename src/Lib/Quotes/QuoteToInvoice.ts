@@ -18,6 +18,9 @@ export default async (quote: IQuotes) =>
         dates: {
             invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
             due_date: quote.due_date,
+            date_refunded: null,
+            date_paid: null,
+            date_cancelled: null,
         },
         amount: quote.items.reduce((acc, item) => acc + item.price * item.quantity, 0),
         currency: quote.currency,
