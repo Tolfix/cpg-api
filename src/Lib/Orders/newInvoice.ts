@@ -160,10 +160,12 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
     {
         Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
         const o_price = product.price;
-        if(code.percentage)
-            product.price = product.price-(product.price*code.discount);
-        else
-            product.price = product.price-code.discount;
+        // if(code.percentage)
+        //     product.price = product.price-(product.price*code.discount);
+        // else
+        //     product.price = product.price-code.discount;
+
+        product.price = product.price - (code.percentage ? (product.price * code.discount) : code.discount);
 
         Logger.info(`New price of product ${product.id} is ${product.price}, old price was ${o_price}`);
         // Check if we are - on price
