@@ -2,6 +2,7 @@ import InvoiceModel from "../../Database/Models/Invoices.model";
 import { IInvoice } from "@interface/Invoice.interface";
 import { Document } from "mongoose";
 import mainEvent from "../../Events/Main.event";
+import { getDate } from "../Time";
 
 export async function getInvoiceByIdAndMarkAsPaid(id: number | string): Promise<IInvoice & Document>
 {
@@ -15,6 +16,7 @@ export async function getInvoiceByIdAndMarkAsPaid(id: number | string): Promise<
             return reject("Invoice is already paid");
 
         invoice.paid = true;
+        invoice.dates.date_paid = getDate();
         await invoice.save();
         // emit event as invoice is paid
         mainEvent.emit("invoice_paid", invoice);

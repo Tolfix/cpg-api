@@ -7,6 +7,7 @@ import { idTransactions } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import sendEmailOnTransactionCreation from "../../../../Lib/Transaction/SendEmailOnCreation";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
+import { getDate } from "../../../../Lib/Time";
 
 const API = new BaseModelAPI<ITransactions>(idTransactions, TransactionsModel);
 
@@ -42,6 +43,8 @@ function insert(req: Request, res: Response)
                         invoice.markModified("status");
                         invoice.paid = true;
                         invoice.markModified("paid");
+                        invoice.dates.date_paid = getDate();
+                        invoice.markModified("dates");
                     }
                     await invoice.save();
                 } 

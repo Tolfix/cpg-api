@@ -8,6 +8,7 @@ import { sendInvoiceEmail, sendLateInvoiceEmail } from "../../Lib/Invoices/SendE
 import { ChargeCustomer } from "../../Payments/Stripe";
 import { InvoiceNotifiedReport } from "../../Email/Reports/InvoiceReport";
 import mainEvent from "../../Events/Main.event";
+import { getDate } from "../../Lib/Time";
 
 export const getDates30DaysAgo = () =>
 {
@@ -111,6 +112,7 @@ export function cron_chargeStripePayment()
                 // assuming it worked, we can mark it as paid
                 invoice.status = "collections";
                 invoice.paid = true;
+                invoice.dates.date_paid = getDate();
                 mainEvent.emit("invoice_paid", invoice);
                 // invoice.notified = true;
                 await invoice.save();

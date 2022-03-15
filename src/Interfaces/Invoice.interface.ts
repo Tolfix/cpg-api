@@ -81,8 +81,11 @@ export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collect
 
 export interface IInvoice_Dates
 {
-    invoice_date: Date | string;
-    due_date: Date | string;
+    invoice_date: string;
+    due_date: string;
+    date_refunded: string | null;
+    date_cancelled: string | null;
+    date_paid: string | null;
 }
 
 export interface IInvoices_Items

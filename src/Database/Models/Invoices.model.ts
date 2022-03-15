@@ -36,6 +36,18 @@ const InvoiceSchema = new Schema
             type: {
                 invoice_date: String,
                 due_date: String,
+                date_refunded: {
+                    type: String,
+                    default: null
+                },
+                date_cancelled: {
+                    type: String,
+                    default: null
+                },
+                date_paid: {
+                    type: String,
+                    default: null
+                },
             },
             required: true,
         },
