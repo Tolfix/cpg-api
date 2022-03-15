@@ -71,6 +71,7 @@ I Would recommend you use `pm2`.
 Plugins allow you to add others features to CPG.
 Beware, it can be `dangerous` as plugins get access to a lot of low level features.
 You can trust `Tolfix` plugins, or plugins you created yourself, otherwise there is no guarantee on stability or security.
+If you want to create your own plugin, check out [`cpg-plugin-template`](https://github.com/Tolfix/cpg-plugin-template) to create you're own!
 
 ## Installing
 You can add new plugins by modifying the environment variable "PLUGIN" as an array of strings.
