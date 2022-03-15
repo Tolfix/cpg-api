@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import { PaypalCurrencies } from "../../../../Payments/Currencies/Paypal.currencies";
-import { currencyCodes, GetCurrencySymbol, TPaymentCurrency } from '../../../../Lib/Currencies';
+import { convertCurrency, currencyCodes, GetCurrencySymbol, TPaymentCurrency } from '../../../../Lib/Currencies';
 export = CurrenciesRouter; 
 class CurrenciesRouter
 {
@@ -29,7 +29,17 @@ class CurrenciesRouter
             if(!code)
                 return APIError("Invalid code")(res);
             return APISuccess(GetCurrencySymbol(code))(res);
-        })
+        });
+
+        this.router.get("/convert/:from/:to/:amount", async (req, res) =>
+        {
+            const from = currencyCodes.find(c => c === req.params.from.toUpperCase()) as TPaymentCurrency;
+            const to = currencyCodes.find(c => c === req.params.to.toUpperCase()) as TPaymentCurrency;
+            const amount = Number(req.params.amount);
+            if(!from || !to || !amount)
+                return APIError("Invalid parameters")(res);
+            return APISuccess(await convertCurrency(amount, from, to))(res);
+        });
 
     }
 
