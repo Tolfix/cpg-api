@@ -2,11 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { Full_Domain, Paypal_Client_Id, Paypal_Client_Secret, Swish_Payee_Number } from "../../Config";
 import { IInvoice } from "@interface/Invoice.interface";
 import { IOrder } from "@interface/Orders.interface";
-import { IPayments } from "@interface/Payments.interface";
 import { createSwishQRCode } from "../../Payments/Swish";
 import { APISuccess } from "../Response";
+import { TPayments } from "../../Types/PaymentMethod";
 
-export const ce_orders = new Map<keyof IPayments, (order: IOrder, 
+export const ce_orders = new Map<TPayments, (order: IOrder, 
     invoice: IInvoice, 
     req: Request, 
     res: Response, 
