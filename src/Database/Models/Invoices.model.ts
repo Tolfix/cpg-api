@@ -122,6 +122,9 @@ const InvoiceSchema = new Schema
             default: 'USD',
         },
 
+    },
+    {
+        timestamps: true,
     }
 );
 

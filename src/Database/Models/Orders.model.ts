@@ -110,6 +110,9 @@ const OrderSchema = new Schema
             default: 'USD',
         },
 
+    },
+    {
+        timestamps: true,
     }
 );
 

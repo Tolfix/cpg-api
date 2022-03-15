@@ -77,6 +77,9 @@ const SubscriptionSchema = new Schema
             default: [],
         }
 
+    },
+    {
+        timestamps: true,
     }
 );
 

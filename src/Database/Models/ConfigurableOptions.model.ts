@@ -29,6 +29,9 @@ const ConfigurableOptionsSchema = new Schema
             default: [],
         },
 
+    },
+    {
+        timestamps: true,
     }
 );
 

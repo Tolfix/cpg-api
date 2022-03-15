@@ -105,6 +105,9 @@ const CustomerSchema = new Schema
             required: true,
         },
 
+    },
+    {
+        timestamps: true,
     }
 );
 

@@ -20,6 +20,9 @@ const PasswordResetSchema = new Schema
             default: false,
         }
 
+    },
+    {
+        timestamps: true,
     }
 );
 

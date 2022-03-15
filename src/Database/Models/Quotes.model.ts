@@ -78,6 +78,9 @@ const QuotesSchema = new Schema
             default: "none",
         }
 
+    },
+    {
+        timestamps: true,
     }
 );
 

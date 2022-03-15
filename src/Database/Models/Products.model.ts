@@ -105,6 +105,9 @@ const ProductSchema = new Schema
             default: [],
         },
 
+    },
+    {
+        timestamps: true,
     }
 );
 

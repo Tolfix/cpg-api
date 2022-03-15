@@ -54,6 +54,9 @@ const TransactionsSchema = new Schema
             default: 'USD',
         },
 
+    },
+    {
+        timestamps: true,
     }
 );
 

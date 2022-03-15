@@ -41,6 +41,9 @@ const PromotionCodeSchema = new Schema
             required: true
         }
 
+    },
+    {
+        timestamps: true,
     }
 );
 
