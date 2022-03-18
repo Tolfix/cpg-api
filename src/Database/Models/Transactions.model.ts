@@ -54,6 +54,12 @@ const TransactionsSchema = new Schema
             default: 'USD',
         },
 
+        statement: {
+            type: String,
+            enum: ['income', 'expense'],
+            default: 'income',
+        },
+
     },
     {
         timestamps: true,

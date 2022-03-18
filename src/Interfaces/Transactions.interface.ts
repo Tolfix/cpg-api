@@ -1,4 +1,3 @@
-import { Document } from "mongoose";
 import { TPaymentCurrency } from "../Lib/Currencies";
 import { ICustomer } from "./Customer.interface";
 import { IInvoice } from "./Invoice.interface";
@@ -21,5 +20,6 @@ export interface ITransactions
     payment_method: IInvoice["payment_method"];
     amount: IInvoice["amount"];
     currency: TPaymentCurrency;
+    statement: "income" | "expense";
     fees: number;
 }
