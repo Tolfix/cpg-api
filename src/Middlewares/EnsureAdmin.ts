@@ -40,8 +40,9 @@ export default function EnsureAdmin(eR = false)
             }
 
             !eR ? Logger.warning(`Authoring admin with username: ${login}`) : null;
-    
-            const match = bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"]) ?? "")
+
+            const match = await bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"]) ?? "");
+
             if(!match)
             {
                 !eR ? Logger.warning(`Authorization failed for admin with username: ${login}`) : null;
