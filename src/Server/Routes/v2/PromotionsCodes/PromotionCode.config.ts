@@ -4,7 +4,9 @@ import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model
 import Logger from "../../../../Lib/Logger";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 import PromotionCodeController from "./PromotionCode.controller";
+
 export = PromotionCodeRoute;
 class PromotionCodeRoute
 {
@@ -20,6 +22,13 @@ class PromotionCodeRoute
             EnsureAdmin(),
             PromotionCodeController.list
         ]);
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, PromotionCodeModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
+        });
 
         this.router.get("/:uid", [
             EnsureAdmin(),

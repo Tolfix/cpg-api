@@ -1,6 +1,10 @@
 import { Application, Router } from "express";
+import CategoryModel from "../../../../Database/Models/Category.model";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
+import { APISuccess } from "../../../../Lib/Response";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 import CategoryController from "./Categories.controller";
+
 export = CategoryRouter; 
 class CategoryRouter
 {
@@ -15,6 +19,13 @@ class CategoryRouter
         this.router.get("/", [
             CategoryController.list
         ]);
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, CategoryModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
+        });
 
         this.router.get("/:uid", [
             CategoryController.getByUid

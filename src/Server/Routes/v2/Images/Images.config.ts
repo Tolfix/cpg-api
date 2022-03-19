@@ -7,6 +7,7 @@ import { IImage } from "@interface/Images.interface";
 import { UploadedFile } from "express-fileupload";
 import { idImages } from "../../../../Lib/Generator";
 import ImageModel from "../../../../Database/Models/Images.model";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 import AW from "../../../../Lib/AW";
 export = ImagesRouter; 
 class ImagesRouter
@@ -71,6 +72,13 @@ class ImagesRouter
                 name: data.name,
                 size: data.size
             })(res);
+        });
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, ImageModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
         });
 
         /**

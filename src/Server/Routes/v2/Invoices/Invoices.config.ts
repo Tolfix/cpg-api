@@ -3,6 +3,8 @@ import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import createPDFInvoice from "../../../../Lib/Invoices/CreatePDFInvoice";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import InvoiceController from "./Invoices.controller";
+import { APISuccess } from "../../../../Lib/Response";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 
 export = InvoiceRouter;
 class InvoiceRouter
@@ -19,6 +21,13 @@ class InvoiceRouter
             EnsureAdmin(),
             InvoiceController.list
         ]);
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, InvoiceModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
+        });
 
         this.router.get("/:uid", [
             EnsureAdmin(),
