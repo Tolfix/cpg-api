@@ -1,4 +1,7 @@
 import { Application, Router } from "express";
+import ConfigurableOptionsModel from "../../../../Database/Models/ConfigurableOptions.model";
+import { APISuccess } from "../../../../Lib/Response";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import ConfigurableOptionsController from "./ConfigurableOptions.controller";
 export = ProductsRouter; 
@@ -15,6 +18,13 @@ class ProductsRouter
         this.router.get("/", [
             ConfigurableOptionsController.list
         ]);
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, ConfigurableOptionsModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
+        });
 
         this.router.get("/:uid", [
             ConfigurableOptionsController.getByUid

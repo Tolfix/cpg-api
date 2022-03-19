@@ -28,6 +28,7 @@ import { TPaymentCurrency } from "../../../../Lib/Currencies";
 import { TPaymentTypes } from "../../../../Types/PaymentTypes";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import { getEnabledPaymentMethods } from "../../../../Cache/Configs.cache";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 
 async function createOrder(customer: ICustomer, products: Array<{
     product_id: IProduct["id"],
@@ -291,6 +292,13 @@ class OrderRoute
                 return ce_orders.get(payment_method)?.(_order_, invoice, req, res, next);
 
             return APISuccess("Invoice sent")(res);
+        });
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, OrderModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
         });
 
         this.router.get("/:uid", [

@@ -6,6 +6,8 @@ import AW from "../../../../Lib/AW";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import ProductController from "./Products.controller";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
+
 export = ProductsRouter; 
 class ProductsRouter
 {
@@ -20,6 +22,13 @@ class ProductsRouter
         this.router.get("/", [
             ProductController.list
         ]);
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, ProductModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
+        });
 
         this.router.get("/:uid", [
             ProductController.getByUid

@@ -1,6 +1,10 @@
 import { Application, Router } from "express";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 import TransactionsController from "./Transactions.controller";
+import TransactionsModel from "../../../../Database/Models/Transactions.model";
+import { APISuccess } from "../../../../Lib/Response";
+
 export = TransactionsRouter; 
 class TransactionsRouter
 {
@@ -16,6 +20,13 @@ class TransactionsRouter
             EnsureAdmin(),
             TransactionsController.list
         ]);
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, TransactionsModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
+        });
 
         this.router.get("/:uid", [
             EnsureAdmin(),

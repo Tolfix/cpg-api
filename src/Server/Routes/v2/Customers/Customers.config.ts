@@ -28,6 +28,8 @@ import { CacheImages } from "../../../../Cache/Image.cache";
 import ImageModel from "../../../../Database/Models/Images.model";
 import Jimp from 'jimp';
 import QuotesModel from "../../../../Database/Models/Quotes.model";
+import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
+
 export = CustomerRouter; 
 class CustomerRouter
 {
@@ -44,6 +46,13 @@ class CustomerRouter
             EnsureAdmin(),
             CustomerController.list
         ]);
+
+        this.router.get("/json", (req, res) =>
+        {
+            const obj = Object.assign({}, CustomerModel.schema.obj);
+            setTypeValueOfObj(obj);
+            return APISuccess(obj)(res);
+        });
 
         this.router.get("/my/profile", [
             EnsureAuth(),
