@@ -71,6 +71,22 @@ class InvoiceRouter
 
             res.end(result, "base64");
         });
+
+        this.router.get("/:uid/preview", EnsureAdmin(), async (req, res) =>
+        {
+            const invoice = await InvoiceModel.findOne({ id: req.params.uid });
+
+            if(!invoice)
+                return res.status(404).send("Invoice not found");
+
+            const result = await createPDFInvoice(invoice);
+
+            res.writeHead(200, {
+                'Content-Type': "application/pdf",
+            });
+
+            res.end(result, "base64");
+        });
     }
 
 }
