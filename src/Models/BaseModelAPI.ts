@@ -58,7 +58,13 @@ export default class BaseModelAPI<IModel extends { uid: string }>
 
                 res.setHeader("X-Total-Pages", result.totalPages);
                 res.setHeader("X-Total", result.totalCount);
-
+                if(query["include_x"])
+                    return resolve({
+                        // @ts-ignore
+                        data: r,
+                        totalPages: result.totalPages,
+                        totalCount: result.totalCount
+                    })
                 resolve(r);
             }).catch(reject);
         });
