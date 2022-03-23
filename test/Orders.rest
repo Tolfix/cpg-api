@@ -1,6 +1,22 @@
 POST http://localhost:8080/v2/orders/place
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo1LCJlbWFpbCI6ImpvaG5AZG9lLmNvbSJ9LCJleHAiOjE2MzgzNzcwODIsImlhdCI6MTYzODI5MDY4Mn0.ZkrdxAMKi1Jh5cDMdC8ZY40_id1PVNptaJidGP7iLTE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJlbWFpbCI6InRlc3RAdG9sZml4LmNvbSJ9LCJleHAiOjE2NDc0Mzc0MjYsImlhdCI6MTY0NzM1MTAyNn0.6U6SUhsq76Ad0uDjm9Z3XbiKDY-YXZ320i6WRcvGnJA
+
+{
+    "payment_method": "credit_card",
+    "products": [
+        {
+            "product_id": 0,
+            "quantity": 1
+        }
+    ]
+}
+
+###
+
+POST http://localhost:8080/v2/orders/place
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJlbWFpbCI6InRlc3RAdG9sZml4LmNvbSJ9LCJleHAiOjE2NDcxOTE3NzksImlhdCI6MTY0NzEwNTM3OX0.8YmWtcAXgddGCvqPSk0O-Cfu5ceaOAx8uexiBPMkgj4
 
 {
     "payment_method": "credit_card",
@@ -9,10 +25,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo1L
             "product_id": 3,
             "quantity": 1,
             "configurable_options": [
-                {
-                    "id": 1,
-                    "option_index": 1
-                },
                 {
                     "id": 1,
                     "option_index": 1
