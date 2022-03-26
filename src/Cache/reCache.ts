@@ -207,10 +207,17 @@ export async function reCache_Images()
      return new Promise(async (resolve) =>
      {
          const invoice = await InvoiceModel.find();
-         for (const o of invoice)
+         for await(const o of invoice)
          {
-             Logger.cache(`Caching invoice ${o.uid}`);
-             CacheInvoice.set(o.uid, o);
+            // check if invoice has currency
+            if(!o.currency)
+            {
+                const companyCurrency = await Company_Currency();
+                o.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
+                await o.save();
+            }
+            Logger.cache(`Caching invoice ${o.uid}`);
+            CacheInvoice.set(o.uid, o);
          }
          return resolve(true);
      });
@@ -226,5 +233,5 @@ export async function reCache()
     // await reCache_Transactions();
     // await reCache_Orders();
     await reCache_Images();
-    // await reCache_Invoices();
+    await reCache_Invoices();
 }

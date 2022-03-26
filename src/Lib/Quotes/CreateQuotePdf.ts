@@ -42,7 +42,7 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             },
             "taxNotation": "vat",
             "settings": {
-                "currency": (!Customer.currency ? await Company_Currency() : Customer.currency).toUpperCase(),
+                "currency": (!quote.currency ? await Company_Currency() : quote.currency).toUpperCase(),
                 "margin-top": 25,
                 "margin-right": 25,
                 "margin-left": 25,

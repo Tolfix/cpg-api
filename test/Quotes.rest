@@ -3,7 +3,7 @@ Content-Type: application/json
 Authorization: Basic 123:123
 
 {
-    "customer_uid": 0,
+    "customer_uid": 1,
     "items": {
         "name": "item1",
         "price": 100,
