@@ -44,9 +44,17 @@ export default class AdminHandler
         inquirer.prompt(Prompt().args).then(async (value) =>
         {
             clear();
+            console.log(
+                chalk.green(
+                    figlet.textSync("CPG Admin", {
+                        horizontalLayout: "full",
+                        verticalLayout: "full"
+                    })
+                )
+            )
             try
             {
-                const cName = value.commands[0];
+                const cName = value.commands;
                 const command = cacheCommands.get(cName);
                 if(command)
                 {
@@ -58,6 +66,9 @@ export default class AdminHandler
             {
                 this.action();
             }
+        }).catch((error) =>
+        {
+            console.log(error)
         });
         // prompt.get(['action'], async (err, result) =>
         // {
