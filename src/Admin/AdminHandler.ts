@@ -8,113 +8,153 @@ import Logger from "../Lib/Logger";
 import { getPlugins, installPlugin } from "../Plugins/PluginHandler";
 import createAdmin from "./CreateAdmin";
 import updateSMTP from "./updateSMTP";
+import chalk from "chalk";
+import clear from "clear";
+import figlet from "figlet";
+import Prompt, { cacheCommands } from "./Commands/Prompt";
+import inquirer from 'inquirer';
+
+export interface ICommandsAdmin
+{
+    [key: string]: {
+        description: string;
+        method: any;
+        [key: string]: any;
+    }
+}
 
 export default class AdminHandler
 {
+
     constructor()
     {
-        prompt.start();
+        console.log(
+            chalk.green(
+                figlet.textSync("CPG Admin", {
+                    horizontalLayout: "full",
+                    verticalLayout: "full"
+                })
+            )
+        )
         this.action();
     }
 
     private action()
     {
-        prompt.get(['action'], async (err, result) =>
+        inquirer.prompt(Prompt().args).then(async (value) =>
         {
-
-            if(result.action === "help")
-                Logger.info(stripIndent`
-                Available actions:
-                    Emails:
-                        add_email
-                        delete_email
-                        show_emails
-
-                    Admin:
-                        create_admin
-                        delete_admin
-                        show_admins
-
-                    SMTP:
-                        update_smtp
-                        show_smtp
-
-                    General:
-                        help
-
-                    Webhooks:
-                        add_webhook
-                        delete_webhook
-                        show_webhooks
-
-                    Company:
-                        update_company
-
-                    Plugins:
-                        show_plugins
-                        update_plugin
-
-                    Cron:
-                        run_invoices_notify
-                        run_charge_payment
-                        run_late_invoice_notify
-                `);
-
-            switch (result.action)
+            clear();
+            try
             {
-                case "create_admin":
-                    await this.create();
-                    break;
-                case "delete_admin":
-                    await this.delete_admin();
-                    break;
-                case "show_admins":
-                    await AdminHandler.show();
-                    break;
-                case "update_smtp":
-                    await this.update_smtp();
-                    break;
-                case "show_smtp":
-                    await this.show_smtp();
-                    break;
-                case "add_email":
-                    await this.add_email();
-                    break;
-                case "delete_email":
-                    await this.delete_email();
-                    break;
-                case "show_emails":
-                    await this.show_emails();
-                    break;
-                case "add_webhook":
-                    await this.add_webhook();
-                    break;
-                case "delete_webhook":
-                    await this.delete_webhook();
-                    break;
-                case "show_webhooks":
-                    await this.show_webhooks();
-                    break;
-                case "update_company":
-                    await this.update_company();
-                    break;
-                case "show_plugins":
-                    await this.show_plugins();
-                    break;
-                case "update_plugin":
-                    await this.update_plugin();
-                    break;
-                case "run_invoices_notify":
-                    await this.run_invoices_notify()
-                    break;
-                case "run_charge_payment":
-                    await this.run_charge_payment();
-                    break;
-                case "run_late_invoice_notify":
-                    await this.run_late_invoice_notify()
+                const cName = value.commands[0];
+                const command = cacheCommands.get(cName);
+                if(command)
+                {
+                    const value = await inquirer.prompt(command.args)
+                    await command.method(value);
+                }
             }
-                        this.action();
+            finally
+            {
+                this.action();
+            }
         });
+        // prompt.get(['action'], async (err, result) =>
+        // {
+
+        //     if(result.action === "help")
+        //         Logger.info(stripIndent`
+        //         Available actions:
+        //             Emails:
+        //                 add_email
+        //                 delete_email
+        //                 show_emails
+
+        //             Admin:
+        //                 create_admin
+        //                 delete_admin
+        //                 show_admins
+
+        //             SMTP:
+        //                 update_smtp
+        //                 show_smtp
+
+        //             General:
+        //                 help
+
+        //             Webhooks:
+        //                 add_webhook
+        //                 delete_webhook
+        //                 show_webhooks
+
+        //             Company:
+        //                 update_company
+
+        //             Plugins:
+        //                 show_plugins
+        //                 update_plugin
+
+        //             Cron:
+        //                 run_invoices_notify
+        //                 run_charge_payment
+        //                 run_late_invoice_notify
+        //         `);
+
+        //     switch (result.action)
+        //     {
+        //         case "create_admin":
+        //             await this.create();
+        //             break;
+        //         case "delete_admin":
+        //             await this.delete_admin();
+        //             break;
+        //         case "show_admins":
+        //             await AdminHandler.show();
+        //             break;
+        //         case "update_smtp":
+        //             await this.update_smtp();
+        //             break;
+        //         case "show_smtp":
+        //             await this.show_smtp();
+        //             break;
+        //         case "add_email":
+        //             await this.add_email();
+        //             break;
+        //         case "delete_email":
+        //             await this.delete_email();
+        //             break;
+        //         case "show_emails":
+        //             await this.show_emails();
+        //             break;
+        //         case "add_webhook":
+        //             await this.add_webhook();
+        //             break;
+        //         case "delete_webhook":
+        //             await this.delete_webhook();
+        //             break;
+        //         case "show_webhooks":
+        //             await this.show_webhooks();
+        //             break;
+        //         case "update_company":
+        //             await this.update_company();
+        //             break;
+        //         case "show_plugins":
+        //             await this.show_plugins();
+        //             break;
+        //         case "update_plugin":
+        //             await this.update_plugin();
+        //             break;
+        //         case "run_invoices_notify":
+        //             await this.run_invoices_notify()
+        //             break;
+        //         case "run_charge_payment":
+        //             await this.run_charge_payment();
+        //             break;
+        //         case "run_late_invoice_notify":
+        //             await this.run_late_invoice_notify()
+        //     }
+        //     this.action();
+        // });
     }
 
 
