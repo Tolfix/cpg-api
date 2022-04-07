@@ -18,7 +18,7 @@ export default () =>
         args: [
             {
                 name: 'commands',
-                type: "checkbox",
+                type: "list",
                 message: "Select the commands you want to run",
                 choices: commands,
             }
