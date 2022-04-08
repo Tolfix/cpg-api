@@ -7,6 +7,7 @@ import { Company_Currency } from "../../Config";
 import { getDate } from "../../Lib/Time";
 import { idTransactions } from "../../Lib/Generator";
 import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
+import { getDates30DaysAgo } from "../../Cron/Methods/Invoices.cron.methods";
 
 export default
 {
@@ -25,6 +26,10 @@ export default
                 {
                     name: 'Get invoice',
                     value: 'get_invoice',
+                },
+                {
+                    name: 'Get late invoices',
+                    value: 'get_late_invoices',
                 },
                 {
                     name: 'Mark invoice as paid',
@@ -66,7 +71,21 @@ export default
                     id: id,
                 }));
                 break;
-
+            case 'get_late_invoices':
+                {
+                    const invoices = await InvoiceModel.find({
+                        "dates.due_date": {
+                            $in: [...(getDates30DaysAgo())]
+                        },
+                        paid: false,
+                        status: {
+                            $not: /fraud|cancelled|draft|refunded/g
+                        }
+                    });
+                    Logger.info(`Total late invoices:`, invoices.length);
+                    Logger.info(`Late invoices ids:`, invoices.map(e => e.id));
+                    break;
+                }
             case 'mark_invoice_paid':
                 {
                     const action = [
