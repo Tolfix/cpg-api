@@ -1,9 +1,6 @@
 /* eslint-disable no-case-declarations */
 import Logger from "../../Lib/Logger";
 import prompt from "prompt";
-import { CacheConfig } from "../../Cache/Configs.cache";
-import ConfigModel from "../../Database/Models/Configs.model";
-import updateSMTP from "../updateSMTP";
 import AdminModel from "../../Database/Models/Administrators.model";
 import createAdmin from "../CreateAdmin";
 

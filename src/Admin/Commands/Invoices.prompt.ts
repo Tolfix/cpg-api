@@ -64,8 +64,8 @@ export default
                 const { invoiceId, isOCR } = await inquirer.prompt(action);
                 let id = invoiceId;
                 if(isOCR)
-                    // get id from ocr, by removing the last 8 digits in the start 
-                    id = invoiceId.substring(0, invoiceId.length - 8);
+                    // get id from ocr, by removing first 8 characters
+                    id = invoiceId.substring(8);
 
                 Logger.info(`Invoice:`, await InvoiceModel.findOne({
                     id: id,
