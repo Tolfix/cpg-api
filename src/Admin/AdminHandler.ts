@@ -18,6 +18,7 @@ export default class AdminHandler
                 })
             )
         )
+        inquirer.registerPrompt('search-list', require('inquirer-search-list'));
         this.action();
     }
 
