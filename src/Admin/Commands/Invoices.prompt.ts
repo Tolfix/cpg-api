@@ -5,9 +5,14 @@ import inquirer from 'inquirer';
 import TransactionsModel from "../../Database/Models/Transactions.model";
 import { Company_Currency } from "../../Config";
 import { getDate } from "../../Lib/Time";
-import { idTransactions } from "../../Lib/Generator";
+import { idInvoice, idTransactions } from "../../Lib/Generator";
 import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
 import { getDates30DaysAgo } from "../../Cron/Methods/Invoices.cron.methods";
+import { A_CC_Payments } from "../../Types/PaymentMethod";
+import { currencyCodes } from "../../Lib/Currencies";
+import CustomerModel from "../../Database/Models/Customers/Customer.model";
+import mainEvent from "../../Events/Main.event";
+import { sendInvoiceEmail } from "../../Lib/Invoices/SendEmail";
 
 export default
 {
@@ -34,6 +39,10 @@ export default
                 {
                     name: 'Mark invoice as paid',
                     value: 'mark_invoice_paid',
+                },
+                {
+                    name: 'Create invoice',
+                    value: 'create_invoice',
                 }
             ],
         }
@@ -145,6 +154,118 @@ export default
             
                     await invoice.save();
                     Logger.info(`Invoice with id ${invoiceId} marked as paid`);
+                    break;
+                }
+            case 'create_invoice':
+                {
+                    const action = [
+                        {
+                            name: 'customerId',
+                            type: 'search-list',
+                            message: 'Customer',
+                            choices: (await CustomerModel.find()).map(e =>
+                                {
+                                    return {
+                                        name: `${e.personal.first_name} ${e.personal.last_name} (${e.id})`,
+                                        value: e.id,
+                                    }
+                                })
+                        },
+                        {
+                            name: 'invoice_date',
+                            type: 'input',
+                            message: 'Enter the invoiced date',
+                        },
+                        {
+                            name: 'due_date',
+                            type: 'input',
+                            message: 'Enter the due date',
+                        },
+                        {
+                            name: 'amount',
+                            type: 'number',
+                            message: 'Enter the amount',
+                        },
+                        {
+                            name: 'tax_rate',
+                            type: 'number',
+                            message: 'Enter the tax rate',
+                        },
+                        {
+                            name: 'payment_method',
+                            type: 'search-list',
+                            message: 'Enter the payment method',
+                            choices: A_CC_Payments
+                        },
+                        {
+                            name: 'currency',
+                            type: 'search-list',
+                            message: 'Enter the currency',
+                            choices: currencyCodes
+                        },
+                        {
+                            name: 'notes',
+                            type: 'input',
+                            message: 'Enter the notes',
+                        },
+                        {
+                            name: "items",
+                            type: "input",
+                            message: "Enter the items (separated by ';') (name,quantity,price;...)",
+                            response: 'array',
+                            validate: (value: string) =>
+                            {
+                                if (value.split(';').length < 1)
+                                    return 'Please enter at least one item';
+                                return true;
+                            }
+                        },
+                        {
+                            name: "send_email",
+                            type: "confirm",
+                            message: "Send notification?",
+                            default: true,
+                        }
+                    ]
+                    const { customerId, invoice_date, due_date, amount, tax_rate, payment_method, currency, notes, items, send_email } = await inquirer.prompt(action);
+                    const customer = await CustomerModel.findOne({ id: customerId })
+                    if(!customer)
+                        return Logger.error(`Customer with id ${customerId} not found`);
+                    // parse items
+                    const nItems = items.split(';').map((e: any) =>
+                    {
+                        const [notes, quantity, price] = e.split(',');
+                        return {
+                            notes,
+                            quantity: Number(quantity),
+                            price: Number(price),
+                        }
+                    });
+                
+                    const invoice = await (new InvoiceModel({
+                        customer_uid: customerId,
+                        dates: {
+                            invoice_date: invoice_date,
+                            due_date: due_date,
+                        },
+                        amount,
+                        tax_rate,
+                        payment_method,
+                        currency,
+                        notes,
+                        nItems,
+                        status: "active",
+                        paid: false,
+                        notified: false,
+                        uid: idInvoice(),
+                        transactions: [],
+                    }).save());
+                    Logger.info(`Invoice created with id ${invoice.id}`);
+                    mainEvent.emit("invoice_created", invoice);
+                    if(send_email)
+                        await sendInvoiceEmail(invoice, customer);
+
+                    break;
                 }
         }
         return true;
