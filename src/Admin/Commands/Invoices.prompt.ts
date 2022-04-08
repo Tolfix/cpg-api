@@ -247,6 +247,9 @@ export default
                         dates: {
                             invoice_date: invoice_date,
                             due_date: due_date,
+                            date_refunded: null,
+                            date_cancelled: null,
+                            date_paid: null
                         },
                         amount,
                         tax_rate,
