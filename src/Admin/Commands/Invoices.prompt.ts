@@ -53,7 +53,21 @@ export default
         {
             case 'get_invoices':
                 // Getting all invoices
-                Logger.info(`All invoices:`, await InvoiceModel.find());
+                const invoices = (await InvoiceModel.find()).map(invoice =>
+                {
+                    return {
+                        id: invoice.id,
+                        customer: invoice.customer_uid,
+                        amount: invoice.amount,
+                        currency: invoice.currency,
+                        due_date: invoice.dates?.due_date,
+                        invoice_date: invoice.dates?.invoice_date,
+                        notified: invoice.notified,
+                        paid: invoice.paid,
+                        status: invoice.status,
+                    }
+                });
+                console.table(invoices);
                 break; 
 
             case 'get_invoice':
