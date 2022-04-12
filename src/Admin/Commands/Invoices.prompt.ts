@@ -232,15 +232,19 @@ export default
                     if(!customer)
                         return Logger.error(`Customer with id ${customerId} not found`);
                     // parse items
-                    const nItems = items.split(';').map((e: any) =>
+                    const nItems = (items as string).split(';').map((e: string) =>
                     {
+                        if(e === "")
+                            return null;
                         const [notes, quantity, price] = e.split(',');
+                        if(!notes || !quantity || !price)
+                            null;
                         return {
                             notes,
                             quantity: Number(quantity),
-                            price: Number(price),
+                            amount: Number(price),
                         }
-                    });
+                    }).filter(e => e);
                 
                     const invoice = await (new InvoiceModel({
                         customer_uid: customerId,
@@ -256,13 +260,14 @@ export default
                         payment_method,
                         currency,
                         notes,
-                        nItems,
+                        items: nItems,
                         status: "active",
                         paid: false,
                         notified: false,
                         uid: idInvoice(),
                         transactions: [],
                     }).save());
+
                     Logger.info(`Invoice created with id ${invoice.id}`);
                     mainEvent.emit("invoice_created", invoice);
                     if(send_email)
