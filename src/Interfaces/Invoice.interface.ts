@@ -50,6 +50,7 @@ export interface IInvoice
     customer_uid: ICustomer["uid"];
     dates: IInvoice_Dates;
     amount: number;
+    fees?: number;
     items: Array<IInvoices_Items>;
     transactions: Array<ITransactions["uid"]>;
     payment_method: keyof IPayments;

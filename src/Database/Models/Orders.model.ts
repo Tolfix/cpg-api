@@ -74,7 +74,7 @@ const OrderSchema = new Schema
             required: false,
         },
         
-        price_override: {
+        fees: {
             type: Number,
             default: 0,
         },

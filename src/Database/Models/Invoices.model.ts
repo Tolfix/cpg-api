@@ -57,6 +57,11 @@ const InvoiceSchema = new Schema
             default: 0,
         },
 
+        fees: {
+            type: Number,
+            default: 0,
+        },
+
         items: {
             type: [
                 {
