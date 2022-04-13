@@ -152,7 +152,7 @@ export default
                         const t = await (new TransactionsModel({
                             amount: invoice.amount+invoice.amount*invoice.tax_rate/100,
                             payment_method: invoice.payment_method,
-                            fees: 0,
+                            fees: invoice.fees,
                             invoice_uid: invoice.id,
                             customer_uid: invoice.customer_uid,
                             currency: invoice.currency ?? await Company_Currency(),
@@ -236,13 +236,18 @@ export default
                             }
                         },
                         {
+                            name: 'fees',
+                            type: 'number',
+                            message: 'Enter the fees',
+                        },
+                        {
                             name: "send_email",
                             type: "confirm",
                             message: "Send notification?",
                             default: true,
                         }
                     ]
-                    const { customerId, invoice_date, due_date, amount, tax_rate, payment_method, currency, notes, items, send_email } = await inquirer.prompt(action);
+                    const { customerId, invoice_date, due_date, amount, tax_rate, payment_method, currency, notes, items, send_email, fees } = await inquirer.prompt(action);
                     const customer = await CustomerModel.findOne({ id: customerId })
                     if(!customer)
                         return Logger.error(`Customer with id ${customerId} not found`);
@@ -275,6 +280,7 @@ export default
                         payment_method,
                         currency,
                         notes,
+                        fees: parseInt(fees ?? '0'),
                         items: nItems as IInvoice['items'],
                         status: "active",
                         paid: false,
