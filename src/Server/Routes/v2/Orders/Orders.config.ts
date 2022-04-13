@@ -30,19 +30,28 @@ import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import { getEnabledPaymentMethods } from "../../../../Cache/Configs.cache";
 import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 
-async function createOrder(customer: ICustomer, products: Array<{
-    product_id: IProduct["id"],
-    quantity: number,
-    configurable_options?: Array<{
-        id: IConfigurableOptions["id"],
-        option_index?: number,
-    }>;
-}>, _products: IProduct[], payment_method: string, billing_type: string, currency: TPaymentCurrency, billing_cycle?: TRecurringMethod)
+async function createOrder(payload: {
+    customer: ICustomer,
+    products: Array<{
+        product_id: IProduct["id"],
+        quantity: number,
+        configurable_options?: Array<{
+            id: IConfigurableOptions["id"],
+            option_index?: number,
+        }>;
+    }>,
+    _products: IProduct[],
+    payment_method: keyof IPayments,
+    billing_type: TPaymentTypes,
+    billing_cycle?: TRecurringMethod,
+    currency: TPaymentCurrency,
+    fees: number,
+})
 {
     const order = await (new OrderModel({
-        customer_uid: customer.id,
+        customer_uid: payload.customer.id,
         // @ts-ignore
-        products: products.map(product =>
+        products: payload.products.map(product =>
         {
             return {
                 product_id: product.product_id,
@@ -50,26 +59,27 @@ async function createOrder(customer: ICustomer, products: Array<{
                 quantity: product.quantity,
             }
         }),
-        payment_method: payment_method as keyof IPayments,
+        payment_method: payload.payment_method as keyof IPayments,
         order_status: "active",
-        billing_type: billing_type as TPaymentTypes,
-        billing_cycle: billing_cycle,
+        billing_type: payload.billing_type as TPaymentTypes,
+        billing_cycle: payload.billing_cycle,
+        fees: payload.fees,
         dates: {
             createdAt: new Date(),
             next_recycle: dateFormat.format(nextRecycleDate(
-                new Date(), billing_cycle ?? "monthly")
+                new Date(), payload.billing_cycle ?? "monthly")
             , "YYYY-MM-DD"),
             last_recycle: dateFormat.format(new Date(), "YYYY-MM-DD")
         },
-        currency: currency,
+        currency: payload.currency,
         uid: idOrder(),
     }).save());
 
     mainEvent.emit("order_created", order);
 
-    await SendEmail(customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${order.id}`, {
+    await SendEmail(payload.customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${order.id}`, {
         isHTML: true,
-        body: await NewOrderCreated(order, customer),
+        body: await NewOrderCreated(order, payload.customer),
     });
 }
 export = OrderRoute; 
@@ -101,7 +111,7 @@ class OrderRoute
                 }>;
             }>;
             const payment_method = req.body.payment_method as TPayments;
-
+            const fees = parseInt(req.body.fees ?? "0") as number ?? 0;
             // Check if payment_method is valid
             const validPaymentMethods = getEnabledPaymentMethods();
             
@@ -165,6 +175,7 @@ class OrderRoute
                     , "YYYY-MM-DD"),
                     last_recycle: dateFormat.format(new Date(), "YYYY-MM-DD")
                 },
+                fees: fees,
                 uid: idOrder(),
                 // @ts-ignore
                 invoices: [],
@@ -172,38 +183,49 @@ class OrderRoute
                 promotion_code: promotion_code?.id,
             }
 
-            const one_timers = [];
-            const recurring_monthly = [];
-            const recurring_quarterly = [];
-            const recurring_semi_annually = [];
-            const recurring_biennially = [];
-            const recurring_triennially = [];
-            const recurring_yearly = [];
+            const recurringMethods = {
+                one_timers: <IProduct[]>[],
+                monthly: <IProduct[]>[],
+                yearly: <IProduct[]>[],
+                quarterly: <IProduct[]>[],
+                semi_annually: <IProduct[]>[],
+                biennially: <IProduct[]>[],
+                triennially: <IProduct[]>[],
+            };
 
             // Possible to get a Dos attack
             // ! prevent this
             for (const p of _products)
             {
                 if(p.payment_type === "one_time")
-                    one_timers.push(p);
+                    recurringMethods["one_timers"].push(p);
 
-                if(p.payment_type === "recurring" && p.recurring_method === "monthly")
-                    recurring_monthly.push(p);
-
-                if(p.payment_type === "recurring" && p.recurring_method === "quarterly")
-                    recurring_quarterly.push(p);
-
-                if(p.payment_type === "recurring" && p.recurring_method === "semi_annually")
-                    recurring_semi_annually.push(p);
-
-                if(p.payment_type === "recurring" && p.recurring_method === "biennially")
-                    recurring_biennially.push(p);
-                
-                if(p.payment_type === "recurring" && p.recurring_method === "triennially")
-                    recurring_triennially.push(p);
-
-                if(p.payment_type === "recurring" && p.recurring_method === "yearly")
-                    recurring_yearly.push(p);
+                if(p.payment_type === "recurring")
+                {
+                    switch(p.recurring_method)
+                    {
+                        case "monthly":
+                            recurringMethods["monthly"].push(p);
+                            break;
+                        case "quarterly":
+                            recurringMethods["quarterly"].push(p);
+                            break;
+                        case "semi_annually":
+                            recurringMethods["semi_annually"].push(p);
+                            break;
+                        case "biennially":
+                            recurringMethods["biennially"].push(p);
+                            break;
+                        case "triennially":
+                            recurringMethods["triennially"].push(p);
+                            break;
+                        case "yearly":
+                            recurringMethods["yearly"].push(p);
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
                 let configurable_option: any = undefined
                 if(products.find(e => e.product_id === p.id)?.configurable_options)
@@ -217,69 +239,30 @@ class OrderRoute
                 });
             }
 
-            // Create new orders
-            if(recurring_monthly.length > 0)
-                await createOrder(customer, recurring_monthly.map(p =>
+            // @ts-ignore
+            Object.keys(recurringMethods).forEach(async (key: keyof (typeof recurringMethods)) =>
+            {
+                const isOneTimer = key === "one_timers";
+                if(recurringMethods[key].length > 0)
                 {
-                    return products.find(p2 => p2.product_id == p.id) ?? {
-                        product_id: p.id,
-                        quantity: 1
-                    }
-                }), recurring_monthly, payment_method, "recurring", _order_.currency, "monthly");
-
-            if(recurring_quarterly.length > 0)
-                await createOrder(customer, recurring_quarterly.map(p =>
-                {
-                    return products.find(p2 => p2.product_id == p.id) ?? {
-                        product_id: p.id,
-                        quantity: 1
-                    }
-                }), recurring_quarterly, payment_method, "recurring", _order_.currency, "quarterly");
-
-            if(recurring_semi_annually.length > 0)
-                await createOrder(customer, recurring_semi_annually.map(p =>
-                {
-                    return products.find(p2 => p2.product_id == p.id) ?? {
-                        product_id: p.id,
-                        quantity: 1
-                    }
-                }), recurring_semi_annually, payment_method, "recurring", _order_.currency, "semi_annually");
-
-            if(recurring_biennially.length > 0)
-                await createOrder(customer, recurring_biennially.map(p =>
-                {
-                    return products.find(p2 => p2.product_id == p.id) ?? {
-                        product_id: p.id,
-                        quantity: 1
-                    }
-                }), recurring_biennially, payment_method, "recurring", _order_.currency, "biennially");
-
-            if(recurring_triennially.length > 0)
-                await createOrder(customer, recurring_triennially.map(p =>
-                {
-                    return products.find(p2 => p2.product_id == p.id) ?? {
-                        product_id: p.id,
-                        quantity: 1
-                    }
-                }), recurring_triennially, payment_method, "recurring", _order_.currency, "triennially");
-
-            if(one_timers.length > 0)
-                await createOrder(customer, one_timers.map(p =>
-                {
-                    return products.find(p2 => p2.product_id == p.id) ?? {
-                        product_id: p.id,
-                        quantity: 1
-                    }
-                }), one_timers, payment_method, "one_time", _order_.currency);
-
-            if(recurring_yearly.length > 0)
-                await createOrder(customer, recurring_yearly.map(p =>
-                {
-                    return products.find(p2 => p2.product_id == p.id) ?? {
-                        product_id: p.id,
-                        quantity: 1
-                    }
-                }), recurring_yearly, payment_method, "recurring", _order_.currency, "yearly");
+                    await createOrder({
+                        customer: customer,
+                        products: recurringMethods[key].map(p =>
+                            {
+                                return products.find(p2 => p2.product_id == p.id) ?? {
+                                    product_id: p.id,
+                                    quantity: 1
+                                }
+                        }),
+                        payment_method: payment_method,
+                        fees: fees,
+                        currency: _order_.currency,
+                        _products: recurringMethods[key],
+                        billing_type: isOneTimer ? "one_time" : "recurring",
+                        billing_cycle: !isOneTimer ? "monthly" : undefined,
+                    })
+                }
+            });
 
             const invoice = await createInvoiceFromOrder(_order_);
 
