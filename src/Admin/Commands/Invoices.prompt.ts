@@ -13,6 +13,7 @@ import { currencyCodes } from "../../Lib/Currencies";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import mainEvent from "../../Events/Main.event";
 import { sendInvoiceEmail } from "../../Lib/Invoices/SendEmail";
+import { IInvoice } from "@interface/Invoice.interface";
 
 export default
 {
@@ -274,7 +275,7 @@ export default
                         payment_method,
                         currency,
                         notes,
-                        items: nItems,
+                        items: nItems as IInvoice['items'],
                         status: "active",
                         paid: false,
                         notified: false,
