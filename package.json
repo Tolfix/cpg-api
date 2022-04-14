@@ -49,6 +49,7 @@
     "nodemailer": "^6.7.0",
     "npm": "^7.20.5",
     "paypal-rest-sdk": "^1.8.1",
+    "pdfkit-table": "^0.1.86",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "prompt": "^1.2.0",
