@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { TPaymentCurrency } from "../../Lib/Currencies";
 import { TPayments } from "../../Types/PaymentMethod";
 
 export interface IConfigs
@@ -20,7 +21,7 @@ export interface ICompanyConfig
     phone: string;
     email: string;
     vat: string;
-    currency: string;
+    currency: TPaymentCurrency;
     logo_url: string;
     tax_registered: boolean;
     website: string;

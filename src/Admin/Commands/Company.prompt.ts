@@ -3,6 +3,7 @@ import Logger from "../../Lib/Logger";
 import prompt from "prompt";
 import { CacheConfig } from "../../Cache/Configs.cache";
 import ConfigModel from "../../Database/Models/Configs.model";
+import { TPaymentCurrency } from "../../Lib/Currencies";
 
 export default
 {
@@ -133,7 +134,7 @@ export default
                                 email: result.email as string,
                                 logo_url: result.logo_url as string,
                                 tax_registered: result.tax_registered === "true",
-                                currency: result.currency as string,
+                                currency: result.currency as TPaymentCurrency,
                                 website: result.website as string
                             };
             
