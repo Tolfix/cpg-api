@@ -11,7 +11,7 @@ import {
 export = function Cron_Invoices()
 {
     // Every hour
-    new CronJob("0 */12 * * *", () =>
+    new CronJob("0 12 * * *", () =>
     {
         Logger.info(GetText(Default_Language).cron.txt_Invoice_Checking);
 
