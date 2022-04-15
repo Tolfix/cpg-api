@@ -16,6 +16,9 @@ export default async (order: IOrder, customer: ICustomer) => await UseStyles(str
         Your order has been created.
     </p>
     <p>
+        A invoice will be generated for you.
+    </p>
+    <p>
         <strong>Order number:</strong> ${order.id}
     </p>
 
