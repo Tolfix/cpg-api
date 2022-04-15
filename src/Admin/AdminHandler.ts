@@ -19,6 +19,7 @@ export default class AdminHandler
             )
         )
         inquirer.registerPrompt('search-list', require('inquirer-search-list'));
+        inquirer.registerPrompt('search-checkbox', require('inquirer-search-checkbox'));
         this.action();
     }
 
