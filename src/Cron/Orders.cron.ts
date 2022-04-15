@@ -11,7 +11,7 @@ import GetText from "../Translation/GetText";
 export = function Cron_Orders()
 {
     // Every hour
-    new CronJob("0 */12 * * *", () =>
+    new CronJob("0 12 * * *", () =>
     {
         Logger.info(GetText(Default_Language).cron.txt_Orders_Checking);
         // Logger.info(`Checking orders..`);

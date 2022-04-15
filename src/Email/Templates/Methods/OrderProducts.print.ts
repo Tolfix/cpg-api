@@ -64,6 +64,16 @@ export default async function printOrderProductTable(order: IOrder, customer: IC
                     }
                 }
 
+                if(order.fees)
+                {
+                    result += stripIndents`
+                    <tr>
+                        <td>Fees</td>
+                        <td>1</td>
+                        <td>${order.fees.toFixed(2)} ${GetCurrencySymbol(order.currency)}</td>
+                    </tr>`
+                }
+
                 return result;
             }))).join("")}
         </tbody>

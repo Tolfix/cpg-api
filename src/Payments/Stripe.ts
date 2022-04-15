@@ -195,7 +195,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
         const newTrans = await (new TransactionsModel({
             amount: invoice.amount+invoice.amount*invoice.tax_rate/100,
             payment_method: invoice.payment_method,
-            fees: 0,
+            fees: invoice.fees,
             invoice_uid: invoice.id,
             customer_uid: invoice.customer_uid,
             currency: invoice.currency ?? await Company_Currency(),
@@ -236,7 +236,7 @@ export const markInvoicePaid = async (intent: stripe.Response<stripe.PaymentInte
     const newTrans = await (new TransactionsModel({
         amount: invoice.amount+invoice.amount*invoice.tax_rate/100,
         payment_method: invoice.payment_method,
-        fees: 0,
+        fees: invoice.fees,
         invoice_uid: invoice.id,
         customer_uid: invoice.customer_uid,
         currency: invoice.currency ?? await Company_Currency(),

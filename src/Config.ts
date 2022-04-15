@@ -104,6 +104,7 @@ export const Company_Currency = async (): Promise<IConfigs["company"]["currency"
 {
     const configs = await ConfigModel.findOne();
     if(!configs) throw new Error("No configs found");
+    // @ts-ignore
     return (configs.company?.currency === "" ? undefined : configs.company?.currency) ?? process.env.COMPANY_CURRENCY ?? "";
 }
 export const Company_Tax_Registered = async (): Promise<IConfigs["company"]["tax_registered"]> =>

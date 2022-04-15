@@ -18,7 +18,6 @@ import { IPromotionsCodes } from "./PromotionsCodes.interface";
  * @property {string} billing_type "free" | "one_time" | "recurring"
  * @property {string} billing_cycle "monthly" | "quarterly" | "semi_annually" | "biennially" | "triennially"
  * @property {number} quantity
- * @property {number} price_override Overwrite price from product
  * @property {object} dates
  */
 
@@ -43,13 +42,12 @@ export interface IOrder
      * if 'billing_type' is "recurring" `billing_cycle` wont be undefined
      */
     billing_cycle?: TRecurringMethod;
-    price_override?: number;
+    fees?: number;
     dates: IOrderDates<IOrder["billing_type"]>;
     invoices: Array<IInvoice["uid"]>;
     currency: TPaymentCurrency;
     promotion_code?: IPromotionsCodes["id"];
 }
-
 
 export type TOrderStatus = "active" | "pending" | "fraud" | "cancelled";
 

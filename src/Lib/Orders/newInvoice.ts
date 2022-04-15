@@ -106,6 +106,15 @@ export async function createInvoiceFromOrder(order: IOrder)
         }
     }
 
+    if(order.fees)
+    {
+        items.push({
+            amount: order.fees,
+            notes: "+ Fees",
+            quantity: 1,
+        });
+    }
+
     // Create invoice
     const newInvoice = await (new InvoiceModel({
         uid: idInvoice(),

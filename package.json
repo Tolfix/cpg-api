@@ -1,6 +1,6 @@
 {
   "name": "cpg-api",
-  "version": "v3.1",
+  "version": "v3.2",
   "description": "Central Payment Gateway",
   "main": "./build/Main.js",
   "dependencies": {
@@ -39,6 +39,8 @@
     "graphql-compose-mongoose": "^9.7.1",
     "graphql-resolvers": "^0.4.2",
     "inquirer": "^8.2.2",
+    "inquirer-search-checkbox": "^1.0.0",
+    "inquirer-search-list": "^1.2.6",
     "jimp": "^0.16.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.4",
@@ -48,6 +50,7 @@
     "nodemailer": "^6.7.0",
     "npm": "^7.20.5",
     "paypal-rest-sdk": "^1.8.1",
+    "pdfkit-table": "^0.1.86",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "prompt": "^1.2.0",

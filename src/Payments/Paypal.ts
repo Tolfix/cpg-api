@@ -133,7 +133,7 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
             const newTrans = await (new TransactionsModel({
                 amount: invoice.amount+invoice.amount*invoice.tax_rate/100,
                 payment_method: invoice.payment_method,
-                fees: 0,
+                fees: invoice.fees,
                 invoice_uid: invoice.id,
                 customer_uid: invoice.customer_uid,
                 currency: invoice.currency ?? await Company_Currency(),
