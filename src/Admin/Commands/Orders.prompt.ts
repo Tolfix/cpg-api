@@ -13,6 +13,8 @@ import mainEvent from "../../Events/Main.event";
 import { sendEmail } from "../../Email/Send";
 import NewOrderCreated from "../../Email/Templates/Orders/NewOrderCreated";
 import { Company_Name } from "../../Config";
+import { createInvoiceFromOrder } from "../../Lib/Orders/newInvoice";
+import { sendInvoiceEmail } from "../../Lib/Invoices/SendEmail";
 
 export default
 {
@@ -91,7 +93,7 @@ export default
                             name: 'currency',
                             type: 'search-list',
                             message: 'Enter the currency',
-                            choices: currencyCodes
+                            choices: [...currencyCodes, "Customer Currency"]
                         },
                         {
                             name: 'products',
@@ -178,18 +180,25 @@ export default
                             }
                         });
 
+                    const customer = await CustomerModel.findOne({
+                        id: customer_uid,
+                    });
+
+                    if(!customer)
+                        throw new Error(`Fail to find customer with id: ${customer_uid}`);
+
                     const b_recurring = action2Result.billing_type === "recurring";
                     const newOrder = await (new OrderModel({
                         uid: idOrder(),
                         invoices: [],
-                        currency,
+                        currency: currency === "Customer Currency" ? customer.currency : currency,
                         customer_uid,
                         dates: {
                             createdAt: new Date(),
                             last_recycle: b_recurring ? dateFormat.format(new Date(), "YYYY-MM-DD") : undefined,
                             next_recycle: b_recurring ? dateFormat.format(nextRycleDate(new Date(), action2Result.billing_cycle), "YYYY-MM-DD") : undefined,
                         },
-                        order_status: 'pending',
+                        order_status: 'active',
                         payment_method,
                         products: newProduct,
                         billing_type: action2Result.billing_type,
@@ -200,13 +209,6 @@ export default
 
                     mainEvent.emit("order_created", newOrder);
 
-                    const customer = await CustomerModel.findOne({
-                        id: customer_uid,
-                    });
-
-                    if(!customer)
-                        throw new Error(`Fail to find customer with id: ${customer_uid}`);
-
                     await sendEmail({
                         receiver: customer.personal.email,
                         subject: `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${newOrder.id}`,
@@ -216,6 +218,15 @@ export default
                     });
                     
                     Logger.info(newOrder);
+
+                    // Creating new invoice
+                    const invoice = await createInvoiceFromOrder(newOrder);
+                    await sendInvoiceEmail(invoice, customer);
+
+                    newOrder.invoices.push(invoice.id);
+                    await newOrder.save();
+
+                    Logger.info(`Created new invoice:`, invoice);
 
                     break;
                 }
