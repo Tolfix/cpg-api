@@ -166,8 +166,10 @@ export default
                     }
             
                     invoice.paid = true;
-            
+                    invoice.dates.date_paid = getDate();
+                    invoice.markModified('dates');
                     await invoice.save();
+                    mainEvent.emit("invoice_paid", invoice);
                     Logger.info(`Invoice with id ${invoiceId} marked as paid`);
                     break;
                 }
