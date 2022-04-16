@@ -1,10 +1,13 @@
 import { stripIndents } from "common-tags";
-import { CPG_Customer_Panel_Domain, Full_Domain } from "../../../Config";
+import { CPG_Customer_Panel_Domain, Full_Domain, Swish_Payee_Number } from "../../../Config";
 import { ICustomer } from "@interface/Customer.interface";
 import { IInvoice, IInvoiceMethods } from "@interface/Invoice.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
 import UseStyles from "../General/UseStyles";
 import printInvoiceItemsTable from "../Methods/InvoiceItems.print";
+import { createSwishQRCode } from "../../../Payments/Swish";
+import GetOCRNumber from "../../../Lib/Invoices/GetOCRNumber";
+import { convertCurrency } from "../../../Lib/Currencies";
 
 export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) => await UseStyles(stripIndents`
 <div>
@@ -35,6 +38,17 @@ export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) 
         <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
             Click me to pay.
         </a>
+        ` : ''}
+        ${((
+            customer.billing.country.toLocaleLowerCase() === "sweden"
+            ||
+            customer.billing.country.toLocaleLowerCase() === "sverige"
+            ) && (Swish_Payee_Number && customer.personal.phone) && (invoice.payment_method === "swish")) ? `
+            <img 
+                src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number,
+                    await convertCurrency((invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), invoice.currency, "SEK"),
+                    `OCR ${GetOCRNumber(invoice)}`)}" 
+            width="150">
         ` : ''}
         ${invoice.payment_method === "credit_card" ? `
         <a href="${Full_Domain}/v2/stripe/pay/${invoice.uid}" target="_blank">
