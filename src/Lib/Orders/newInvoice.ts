@@ -122,9 +122,9 @@ export async function createInvoiceFromOrder(order: IOrder)
         customer_uid: Customer_Id,
         dates: <IInvoice_Dates>{
             // If undefined we pick current date
-            due_date: order.dates.next_recycle ?? dateFormat.format(new Date(), "YYYY-MM-DD"),
+            due_date: order.dates.next_recycle ?? dateFormat.format(nextRycleDate(new Date(), "monthly"), "YYYY-MM-DD"),
             // Possible fix to issue #94
-            invoice_date: order.dates.last_recycle ?? dateFormat.format(nextRycleDate(new Date(), "monthly"), "YYYY-MM-DD"),
+            invoice_date: order.dates.last_recycle ?? dateFormat.format(new Date(), "YYYY-MM-DD"),
             // invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
         },
         amount: items.reduce((acc, item) =>
