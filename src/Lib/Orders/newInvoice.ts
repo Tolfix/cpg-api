@@ -16,6 +16,7 @@ import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
 import { sanitizeMongoose } from "../Sanitize";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import { convertCurrency } from "../Currencies";
+import nextRycleDate from "../../Lib/Dates/DateCycle";
 
 // Create a method that checks if the order next recycle is within 14 days
 export function isWithinNext14Days(date: Date | string): boolean
@@ -120,9 +121,10 @@ export async function createInvoiceFromOrder(order: IOrder)
         uid: idInvoice(),
         customer_uid: Customer_Id,
         dates: <IInvoice_Dates>{
-            due_date: order.dates.next_recycle,
+            // If undefined we pick current date
+            due_date: order.dates.next_recycle ?? dateFormat.format(nextRycleDate(new Date(), "monthly"), "YYYY-MM-DD"),
             // Possible fix to issue #94
-            invoice_date: order.dates.last_recycle,
+            invoice_date: order.dates.last_recycle ?? dateFormat.format(new Date(), "YYYY-MM-DD"),
             // invoice_date: dateFormat.format(new Date(), "YYYY-MM-DD"),
         },
         amount: items.reduce((acc, item) =>

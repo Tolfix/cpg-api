@@ -6,7 +6,7 @@ import GetText from "../../Translation/GetText";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../../Lib/Invoices/SendEmail";
 import { ChargeCustomer } from "../../Payments/Stripe";
-import { InvoiceNotifiedReport } from "../../Email/Reports/InvoiceReport";
+import { InvoiceLateReport, InvoiceNotifiedReport } from "../../Email/Reports/InvoiceReport";
 import mainEvent from "../../Events/Main.event";
 import { getDate } from "../../Lib/Time";
 
@@ -44,7 +44,7 @@ export function cron_notifyInvoices()
         for await(const invoice of invoices)
         {
             // Get customer
-            const Customer = await CustomerModel.findOne({ id: invoice.customer_uid});
+            const Customer = await CustomerModel.findOne({ id: invoice.customer_uid });
             if(!Customer)
                 continue;
             
@@ -143,9 +143,9 @@ export function cron_notifyLateInvoicePaid()
             const Customer = await CustomerModel.findOne({ id: invoice.customer_uid});
             if(!Customer)
                 continue;
-    
             await sendLateInvoiceEmail(invoice, Customer);
-    
         }
+        if(invoices.length > 0)
+            await InvoiceLateReport(invoices);
     });
 }

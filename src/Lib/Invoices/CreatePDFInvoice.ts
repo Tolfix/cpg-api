@@ -23,6 +23,7 @@ import {
 import qrcode from "qrcode";
 import GetText from "../../Translation/GetText";
 import GetOCRNumber from "./GetOCRNumber";
+import { convertCurrency } from "../Currencies";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {
@@ -89,7 +90,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                         Swish
                         <div>
                             <img 
-                            src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `OCR ${GetOCRNumber(invoice)}`)}" 
+                            src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, await convertCurrency((invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), invoice.currency, "SEK"), `OCR ${GetOCRNumber(invoice)}`)}" 
                             width="64">
                         </div>
                         ` : ''}

@@ -21,6 +21,9 @@ export = async (t: ITransactions, c: ICustomer, charged = false) => UseStyles(st
     <p>
         <strong>Customer:</strong> ${getFullName(c)}
     </p>
+    </p>
+        <strong>Invoice ID:</strong> ${t.invoice_uid}
+    </p>
     <p>
         ${await PrintCompanyInformation()}
     </p>
