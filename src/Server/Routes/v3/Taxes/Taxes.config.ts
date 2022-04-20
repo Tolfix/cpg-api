@@ -69,7 +69,7 @@ class TaxesRouter
                 headers: [
                     "Date",
                     "Invoice ID",
-                    "Customer",
+                    "Company",
                     "Total",
                     "Fees",
                 ],
@@ -77,8 +77,8 @@ class TaxesRouter
                 {
                     return [
                         t.date,
-                        t.invoice_uid,
-                        t.customer_uid,
+                        t.expense_information?.invoice_id,
+                        t.expense_information?.company,
                         t.amount,
                         t.fees,
                     ];
