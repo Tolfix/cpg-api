@@ -10,16 +10,30 @@ import { IInvoice } from "./Invoice.interface";
  * @property {number} amount
  * @property {number} fees 
  */
-export interface ITransactions
+export interface ITransactions<E extends "income" | "expense" = any>
 {
     id: number;
     uid: `TRAN_${string}`;
-    customer_uid: ICustomer["uid"];
-    invoice_uid: IInvoice["uid"];
+    customer_uid: E extends "income" ? ICustomer["uid"] : undefined;
+    invoice_uid: E extends "income" ? IInvoice["uid"] : undefined;
     date: Date | string;
     payment_method: IInvoice["payment_method"];
     amount: IInvoice["amount"];
     currency: TPaymentCurrency;
-    statement: "income" | "expense";
+    statement: E;
+    /**
+     * @description
+     * If the transaction statement is expense, we will out information here
+     * Since is not relative to our customers or invoices
+     */
+    expense_information: E extends "expense" ? {
+        invoice_id: any;
+        company: string;
+        description: string;
+        notes: string;        
+        extra: {
+            [key: string]: any;
+        }
+    } : undefined;
     fees: number;
 }

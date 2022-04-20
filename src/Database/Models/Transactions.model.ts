@@ -19,7 +19,7 @@ const TransactionsSchema = new Schema
 
         customer_uid: {
             type: Number || String,
-            required: true
+            required: false
         },
 
         invoice_uid: {
@@ -59,6 +59,32 @@ const TransactionsSchema = new Schema
             enum: ['income', 'expense'],
             default: 'income',
         },
+
+        expense_information: {
+            type: {
+                invoice_id: {
+                    type: Number,
+                    required: false,
+                },
+                company: {
+                    type: String,
+                    required: false,
+                },
+                description: {
+                    type: String,
+                    required: false,
+                },
+                notes: {
+                    type: String,
+                    required: false,
+                },
+                extra: {
+                    type: Schema.Types.Mixed,
+                    required: false,
+                },
+            },
+            required: false,
+        }
 
     },
     {
