@@ -202,7 +202,6 @@ export default
                                     expense_information: {
                                         invoice_id,
                                         company,
-                                        amount,
                                         description,
                                         notes,
                                     },

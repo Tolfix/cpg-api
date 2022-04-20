@@ -70,6 +70,7 @@ class TaxesRouter
                     "Date",
                     "Invoice ID",
                     "Company",
+                    "Description",
                     "Total",
                     "Fees",
                 ],
@@ -79,6 +80,7 @@ class TaxesRouter
                         t.date,
                         t.expense_information?.invoice_id,
                         t.expense_information?.company,
+                        t.expense_information?.description,
                         t.amount,
                         t.fees,
                     ];
