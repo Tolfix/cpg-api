@@ -9,6 +9,9 @@ export interface IConfigs
     webhooks_urls: Array<string>;
     company: ICompanyConfig;
     payment_methods: Array<Partial<TPayments>>;
+    extra: {
+        [key: string]: any;
+    }
 }
 
 export interface ICompanyConfig

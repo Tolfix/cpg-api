@@ -30,6 +30,11 @@ const ConfigsSchema = new Schema
             default: [],
         },
 
+        extra: {
+            type: Object,
+            default: {},
+        }
+
     }
 );
 

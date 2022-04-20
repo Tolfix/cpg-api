@@ -172,11 +172,18 @@ export async function reCache_Configs()
             await c.save();
         }
 
+        if(!c.extra)
+        {
+            c.extra = {};
+            await c.save();
+        }
+
         CacheConfig.set("smtp", c.smtp);
         CacheConfig.set("smtp_emails", c.smtp_emails);
         CacheConfig.set("payment_methods", c.payment_methods);
         CacheConfig.set("company", c.company);
         CacheConfig.set("webhooks_urls", c.webhooks_urls);
+        CacheConfig.set("extra", c.extra);
 
         return resolve(true);
     });
