@@ -31,7 +31,7 @@ export interface ITransactions<E extends "income" | "expense" = any>
         company: string;
         description: string;
         notes: string;        
-        extra: {
+        extra?: {
             [key: string]: any;
         }
     } : undefined;
