@@ -1,8 +1,11 @@
 import { GetSMTPEmails } from "../../Config";
-import { IInvoice } from "@interface/Invoice.interface";
+import { IInvoice, IInvoiceMethods } from "@interface/Invoice.interface";
 import { SendEmail } from "../Send";
 import UseStyles from "../Templates/General/UseStyles";
 import { stripIndent } from "common-tags";
+import CustomerModel from "../../Database/Models/Customers/Customer.model";
+import printInvoiceItemsTable from "../Templates/Methods/InvoiceItems.print";
+import mainEvent from "../../Events/Main.event";
 
 export const InvoiceNotifiedReport = async (invoices: IInvoice[]) =>
 {
@@ -28,6 +31,53 @@ export const InvoiceNotifiedReport = async (invoices: IInvoice[]) =>
         }
     })
 };
+
+export const InvoicePaidReport = async (invoice: IInvoice & IInvoiceMethods) =>
+{
+    const customer = await CustomerModel.findOne({ id: invoice.customer_uid });
+    GetSMTPEmails().then(async (emails) =>
+    {
+        for await(const email of emails)
+        {
+            SendEmail(email, `Invoice #${invoice.id} paid`, {
+                isHTML: true,
+                body: await UseStyles(stripIndent`
+                <div>
+                    <h1>
+                        Invoice #${invoice.id} has been paid.
+                    </h1>
+                    <p>
+                        <strong>Customer:</strong> ${customer?.fullName(true)} (#${customer?.id})
+                    </p>
+                    <p>
+                        <strong>Invoice:</strong> ${invoice.id}
+                    </p>
+                    <p>
+                        <strong>Amount:</strong> ${invoice.amount}
+                    </p>
+                    <p>
+                        <strong>Due date:</strong> ${invoice.dates.due_date}
+                    </p>
+                    <p>
+                        <strong>Paid date:</strong> ${invoice.dates.date_paid}
+                    </p>
+                    
+                    ${await printInvoiceItemsTable(invoice)}
+
+                    <p>
+                        <strong>
+                            Total:
+                        </strong>
+                        ${invoice.getTotalAmount({ tax: true, currency: false, symbol: false }).toFixed(2)} ${invoice.currency} +(${invoice.tax_rate}%)
+                    </p>
+                </div>
+                `)
+            });
+        }
+    })
+};
+// @ts-ignore
+mainEvent.on("invoice_paid", InvoicePaidReport);
 
 export const InvoiceLateReport = async (invoices: IInvoice[]) =>
 {
