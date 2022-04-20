@@ -1,4 +1,7 @@
 require("dotenv").config();
+// Bad method, will find a better way to do this later
+// TODO: Find right amount of max listeners
+process.setMaxListeners(0);
 import Logger from "./Lib/Logger";
 import { DebugMode, GetVersion } from "./Config";
 
