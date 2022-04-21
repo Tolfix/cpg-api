@@ -52,7 +52,7 @@
     "qrcode": "^1.4.4",
     "request": "^2.88.2",
     "sequelize": "^6.15.0",
-    "stripe": "^8.186.1",
+    "stripe": "^8.186.1"
   },
   "scripts": {
     "start": "node ./build/Main.js",
