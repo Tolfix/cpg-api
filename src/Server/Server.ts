@@ -7,7 +7,6 @@ import fileUpload from "express-fileupload";
 import { Default_Language, Express_Session_Secret, Full_Domain, PORT } from "../Config";
 import Logger from "../Lib/Logger";
 import RouteHandler from "../Handlers/Route.handler";
-import { reCache } from "../Cache/reCache";
 import { ICustomer } from "@interface/Customer.interface";
 import { APIError } from "../Lib/Response";
 import ApolloServer from "../Database/GraphQL/ApolloServer";
@@ -104,7 +103,6 @@ const limiter = rateLimiter({
 
 server.use(limiter);
 
-reCache();
 RouteHandler(server);
 
 server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listing} ${PORT} | ${Full_Domain}`));

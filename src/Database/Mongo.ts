@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { reCache } from "../Cache/reCache";
 import { DebugMode, Default_Language, MongoDB_URI } from "../Config";
 import Logger from "../Lib/Logger";
 import GetText from "../Translation/GetText";
@@ -23,5 +24,6 @@ db.on('disconnected', () =>
 db.once('open', () =>
 {
     Logger.db(GetText(Default_Language).database.txt_Database_Opened);
+    reCache();
     // Logger.db(`Database opened`);
 });
