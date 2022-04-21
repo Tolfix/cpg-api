@@ -95,11 +95,11 @@ export const InvoiceLateReport = async (invoices: IInvoice[]) =>
                     </p>
                     <p>
                         The following invoices have been reminded:
-                        ${invoices.map(async (invoice) => 
+                        ${(await Promise.all(invoices.map(async (invoice) => 
                         {
                             const customer = await CustomerModel.findOne({ id: invoice.customer_uid });
                             return `<br><strong>${invoice.id} (${customer?.fullName(true)} (#${customer?.id}))</strong>`;
-                        }).join("")}
+                        }))).join("")}
                     </p>
                 </div>
                 `)
