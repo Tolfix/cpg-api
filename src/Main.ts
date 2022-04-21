@@ -3,9 +3,9 @@ require("dotenv").config();
 // TODO: Find right amount of max listeners
 process.setMaxListeners(0);
 import Logger from "./Lib/Logger";
-import { DebugMode, GetVersion } from "./Config";
+import { DebugMode, GetVersion, CLI_MODE } from "./Config";
 
-Logger.info(`Starting CPG-API with version ${GetVersion()}`);
+Logger.info(!CLI_MODE ? `Starting CPG-API with version ${GetVersion()}` : `Starting CPG-API with version ${GetVersion()} in CLI mode only`);
 Logger.info("Adding .env variables");
 
 import "./Mods/Map.mod";
@@ -18,14 +18,14 @@ import "./Database/Mongo";
 Logger.info(`Loading ./Events/Node.events`);
 import "./Events/Node.events";
 
-Logger.info(`Loading ./Server`);
-import "./Server/Server";
+!CLI_MODE ? Logger.info(`Loading ./Server`) : null;
+!CLI_MODE ? import("./Server/Server") : null;
 
 DebugMode ? Logger.info(`Loading ./Database/Postgres`) : null;
 DebugMode ? import("./Database/Postgres") : null;
 
-Logger.info(`Loading ./Handlers/CronHandler`);
-import "./Handlers/Cron.handler";
+!CLI_MODE ? Logger.info(`Loading ./Handlers/CronHandler`) : null;
+!CLI_MODE ? import("./Handlers/Cron.handler") : null;
 
 import "./Handlers/Commands.handler";
 
