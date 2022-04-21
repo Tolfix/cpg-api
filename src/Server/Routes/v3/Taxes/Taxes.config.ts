@@ -67,22 +67,26 @@ class TaxesRouter
             const expense = {
                 title: "Expense",
                 headers: [
+                    "Id",
                     "Date",
                     "Invoice ID",
                     "Company",
                     "Description",
                     "Total",
                     "Fees",
+                    "Payment method"
                 ],
                 rows: transactions.filter(e => e.statement === "expense").map((t) =>
                 {
                     return [
+                        t.id,
                         t.date,
                         t.expense_information?.invoice_id,
                         t.expense_information?.company,
                         t.expense_information?.description,
-                        t.amount,
+                        `${t.amount.toFixed(2)} ${t.currency}`,
                         t.fees,
+                        t.payment_method,
                     ];
                 }),
             };
