@@ -34,6 +34,10 @@ export default
                     value: 'get_invoice',
                 },
                 {
+                    name: "Delete invoice",
+                    value: "delete_invoice",
+                },
+                {
                     name: 'Get late invoices',
                     value: 'get_late_invoices',
                 },
@@ -95,6 +99,30 @@ export default
                     id: id,
                 }));
                 break;
+
+            case 'delete_invoice':
+                {
+                    const action = [
+                        {
+                            name: 'invoiceId',
+                            type: 'search-list',
+                            message: 'Select the invoice you want to delete',
+                            choices: (await InvoiceModel.find()).map(invoice =>
+                            {
+                                return {
+                                    name: `#${invoice.id}`,
+                                    value: invoice.id,
+                                }
+                            }),
+                        },
+                    ];
+                    const { invoiceId } = await inquirer.prompt(action);
+                    await InvoiceModel.deleteOne({
+                        id: invoiceId,
+                    });
+                    Logger.info(`Invoice deleted`, invoiceId);
+                    break;                    
+                }
             case 'get_late_invoices':
                 {
                     const invoices = await InvoiceModel.find({
