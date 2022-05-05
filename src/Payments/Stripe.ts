@@ -20,7 +20,7 @@ const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
 // Check if stripe webhook is configured
 (async () => 
 {
-    if(!((await Stripe.webhookEndpoints.list()).data.length))
+    if (!((await Stripe.webhookEndpoints.list()).data.length))
         Stripe.webhookEndpoints.create({
             url: `${Full_Domain}/v2/payments/stripe/webhook`,
             enabled_events: [
@@ -43,19 +43,19 @@ const cacheSetupIntents = new Map<string, stripe.Response<stripe.SetupIntent>>()
 // Create a method that will create a payment intent from an order
 export const CreatePaymentIntent = async (invoice: IInvoice) =>
 {
-    if(cacheIntents.has(invoice.uid))
+    if (cacheIntents.has(invoice.uid))
         return cacheIntents.get(invoice.uid) as stripe.Response<stripe.PaymentIntent>;
 
     const customer = await CustomerModel.findOne({ id: invoice.customer_uid });
-    if(!customer)
+    if (!customer)
         throw new Error("Customer not found");
     // Check if we got this customer on stripe
     let s_customer;
 
-    if(customer.extra?.stripe_id)
+    if (customer.extra?.stripe_id)
         s_customer = await Stripe.customers.retrieve(customer.extra.stripe_id);
 
-    if(!customer.extra?.stripe_id)
+    if (!customer.extra?.stripe_id)
         // Create the customer on stripe
         s_customer = await Stripe.customers.create({
             email: customer.personal.email,
@@ -67,7 +67,7 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
             },
         });
 
-    if(!customer.extra)
+    if (!customer.extra)
         customer.extra = {};
 
     customer.extra.stripe_id = s_customer?.id;
@@ -98,20 +98,20 @@ export const RetrievePaymentIntent = async (payment_intent: string) => (await St
 
 export const createSetupIntent = async (id: ICustomer["id"]) =>
 {
-    if(cacheSetupIntents.has(id))
+    if (cacheSetupIntents.has(id))
         return cacheSetupIntents.get(id) as stripe.Response<stripe.SetupIntent>;
 
     const customer = await CustomerModel.findOne({ id: id });
-    if(!customer)
+    if (!customer)
         throw new Error("Customer not found");
     
     // Check if we got this customer on stripe
     let s_customer;
 
-    if(customer.extra?.stripe_id)
+    if (customer.extra?.stripe_id)
         s_customer = await Stripe.customers.retrieve(customer.extra.stripe_id);
 
-    if(!customer.extra?.stripe_id)
+    if (!customer.extra?.stripe_id)
         // Create the customer on stripe
         s_customer = await Stripe.customers.create({
             email: customer.personal.email,
@@ -123,7 +123,7 @@ export const createSetupIntent = async (id: ICustomer["id"]) =>
             },
         });
 
-    if(!customer.extra)
+    if (!customer.extra)
         customer.extra = {};
 
     customer.extra.stripe_id = s_customer?.id;
@@ -131,7 +131,7 @@ export const createSetupIntent = async (id: ICustomer["id"]) =>
     await customer.save();
 
     // Check if already have a setup intent
-    if(customer.extra.stripe_setup_intent)
+    if (customer.extra.stripe_setup_intent)
         throw new Error("Setup intent already exists");
 
     const setupIntent = await Stripe.setupIntents.create({
@@ -153,16 +153,16 @@ export const RetrieveSetupIntent = async (setup_intent: string) => (await Stripe
 export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
 {
     const invoice = await InvoiceModel.findOne({ id: invoice_id });
-    if(!invoice)
+    if (!invoice)
         throw new Error("Invoice not found");
 
     const customer = await CustomerModel.findOne({ id: invoice.customer_uid });
-    if(!customer)
+    if (!customer)
         throw new Error("Customer not found");
 
     // Check if we got this customer on stripe
     const s_customer = await Stripe.customers.retrieve(customer.extra?.stripe_id  ?? "");
-    if(!s_customer)
+    if (!s_customer)
         throw new Error("Customer not found on stripe");
         
     const paymentMethods = await Stripe.paymentMethods.list({
@@ -223,7 +223,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
         await invoice.save();
         return Promise.resolve(paymentIntent);
     }
-    catch(e)
+    catch (e)
     {
         await Promise.reject(e);
     }

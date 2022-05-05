@@ -7,7 +7,7 @@ const command = readdirSync(`${routeDir}`).filter((f) => f.endsWith('cron.js'));
 for (const file of command)
 {
     const pull = require(`${routeDir}/${file}`);
-    if(pull)
+    if (pull)
     {
         Logger.info(`Adding new cron job`);
         pull();

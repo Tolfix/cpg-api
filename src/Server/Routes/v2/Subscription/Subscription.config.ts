@@ -51,22 +51,22 @@ export = class SubscriptionRouter
                 name: sanitizeMongoose(__promotion_code),
             });
 
-            if(!customer_id || !products || !payment_method)
+            if (!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
 
-            if(!payment_method.match(/paypal|credit_card/g))
+            if (!payment_method.match(/paypal|credit_card/g))
                 return APIError("payment_method invalid")(res);
 
-            if(products.every(e => e.quantity <= 0))
+            if (products.every(e => e.quantity <= 0))
                 return APIError("quantity invalid")(res);
 
-            if(products.every(e => typeof e.product_id === "undefined"))
+            if (products.every(e => typeof e.product_id === "undefined"))
                 return APIError("product_id invalid")(res);
 
             // Check if customer_id is valid
             const customer = await CustomerModel.findOne({ id: customer_id });
 
-            if(!customer)
+            if (!customer)
                 return APIError("Unable to find customer")(res);
 
             const _products = await ProductModel.find({
@@ -79,13 +79,13 @@ export = class SubscriptionRouter
             const products_with_recurring = _products.filter(product => product.payment_type.includes("recurring"));
 
             // Check if empty array
-            if(products_with_recurring.length <= 0)
+            if (products_with_recurring.length <= 0)
                 return APIError(`Ensure that the products includes products with recurring payment type`)(res);
 
             // Check if they are all the same when it comes to recurring_method
             const p_same_method = products_with_recurring.every(product => product.recurring_method === products_with_recurring[0].recurring_method);
 
-            if(!p_same_method)
+            if (!p_same_method)
                 return APIError(`Ensure that products includes same recurring method`)(res);
 
             // Create subscription
@@ -95,7 +95,7 @@ export = class SubscriptionRouter
                     products: products_with_recurring.map(product =>
                     {
                         let configurable_option: any = undefined
-                        if(products.find(e => e.product_id === product.id)?.configurable_options)
+                        if (products.find(e => e.product_id === product.id)?.configurable_options)
                             configurable_option = products.find(e => e.product_id === product.id)?.configurable_options;
                         return {
                             product_id: product.id,
@@ -114,10 +114,10 @@ export = class SubscriptionRouter
                 }
             )).save();
 
-            if(!subscription)
+            if (!subscription)
                 return APIError("Unable to create subscription")(res);
 
-            if(ce_subscription.get(payment_method))
+            if (ce_subscription.get(payment_method))
                 return ce_subscription.get(payment_method)?.(subscription, req, res, next);
 
             return APISuccess("Invoice sent")(res);

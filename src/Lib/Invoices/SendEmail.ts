@@ -13,7 +13,7 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document & IInvoiceMe
     return new Promise(async(resolve) =>
     {
 
-        if(!Customer.personal.email)
+        if (!Customer.personal.email)
             return;
         
         //@ts-ignore
@@ -29,7 +29,7 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document & IInvoiceMe
             body: await InvoiceTemplate(invoice, Customer)
         }, async (err: any, sent: any) =>
         {
-            if(!err && sent)
+            if (!err && sent)
             {
                 invoice.notified = true;
                 invoice.status = "payment_pending";
@@ -48,7 +48,7 @@ export async function sendLateInvoiceEmail(invoice: IInvoice & Document & IInvoi
     return new Promise(async(resolve) =>
     {
 
-        if(!Customer.personal.email)
+        if (!Customer.personal.email)
             return;
         
         //@ts-ignore

@@ -26,19 +26,19 @@ class ConfigRouter
             const { host, port, secure, username, password } = req.body;
             const config = CacheConfig.get("smtp") as ISmtp;
             
-            if(host && config.host !== host)
+            if (host && config.host !== host)
                 config.host = host;
 
-            if(port && config.port !== port)
+            if (port && config.port !== port)
                 config.port = port;
 
-            if(secure && config.secure !== secure)
+            if (secure && config.secure !== secure)
                 config.secure = secure;
 
-            if(username && config.username !== username)
+            if (username && config.username !== username)
                 config.username = username;
 
-            if(password && config.password !== password)
+            if (password && config.password !== password)
                 config.password = password;
 
             CacheConfig.set("smtp", config);
@@ -57,7 +57,7 @@ class ConfigRouter
             const { payment_methods } = req.body;
             
             // Check if array
-            if(!Array.isArray(payment_methods))
+            if (!Array.isArray(payment_methods))
                 return APISuccess(`Has to be an array`)(res);
 
             // Check if the payment methods are valid
@@ -66,7 +66,7 @@ class ConfigRouter
                 return A_CC_Payments.includes(p);
             });
 
-            if(!valid)
+            if (!valid)
                 return APISuccess(`Invalid payment_methods`)(res);
 
             let config = CacheConfig.get("payment_methods") as Array<Partial<TPayments>>;

@@ -14,7 +14,7 @@ export const GetCacheCategoryByName = (name: ICategory["name"]) =>
 {
     for (const [key, value] of CacheCategories.entries())
     {
-        if(value.name === name)
+        if (value.name === name)
             return key;
     }
 

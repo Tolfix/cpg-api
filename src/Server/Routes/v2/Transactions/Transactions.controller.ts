@@ -17,7 +17,7 @@ function insert(req: Request, res: Response)
         .then(async (result) =>
         {
             // check if we got a invoice id
-            if(req.body.invoice_uid)
+            if (req.body.invoice_uid)
             {
                 // Get invoice
                 const invoice = await InvoiceModel.findOne({
@@ -31,13 +31,13 @@ function insert(req: Request, res: Response)
                     ]
                 });
 
-                if(invoice)
+                if (invoice)
                 {
                     // Update invoice
                     invoice.transactions.push(result.uid);
                     invoice.markModified("transactions");
                     // Check if they wanted to mark it as paid as well
-                    if(req.body.markInvoiceAsPaid)
+                    if (req.body.markInvoiceAsPaid)
                     {
                         invoice.status = "collections";
                         invoice.markModified("status");
@@ -47,12 +47,12 @@ function insert(req: Request, res: Response)
                         invoice.markModified("dates");
                     }
                     await invoice.save();
-                } 
+                }
             }
 
             mainEvent.emit("transaction_created", result);
             await sendEmailOnTransactionCreation(result);
-            
+
             return APISuccess({
                 uid: result.uid
             })(res);
@@ -88,13 +88,13 @@ function patch(req: Request, res: Response)
 function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.uid as ITransactions["uid"])
-        .then((result)=>
+        .then((result) =>
         {
             // @ts-ignore
             mainEvent.emit("transaction_deleted", result);
             APISuccess(result, 204)(res)
         });
- }
+}
 
 const CustomerController = {
     insert,

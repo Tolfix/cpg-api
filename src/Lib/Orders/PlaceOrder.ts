@@ -19,7 +19,7 @@ export async function run_swish_method(
     res: Response, 
 )
 {
-    if(Swish_Payee_Number !== "")
+    if (Swish_Payee_Number !== "")
         return APISuccess(`data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, (invoice.amount)+(invoice.amount)*(invoice.tax_rate/100), `Invoice ${invoice.id}`)}`)(res);
 
     return APISuccess("Invoice sent")(res);
@@ -33,7 +33,7 @@ export async function run_paypal_method(
     res: Response, 
 )
 {
-    if(Paypal_Client_Secret !== "" && Paypal_Client_Id !== "")
+    if (Paypal_Client_Secret !== "" && Paypal_Client_Id !== "")
         return APISuccess(`${Full_Domain}/v2/paypal/pay/${invoice.uid}`)(res);
 
     return APISuccess("Invoice sent")(res);

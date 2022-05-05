@@ -24,14 +24,14 @@ export default class BaseModelAPI<IModel extends { uid: string }>
 
     public findByUid(uid: IModel["uid"]): Promise<IModel | []>
     {
-        if(!uid || uid === "undefined")
+        if (!uid || uid === "undefined")
             return Promise.resolve([]);
         return this.iModel.findOne({ $or: [
             { id: uid },
             { uid: uid }
         ]}).then((result: any) =>
         {
-            if(!result)
+            if (!result)
                 return;
 
             const r = result.toJSON();
@@ -58,7 +58,7 @@ export default class BaseModelAPI<IModel extends { uid: string }>
 
                 res.setHeader("X-Total-Pages", result.totalPages);
                 res.setHeader("X-Total", result.totalCount);
-                if(query["include_x"])
+                if (query["include_x"])
                     return resolve({
                         // @ts-ignore
                         data: r,
@@ -75,7 +75,7 @@ export default class BaseModelAPI<IModel extends { uid: string }>
         data: IModel
     ): Promise<IModel>
     {
-        if(!uid || uid === "undefined")
+        if (!uid || uid === "undefined")
             return Promise.reject("No uid provided");
         return this.iModel.findOneAndUpdate({ $or: [
             { id: uid },
@@ -85,7 +85,7 @@ export default class BaseModelAPI<IModel extends { uid: string }>
 
     public removeByUid(uid: IModel["uid"])
     {
-        if(!uid || uid === "undefined")
+        if (!uid || uid === "undefined")
             return Promise.resolve([]);
         return new Promise((resolve, reject) =>
         {

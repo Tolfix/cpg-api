@@ -33,22 +33,22 @@ export default
     ],
     method: async ({crons}: {crons: string[]}) => 
     {
-        if(crons.includes('run_invoices_notify'))
+        if (crons.includes('run_invoices_notify'))
         {
             Logger.info('Running Invoice notify');
             cron_notifyInvoices();
         }
-        if(crons.includes('run_charge_payment'))
+        if (crons.includes('run_charge_payment'))
         {
             Logger.info('Running Charge payments');
             cron_chargeStripePayment();
         }
-        if(crons.includes('run_late_invoice_notify'))
+        if (crons.includes('run_late_invoice_notify'))
         {
             Logger.info('Running Invoice late notify');
             cron_notifyLateInvoicePaid()
         }
-        if(crons.includes('run_create_invoice_from_order'))
+        if (crons.includes('run_create_invoice_from_order'))
         {
             Logger.info('Running Create invoice from order');
             cron_createNewInvoicesFromOrders();

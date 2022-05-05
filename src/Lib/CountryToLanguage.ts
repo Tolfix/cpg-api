@@ -1,6 +1,6 @@
 export function ConvertCountryNameToLanguageCode(country: string)
 {
-    switch(country.toLowerCase())
+    switch (country.toLowerCase())
     {
         case "sweden":
         case "swedish":

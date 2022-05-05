@@ -11,7 +11,7 @@ import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreati
 import GetText from "../Translation/GetText";
 import { validCurrencyPaypal } from "./Currencies/Paypal.currencies";
 
-if(Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
+if (Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
     paypal.configure({
         'mode': DebugMode ? 'sandbox' : "live",
         'client_id': Paypal_Client_Id,
@@ -116,18 +116,18 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
     
     paypal.payment.execute(paymentId, execute_payment_json, async (error, payment) =>
     {
-        if(error)
+        if (error)
             return;
 
-        if(payment.state !== "approved")
+        if (payment.state !== "approved")
             return;
 
         // Go through each transactions and get invoice_number and mark the invoice as paid
         // then make a transaction and add it to the invoice
-        for await(const tran of payment.transactions)
+        for await (const tran of payment.transactions)
         {
             const invoice_number = tran.invoice_number;
-            if(!invoice_number)
+            if (!invoice_number)
                 return;
             const invoice = await getInvoiceByIdAndMarkAsPaid(invoice_number);
             const newTrans = await (new TransactionsModel({

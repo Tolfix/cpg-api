@@ -49,7 +49,7 @@ class QuotesRouter
                 { id: uid }
             ] }));
 
-            if(e_quote || !quote)
+            if (e_quote || !quote)
                 return APIError(`Failed to fetch quote with uid ${uid}`)(res);
 
             const [customer, e_customer] = await AW(CustomerModel.findOne({ $or: [
@@ -57,7 +57,7 @@ class QuotesRouter
                 { uid: quote.customer_uid as any }
             ] }));
 
-            if(e_customer || !customer)
+            if (e_customer || !customer)
                 return APIError(`Failed to fetch customer with uid ${quote.customer_uid}`)(res);
 
             const result = await createQuotePdf(quote);
@@ -77,7 +77,7 @@ class QuotesRouter
                 { id: uid }
             ] }));
 
-            if(e_quote || !quote)
+            if (e_quote || !quote)
                 return APIError(`Failed to fetch quote with uid ${uid}`)(res);
 
             const customer = await CustomerModel.findOne({ $or: [
@@ -85,10 +85,10 @@ class QuotesRouter
                 { uid: quote.customer_uid as any }
             ] });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Failed to fetch customer with uid ${quote.customer_uid}`)(res);
 
-            if(quote.accepted)
+            if (quote.accepted)
                 return APIError(`Quote already accepted`)(res);
 
             quote.accepted = true;
@@ -105,7 +105,7 @@ class QuotesRouter
 
             // Convert quote to invoice
             const invoice = await QuoteToInvoice(quote);
-            if(!invoice)
+            if (!invoice)
                 return APIError("Failed to convert quote to invoice")(res);
 
             // Send email to customer, no need to await since if it fails it will run cron either way
@@ -122,7 +122,7 @@ class QuotesRouter
                 { id: uid }
             ] }));
 
-            if(e_quote || !quote)
+            if (e_quote || !quote)
                 return APIError(`Failed to fetch quote with uid ${uid}`)(res);
 
             quote.declined = true;

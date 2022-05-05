@@ -18,7 +18,7 @@ function insert(req: Request, res: Response)
         .then(async (result) =>
         {
             
-            if(req.body.send_email !== undefined && req.body.send_email)
+            if (req.body.send_email !== undefined && req.body.send_email)
             {
                 // Get customer.
                 const Customer = await CustomerModel.findOne({
@@ -27,7 +27,7 @@ function insert(req: Request, res: Response)
                         { uid: result.customer_uid as any }
                     ]
                 });
-                if(Customer)
+                if (Customer)
                 {
                     // Send email to customer.
                     await SendEmail(Customer.personal.email, `Quote from ${await Company_Name() === "" ? "CPG" : await Company_Name()}`, {

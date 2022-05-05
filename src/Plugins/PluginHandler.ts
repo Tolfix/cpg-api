@@ -12,9 +12,9 @@ export default async function PlguinHandler()
     Logger.plugin(GetText().plugins.txt_Plugin_Loading);
     // Logger.plugin("Loading plugins...");
     const plugins = getPlugins();
-    for await(const plugin of plugins)
+    for await (const plugin of plugins)
     {
-        if(!(await isPluginInstalled(plugin)))
+        if (!(await isPluginInstalled(plugin)))
         {
             await installPlugin(plugin);
             Logger.plugin(GetText().plugins.txt_Plugin_Installed(plugin));
@@ -36,14 +36,14 @@ export function installPlugin(plugin: string)
     {
         npm.load(function(err)
         {
-            if(err)
+            if (err)
             {
                 Logger.error(err);
                 return reject(err);
             }
             npm.commands.install([plugin], function(err)
             {
-                if(err)
+                if (err)
                 {
                     Logger.error(err);
                     return reject(err);
@@ -60,7 +60,7 @@ export function isPluginInstalled(plugin: string)
     {
         // Check node_modules for plugin
         const pluginPath = `${process.cwd()}/node_modules/${plugin}`;
-        if(!fs.existsSync(pluginPath))
+        if (!fs.existsSync(pluginPath))
             return resolve(false);
         resolve(true);
     });

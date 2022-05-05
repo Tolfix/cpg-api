@@ -54,7 +54,7 @@ class ImagesRouter
 
             const data = CacheImages.get(parseInt(id));
             
-            if(!data)
+            if (!data)
                 return APIError(`Unable to find image by id ${id}`)(res);
 
             const binaryString = Array.prototype.map.call(data.data, function (ch)
@@ -90,7 +90,7 @@ class ImagesRouter
          */
         this.router.post("/", EnsureAdmin(), async (req, res) =>
         {
-            if(req.files)
+            if (req.files)
             {
                 // @ts-ignore
                 const image = (req.files.image as UploadedFile);
@@ -128,13 +128,13 @@ class ImagesRouter
          {
             const id = req.params.id as IImage["id"];
             const data = CacheImages.get(id);
-            if(!data)
+            if (!data)
                 return APIError(`Unable to find image by id ${id}`)(res);
             
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const [S, F] = await AW(ImageModel.deleteOne({ id: id }));
             
-            if(F)
+            if (F)
                 return APIError(`Something went wrong.. try again later`)(res);
             
             CacheImages.delete(id);

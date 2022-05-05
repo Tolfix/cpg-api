@@ -40,7 +40,7 @@ export default class AdminHandler
             {
                 const cName = value.commands;
                 const command = cacheCommands.get(cName);
-                if(command)
+                if (command)
                 {
                     const value = await inquirer.prompt(command.args)
                     await command.method(value);

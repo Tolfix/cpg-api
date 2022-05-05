@@ -43,7 +43,7 @@ export default
     ],
     method: async ({action}: {action: string}) => 
     {
-        switch(action)
+        switch (action)
         {
             case 'get_orders':
                 {
@@ -184,7 +184,7 @@ export default
                         id: customer_uid,
                     });
 
-                    if(!customer)
+                    if (!customer)
                         throw new Error(`Fail to find customer with id: ${customer_uid}`);
 
                     const b_recurring = action2Result.billing_type === "recurring";

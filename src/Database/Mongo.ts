@@ -17,7 +17,7 @@ db.on('disconnected', () =>
 {
     Logger.error(GetText(Default_Language).database.txt_Database_Error_Lost_Connection);
     // Logger.error(`Lost connection to the database, shutting down.`);
-    if(!DebugMode)
+    if (!DebugMode)
         process.exit(1);
 });
 

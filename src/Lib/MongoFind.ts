@@ -13,10 +13,10 @@ export default async function MongoFind<T>(model: Model<T>, query: Request["quer
         ...eQuery ?? {}
     }).sort(data.sort ?? "1").skip(data.skip ?? 0).limit(data.limit ?? 10);
     
-    if(data.select)
+    if (data.select)
         b.select(data.select);
 
-    if(data.populate)
+    if (data.populate)
         b.populate(data.populate);
 
     const c = await b.exec();

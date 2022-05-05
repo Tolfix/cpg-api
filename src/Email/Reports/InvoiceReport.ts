@@ -11,7 +11,7 @@ export const InvoiceNotifiedReport = async (invoices: IInvoice[]) =>
 {
     GetSMTPEmails().then(async (emails) =>
     {
-        for await(const email of emails)
+        for await (const email of emails)
         {
             SendEmail(email, "Invoice(s) Notified", {
                 isHTML: true,
@@ -37,7 +37,7 @@ export const InvoicePaidReport = async (invoice: IInvoice & IInvoiceMethods) =>
     const customer = await CustomerModel.findOne({ id: invoice.customer_uid });
     GetSMTPEmails().then(async (emails) =>
     {
-        for await(const email of emails)
+        for await (const email of emails)
         {
             SendEmail(email, `Invoice #${invoice.id} paid`, {
                 isHTML: true,
@@ -83,7 +83,7 @@ export const InvoiceLateReport = async (invoices: IInvoice[]) =>
 {
     GetSMTPEmails().then(async (emails) =>
     {
-        for await(const email of emails)
+        for await (const email of emails)
         {
             SendEmail(email, "Invoice(s) Late Reminder", {
                 isHTML: true,
@@ -112,7 +112,7 @@ export const InvoiceCreatedReport = async (invoices: IInvoice[]) =>
 {
     GetSMTPEmails().then(async (emails) =>
     {
-        for await(const email of emails)
+        for await (const email of emails)
         {
             SendEmail(email, "Invoice(s) Created", {
                 isHTML: true,

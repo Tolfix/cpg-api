@@ -30,7 +30,7 @@ export default
     ],
     method: async ({action}: {action: string}) => 
     {
-        switch(action)
+        switch (action)
         {
             case 'show_webhooks':
                 return new Promise(async (resolve) =>

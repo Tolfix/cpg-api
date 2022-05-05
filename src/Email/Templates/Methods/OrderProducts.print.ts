@@ -21,20 +21,20 @@ export default async function printOrderProductTable(order: IOrder, customer: IC
             ${(await Promise.all(order.products.map(async (product) =>
             {
                 const p = await getProductById(product.product_id);
-                if(!p) return 0;
+                if (!p) return 0;
 
-                if(p?.currency.toUpperCase() !== customer.currency.toUpperCase())
+                if (p?.currency.toUpperCase() !== customer.currency.toUpperCase())
                     p.price = await convertCurrency(p?.price, p?.currency, order.currency);
                 const p_c = [];
-                for await(const conf of product?.configurable_options ?? [])
+                for await (const conf of product?.configurable_options ?? [])
                 {
                     const c = await ConfigurableOptionsModel.findOne({
                         id: conf.id,
                     });
 
-                    if(c)
+                    if (c)
                     {
-                        if(p?.currency.toUpperCase() !== customer.currency.toUpperCase())
+                        if (p?.currency.toUpperCase() !== customer.currency.toUpperCase())
                             // Convert to customer currency
                             c.options[conf.option_index].price = await convertCurrency(c.options[conf.option_index].price, p?.currency, customer.currency);
                         p_c.push({
@@ -51,9 +51,9 @@ export default async function printOrderProductTable(order: IOrder, customer: IC
                     <td>${p?.price.toFixed(2)} ${GetCurrencySymbol(order.currency)}</td>
                 </tr>`;
 
-                if(p_c.length > 0)
+                if (p_c.length > 0)
                 {
-                    for(const c of p_c)
+                    for (const c of p_c)
                     {
                         result += stripIndents`
                         <tr>
@@ -64,7 +64,7 @@ export default async function printOrderProductTable(order: IOrder, customer: IC
                     }
                 }
 
-                if(order.fees)
+                if (order.fees)
                 {
                     result += stripIndents`
                     <tr>

@@ -54,7 +54,7 @@ export default
     ],
     method: async ({action}: {action: string}) => 
     {
-        switch(action)
+        switch (action)
         {
             case 'get_invoices':
                 // Getting all invoices
@@ -91,7 +91,7 @@ export default
                 ]
                 const { invoiceId, isOCR } = await inquirer.prompt(action);
                 let id = invoiceId;
-                if(isOCR)
+                if (isOCR)
                     // get id from ocr, by removing first 8 characters
                     id = invoiceId.substring(8);
 
@@ -175,7 +175,7 @@ export default
                     if (invoice.paid)
                         return Logger.error(`Invoice with id ${invoiceId} is already paid`);
             
-                    if(cTransaction.toLowerCase() === 'yes')
+                    if (cTransaction.toLowerCase() === 'yes')
                     {
                         const t = await (new TransactionsModel({
                             amount: invoice.amount+invoice.amount*invoice.tax_rate/100,
@@ -279,15 +279,15 @@ export default
                     ]
                     const { customerId, invoice_date, due_date, amount, tax_rate, payment_method, currency, notes, items, send_email, fees } = await inquirer.prompt(action);
                     const customer = await CustomerModel.findOne({ id: customerId })
-                    if(!customer)
+                    if (!customer)
                         return Logger.error(`Customer with id ${customerId} not found`);
                     // parse items
                     const nItems = (items as string).split(';').map((e: string) =>
                     {
-                        if(e === "")
+                        if (e === "")
                             return null;
                         const [notes, quantity, price] = e.split(',');
-                        if(!notes || !quantity || !price)
+                        if (!notes || !quantity || !price)
                             null;
                         return {
                             notes,
@@ -321,7 +321,7 @@ export default
 
                     Logger.info(`Invoice created with id ${invoice.id}`);
                     mainEvent.emit("invoice_created", invoice);
-                    if(send_email)
+                    if (send_email)
                         await sendInvoiceEmail(invoice, customer);
 
                     break;

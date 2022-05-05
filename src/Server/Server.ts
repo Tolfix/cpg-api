@@ -18,31 +18,31 @@ import PluginHandler from "../Plugins/PluginHandler";
 
 declare module "express-session"
 {
-    interface SessionData
-    {
-        payload?: ICustomer;
-    }
+  interface SessionData
+  {
+    payload?: ICustomer;
+  }
 }
 
 export const server = express();
 
 server.use(fileUpload({
-    createParentPath: true,
+  createParentPath: true,
 }));
 
 server.use(cors({
-    origin: "*",
-    credentials: true,
+  origin: "*",
+  credentials: true,
 }));
 
 const sessionMiddleWare = session({
-    secret: Express_Session_Secret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        path: "/",
-        maxAge: 30*24*60*60*1000,
-    }
+  secret: Express_Session_Secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    path: "/",
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+  }
 });
 
 server.use(sessionMiddleWare);
@@ -50,55 +50,58 @@ server.use(sessionMiddleWare);
 server.use(express.urlencoded({ extended: true }));
 server.use((req, res, next) => 
 {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    express.json({verify: (req, res, buf, encoding) =>
-    { 
-        // Check if content type is application/json
-        // And method is POST|PUT|PATCH, since we don't care to look at GET requests
-        if(
-            req.headers["content-type"] === "application/json" &&
-            req.method?.match(/POST|PATCH|PUT/g) &&
-            buf.toString() !== ""
-        )
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  express.json({
+    verify: (req, res, buf, encoding) =>
+    {
+      // Check if content type is application/json
+      // And method is POST|PUT|PATCH, since we don't care to look at GET requests
+      if (
+        req.headers["content-type"] === "application/json" &&
+        req.method?.match(/POST|PATCH|PUT/g) &&
+        buf.toString() !== ""
+      )
+      {
+        // Fix to issue #29
+        // https://github.com/Tolfix/cpg-api/issues/29
+        // Not good "method" to return node errors to user.
+        try
         {
-            // Fix to issue #29
-            // https://github.com/Tolfix/cpg-api/issues/29
-            // Not good "method" to return node errors to user.
-            try
-            {
-                JSON.parse(buf.toString());
-            }
-            catch (e)
-            {
-                // @ts-ignore
-                APIError(`Invalid JSON, ${(e.toString())}`)(res);
-            }
+          JSON.parse(buf.toString());
         }
-        
-        // @ts-ignore
-        req.rawBody = buf;
-    }})(req, res, next);
+        catch (e)
+        {
+          // @ts-ignore
+          APIError(`Invalid JSON, ${(e.toString())}`)(res);
+        }
+      }
+
+
+      // @ts-ignore
+      req.rawBody = buf;
+    }
+  })(req, res, next);
 });
 
 server.use((req, res, next) =>
 {
-    res.setHeader('X-Powered-By', 'cpg-api');
-    next();
+  res.setHeader('X-Powered-By', 'cpg-api');
+  next();
 });
 
 //Limiter, to reduce spam if it would happen.
 const limiter = rateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: async (request, response) =>
-    {
-        if(await EnsureAuth(true)(request,response))
-            return 1000;
-		if(await EnsureAdmin(true)(request,response))
-            return 5000;
-        return 500;
-	},
-    standardHeaders: true,
-    message: "Too many requests, please try again later."
+  windowMs: 15 * 60 * 1000,
+  max: async (request, response) =>
+  {
+    if (await EnsureAuth(true)(request, response))
+      return 1000;
+    if (await EnsureAdmin(true)(request, response))
+      return 5000;
+    return 500;
+  },
+  standardHeaders: true,
+  message: "Too many requests, please try again later."
 });
 
 server.use(limiter);
@@ -108,12 +111,12 @@ RouteHandler(server);
 server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listing} ${PORT} | ${Full_Domain}`));
 
 (async () =>
-    {
-        await ApolloServer(server);
-        await PluginHandler();
-        server.use("*", (req, res) =>
-        {
-            return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
-        });
-    }
+{
+  await ApolloServer(server);
+  await PluginHandler();
+  server.use("*", (req, res) =>
+  {
+    return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
+  });
+}
 )();

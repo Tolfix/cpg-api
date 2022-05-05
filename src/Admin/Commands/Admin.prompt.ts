@@ -31,7 +31,7 @@ export default
     ],
     method: async ({action}: {action: string}) => 
     {
-        switch(action)
+        switch (action)
         {
             case 'show_admins':
                 // Getting all invoices
@@ -80,7 +80,7 @@ export default
             
                             AdminModel.findOneAndUpdate({ username: username }, (err: any) =>
                             {
-                                if(err)
+                                if (err)
                                     Logger.error(err);
                                     
                                 Logger.info(`Successfully deleted administrator ${username}`);

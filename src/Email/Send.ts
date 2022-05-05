@@ -20,7 +20,7 @@ export async function SendEmail(
 ): Promise<boolean | void>
 {
     const [SMTPConfig, SMTP_Error] = await AW<IConfigs["smtp"]>(await GetSMTPConfig());
-    if(!SMTPConfig || SMTP_Error)
+    if (!SMTPConfig || SMTP_Error)
         throw new Error(`No SMTP config.`);
 
     const config = {
@@ -52,13 +52,13 @@ export async function SendEmail(
         subject: subject,
     }
 
-    if(body.isHTML)
+    if (body.isHTML)
         email.html = body.body;
 
-    if(!body.isHTML)
+    if (!body.isHTML)
         email.text = body.body
 
-    if(body.attachments)
+    if (body.attachments)
         email.attachments = body.attachments;
 
     //@ts-ignore
@@ -86,7 +86,7 @@ export async function sendEmail(options: {
 })
 {
     const [SMTPConfig, SMTP_Error] = await AW<IConfigs["smtp"]>(await GetSMTPConfig());
-    if(!SMTPConfig || SMTP_Error)
+    if (!SMTPConfig || SMTP_Error)
         throw new Error(`No SMTP config.`);
 
     const config = {
@@ -118,7 +118,7 @@ export async function sendEmail(options: {
         subject: options.subject,
     }
 
-    if(options.body.attachments)
+    if (options.body.attachments)
         email.attachments = options.body.attachments;
 
     //@ts-ignore

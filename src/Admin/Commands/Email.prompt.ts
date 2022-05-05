@@ -30,7 +30,7 @@ export default
     ],
     method: async ({action}: {action: string}) => 
     {
-        switch(action)
+        switch (action)
         {
             case 'show_emails':
                 return new Promise(async (resolve,) =>
@@ -56,7 +56,7 @@ export default
                         Logger.info(`Adding email..`);
                         // Check if email is valid
                         // eslint-disable-next-line no-useless-escape
-                        if(!email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
+                        if (!email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
                         {
                             Logger.error(`Invalid email`);
                             return resolve(false);

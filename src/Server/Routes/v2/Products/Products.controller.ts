@@ -13,7 +13,7 @@ const API = new BaseModelAPI<IProduct>(idProduct, ProductModel);
 async function insert(req: Request, res: Response)
 {
 
-    if(!req.body.currency)
+    if (!req.body.currency)
         req.body.currency = (await Company_Currency()).toUpperCase();
 
     // Check if our currency is valid
@@ -24,7 +24,7 @@ async function insert(req: Request, res: Response)
         return currencyCodes.includes(currency as TPaymentCurrency);
     }
 
-    if(!validCurrency(req.body.currency))
+    if (!validCurrency(req.body.currency))
         req.body.currency = (await Company_Currency()).toUpperCase();
     
     API.create(req.body)

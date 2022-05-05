@@ -115,7 +115,7 @@ class OrderRoute
             // Check if payment_method is valid
             const validPaymentMethods = getEnabledPaymentMethods();
             
-            if(!validPaymentMethods.includes(payment_method))
+            if (!validPaymentMethods.includes(payment_method))
             {
                 Logger.error(`Invalid payment method ${payment_method}`, `Please ensure you have enabled this payment method in the config (/v3/config/payment_methods)`);
                 return APIError("Invalid payment method", 400)(res);
@@ -128,22 +128,22 @@ class OrderRoute
             // @ts-ignore
             Logger.info(`Order placed by ${req.customer.email}`, `General information:`, products, payment_method, promotion_code);
 
-            if(!customer_id || !products || !payment_method)
+            if (!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);
 
-            if(!payment_method.match(/manual|bank|paypal|credit_card|swish/g))
+            if (!payment_method.match(/manual|bank|paypal|credit_card|swish/g))
                 return APIError("payment_method invalid")(res);
 
-            if(products.every(e => e.quantity <= 0))
+            if (products.every(e => e.quantity <= 0))
                 return APIError("quantity invalid")(res);
 
-            if(products.every(e => typeof e.product_id === "undefined"))
+            if (products.every(e => typeof e.product_id === "undefined"))
                 return APIError("product_id invalid")(res);      
 
             // Check if customer_id is valid
             const customer = await CustomerModel.findOne({ id: customer_id });
 
-            if(!customer)
+            if (!customer)
                 return APIError("Unable to find customer")(res);
 
             let _products = await ProductModel.find({
@@ -155,7 +155,7 @@ class OrderRoute
             // Filter products which are hidden
             _products = _products.filter(product => product.hidden === false);
 
-            if(_products.length <= 0)
+            if (_products.length <= 0)
                 return APIError("No valid products ids")(res);
 
             const _order_ = <IOrder>{
@@ -197,12 +197,12 @@ class OrderRoute
             // ! prevent this
             for (const p of _products)
             {
-                if(p.payment_type === "one_time")
+                if (p.payment_type === "one_time")
                     recurringMethods["one_timers"].push(p);
 
-                if(p.payment_type === "recurring")
+                if (p.payment_type === "recurring")
                 {
-                    switch(p.recurring_method)
+                    switch (p.recurring_method)
                     {
                         case "monthly":
                             recurringMethods["monthly"].push(p);
@@ -228,7 +228,7 @@ class OrderRoute
                 }
 
                 let configurable_option: any = undefined
-                if(products.find(e => e.product_id === p.id)?.configurable_options)
+                if (products.find(e => e.product_id === p.id)?.configurable_options)
                     configurable_option = products.find(e => e.product_id === p.id)?.configurable_options
 
                 _order_.products.push({
@@ -243,7 +243,7 @@ class OrderRoute
             Object.keys(recurringMethods).forEach(async (key: keyof (typeof recurringMethods)) =>
             {
                 const isOneTimer = key === "one_timers";
-                if(recurringMethods[key].length > 0)
+                if (recurringMethods[key].length > 0)
                 {
                     await createOrder({
                         customer: customer,
@@ -268,10 +268,10 @@ class OrderRoute
 
             await sendInvoiceEmail(invoice, customer);
 
-            if(!invoice)
+            if (!invoice)
                 return APIError("Unable to create invoice, but created order.")(res);
 
-            if(ce_orders.get(payment_method))
+            if (ce_orders.get(payment_method))
                 return ce_orders.get(payment_method)?.(_order_, invoice, req, res, next);
 
             return APISuccess("Invoice sent")(res);

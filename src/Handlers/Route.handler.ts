@@ -19,10 +19,10 @@ export default function RouteHandler(server: Application): void
         readdirSync(`${routeDir}/${version}`).forEach((route) =>
         {
             const routes = readdirSync(`${routeDir}/${version}/${route}`).filter((f) => f.endsWith('config.js'));
-            for(const file of routes)
+            for (const file of routes)
             {
                 const pull = require(`${routeDir}/${version}/${route}/${file}`);
-                if(pull)
+                if (pull)
                 {
                     Logger.api(`Adding new router in version ${version}, name ${pull.name ?? ""}`)
                     new pull(server, version);

@@ -23,14 +23,14 @@ export default async function stripeWebhookEvent(event: stripe.Event)
             // That their payment failed
             const invoice_id = intent.metadata.invoice_id;
             const invoice = await InvoiceModel.findOne({ id: invoice_id });
-            if(!invoice)
+            if (!invoice)
                 throw new Error("Invoice not found");
 
             const customer = await CustomerModel.findOne({ $or: [
                 { id: invoice.customer_uid },
                 { uid: invoice.customer_uid },
             ] });
-            if(!customer)
+            if (!customer)
                 throw new Error("Customer not found");
 
             // Send email to customer

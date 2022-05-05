@@ -6,7 +6,7 @@ export default function urlToBase64(url: string): Promise<Buffer>
     {
         request({ url, encoding: null }, (error, response, body) =>
         {
-            if(!error && response.statusCode === 200)
+            if (!error && response.statusCode === 200)
                 return resolve(Buffer.from(body, 'base64'));
             return reject(`Failed to get`);
         });

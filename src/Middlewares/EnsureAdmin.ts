@@ -13,33 +13,33 @@ export default function EnsureAdmin(eR = false)
 
         const authHeader = req.headers['authorization'];
         const tokenQuery = req.query.access_token;
-        if(!authHeader && !tokenQuery)
+        if (!authHeader && !tokenQuery)
             return eR ? Promise.resolve(false) : APIError({
                 text: "Missing 'authorization' in header"
             })(res);
     
         let b64auth: string[];
-        if(authHeader)
+        if (authHeader)
             b64auth = authHeader.split(' ');
     
-        if(tokenQuery)
+        if (tokenQuery)
             b64auth = ["query", tokenQuery as string];
     
         // @ts-ignore
-        if(!b64auth[0].toLocaleLowerCase().match(/basic|bearer|query/g))
+        if (!b64auth[0].toLocaleLowerCase().match(/basic|bearer|query/g))
             return eR ? Promise.resolve(false) : APIError("Missing 'basic' or 'bearer' in authorization")(res);
             
         // @ts-ignore
-        if(!b64auth[1])
+        if (!b64auth[1])
             return eR ? Promise.resolve(false) : APIError("Missing 'buffer' in authorization")(res);
         
         // @ts-ignore
-        if(b64auth[0].toLocaleLowerCase() === "basic")
+        if (b64auth[0].toLocaleLowerCase() === "basic")
         {
             // Check if buffer, or base64
             // @ts-ignore
             let [login, password] = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString().split(':');
-            if(login.includes("==") || password.includes("=="))
+            if (login.includes("==") || password.includes("=="))
             {
                 // Assuming base64 string
                 // Convert it to normal string
@@ -55,7 +55,7 @@ export default function EnsureAdmin(eR = false)
 
             const match = await bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"]) ?? "");
 
-            if(!match)
+            if (!match)
             {
                 !eR ? Logger.warning(`Authorization failed for admin with username: ${login}`) : null;
                 return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
@@ -65,7 +65,7 @@ export default function EnsureAdmin(eR = false)
         }
     
         // @ts-ignore
-        if(b64auth[0].toLocaleLowerCase() === "bearer" || b64auth[0].toLocaleLowerCase() === "query")
+        if (b64auth[0].toLocaleLowerCase() === "bearer" || b64auth[0].toLocaleLowerCase() === "query")
         {
             // @ts-ignore
             const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
@@ -76,7 +76,7 @@ export default function EnsureAdmin(eR = false)
             {
                 const payload = jwt.verify(token, JWT_Access_Token);
                 
-                if(!payload)
+                if (!payload)
                 {
                     !eR ? Logger.warning(`Authorization failed for admin with token: ${token}`) : null;
                     return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
@@ -86,7 +86,7 @@ export default function EnsureAdmin(eR = false)
     
                 return eR ? Promise.resolve(true) : next?.();
             }
-            catch(e)
+            catch (e)
             {
                 return eR ? Promise.resolve(false) : APIError("JWT token expired or bad", 403)(res);
             }

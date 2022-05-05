@@ -17,28 +17,28 @@ export default async (server: Application) =>
         {
             
             const authHeader = req.headers['authorization'];
-            if(!authHeader)
+            if (!authHeader)
                 return {
                     isAuth: false,
                 }
         
             const b64auth = (authHeader).split(' ');
         
-            if(!b64auth[0].toLocaleLowerCase().match(/basic|bearer/g))
+            if (!b64auth[0].toLocaleLowerCase().match(/basic|bearer/g))
                 return {
                     isAuth: false,
                 }
         
-            if(!b64auth[1])
+            if (!b64auth[1])
                 return {
                     isAuth: false,
                 }
 
-            if(b64auth[0].toLocaleLowerCase() === "basic")
+            if (b64auth[0].toLocaleLowerCase() === "basic")
             {
                 // Check if buffer, or base64
                 let [login, password] = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString().split(':');
-                if(login.includes("==") || password.includes("=="))
+                if (login.includes("==") || password.includes("=="))
                 {
                     //login = atob(login);
                     login = Buffer.from(login, 'base64').toString();
@@ -47,11 +47,11 @@ export default async (server: Application) =>
                 }
 
                 // Check if admin
-                if(CacheAdmin.has(getAdminByUsername(login) ?? "ADM_"))
+                if (CacheAdmin.has(getAdminByUsername(login) ?? "ADM_"))
                 {
                     const succeed = await bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"] ?? ""));
 
-                    if(succeed)
+                    if (succeed)
                         return {
                             isAuth: true,
                             isAdmin: true,
@@ -61,12 +61,12 @@ export default async (server: Application) =>
                 }
             }
 
-            if(b64auth[0].toLocaleLowerCase() === "bearer")
+            if (b64auth[0].toLocaleLowerCase() === "bearer")
             {
                 const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
                 const suc = jwt.verify(token, JWT_Access_Token)
                 // @ts-ignore
-                if(suc?.data === "admin")
+                if (suc?.data === "admin")
                     return {
                         isAuth: true,
                         isAdmin: true,
@@ -75,7 +75,7 @@ export default async (server: Application) =>
                     }
                 console.log(suc)
                 // @ts-ignore
-                if(suc?.data?.["id"])
+                if (suc?.data?.["id"])
                     return {
                         isAuth: true,
                         isAdmin: false,

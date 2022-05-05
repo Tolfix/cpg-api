@@ -27,7 +27,7 @@ export async function run_paypal_method(
     res: Response, 
 )
 {
-    if(Paypal_Client_Secret !== "" && Paypal_Client_Id !== "")
+    if (Paypal_Client_Secret !== "" && Paypal_Client_Id !== "")
         return APISuccess(`${Full_Domain}/v2/paypal/subscription/place/${subscription.uid}`)(res);
 
     return APISuccess("Invoice sent")(res);

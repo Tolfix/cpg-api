@@ -41,11 +41,11 @@ export function cron_notifyInvoices()
     {
         Logger.info(GetText(Default_Language).cron.txt_Invoice_Found_Notify(invoices.length));
         // Logger.info(`Found ${invoices.length} invoices to notify.`);
-        for await(const invoice of invoices)
+        for await (const invoice of invoices)
         {
             // Get customer
             const Customer = await CustomerModel.findOne({ id: invoice.customer_uid });
-            if(!Customer)
+            if (!Customer)
                 continue;
             
             Logger.info(GetText(Default_Language).cron.txt_Invoice_Found_Sending_Email(Customer));
@@ -54,7 +54,7 @@ export function cron_notifyInvoices()
             await sendInvoiceEmail(invoice, Customer);
     
         }
-        if(invoices.length > 0)
+        if (invoices.length > 0)
             await InvoiceNotifiedReport(invoices);
     });
 }
@@ -81,7 +81,7 @@ export function cron_chargeStripePayment()
     }).then(async (invoices) =>
     {
         // Logger.info(`Found ${invoices.length} invoices to charge.`);
-        for await(const invoice of invoices)
+        for await (const invoice of invoices)
         {
             // Get customer
             const Customer = await CustomerModel.findOne({ $or: [
@@ -89,16 +89,16 @@ export function cron_chargeStripePayment()
                 { uid: invoice.customer_uid }
             ] });
 
-            if(!Customer)
+            if (!Customer)
                 continue;
             
             Logger.info(`Checking ${Customer.personal.email} for stripe payment.`, Logger.trace());
             // Check if credit card
-            if(invoice.payment_method !== "credit_card")
+            if (invoice.payment_method !== "credit_card")
                 continue;
     
             // Check if customer got setup_intent enabled
-            if(!(Customer?.extra?.stripe_setup_intent))
+            if (!(Customer?.extra?.stripe_setup_intent))
                 continue;
     
             Logger.info(`Invoice ${invoice.id} is due in the next 2 weeks and has a setup_intent enabled.`);
@@ -117,7 +117,7 @@ export function cron_chargeStripePayment()
                 // invoice.notified = true;
                 await invoice.save();
             }
-            catch(e)
+            catch (e)
             {
                 Logger.error(`Failed to charge customer ${Customer.id} with error`, e);
             }
@@ -137,15 +137,15 @@ export function cron_notifyLateInvoicePaid()
         }
     }).then(async (invoices) =>
     {
-        for await(const invoice of invoices)
+        for await (const invoice of invoices)
         {
             // Get customer
             const Customer = await CustomerModel.findOne({ id: invoice.customer_uid});
-            if(!Customer)
+            if (!Customer)
                 continue;
             await sendLateInvoiceEmail(invoice, Customer);
         }
-        if(invoices.length > 0)
+        if (invoices.length > 0)
             await InvoiceLateReport(invoices);
     });
 }

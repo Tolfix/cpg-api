@@ -10,32 +10,32 @@ export default function EnsureAuth(eR = false)
     {
         const authHeader = req.headers['authorization'];
         const tokenQuery = req.query.access_token;
-        if(!authHeader && !tokenQuery)
+        if (!authHeader && !tokenQuery)
             return eR ? Promise.resolve(false) : APIError({
                 text: "Missing 'authorization' in header"
             })(res);
     
         let b64auth: string[];
-        if(authHeader)
+        if (authHeader)
             b64auth = authHeader.split(' ');
     
-        if(tokenQuery)
+        if (tokenQuery)
             b64auth = ["query", tokenQuery as string];
 
         // @ts-ignore
-        if(!b64auth[0].toLocaleLowerCase().match(/query|bearer/g))
+        if (!b64auth[0].toLocaleLowerCase().match(/query|bearer/g))
             return eR ? Promise.resolve(false) : APIError({
                 text: "Missing 'basic' or 'bearer' in authorization"
             })(res);
 
         // @ts-ignore
-        if(!b64auth[1])
+        if (!b64auth[1])
             return eR ? Promise.resolve(false) : APIError({
                 text: "Missing 'buffer' in authorization"
             })(res);
             
         // @ts-ignore
-        if(b64auth[0].toLocaleLowerCase() === "bearer" || b64auth[0].toLocaleLowerCase() === "query")
+        if (b64auth[0].toLocaleLowerCase() === "bearer" || b64auth[0].toLocaleLowerCase() === "query")
         {
             // @ts-ignore
             const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
@@ -50,7 +50,7 @@ export default function EnsureAuth(eR = false)
                     return eR ? Promise.resolve(false) : APIError(`Unauthorized user.`, 403)(res);
     
                 // @ts-ignore
-                if(!payload?.data?.id)
+                if (!payload?.data?.id)
                     return eR ? Promise.resolve(false) : APIError(`Wrong payload.`, 403)(res);
     
                 //@ts-ignore
@@ -60,7 +60,7 @@ export default function EnsureAuth(eR = false)
     
                 return eR ? Promise.resolve(true) : next?.();
             }
-            catch(e)
+            catch (e)
             {
                 Logger.error(`${e}`, Logger.trace());
                 return eR ? Promise.resolve(false) : APIError(`JWT token expired or bad`, 403)(res);

@@ -19,19 +19,19 @@ class PaypalRouter
             const invoiceUid = req.params.invoiceUid;
             const invoice = await InvoiceModel.findOne({ uid: invoiceUid as IInvoice["uid"] });
 
-            if(!invoice)
+            if (!invoice)
                 return res.redirect("back");
 
-            if(invoice.paid)
+            if (invoice.paid)
                 return res.redirect("back");
 
             const links = await createPaypalPaymentFromInvoice(invoice);
 
-            if(!links)
+            if (!links)
                 return res.redirect("back");
 
-            for(const link of links)
-                if(link.rel === "approval_url")
+            for (const link of links)
+                if (link.rel === "approval_url")
                     return res.redirect(link.href);
         });
 
@@ -40,7 +40,7 @@ class PaypalRouter
             const payerId = req.query.PayerID as string;
             const paymentId = req.query.paymentId as string;
 
-            if(!payerId || !paymentId)
+            if (!payerId || !paymentId)
                 return res.redirect(await Company_Website());
 
             await retrievePaypalTransaction(payerId, paymentId);

@@ -59,10 +59,10 @@ export async function reCache_Customers()
     return new Promise(async (resolve) =>
     {
         const customer = await CustomerModel.find();
-        for await(const c of customer)
+        for await (const c of customer)
         {
             // Check if customer has currency
-            if(!c.currency)
+            if (!c.currency)
             {
                 const companyCurrency = await Company_Currency();
                 c.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
@@ -84,7 +84,7 @@ export async function reCache_Product()
         for (const c of product)
         {
             // Check if product has currency
-            if(!c.currency)
+            if (!c.currency)
             {
                 const companyCurrency = await Company_Currency();
                 c.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
@@ -140,7 +140,7 @@ export async function reCache_Configs()
     {
         const config = await ConfigModel.find();
         // Logger.debug(config);
-        if(!config[0])
+        if (!config[0])
         {
             const smtpData = {
                 smtp: {
@@ -166,13 +166,13 @@ export async function reCache_Configs()
         const c = config[0];
 
         // Check if c has payment_methods
-        if(!c.payment_methods)
+        if (!c.payment_methods)
         {
             c.payment_methods = [];
             await c.save();
         }
 
-        if(!c.extra)
+        if (!c.extra)
         {
             c.extra = {};
             await c.save();
@@ -214,10 +214,10 @@ export async function reCache_Images()
      return new Promise(async (resolve) =>
      {
          const invoice = await InvoiceModel.find();
-         for await(const o of invoice)
+         for await (const o of invoice)
          {
             // check if invoice has currency
-            if(!o.currency)
+            if (!o.currency)
             {
                 const companyCurrency = await Company_Currency();
                 o.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;

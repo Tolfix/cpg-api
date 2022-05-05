@@ -21,7 +21,7 @@ function insert(req: Request, res: Response)
     {
         bcrypt.hash(req.body.password ?? "123qwe123", salt, async (err, hash) =>
         {
-            if(err)
+            if (err)
                 Logger.error(err);
 
             req.body.password = hash;
@@ -31,10 +31,10 @@ function insert(req: Request, res: Response)
             // Check if email already exists
             const doesExist = await CustomerModel.findOne({ "personal.email": sanitizeMongoose(email) });
 
-            if(doesExist)
+            if (doesExist)
                 return APIError(`Email ${email} already exists`, 409)(res);
 
-            if(!req.body.currency)
+            if (!req.body.currency)
                 req.body.currency = await Company_Currency();
 
             // Check if our currency is valid
@@ -45,7 +45,7 @@ function insert(req: Request, res: Response)
                 return currencyCodes.includes(currency as TPaymentCurrency);
             }
 
-            if(!validCurrency(req.body.currency))
+            if (!validCurrency(req.body.currency))
                 req.body.currency = await Company_Currency();        
 
             API.create(req.body)
@@ -86,11 +86,11 @@ function list(req: Request, res: Response)
 
 async function patch(req: Request, res: Response)
 {
-    if(req.body.password)
+    if (req.body.password)
     {
         // Check if they are the same..
         const Customer = await CustomerModel.findOne({ id: req.params.uid });
-        if(Customer?.password !== req.body.password)
+        if (Customer?.password !== req.body.password)
         {
             const salt = await bcrypt.genSalt(10)
             req.body.password = await bcrypt.hash(req.body.password ?? "123qwe123", salt);

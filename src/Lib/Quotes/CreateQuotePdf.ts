@@ -21,7 +21,7 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
 
         const Customer = await CustomerModel.findOne({ id: quote.customer_uid });
     
-        if(!Customer)
+        if (!Customer)
             return reject("Customer not found");
     
         const data = {
@@ -77,18 +77,18 @@ export default function createQuotePdf(quote: IQuotes): Promise<string>
             }),
         };
 
-        if(
+        if (
             Customer.billing.country.toLowerCase() === "sweden" ||
             Customer.billing.country.toLowerCase() === "sverige"
         )
             data["client"]["custom1"] = `<br/><strong>Innehar ${await Company_Tax_Registered() ? "" : "inte"} F-Skattsedel</strong>`;
 
 
-        if(await Company_Logo_Url() !== "" && PDF_Template_Url === "")
+        if (await Company_Logo_Url() !== "" && PDF_Template_Url === "")
             // @ts-ignore
             data["images"]["logo"] = await Company_Logo_Url();
 
-        if(PDF_Template_Url !== "")
+        if (PDF_Template_Url !== "")
             // @ts-ignore
             data["images"]["background"] = PDF_Template_Url;
         

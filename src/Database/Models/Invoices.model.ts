@@ -147,7 +147,7 @@ InvoiceSchema.methods.getTotalAmount = function({
 {
     const _ = this as unknown as IInvoice;
     const total = _.items.reduce((total, item) => total + item.amount, 0);
-    if(currency)
+    if (currency)
         return `${tax ? total + total * _.tax_rate/100 : total} ${symbol ? GetCurrencySymbol(_.currency) : _.currency}`;
     return tax ? total + total * _.tax_rate/100 : total;
 }

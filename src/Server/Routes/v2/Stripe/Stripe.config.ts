@@ -30,10 +30,10 @@ class StripeRouter
         {
             const invoiceId = req.params.invoiceId as any;
             const invoice = await InvoiceModel.findOne( { uid: invoiceId } );
-            if(!invoice)
+            if (!invoice)
                 return APIError("Couldn't find invoice")(res);
 
-            if(invoice.paid)
+            if (invoice.paid)
                 return APIError("Invoice already paid")(res);
 
             const intent = await CreatePaymentIntent(invoice);
@@ -201,10 +201,10 @@ class StripeRouter
             const invoiceId = req.params.invoiceId;
             const payment_intent = req.query.payment_intent as string;
             const invoice = await InvoiceModel.findOne( { id: invoiceId } );
-            if(!invoice)
+            if (!invoice)
                 return APIError("Couldn't find invoice")(res);
 
-            if(!payment_intent)
+            if (!payment_intent)
                 return APIError("No payment_intent")(res);
 
             const intent = await RetrievePaymentIntent(payment_intent);
@@ -293,7 +293,7 @@ class StripeRouter
         {
             const customer_uid = req.params.customer_uid;
             const customer = await CustomerModel.findOne( { uid: customer_uid } );
-            if(!customer)
+            if (!customer)
                 return APIError("Couldn't find customer")(res);
 
             // Create a SetupIntent with a PaymentMethod
@@ -425,12 +425,12 @@ class StripeRouter
         this.router.get("/setup-complete", async (req, res) =>
         {
             const payment_intent = DebugMode ? req.query.setup_intent as string : req.query.setup_intent_client_secret as string;
-            if(!payment_intent)
+            if (!payment_intent)
                 return APIError("No payment_intent")(res);
 
             const intent = await RetrieveSetupIntent(payment_intent);
             const customer = await CustomerModel.findOne( { uid: intent.metadata?.customer_uid } );
-            if(!customer)
+            if (!customer)
                 return APIError("Couldn't find customer")(res);
 
             let message: string;

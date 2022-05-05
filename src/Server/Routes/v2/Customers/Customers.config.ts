@@ -66,18 +66,18 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const data = req.body;
 
             // Go through each key from "data"
-            for(const key in data)
+            for (const key in data)
             {
                 // If the key is in the customer object
                 // We also check if key is not "password"
                 // Because we don't want to update the password
-                if(key === "password")
+                if (key === "password")
                     continue;
 
                 // Now an issues could be that the key is not in the customer object
@@ -85,7 +85,7 @@ class CustomerRouter
                 // Which can look like this: personal.first_name
                 // But it could be: personal: { first_name: "John" }
                 // So we need to check if the key is a string
-                if(key.includes("."))
+                if (key.includes("."))
                 {
                     // If the key is a string, we need to split it
                     // And check if the first part is in the customer object
@@ -93,10 +93,10 @@ class CustomerRouter
 
                     // If the first part is in the customer object
                     // @ts-ignore
-                    if(customer[parts[0]])
+                    if (customer[parts[0]])
                         // If the second part is in the customer object
                         // @ts-ignore
-                        if(customer[parts[0]][parts[1]])
+                        if (customer[parts[0]][parts[1]])
                             // Set the value of the key to the value of the second part
                             // @ts-ignore
                             customer[parts[0]][parts[1]] = data[key];
@@ -124,7 +124,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const invoices = await MongoFind(InvoiceModel, req.query, {
@@ -144,7 +144,7 @@ class CustomerRouter
         {
             const invoiceId = req.params.id;
 
-            if(!invoiceId)
+            if (!invoiceId)
                 return APIError(`Invalid invoice id`)(res);
             
             const customer = await CustomerModel.findOne({
@@ -152,7 +152,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const data = await MongoFind(InvoiceModel, req.query, {
@@ -168,7 +168,7 @@ class CustomerRouter
                 id: invoiceId,
             });
 
-            if(!data.data)
+            if (!data.data)
                 return APIError(`Unable to find invoice`)(res);
 
             return APISuccess(data.data[0])(res);
@@ -178,7 +178,7 @@ class CustomerRouter
         {
             const invoiceId = req.params.id;
 
-            if(!invoiceId)
+            if (!invoiceId)
                 return APIError(`Invalid invoice id`)(res);
             
             const customer = await CustomerModel.findOne({
@@ -186,7 +186,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const {data: [invoice]} = await MongoFind(InvoiceModel, req.query, {
@@ -202,7 +202,7 @@ class CustomerRouter
                 id: invoiceId,
             });
 
-            if(!invoice)
+            if (!invoice)
                 return APIError(`Unable to find invoice`)(res);
 
             const result = await createPDFInvoice(invoice);
@@ -221,7 +221,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const data = await MongoFind(OrderModel, req.query,{
@@ -241,7 +241,7 @@ class CustomerRouter
         {
             const orderId = req.params.id;
 
-            if(!orderId)
+            if (!orderId)
                 return APIError(`Invalid invoice id`)(res);
             
             const customer = await CustomerModel.findOne({
@@ -249,7 +249,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const {data: [order]} = await MongoFind(OrderModel, req.query,{
@@ -264,7 +264,7 @@ class CustomerRouter
                 id: orderId,
             });
 
-            if(!order)
+            if (!order)
                 return APIError(`Unable to find order`)(res);
 
             return APISuccess(order)(res);
@@ -274,7 +274,7 @@ class CustomerRouter
         {
             const orderId = req.params.id;
 
-            if(!orderId)
+            if (!orderId)
                 return APIError(`Invalid invoice id`)(res);
             
             const customer = await CustomerModel.findOne({
@@ -282,7 +282,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const order = await OrderModel.findOne({
@@ -301,7 +301,7 @@ class CustomerRouter
                 }
             });
 
-            if(!order)
+            if (!order)
                 return APIError(`Unable to find order`)(res);
 
             order.order_status = "cancelled";
@@ -314,7 +314,7 @@ class CustomerRouter
 
             GetSMTPEmails().then(emails =>
             {
-                for(const email of emails)
+                for (const email of emails)
                 {
                     SendEmail(email, `Order Cancelled #${order.id}`, {
                         isHTML: true,
@@ -336,7 +336,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const data = await MongoFind(QuotesModel, req.query,{
@@ -356,7 +356,7 @@ class CustomerRouter
         {
             const quoteId = req.params.id;
 
-            if(!quoteId)
+            if (!quoteId)
                 return APIError(`Invalid invoice id`)(res);
             
             const customer = await CustomerModel.findOne({
@@ -364,7 +364,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const {data: [order]} = await MongoFind(QuotesModel, req.query,{
@@ -379,7 +379,7 @@ class CustomerRouter
                 id: quoteId,
             });
 
-            if(!order)
+            if (!order)
                 return APIError(`Unable to find quote`)(res);
 
             return APISuccess(order)(res);
@@ -392,7 +392,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const {data: transactions, totalCount, totalPages} = await MongoFind(TransactionsModel, req.query,{
@@ -412,7 +412,7 @@ class CustomerRouter
         {
             const transactionId = req.params.id;
 
-            if(!transactionId)
+            if (!transactionId)
                 return APIError(`Invalid transaction id`)(res);
             
             const customer = await CustomerModel.findOne({
@@ -420,7 +420,7 @@ class CustomerRouter
                 id: req.customer.id
             });
 
-            if(!customer)
+            if (!customer)
                 return APIError(`Unable to find customer`)(res);
 
             const {data: [transactions]} = await MongoFind(TransactionsModel, req.query,{
@@ -442,14 +442,14 @@ class CustomerRouter
         {
             const email = req.body.email;
             Logger.api(`Email reset password request for ${email}`);
-            if(!email)
+            if (!email)
             {
                 Logger.error(`API: Email reset password request failed. No email provided`);
                 return APIError(`Invalid email`)(res);
             }
             
             const customer = await CustomerModel.findOne({ "personal.email": sanitizeMongoose(email) });
-            if(!customer)
+            if (!customer)
             {
                 Logger.error(`API: Email reset password request failed. No customer found`);
                 return APIError(`Unable to find user with email ${email}`)(res);
@@ -478,10 +478,10 @@ class CustomerRouter
             const token = req.params.token;
             const passwordReset = await PasswordResetModel.findOne({ token: token });
 
-            if(!passwordReset)
+            if (!passwordReset)
                 return APIError(`Invalid token`)(res);
 
-            if(await passwordResetChecks(passwordReset, res))
+            if (await passwordResetChecks(passwordReset, res))
                 return;
 
             const customer = await CustomerModel.findOne({"personal.email": passwordReset.email});
@@ -539,15 +539,15 @@ class CustomerRouter
             const token = req.query.token;
             const password = req.body.password;
 
-            if(!password)
+            if (!password)
                 return APIError(`Password is required`)(res);
             
-            if(!token)
+            if (!token)
                 return APIError(`Token is required`)(res);
 
             const passwordReset = await PasswordResetModel.findOne({ token: sanitizeMongoose(token) });
 
-            if(!passwordReset)
+            if (!passwordReset)
                 return APIError(`Invalid token`)(res);
                 
             if (await passwordResetChecks(passwordReset, res))
@@ -623,25 +623,25 @@ class CustomerRouter
             
             Logger.info(`Authenticating user ${username}`);
 
-            if(!username || !password)
+            if (!username || !password)
                 return APIError("Please include username and password in body.")(res);
             
             const customer = await CustomerModel.findOne({ "personal.email": sanitizeMongoose(username) });
 
-            if(!customer)
+            if (!customer)
                 return APIError("Invalid email or password.")(res);
 
             // @ts-ignore
             const isCorrect = await bcrypt.compare(password.toString(), customer.password)
 
-            if(!isCorrect)
+            if (!isCorrect)
             {
-                if(this.attemptedLogins.has(customer.id))
+                if (this.attemptedLogins.has(customer.id))
                 {
                     const attempts = this.attemptedLogins.get(customer.id);
-                    if(attempts)
+                    if (attempts)
                     {
-                        if(attempts >= 3)
+                        if (attempts >= 3)
                         {
                             await SendEmail(customer.personal.email, "Account login attempts", {
                                 isHTML: true,
@@ -677,26 +677,26 @@ class CustomerRouter
 
         this.router.post("/my/profile_picture", EnsureAuth(), async (req, res) =>
         {
-            if(req.files)
+            if (req.files)
             {
                 const customer = await CustomerModel.findOne({
                     // @ts-ignore
                     id: req.customer.id
                 });
 
-                if(!customer)
+                if (!customer)
                     return APIError(`Unable to find customer`)(res);
                 
                 // @ts-ignore
                 const image = (req.files.image as UploadedFile);
 
                 // Check if type is valid image (only jpg, png, jpeg)
-                if(!image.mimetype.match(/image\/(jpeg|png|jpg)/))
+                if (!image.mimetype.match(/image\/(jpeg|png|jpg)/))
                     return APIError("Invalid image type.")(res);
 
                 // Image can't be over 5000 MB
                 // TODO: Make dynamic later
-                if(image.size > 5000000)
+                if (image.size > 5000000)
                     return APIError("Image is too large.")(res);
 
                 Logger.info(`Customer uploading new profile picture`);
@@ -720,11 +720,11 @@ class CustomerRouter
                 customer.profile_picture = db_Image.id;
                 await customer.save();
 
-                if(tempImageId)
+                if (tempImageId)
                 {
                     // Remove old image from cache and database
                     const oldImage = CacheImages.get(tempImageId);
-                    if(oldImage)
+                    if (oldImage)
                     {
                         CacheImages.delete(tempImageId);
                         await ImageModel.deleteOne({ id: tempImageId });

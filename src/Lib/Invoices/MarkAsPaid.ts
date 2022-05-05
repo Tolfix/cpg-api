@@ -9,10 +9,10 @@ export async function getInvoiceByIdAndMarkAsPaid(id: number | string): Promise<
     return new Promise(async (resolve, reject) =>
     {
         const invoice = await InvoiceModel.findOne({ id: id });
-        if(!invoice)
+        if (!invoice)
             return reject("Unable to find invoice");
     
-        if(invoice.paid)
+        if (invoice.paid)
             return reject("Invoice is already paid");
 
         invoice.paid = true;

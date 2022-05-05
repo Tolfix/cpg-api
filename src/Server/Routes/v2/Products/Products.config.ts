@@ -41,7 +41,7 @@ class ProductsRouter
                 { uid: uid as IProduct["uid"] },
                 { id: uid as unknown as any }
             ]}));
-            if(p_fail || !product)
+            if (p_fail || !product)
                 return APIError("Failed to fetch product")(res);
 
             const [options, o_fail] = await AW(ConfigurableOptionsModel.find({
@@ -50,7 +50,7 @@ class ProductsRouter
                 }
             }));
 
-            if(o_fail)
+            if (o_fail)
                 return APIError("Failed to fetch configurable options")(res);
 
             return APISuccess(options)(res);

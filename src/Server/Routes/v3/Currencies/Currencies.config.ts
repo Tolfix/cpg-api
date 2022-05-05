@@ -26,7 +26,7 @@ class CurrenciesRouter
         this.router.get("/:code/symbol", (req, res) =>
         {
             const code = currencyCodes.find(c => c === req.params.code.toUpperCase()) as TPaymentCurrency;
-            if(!code)
+            if (!code)
                 return APIError("Invalid code")(res);
             return APISuccess(GetCurrencySymbol(code))(res);
         });
@@ -36,7 +36,7 @@ class CurrenciesRouter
             const from = currencyCodes.find(c => c === req.params.from.toUpperCase()) as TPaymentCurrency;
             const to = currencyCodes.find(c => c === req.params.to.toUpperCase()) as TPaymentCurrency;
             const amount = Number(req.params.amount);
-            if(!from || !to || !amount)
+            if (!from || !to || !amount)
                 return APIError("Invalid parameters")(res);
             return APISuccess(await convertCurrency(amount, from, to))(res);
         });

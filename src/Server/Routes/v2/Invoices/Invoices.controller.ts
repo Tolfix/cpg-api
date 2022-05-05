@@ -43,7 +43,7 @@ function patch(req: Request, res: Response)
     const paid = req.body.paid ?? false;
     API.findAndPatch((req.params.uid as IInvoice["uid"]), req.body).then((result) =>
     {
-        if(paid !== result.paid && result.paid)
+        if (paid !== result.paid && result.paid)
             mainEvent.emit("invoice_paid", result);
         // @ts-ignore
         mainEvent.emit("invoice_updated", result);

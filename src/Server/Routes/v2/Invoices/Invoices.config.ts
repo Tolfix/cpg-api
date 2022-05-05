@@ -59,7 +59,7 @@ class InvoiceRouter
             
             const invoice = await InvoiceModel.findOne({ id: req.params.uid });
 
-            if(!invoice)
+            if (!invoice)
                 return res.status(404).send("Invoice not found");
 
             const result = await createPDFInvoice(invoice);
@@ -76,7 +76,7 @@ class InvoiceRouter
         {
             const invoice = await InvoiceModel.findOne({ id: req.params.uid });
 
-            if(!invoice)
+            if (!invoice)
                 return res.status(404).send("Invoice not found");
 
             const result = await createPDFInvoice(invoice);

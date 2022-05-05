@@ -21,13 +21,13 @@ export function cron_createNewInvoicesFromOrders()
     {
         const newInvoices = [];
         // orders.forEach(async order => {
-        for await(const order of orders)
+        for await (const order of orders)
         {
             Logger.info(GetText(Default_Language).cron.txt_Order_Checking(order.id));
             // Logger.info(`Checking order ${order.id}`);
             // Check if order.order_status is not "cancelled" or "fraud"
-            if(order.dates.next_recycle)
-                if(dateFormat.parse(order.dates.next_recycle, "YYYY-MM-DD").getTime() - new Date().getTime() <= d_Days * 24 * 60 * 60 * 1000)
+            if (order.dates.next_recycle)
+                if (dateFormat.parse(order.dates.next_recycle, "YYYY-MM-DD").getTime() - new Date().getTime() <= d_Days * 24 * 60 * 60 * 1000)
                 {
                     const temptNextRecycle = order.dates.next_recycle;
                     order.dates.last_recycle = temptNextRecycle;
@@ -48,7 +48,7 @@ export function cron_createNewInvoicesFromOrders()
                     // Save the order
                     await order.save();
                 }
-            if(newInvoices.length > 0)
+            if (newInvoices.length > 0)
                 await InvoiceCreatedReport(newInvoices);
         }
     });

@@ -24,7 +24,7 @@ export function myProfileResolver(
             }
         } & TContext, TArgs>) =>
         {
-            if(context.isAdmin)
+            if (context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
             return CustomerModel.findOne({
@@ -53,14 +53,14 @@ export function myInvoicesResolver(
             }
         } & TContext, TArgs>) =>
         {
-            if(context.isAdmin)
+            if (context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
             const customer = await CustomerModel.findOne({
                 id: context.userData.id,
             });
 
-            if(!customer)
+            if (!customer)
                 throw new Error(`Customer not found`);
 
             return InvoiceModel.find({
@@ -97,17 +97,17 @@ export function myInvoiceResolver(
             id: unknown
         } & TArgs>) =>
         {
-            if(context.isAdmin)
+            if (context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
-            if(!args.id)
+            if (!args.id)
                 throw new Error(`Invoice ID is required`);
 
             const customer = await CustomerModel.findOne({
                 id: context.userData.id,
             });
 
-            if(!customer)
+            if (!customer)
                 throw new Error(`Customer not found`);
 
             return InvoiceModel.findOne({
@@ -165,14 +165,14 @@ export function myOrdersResolver(
             }
         } & TContext, TArgs>) =>
         {
-            if(context.isAdmin)
+            if (context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
             const customer = await CustomerModel.findOne({
                 id: context.userData.id,
             });
 
-            if(!customer)
+            if (!customer)
                 throw new Error(`Customer not found`);
 
             return OrderModel.find({
@@ -209,17 +209,17 @@ export function myOrderResolver(
             id: unknown
         } & TArgs>) =>
         {
-            if(context.isAdmin)
+            if (context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
-            if(!args.id)
+            if (!args.id)
                 throw new Error(`Order ID is required`);
 
             const customer = await CustomerModel.findOne({
                 id: context.userData.id,
             });
 
-            if(!customer)
+            if (!customer)
                 throw new Error(`Customer not found`);
 
             return OrderModel.findOne({
@@ -277,14 +277,14 @@ export function myTransactionsResolver(
             }
         } & TContext, TArgs>) =>
         {
-            if(context.isAdmin)
+            if (context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
             const customer = await CustomerModel.findOne({
                 id: context.userData.id,
             });
 
-            if(!customer)
+            if (!customer)
                 throw new Error(`Customer not found`);
 
             return TransactionsModel.find({
@@ -321,17 +321,17 @@ export function myTransactionResolver(
             id: unknown
         } & TArgs>) =>
         {
-            if(context.isAdmin)
+            if (context.isAdmin)
                 throw new Error(`Admin not allowed to access this`);
 
-            if(!args.id)
+            if (!args.id)
                 throw new Error(`Transaction ID is required`);
 
             const customer = await CustomerModel.findOne({
                 id: context.userData.id,
             });
 
-            if(!customer)
+            if (!customer)
                 throw new Error(`Customer not found`);
 
             return TransactionsModel.findOne({

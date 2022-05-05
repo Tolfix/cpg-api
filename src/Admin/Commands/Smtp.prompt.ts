@@ -28,7 +28,7 @@ export default
     ],
     method: async ({action}: {action: string}) => 
     {
-        switch(action)
+        switch (action)
         {
             case 'show_smtp_settings':
                 // Getting all invoices

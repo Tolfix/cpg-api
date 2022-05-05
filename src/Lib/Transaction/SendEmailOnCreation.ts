@@ -16,7 +16,7 @@ export default async function sendEmailOnTransactionCreation(t: ITransactions)
         ]
     });
 
-    if(!customer)
+    if (!customer)
         return Promise.resolve(false);
 
     await SendEmail(customer.personal.email, "Transaction Statement", {

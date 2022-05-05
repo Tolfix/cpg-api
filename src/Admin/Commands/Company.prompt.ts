@@ -28,7 +28,7 @@ export default
     ],
     method: async ({action}: {action: string}) => 
     {
-        switch(action)
+        switch (action)
         {
             case 'show_company':
                 // Getting all invoices
@@ -42,7 +42,7 @@ export default
                         // Get our config from database
                         const config = (await ConfigModel.find())[0];
                         Logger.info(`Current company:`, config.company);
-                        if(!config.company)
+                        if (!config.company)
                             // @ts-ignore
                             config.company = {};
                         

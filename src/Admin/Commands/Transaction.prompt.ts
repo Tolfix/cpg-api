@@ -35,7 +35,7 @@ export default
     ],
     method: async ({action}: {action: string}) => 
     {
-        switch(action)
+        switch (action)
         {
             case 'show_transactions':
                 {
@@ -175,7 +175,7 @@ export default
 
                     const result = await inquirer.prompt(picked_action);
 
-                    switch(statement)
+                    switch (statement)
                     {
                         case 'income':
                             {
@@ -238,7 +238,7 @@ export default
                     ]
                     const {transaction_id} = await inquirer.prompt(action1);
                     const transaction_to_delete = await TransactionsModel.findOne({id: transaction_id});
-                    if(!transaction_to_delete)
+                    if (!transaction_to_delete)
                         return Logger.error(`Transaction with id ${transaction_id} not found`);
 
                     await transaction_to_delete.remove();

@@ -14,7 +14,7 @@ Object.defineProperty(CacheConfig, "save", {
         return new Promise(async (resolve) =>
         {
             const config = await ConfigModel.find();
-            if(!config[0])
+            if (!config[0])
                 return resolve(false);
 
             // @ts-ignore

@@ -22,7 +22,7 @@ import nextRycleDate from "../../Lib/Dates/DateCycle";
 export function isWithinNext14Days(date: Date | string): boolean
 {
     let nextRecycle;
-    if(typeof date === "string")
+    if (typeof date === "string")
         nextRecycle = dateFormat.parse(date, "YYYY-MM-DD");
     else
         nextRecycle = new Date(date);
@@ -48,23 +48,23 @@ export async function createInvoiceFromOrder(order: IOrder)
         { uid: Customer_Id },
         { id: Customer_Id },
     ] });
-    if(!customer)
+    if (!customer)
         throw new Error(`Customer ${Customer_Id} not found`);
 
     // Change products price based on customers.currenc
     Products = await Promise.all(Products.map(async product =>
     {
         // Check if same currency
-        if(product.currency.toUpperCase() !== customer.currency.toUpperCase())
+        if (product.currency.toUpperCase() !== customer.currency.toUpperCase())
             // Convert to customer currency
             product.price = await convertCurrency(product.price, product.currency, customer.currency);
         return product;
     }));
 
     const items = [];
-    for await(let product of Products)
+    for await (let product of Products)
     {
-        if(Promotion_Code)
+        if (Promotion_Code)
             // @ts-ignore
             product = await getNewPriceOfPromotionCode(Promotion_Code, product);
         const category = await getCategoryByProduct(product);
@@ -74,7 +74,7 @@ export async function createInvoiceFromOrder(order: IOrder)
             quantity: LBProducts.get(product.id)?.quantity ?? 1,
             product_id: product.id
         });
-        if(LBProducts.get(product.id)?.configurable_options)
+        if (LBProducts.get(product.id)?.configurable_options)
         {
             const configurable_options = await ConfigurableOptionsModel.find({
                 id: {
@@ -83,16 +83,16 @@ export async function createInvoiceFromOrder(order: IOrder)
                     $in: [...LBProducts.get(product.id)?.configurable_options?.map(e => e.id ?? undefined)]
                 }
             });
-            if(configurable_options)
+            if (configurable_options)
             {
-                for await(const configurable_option of configurable_options)
+                for await (const configurable_option of configurable_options)
                 {
                     const option_index = LBProducts.get(product.id)?.configurable_options?.find(e => e.id === configurable_option.id)?.option_index ?? 0;
                     const option = configurable_option.options[
                         option_index
                     ];
                     // Fix option.price to customer currency
-                    if(product.currency.toUpperCase() !== customer.currency.toUpperCase())
+                    if (product.currency.toUpperCase() !== customer.currency.toUpperCase())
                         option.price = await convertCurrency(option.price, product.currency, customer.currency);
 
                     items.push({
@@ -107,7 +107,7 @@ export async function createInvoiceFromOrder(order: IOrder)
         }
     }
 
-    if(order.fees)
+    if (order.fees)
     {
         items.push({
             amount: order.fees,
@@ -148,9 +148,9 @@ export async function createInvoiceFromOrder(order: IOrder)
 
 export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Document, product: IProduct)
 {
-    if(code.valid_to !== "permanent")
+    if (code.valid_to !== "permanent")
         // Convert string to date
-        if(new Date(code.valid_to) < new Date())
+        if (new Date(code.valid_to) < new Date())
         {
             Logger.debug(`Promotion code ${code.name} got invalid valid date`);
             return product;
@@ -167,7 +167,7 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
     // get product from code.products_ids[]
     // _products is also an array so we need to go through each product
     // Check if the product id is in the promotion code
-    if(code.products_ids.includes(product.id))
+    if (code.products_ids.includes(product.id))
     {
         Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
         const o_price = product.price;
@@ -180,7 +180,7 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
 
         Logger.info(`New price of product ${product.id} is ${product.price}, old price was ${o_price}`);
         // Check if we are - on price
-        if(product.price < 0)
+        if (product.price < 0)
         {
             Logger.error(`Product ${product.id} price is less than 0, making it "free" by setting it to 0`);
             product.price = 0;
@@ -188,7 +188,7 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
     }
 
     // Decrease the uses if not unlimited
-    if(code.uses !== "unlimited")
+    if (code.uses !== "unlimited")
         code.uses--;
     await code.save();
 
@@ -197,7 +197,7 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
 
 export async function getPriceFromOrder(order: IOrder, product?: IProduct[])
 {
-    if(!product)
+    if (!product)
         product = await getProductsByOrder(order);
     
     return product.reduce((acc, cur) => acc + cur.price, 0);
