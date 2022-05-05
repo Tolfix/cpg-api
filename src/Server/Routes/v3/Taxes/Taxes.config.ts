@@ -32,6 +32,7 @@ class TaxesRouter
 
             const companyCurrency = await Company_Currency();
 
+            // @ts-ignore
             const doc = new pdfdocs({
                 size: "A4",
                 margin: 50,
@@ -128,9 +129,11 @@ class TaxesRouter
 
             doc.table(total);
 
+            // @ts-ignore
             doc.pipe(res);
 
             // done
+            // @ts-ignore
             doc.end();
         });
 
